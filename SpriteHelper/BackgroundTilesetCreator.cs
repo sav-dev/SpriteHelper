@@ -95,7 +95,7 @@ namespace SpriteHelper
                                     BackgroundFileId = config.BackgroundFiles.First(bf => bf.FileName == bitmap.FileName).Id,
                                     HeightSprites = Constants.BackgroundTileHeight / Constants.SpriteHeight,
                                     WidthInSprites = Constants.BackgroundTileWidth / Constants.SpriteWidth,
-                                    PaletteMapping = paletteId,                                    
+                                    PaletteMappingId = paletteId,                                    
                                     Type = tileType,
                                     X = x,
                                     Y = y

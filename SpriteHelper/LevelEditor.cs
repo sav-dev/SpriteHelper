@@ -15,6 +15,8 @@ namespace SpriteHelper
     {
         private Palettes palettes;
         private BackgroundConfig config;
+        private Dictionary<string, MyBitmap> tiles;
+        private Dictionary<string, MyBitmap> tilesPaletteApplied;
 
         public LevelEditor()
         {
@@ -80,6 +82,40 @@ namespace SpriteHelper
 
             this.palettes = Palettes.Read(this.palettesTextBox.Text);
             this.config = BackgroundConfig.Read(this.specTextBox.Text);
+
+            var bitmaps = new MyBitmap[this.config.BackgroundFiles.Max(f => f.Id) + 1];
+            foreach (var file in this.config.BackgroundFiles)
+            {
+                bitmaps[file.Id] = MyBitmap.FromFile(file.FileName);
+            }
+
+            this.tiles = new Dictionary<string, MyBitmap>();
+            this.tilesPaletteApplied = new Dictionary<string, MyBitmap>();
+
+            foreach (var tile in this.config.Tiles)
+            {
+                var bitmap = bitmaps[tile.BackgroundFileId];
+                var tileBitmap = bitmap.GetPart(tile.X, tile.Y, tile.WidthInSprites * Constants.SpriteWidth, tile.HeightSprites * Constants.SpriteHeight);
+                this.tiles.Add(tile.Id, tileBitmap);
+
+
+                var paletteMapping = this.config.PaletteMappings.First(pm => pm.Id == tile.PaletteMappingId);
+                var palette = this.palettes.BackgroundPalette[paletteMapping.ToPalette];
+                var tileBitmapWithPaletteApplied = new MyBitmap(tileBitmap.Width, tileBitmap.Height);
+
+                for (var x = 0; x < tileBitmap.Width; x++)
+                {
+                    for (var y = 0; y < tileBitmap.Height; y++)
+                    {
+                        var color = tileBitmap.GetPixel(x, y);
+                        var mappedColorId = paletteMapping.ColorMappings.First(c => c.Color == color).To;
+                        var mappedColor = palette.ActualColors[mappedColorId];
+                        tileBitmapWithPaletteApplied.SetPixel(mappedColor, x, y);
+                    }
+                }
+                
+                this.tilesPaletteApplied.Add(tile.Id, tileBitmapWithPaletteApplied);
+            }            
         }
 
         private Color GetBgColor()

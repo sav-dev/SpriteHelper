@@ -63,6 +63,14 @@ namespace SpriteHelper
     [DataContract]
     public class Tile
     {
+        public string Id
+        {
+            get
+            {
+                return string.Format("{0}-{1}-{2}-{3}-{4}", this.BackgroundFileId, this.X, this.Y, this.WidthInSprites, this.HeightSprites);
+            }
+        }
+
         [DataMember]
         public int BackgroundFileId { get; set; }
 
@@ -82,7 +90,7 @@ namespace SpriteHelper
         public int HeightSprites { get; set; }
 
         [DataMember]
-        public int PaletteMapping { get; set; }
+        public int PaletteMappingId { get; set; }
 
         // 0 1 2
         // 3 4 5
@@ -90,6 +98,11 @@ namespace SpriteHelper
         // ...
         [DataMember]        
         public int[] Sprites { get; set; }
+
+        public override string ToString()
+        {
+            return this.Id;
+        }
     }
 
     [DataContract]
