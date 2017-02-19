@@ -45,37 +45,30 @@
             this.specTextBox = new System.Windows.Forms.TextBox();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tileListView = new System.Windows.Forms.ListView();
+            this.inputPanel = new System.Windows.Forms.Panel();
+            this.bottomPanel = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerVertical)).BeginInit();
             this.splitContainerVertical.Panel2.SuspendLayout();
             this.splitContainerVertical.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.zoomPicker)).BeginInit();
             this.statusStrip.SuspendLayout();
+            this.inputPanel.SuspendLayout();
+            this.bottomPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainerVertical
             // 
             this.splitContainerVertical.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainerVertical.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.splitContainerVertical.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
             this.splitContainerVertical.IsSplitterFixed = true;
             this.splitContainerVertical.Location = new System.Drawing.Point(0, 0);
             this.splitContainerVertical.Name = "splitContainerVertical";
             // 
             // splitContainerVertical.Panel2
             // 
-            this.splitContainerVertical.Panel2.Controls.Add(this.applyPaletteCheckbox);
-            this.splitContainerVertical.Panel2.Controls.Add(this.zoomPicker);
-            this.splitContainerVertical.Panel2.Controls.Add(this.zoomLabel);
-            this.splitContainerVertical.Panel2.Controls.Add(this.bgColorPanel);
-            this.splitContainerVertical.Panel2.Controls.Add(this.bgColorLabel);
-            this.splitContainerVertical.Panel2.Controls.Add(this.bgColorTextBox);
-            this.splitContainerVertical.Panel2.Controls.Add(this.saveButton);
-            this.splitContainerVertical.Panel2.Controls.Add(this.loadButton);
-            this.splitContainerVertical.Panel2.Controls.Add(this.levelLabel);
-            this.splitContainerVertical.Panel2.Controls.Add(this.levelTextBox);
-            this.splitContainerVertical.Panel2.Controls.Add(this.palettesLabel);
-            this.splitContainerVertical.Panel2.Controls.Add(this.palettesTextBox);
-            this.splitContainerVertical.Panel2.Controls.Add(this.specLabel);
-            this.splitContainerVertical.Panel2.Controls.Add(this.specTextBox);
+            this.splitContainerVertical.Panel2.Controls.Add(this.bottomPanel);
+            this.splitContainerVertical.Panel2.Controls.Add(this.inputPanel);
             this.splitContainerVertical.Size = new System.Drawing.Size(1040, 519);
             this.splitContainerVertical.SplitterDistance = 536;
             this.splitContainerVertical.TabIndex = 0;
@@ -85,7 +78,7 @@
             this.applyPaletteCheckbox.AutoSize = true;
             this.applyPaletteCheckbox.Checked = true;
             this.applyPaletteCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.applyPaletteCheckbox.Location = new System.Drawing.Point(309, 92);
+            this.applyPaletteCheckbox.Location = new System.Drawing.Point(309, 90);
             this.applyPaletteCheckbox.Name = "applyPaletteCheckbox";
             this.applyPaletteCheckbox.Size = new System.Drawing.Size(88, 17);
             this.applyPaletteCheckbox.TabIndex = 29;
@@ -95,9 +88,9 @@
             // 
             // zoomPicker
             // 
-            this.zoomPicker.Location = new System.Drawing.Point(248, 90);
+            this.zoomPicker.Location = new System.Drawing.Point(248, 88);
             this.zoomPicker.Maximum = new decimal(new int[] {
-            10,
+            2,
             0,
             0,
             0});
@@ -110,7 +103,7 @@
             this.zoomPicker.Size = new System.Drawing.Size(46, 20);
             this.zoomPicker.TabIndex = 28;
             this.zoomPicker.Value = new decimal(new int[] {
-            5,
+            2,
             0,
             0,
             0});
@@ -119,7 +112,7 @@
             // zoomLabel
             // 
             this.zoomLabel.AutoSize = true;
-            this.zoomLabel.Location = new System.Drawing.Point(208, 93);
+            this.zoomLabel.Location = new System.Drawing.Point(208, 91);
             this.zoomLabel.Name = "zoomLabel";
             this.zoomLabel.Size = new System.Drawing.Size(34, 13);
             this.zoomLabel.TabIndex = 27;
@@ -127,7 +120,7 @@
             // 
             // bgColorPanel
             // 
-            this.bgColorPanel.Location = new System.Drawing.Point(182, 90);
+            this.bgColorPanel.Location = new System.Drawing.Point(182, 88);
             this.bgColorPanel.Name = "bgColorPanel";
             this.bgColorPanel.Size = new System.Drawing.Size(20, 20);
             this.bgColorPanel.TabIndex = 26;
@@ -135,7 +128,7 @@
             // bgColorLabel
             // 
             this.bgColorLabel.AutoSize = true;
-            this.bgColorLabel.Location = new System.Drawing.Point(13, 93);
+            this.bgColorLabel.Location = new System.Drawing.Point(13, 91);
             this.bgColorLabel.Name = "bgColorLabel";
             this.bgColorLabel.Size = new System.Drawing.Size(49, 13);
             this.bgColorLabel.TabIndex = 25;
@@ -143,7 +136,7 @@
             // 
             // bgColorTextBox
             // 
-            this.bgColorTextBox.Location = new System.Drawing.Point(68, 90);
+            this.bgColorTextBox.Location = new System.Drawing.Point(68, 88);
             this.bgColorTextBox.Name = "bgColorTextBox";
             this.bgColorTextBox.Size = new System.Drawing.Size(105, 20);
             this.bgColorTextBox.TabIndex = 24;
@@ -151,7 +144,7 @@
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(405, 90);
+            this.saveButton.Location = new System.Drawing.Point(405, 88);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(34, 20);
             this.saveButton.TabIndex = 23;
@@ -161,7 +154,7 @@
             // 
             // loadButton
             // 
-            this.loadButton.Location = new System.Drawing.Point(448, 90);
+            this.loadButton.Location = new System.Drawing.Point(448, 88);
             this.loadButton.Name = "loadButton";
             this.loadButton.Size = new System.Drawing.Size(34, 20);
             this.loadButton.TabIndex = 22;
@@ -172,7 +165,7 @@
             // levelLabel
             // 
             this.levelLabel.AutoSize = true;
-            this.levelLabel.Location = new System.Drawing.Point(13, 15);
+            this.levelLabel.Location = new System.Drawing.Point(13, 13);
             this.levelLabel.Name = "levelLabel";
             this.levelLabel.Size = new System.Drawing.Size(33, 13);
             this.levelLabel.TabIndex = 21;
@@ -180,7 +173,7 @@
             // 
             // levelTextBox
             // 
-            this.levelTextBox.Location = new System.Drawing.Point(68, 12);
+            this.levelTextBox.Location = new System.Drawing.Point(68, 10);
             this.levelTextBox.Name = "levelTextBox";
             this.levelTextBox.Size = new System.Drawing.Size(414, 20);
             this.levelTextBox.TabIndex = 20;
@@ -188,7 +181,7 @@
             // palettesLabel
             // 
             this.palettesLabel.AutoSize = true;
-            this.palettesLabel.Location = new System.Drawing.Point(13, 67);
+            this.palettesLabel.Location = new System.Drawing.Point(13, 65);
             this.palettesLabel.Name = "palettesLabel";
             this.palettesLabel.Size = new System.Drawing.Size(45, 13);
             this.palettesLabel.TabIndex = 19;
@@ -196,7 +189,7 @@
             // 
             // palettesTextBox
             // 
-            this.palettesTextBox.Location = new System.Drawing.Point(68, 64);
+            this.palettesTextBox.Location = new System.Drawing.Point(68, 62);
             this.palettesTextBox.Name = "palettesTextBox";
             this.palettesTextBox.Size = new System.Drawing.Size(414, 20);
             this.palettesTextBox.TabIndex = 18;
@@ -204,7 +197,7 @@
             // specLabel
             // 
             this.specLabel.AutoSize = true;
-            this.specLabel.Location = new System.Drawing.Point(13, 41);
+            this.specLabel.Location = new System.Drawing.Point(13, 39);
             this.specLabel.Name = "specLabel";
             this.specLabel.Size = new System.Drawing.Size(32, 13);
             this.specLabel.TabIndex = 17;
@@ -212,7 +205,7 @@
             // 
             // specTextBox
             // 
-            this.specTextBox.Location = new System.Drawing.Point(68, 38);
+            this.specTextBox.Location = new System.Drawing.Point(68, 36);
             this.specTextBox.Name = "specTextBox";
             this.specTextBox.Size = new System.Drawing.Size(414, 20);
             this.specTextBox.TabIndex = 16;
@@ -233,6 +226,50 @@
             this.toolStripStatusLabel.Size = new System.Drawing.Size(112, 17);
             this.toolStripStatusLabel.Text = "toolStripStatusLabel";
             // 
+            // tileListView
+            // 
+            this.tileListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tileListView.Location = new System.Drawing.Point(16, 3);
+            this.tileListView.MultiSelect = false;
+            this.tileListView.Name = "tileListView";
+            this.tileListView.Size = new System.Drawing.Size(466, 373);
+            this.tileListView.TabIndex = 30;
+            this.tileListView.TileSize = new System.Drawing.Size(30, 30);
+            this.tileListView.UseCompatibleStateImageBehavior = false;
+            // 
+            // inputPanel
+            // 
+            this.inputPanel.Controls.Add(this.levelLabel);
+            this.inputPanel.Controls.Add(this.specTextBox);
+            this.inputPanel.Controls.Add(this.applyPaletteCheckbox);
+            this.inputPanel.Controls.Add(this.specLabel);
+            this.inputPanel.Controls.Add(this.zoomPicker);
+            this.inputPanel.Controls.Add(this.palettesTextBox);
+            this.inputPanel.Controls.Add(this.zoomLabel);
+            this.inputPanel.Controls.Add(this.palettesLabel);
+            this.inputPanel.Controls.Add(this.bgColorPanel);
+            this.inputPanel.Controls.Add(this.levelTextBox);
+            this.inputPanel.Controls.Add(this.bgColorLabel);
+            this.inputPanel.Controls.Add(this.loadButton);
+            this.inputPanel.Controls.Add(this.bgColorTextBox);
+            this.inputPanel.Controls.Add(this.saveButton);
+            this.inputPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.inputPanel.Location = new System.Drawing.Point(0, 0);
+            this.inputPanel.Name = "inputPanel";
+            this.inputPanel.Size = new System.Drawing.Size(500, 125);
+            this.inputPanel.TabIndex = 31;
+            // 
+            // bottomPanel
+            // 
+            this.bottomPanel.Controls.Add(this.tileListView);
+            this.bottomPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.bottomPanel.Location = new System.Drawing.Point(0, 125);
+            this.bottomPanel.Name = "bottomPanel";
+            this.bottomPanel.Size = new System.Drawing.Size(500, 394);
+            this.bottomPanel.TabIndex = 32;
+            // 
             // LevelEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -240,17 +277,18 @@
             this.ClientSize = new System.Drawing.Size(1040, 541);
             this.Controls.Add(this.splitContainerVertical);
             this.Controls.Add(this.statusStrip);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Name = "LevelEditor";
             this.Text = "Level editor";
             this.Load += new System.EventHandler(this.LevelEditorLoad);
             this.splitContainerVertical.Panel2.ResumeLayout(false);
-            this.splitContainerVertical.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerVertical)).EndInit();
             this.splitContainerVertical.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.zoomPicker)).EndInit();
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
+            this.inputPanel.ResumeLayout(false);
+            this.inputPanel.PerformLayout();
+            this.bottomPanel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -275,5 +313,8 @@
         private System.Windows.Forms.CheckBox applyPaletteCheckbox;
         private System.Windows.Forms.NumericUpDown zoomPicker;
         private System.Windows.Forms.Label zoomLabel;
+        private System.Windows.Forms.ListView tileListView;
+        private System.Windows.Forms.Panel bottomPanel;
+        private System.Windows.Forms.Panel inputPanel;
     }
 }

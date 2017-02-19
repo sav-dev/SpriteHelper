@@ -47,6 +47,7 @@ namespace SpriteHelper
         private void ApplyPaletteCheckboxCheckedChanged(object sender, EventArgs e)
         {
             // todo
+            this.PopulateListView();
         }
 
         private void ZoomPickerValueChanged(object sender, EventArgs e)
@@ -115,7 +116,9 @@ namespace SpriteHelper
                 }
                 
                 this.tilesPaletteApplied.Add(tile.Id, tileBitmapWithPaletteApplied);
-            }            
+            }
+
+            this.PopulateListView();
         }
 
         private Color GetBgColor()
@@ -128,6 +131,23 @@ namespace SpriteHelper
             catch (Exception)
             {
                 return Color.Black;
+            }
+        }
+
+        private void PopulateListView()
+        {
+            const int ListViewZoom = 2;
+            var applyPalettes = this.applyPaletteCheckbox.Checked;
+
+            this.tileListView.Items.Clear();
+            this.tileListView.LargeImageList = new ImageList { ImageSize = new Size(Constants.BackgroundTileWidth * ListViewZoom, Constants.BackgroundTileHeight * ListViewZoom) };
+            var index = 0;
+            foreach (var kvp in applyPalettes ? this.tilesPaletteApplied : tiles)
+            {
+                var scaledImage = kvp.Value.Scale(ListViewZoom);
+                var bitmap = scaledImage.ToBitmap();
+                this.tileListView.LargeImageList.Images.Add(bitmap);
+                this.tileListView.Items.Add(new ListViewItem(kvp.Key, index++));
             }
         }
     }
