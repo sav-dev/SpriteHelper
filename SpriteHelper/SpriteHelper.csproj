@@ -56,6 +56,12 @@
       <DependentUpon>BackgroundTilesetCreator.cs</DependentUpon>
     </Compile>
     <Compile Include="Defaults.cs" />
+    <Compile Include="LevelEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LevelEditor.Designer.cs">
+      <DependentUpon>LevelEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="SpriteConfig.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="AnimationHelper.cs">
@@ -74,6 +80,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AnimationHelper.resx">
       <DependentUpon>AnimationHelper.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LevelEditor.resx">
+      <DependentUpon>LevelEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

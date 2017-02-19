@@ -26,6 +26,10 @@ namespace SpriteHelper
                 case "Background":
                     Application.Run(new BackgroundTilesetCreator());
                     break;
+
+                case "Level":
+                    Application.Run(new LevelEditor());
+                    break;
             }
         }
     }

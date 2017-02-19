@@ -26,6 +26,25 @@ namespace SpriteHelper
                 xmlSerializer.Serialize(stream, this);
             }
         }
+
+        public static BackgroundConfig Read(string file)
+        {
+            BackgroundConfig config;
+            var xml = File.ReadAllText(file);
+            var xmlSerializer = new XmlSerializer(typeof(BackgroundConfig));
+            using (var memoryStream = new MemoryStream())
+            {
+                using (var streamWriter = new StreamWriter(memoryStream))
+                {
+                    streamWriter.Write(xml);
+                    streamWriter.Flush();
+                    memoryStream.Position = 0;
+                    config = (BackgroundConfig)xmlSerializer.Deserialize(memoryStream);
+                }
+            }
+
+            return config;
+        }
     }
 
     [DataContract]

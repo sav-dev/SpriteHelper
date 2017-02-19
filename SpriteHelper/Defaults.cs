@@ -40,6 +40,9 @@ namespace SpriteHelper
         [DataMember]
         public string BackgroundSpec { get; set; }
 
+        [DataMember]
+        public string Level { get; set; }
+
         private static Defaults instance;
         public static Defaults Instance
         {
