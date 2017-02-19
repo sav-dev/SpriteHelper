@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 
 namespace SpriteHelper
@@ -36,6 +31,18 @@ namespace SpriteHelper
     [DataContract]
     public class Tile
     {
+        [DataMember]
+        public string FileName { get; set; }
+
+        [DataMember]
+        public int X { get; set; }
+
+        [DataMember]
+        public int Y { get; set; }
+
+        [DataMember]
+        public string Type { get; set; }
+
         [DataMember]
         public int WidthInSprites { get; set; }
 

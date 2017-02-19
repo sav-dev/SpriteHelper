@@ -1,0 +1,22 @@
+﻿<Defaults>
+  <AppToRun>Background</AppToRun>
+  <AnimationImage>C: \users\tomas\documents\nes\github\platformer\graphics\sprites\gunner_sprites.png</AnimationImage>
+  <AnimationSpec>C:\users\tomas\documents\nes\github\platformer\graphics\sprites\gunner_spec.xml</AnimationSpec>
+  <Palette>C:\users\tomas\documents\nes\github\platformer\graphics\palettes\palette.png</Palette>
+  <PalettesSpec>C:\users\tomas\documents\nes\github\platformer\graphics\palettes\palettes_01.xml</PalettesSpec>
+  <BlockingBackgrounds>
+    <string>C:\Users\tomas\Documents\NES\GitHub\Platformer\Graphics\Backgrounds\back_01_ground_blocking.png</string>
+    <string>C:\Users\tomas\Documents\NES\GitHub\Platformer\Graphics\Backgrounds\back_01_large_pipes_blocking.png</string>
+    <string>C:\Users\tomas\Documents\NES\GitHub\Platformer\Graphics\Backgrounds\back_01_pipes_blocking.png</string>
+  </BlockingBackgrounds>
+  <NonBlockingBackgrounds>
+    <string>C:\Users\tomas\Documents\NES\GitHub\Platformer\Graphics\Backgrounds\back_01_pipes_nonblocking.png</string>
+    <string>C:\Users\tomas\Documents\NES\GitHub\Platformer\Graphics\Backgrounds\back_water_non_blocking.png</string>
+  </NonBlockingBackgrounds>  
+  <ThreatBackgrounds>
+    <string>C:\Users\tomas\Documents\NES\GitHub\Platformer\Graphics\Backgrounds\back_01_pipes_threat.png</string>
+  </ThreatBackgrounds>  
+  <DefaultBgColor>0,1,0</DefaultBgColor>
+  <BackgroundChr>C:\users\tomas\desktop\back.bm</BackgroundChr>
+  <BackgroundSpec>C:\users\tomas\desktop\back.xml</BackgroundSpec>
+</Defaults>
