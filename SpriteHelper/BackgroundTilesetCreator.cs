@@ -57,135 +57,94 @@ namespace SpriteHelper
         {
             var config = new BackgroundConfig();
 
-            //// PROCESSING 16x16 tilesets
+            // Get all files
+            var blocking = this.blockingTextBox.Lines.Select(l => MyBitmap.FromFile(l)).ToArray();
+            var nonBlocking = this.nonBlockingTextBox.Lines.Select(l => MyBitmap.FromFile(l)).ToArray();
+            var threat = this.threatsTextBox.Lines.Select(l => MyBitmap.FromFile(l)).ToArray();
 
-            var bitmaps16 = this.blockingTextBox.Lines.Select(l => MyBitmap.FromFile(l)).ToArray();
+            // Figure out palettes
+            var palettes = GetPalettes(blocking.Union(nonBlocking).Union(threat));
+            config.PaletteMappings = palettes.Select(
+                (p, i) => new PaletteMapping { Id = i, ToPalette = i, ColorMappings = p.Select((c, j) => new ColorMapping { R = c.R, G = c.G, B = c.B, To = j }).ToArray() }).ToArray();
 
-            if (bitmaps16.Length > 4)
-            {
-                throw new Exception("Too many bitmaps");
-            }
-
-            var tiles16PerBitmap = new List<dynamic>();
-            var allTiles = new List<MyBitmap>();        
-            foreach (var bitmap in bitmaps16)
-            {
-                var tiles16 = new List<MyBitmap>();
-                var uniqueColors = bitmap.UniqueColors();
-
-                if (uniqueColors.Length > 4)
-                {
-                    throw new Exception("too many colors");
-                }
-
-                for (var x = 0; x < bitmap.Width; x += Constants.BackgroundTileWidth)
-                { 
-                    for (var y = 0; y < bitmap.Height; y += Constants.BackgroundTileHeight)
-                    { 
-                        var newTile = bitmap.GetPart(x, y, Constants.BackgroundTileWidth, Constants.BackgroundTileHeight);
-                        if (!allTiles.Any(tile => tile.Equals(newTile)))
-                        {
-                            allTiles.Add(newTile);
-                            tiles16.Add(newTile);
-                        }
-                    }
-                }
-
-                dynamic item = new ExpandoObject();
-                item.Tiles = tiles16;
-                item.Palette = uniqueColors;
-                tiles16PerBitmap.Add(item);
-            }
-
-            var sprites = new List<MyBitmap>();
-            var targetColors = new[] { NesPalette.Colors[15], NesPalette.Colors[0], NesPalette.Colors[16], NesPalette.Colors[32] }; // greyscale
+            // Get all tiles and sprites
+            var allTiles = new List<MyBitmap>();
             var tiles = new List<Tile>();
-            config.PaletteMappings = new PaletteMapping[tiles16PerBitmap.Count];            
-            for (var tilesetIndex = 0; tilesetIndex < tiles16PerBitmap.Count; tilesetIndex++)
+            var sprites = new List<MyBitmap>();
+
+            // Processing function
+            Action<MyBitmap[], TileType> processList = (bitmaps, tileType) =>
             {
-                var item = tiles16PerBitmap[tilesetIndex]; 
-                var bgColor = this.GetBgColor();
-                Color[] palette = item.Palette;
-                if (palette.Length < 4)
+                foreach (var bitmap in bitmaps)
                 {
-                    var newPalette = new Color[4];
-                    for (var i = 0; i < palette.Length; i++)
+                    // Get target palette id.
+                    var uniqueColors = bitmap.UniqueColors();
+                    var palette = palettes.First(p => uniqueColors.All(c => p.Contains(c)));
+                    var paletteId = palettes.IndexOf(palette);
+
+                    for (var x = 0; x < bitmap.Width; x += Constants.BackgroundTileWidth)
                     {
-                        newPalette[i] = palette[i];
-                    }
-
-                    for (var i = palette.Length; i < newPalette.Length; i++)
-                    {
-                        newPalette[i] = bgColor;
-                    }
-
-                    palette = newPalette;
-                }
-
-                if (!palette.Contains(bgColor))
-                {
-                    throw new Exception("Palette doesn't contain the bg color");
-                }
-
-                if (palette[0] != bgColor)
-                {
-                    var newPalette = new Color[4] { bgColor, bgColor, bgColor, bgColor };
-                    var i = 1;
-                    foreach (var color in palette)
-                    {
-                        if (color != bgColor)
+                        for (var y = 0; y < bitmap.Height; y += Constants.BackgroundTileHeight)
                         {
-                            newPalette[i++] = color;
+                            var newTile = bitmap.GetPart(x, y, Constants.BackgroundTileWidth, Constants.BackgroundTileHeight);
+                            if (!allTiles.Any(tile => tile.Equals(newTile)))
+                            {
+                                var tileConfig = new Tile
+                                {
+                                    FileName = bitmap.FileName,
+                                    HeightSprites = Constants.BackgroundTileHeight / Constants.SpriteHeight,
+                                    WidthInSprites = Constants.BackgroundTileWidth / Constants.SpriteWidth,
+                                    PaletteMapping = paletteId,                                    
+                                    Type = tileType,
+                                    X = x,
+                                    Y = y
+                                };
+
+                                tileConfig.Sprites = new int[tileConfig.WidthInSprites * tileConfig.HeightSprites];
+
+                                var spritesInTile = new MyBitmap[] 
+                                {
+                                    newTile.GetPart(0, 0, Constants.SpriteWidth, Constants.SpriteHeight),
+                                    newTile.GetPart(Constants.SpriteWidth, 0, Constants.SpriteWidth, Constants.SpriteHeight),
+                                    newTile.GetPart(0, Constants.SpriteHeight, Constants.SpriteWidth, Constants.SpriteHeight),
+                                    newTile.GetPart(Constants.SpriteWidth, Constants.SpriteHeight, Constants.SpriteWidth, Constants.SpriteHeight)
+                                };
+
+                                for (var i = 0; i < spritesInTile.Length; i++)
+                                {
+                                    var sprite = spritesInTile[i];
+                                    sprite.UpdateToGreyscale(palette);
+
+                                    var indexOfSprite = -1;
+                                    var spriteFromList = sprites.FirstOrDefault(s => s.Equals(sprite));
+                                    
+                                    if (spriteFromList != null)
+                                    {
+                                        indexOfSprite = sprites.IndexOf(spriteFromList);
+                                    }
+                                    else
+                                    {
+                                        sprites.Add(sprite);
+                                        indexOfSprite = sprites.Count - 1;
+                                    }
+                                    
+                                    tileConfig.Sprites[i] = indexOfSprite;
+                                }
+
+                                tiles.Add(tileConfig);
+                                allTiles.Add(newTile);
+                            }
                         }
                     }
-
-                    palette = newPalette;
                 }
+            };
 
-                config.PaletteMappings[tilesetIndex] = new PaletteMapping
-                {
-                    Id = tilesetIndex,
-                    ToPalette = tilesetIndex,
-                    ColorMappings = palette.Select((c, i) => new ColorMapping { R = c.R, B = c.B, G = c.G, To = i }).ToArray()
-                };
-                
-                foreach (var tile in item.Tiles)
-                {
-                    var tileConfig = new Tile { WidthInSprites = 2, HeightSprites = 2, PaletteMapping = tilesetIndex, Sprites = new int[4] };
-                    var spritesInTile = new MyBitmap[] { tile.GetPart(0, 0, 8, 8), tile.GetPart(8, 0, 8, 8), tile.GetPart(0, 8, 8, 8), tile.GetPart(8, 8, 8, 8) };
-                    for (var i = 0; i < spritesInTile.Length; i++)
-                    {
-                        var sprite = spritesInTile[i];
-                        sprite.UpdateColors(palette.ToList(), targetColors.ToList());
-
-                        var indexOfSprite = -1;
-                        var spriteFromList = sprites.FirstOrDefault(s => s.Equals(sprite));
-
-                        if (spriteFromList != null)
-                        {
-                            indexOfSprite = sprites.IndexOf(spriteFromList);
-                        }
-                        else
-                        {
-                            sprites.Add(sprite); // sprite added
-                            indexOfSprite = sprites.Count - 1;
-                        }
-
-                        tileConfig.Sprites[i] = indexOfSprite;
-                    }
-
-                    tiles.Add(tileConfig);
-                }
-            }
-
+            // Process all tiles
+            processList(blocking, TileType.Blocking);
+            processList(nonBlocking, TileType.NonBlocking);
+            processList(threat, TileType.Threat);
             config.Tiles = tiles.ToArray();
-
-            var maxTileIndex = config.Tiles.Max(t => t.Sprites.Max());
-
-            //// PROCESSING 16x16 tilesets DONE
-
-            maxTileIndex = config.Tiles.Max(t => t.Sprites.Max());
-
+            
             var chrFile = new MyBitmap(Constants.SpriteWidth * Constants.ChrFileSpritesPerRow, Constants.SpriteHeight * Constants.ChrFileRows, Color.Black);
             
             {                
@@ -204,9 +163,80 @@ namespace SpriteHelper
                 }
             }
             
-            chrFile.ToBitmap().Save(outputImageTextBox.Text);
-
+            chrFile.ToBitmap().Save(outputImageTextBox.Text);            
             config.Write(outputSpecTextBox.Text);
+        }
+
+        private List<Color[]> GetPalettes(IEnumerable<MyBitmap> bitmaps)
+        {
+            var bgColor = this.GetBgColor();
+            var palettes = new List<Color[]>();
+            foreach (var bitmap in bitmaps)
+            {
+                var uniqueColors = bitmap.UniqueColors();
+                if (uniqueColors.Length > 4)
+                {
+                    throw new Exception("Too many colors!");
+                }
+
+                // Looks for equals or supersets
+                if (palettes.Any(p => uniqueColors.All(c => p.Contains(c))))
+                {
+                    // Already in the list.
+                    continue;
+                }
+
+                // Look for subsets
+                var subset = palettes.FirstOrDefault(p => p.Length < uniqueColors.Length && p.All(c => uniqueColors.Contains(c)));
+                if (subset != null)
+                {
+                    palettes.Remove(subset);
+                }
+
+                // Add new palette.
+                if (palettes.Count == 4)
+                {
+                    throw new Exception("Too many palettes!");
+                }
+
+                palettes.Add(uniqueColors);
+            }
+
+            // Normalize palettes - must start with bg color, then all colors, padded with more bg color
+            var newPalettes = new List<Color[]>();
+            foreach (var palette in palettes)
+            {
+                if (palette.Length == 4 && !palette.Contains(bgColor))
+                {
+                    throw new Exception("Invalid palette, doesn't contain the bg color");
+                }
+
+                var newPalette = new List<Color>();
+                newPalette.Add(bgColor);
+                foreach (var color in palette)
+                {
+                    if (color == bgColor)
+                    {
+                        continue;
+                    }
+
+                    newPalette.Add(color);
+                }
+
+                while (newPalette.Count < 4)
+                {
+                    newPalette.Add(bgColor);
+                }
+
+                newPalettes.Add(newPalette.ToArray());
+            }
+
+            while (newPalettes.Count < 4)
+            {
+                newPalettes.Add(new Color[] { bgColor, bgColor, bgColor, bgColor });
+            }
+
+            return newPalettes;
         }
     }
 }

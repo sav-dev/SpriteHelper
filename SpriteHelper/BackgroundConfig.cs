@@ -41,7 +41,7 @@ namespace SpriteHelper
         public int Y { get; set; }
 
         [DataMember]
-        public string Type { get; set; }
+        public TileType Type { get; set; }
 
         [DataMember]
         public int WidthInSprites { get; set; }
@@ -58,5 +58,13 @@ namespace SpriteHelper
         // ...
         [DataMember]        
         public int[] Sprites { get; set; }
+    }
+
+    [DataContract]
+    public enum TileType
+    {
+        Blocking,
+        NonBlocking,
+        Threat
     }
 }

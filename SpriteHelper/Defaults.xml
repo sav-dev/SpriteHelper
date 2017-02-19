@@ -17,6 +17,6 @@
     <string>C:\Users\tomas\Documents\NES\GitHub\Platformer\Graphics\Backgrounds\back_01_pipes_threat.png</string>
   </ThreatBackgrounds>  
   <DefaultBgColor>0,1,0</DefaultBgColor>
-  <BackgroundChr>C:\users\tomas\desktop\back.bm</BackgroundChr>
+  <BackgroundChr>C:\users\tomas\desktop\back.png</BackgroundChr>
   <BackgroundSpec>C:\users\tomas\desktop\back.xml</BackgroundSpec>
 </Defaults>

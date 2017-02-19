@@ -7,12 +7,14 @@ namespace SpriteHelper
 {
     public class MyBitmap : IEquatable<MyBitmap>
     {
+        private string fileName;
         private int width;
         private int height;
         private Color[][] pixels;
 
         public int Width { get { return this.width; } }
         public int Height { get { return this.height; } }
+        public string FileName { get { return this.fileName; } }
 
         public static MyBitmap FromFile(string file)
         {
@@ -26,6 +28,7 @@ namespace SpriteHelper
                 }
             }
 
+            result.fileName = file;
             return result;
         }
 
@@ -157,11 +160,27 @@ namespace SpriteHelper
             return true;
         }
 
+        public void UpdateToGreyscale(Color[] sourceColors)
+        {
+            var targetColors = new[] { NesPalette.Colors[15], NesPalette.Colors[0], NesPalette.Colors[16], NesPalette.Colors[32] };
+            this.UpdateColors(sourceColors, targetColors);
+        }
+
+        public void UpdateColors(Color[] sourceColors, Color[] targetColors)
+        {
+            this.UpdateColors(sourceColors.ToList(), targetColors.ToList());
+        }
+
         public void UpdateColors(List<Color> sourceColors, List<Color> targetColors)
         {
             if (sourceColors.Count != targetColors.Count)
             {
                 throw new Exception("Invalid number of colors provided");
+            }
+
+            if (this.UniqueColors().Any(c => !sourceColors.Contains(c)))
+            {
+                throw new Exception("Not all source colors provided");
             }
 
             for (var x = 0; x < this.width; x++)
@@ -174,6 +193,16 @@ namespace SpriteHelper
                     this.pixels[x][y] = newColor;
                 }
             }
+        }
+
+        public override string ToString()
+        {
+            if (this.fileName != null)
+            {
+                return string.Format("Bitmap {0} x {1} ({2})", this.width, this.height, this.fileName);
+            }
+
+            return string.Format("Bitmap {0} x {1}", this.width, this.height);
         }
     }
 }
