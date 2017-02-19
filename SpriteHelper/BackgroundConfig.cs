@@ -8,6 +8,9 @@ namespace SpriteHelper
     public class BackgroundConfig
     {
         [DataMember]
+        public BackgroundFile[] BackgroundFiles { get; set; }
+
+        [DataMember]
         public PaletteMapping[] PaletteMappings { get; set; }
 
         [DataMember]
@@ -48,10 +51,20 @@ namespace SpriteHelper
     }
 
     [DataContract]
+    public class BackgroundFile
+    {
+        [DataMember]
+        public int Id { get; set; }
+
+        [DataMember]
+        public string FileName { get; set; }
+    }
+
+    [DataContract]
     public class Tile
     {
         [DataMember]
-        public string FileName { get; set; }
+        public int BackgroundFileId { get; set; }
 
         [DataMember]
         public int X { get; set; }

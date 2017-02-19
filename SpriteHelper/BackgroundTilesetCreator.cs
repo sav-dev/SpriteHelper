@@ -60,9 +60,11 @@ namespace SpriteHelper
             var blocking = this.blockingTextBox.Lines.Select(l => MyBitmap.FromFile(l)).ToArray();
             var nonBlocking = this.nonBlockingTextBox.Lines.Select(l => MyBitmap.FromFile(l)).ToArray();
             var threat = this.threatsTextBox.Lines.Select(l => MyBitmap.FromFile(l)).ToArray();
+            var allBitmaps = blocking.Union(nonBlocking).Union(threat).ToArray();
+            config.BackgroundFiles = allBitmaps.Select((b, i) => new BackgroundFile { FileName = b.FileName, Id = i }).ToArray();
 
             // Figure out palettes
-            var palettes = GetPalettes(blocking.Union(nonBlocking).Union(threat));
+            var palettes = GetPalettes(allBitmaps);
             config.PaletteMappings = palettes.Select(
                 (p, i) => new PaletteMapping { Id = i, ToPalette = i, ColorMappings = p.Select((c, j) => new ColorMapping { R = c.R, G = c.G, B = c.B, To = j }).ToArray() }).ToArray();
 
@@ -90,7 +92,7 @@ namespace SpriteHelper
                             {
                                 var tileConfig = new Tile
                                 {
-                                    FileName = bitmap.FileName,
+                                    BackgroundFileId = config.BackgroundFiles.First(bf => bf.FileName == bitmap.FileName).Id,
                                     HeightSprites = Constants.BackgroundTileHeight / Constants.SpriteHeight,
                                     WidthInSprites = Constants.BackgroundTileWidth / Constants.SpriteWidth,
                                     PaletteMapping = paletteId,                                    
