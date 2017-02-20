@@ -171,7 +171,17 @@ namespace SpriteHelper
             populateListView(TileType.Blocking, this.listViewBlocking);
             populateListView(TileType.NonBlocking, this.listViewNonBlocking);
             populateListView(TileType.Threat, this.listViewThreat);
+        }
 
+        public string SelectedTile()
+        {
+            var selectedListView = this.tabControl.SelectedTab.Controls.Cast<object>().First(c => c is ListView) as ListView;
+            if (selectedListView.SelectedItems.Count == 0)
+            {
+                return null;
+            }
+
+            return selectedListView.SelectedItems[0].Text;
         }
     }
 }
