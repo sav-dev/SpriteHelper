@@ -22,15 +22,15 @@ namespace SpriteHelper
                 case "Animation":
                     Application.Run(new AnimationHelper());
                     break;
-
+            
                 case "Background":
                     Application.Run(new BackgroundTilesetCreator());
                     break;
-
+            
                 case "Level":
                     Application.Run(new LevelEditor());
                     break;
-            }
+            }           
         }
     }
 }

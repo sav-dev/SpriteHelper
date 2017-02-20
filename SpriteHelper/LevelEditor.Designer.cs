@@ -55,7 +55,7 @@
             this.saveButton = new System.Windows.Forms.Button();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.viewButton = new System.Windows.Forms.Button();
+            this.showGridCheckbox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerVertical)).BeginInit();
             this.splitContainerVertical.Panel2.SuspendLayout();
             this.splitContainerVertical.SuspendLayout();
@@ -77,7 +77,7 @@
             // 
             // splitContainerVertical.Panel2
             // 
-            this.splitContainerVertical.Panel2.Controls.Add(this.viewButton);
+            this.splitContainerVertical.Panel2.Controls.Add(this.showGridCheckbox);
             this.splitContainerVertical.Panel2.Controls.Add(this.editButton);
             this.splitContainerVertical.Panel2.Controls.Add(this.tabControl);
             this.splitContainerVertical.Panel2.Controls.Add(this.showTypeCheckbox);
@@ -102,7 +102,7 @@
             // 
             // editButton
             // 
-            this.editButton.Location = new System.Drawing.Point(319, 109);
+            this.editButton.Location = new System.Drawing.Point(405, 109);
             this.editButton.Name = "editButton";
             this.editButton.Size = new System.Drawing.Size(80, 23);
             this.editButton.TabIndex = 47;
@@ -366,15 +366,18 @@
             this.toolStripStatusLabel.Size = new System.Drawing.Size(112, 17);
             this.toolStripStatusLabel.Text = "toolStripStatusLabel";
             // 
-            // viewButton
+            // showGridCheckbox
             // 
-            this.viewButton.Location = new System.Drawing.Point(405, 109);
-            this.viewButton.Name = "viewButton";
-            this.viewButton.Size = new System.Drawing.Size(80, 23);
-            this.viewButton.TabIndex = 48;
-            this.viewButton.Text = "View";
-            this.viewButton.UseVisualStyleBackColor = true;
-            this.viewButton.Click += new System.EventHandler(this.ViewButtonClick);
+            this.showGridCheckbox.AutoSize = true;
+            this.showGridCheckbox.Checked = true;
+            this.showGridCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.showGridCheckbox.Location = new System.Drawing.Point(305, 113);
+            this.showGridCheckbox.Name = "showGridCheckbox";
+            this.showGridCheckbox.Size = new System.Drawing.Size(75, 17);
+            this.showGridCheckbox.TabIndex = 48;
+            this.showGridCheckbox.Text = "Show Grid";
+            this.showGridCheckbox.UseVisualStyleBackColor = true;
+            this.showGridCheckbox.CheckedChanged += new System.EventHandler(this.ShowGridCheckboxCheckedChanged);
             // 
             // LevelEditor
             // 
@@ -432,6 +435,6 @@
         private System.Windows.Forms.ListView listViewThreat;
         private System.Windows.Forms.ListView listViewBlocking;
         private System.Windows.Forms.ListView listViewNonBlocking;
-        private System.Windows.Forms.Button viewButton;
+        private System.Windows.Forms.CheckBox showGridCheckbox;
     }
 }

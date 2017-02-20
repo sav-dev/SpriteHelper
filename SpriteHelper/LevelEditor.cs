@@ -18,10 +18,16 @@ namespace SpriteHelper
         private Dictionary<string, MyBitmap> tiles;
         private Dictionary<string, MyBitmap> tilesPaletteApplied;
 
+        private int width;
+        private const int DefaultWidth = 64;
+
+        // todo
+
         public LevelEditor()
         {
-            InitializeComponent();
-            UpdateToolBar(string.Empty);
+            InitializeComponent();            
+            this.width = DefaultWidth;
+            UpdateToolBar(null);
         }
 
         private void LevelEditorLoad(object sender, EventArgs e)
@@ -56,10 +62,21 @@ namespace SpriteHelper
 
         private void EditButtonClick(object sender, EventArgs e)
         {
-            // todo
+            var editLevelDialog = new EditLevelDialog(this.width);
+            editLevelDialog.FormClosed += (notUsed1, notUsed2) =>
+            {
+                switch (editLevelDialog.Result)
+                {
+                    case EditLevelDialogResult.WidthChange:
+                        this.width = editLevelDialog.LevelWidth;
+                        break;
+                }
+            };
+
+            editLevelDialog.ShowDialog();
         }
 
-        private void ViewButtonClick(object sender, EventArgs e)
+        private void ShowGridCheckboxCheckedChanged(object sender, EventArgs e)
         {
             // todo
         }
@@ -182,6 +199,6 @@ namespace SpriteHelper
             }
 
             return selectedListView.SelectedItems[0].Text;
-        }
+        }        
     }
 }
