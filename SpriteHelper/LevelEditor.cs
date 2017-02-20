@@ -29,11 +29,6 @@ namespace SpriteHelper
             this.PreLoad();
         }
 
-        private void SaveButtonClick(object sender, EventArgs e)
-        {
-            this.SaveLevel();
-        }
-
         private void LoadButtonClick(object sender, EventArgs e)
         {
             this.LoadLevel();
@@ -44,10 +39,14 @@ namespace SpriteHelper
             this.bgColorPanel.BackColor = this.GetBgColor();
         }
 
-        private void ApplyPaletteCheckboxCheckedChanged(object sender, EventArgs e)
+        private void SaveButtonClick(object sender, EventArgs e)
         {
             // todo
-            this.PopulateListView();
+        }
+
+        private void ExportButtonClick(object sender, EventArgs e)
+        {
+            // todo
         }
 
         private void ZoomPickerValueChanged(object sender, EventArgs e)
@@ -55,9 +54,20 @@ namespace SpriteHelper
             // todo
         }
 
-        private void SaveLevel()
+        private void EditButtonClick(object sender, EventArgs e)
         {
             // todo
+        }
+
+        private void ViewButtonClick(object sender, EventArgs e)
+        {
+            // todo
+        }
+
+        private void ApplyPaletteCheckboxCheckedChanged(object sender, EventArgs e)
+        {
+            // todo
+            this.PopulateListViews();
         }
 
         private void UpdateToolBar(string text)
@@ -118,7 +128,7 @@ namespace SpriteHelper
                 this.tilesPaletteApplied.Add(tile.Id, tileBitmapWithPaletteApplied);
             }
 
-            this.PopulateListView();
+            this.PopulateListViews();
         }
 
         private Color GetBgColor()
@@ -134,21 +144,34 @@ namespace SpriteHelper
             }
         }
 
-        private void PopulateListView()
+        private void PopulateListViews()
         {
             const int ListViewZoom = 2;
             var applyPalettes = this.applyPaletteCheckbox.Checked;
 
-            this.tileListView.Items.Clear();
-            this.tileListView.LargeImageList = new ImageList { ImageSize = new Size(Constants.BackgroundTileWidth * ListViewZoom, Constants.BackgroundTileHeight * ListViewZoom) };
-            var index = 0;
-            foreach (var kvp in applyPalettes ? this.tilesPaletteApplied : tiles)
+            Action<TileType, ListView> populateListView = (tileType, listView) =>
             {
-                var scaledImage = kvp.Value.Scale(ListViewZoom);
-                var bitmap = scaledImage.ToBitmap();
-                this.tileListView.LargeImageList.Images.Add(bitmap);
-                this.tileListView.Items.Add(new ListViewItem(kvp.Key, index++));
-            }
+                listView.Items.Clear();
+                listView.LargeImageList = new ImageList { ImageSize = new Size(Constants.BackgroundTileWidth * ListViewZoom, Constants.BackgroundTileHeight * ListViewZoom) };
+                var index = 0;
+                foreach (var kvp in applyPalettes ? this.tilesPaletteApplied : tiles)
+                {
+                    if (this.config.Tiles.First(t => t.Id == kvp.Key).Type != tileType)
+                    {
+                        continue;
+                    }
+
+                    var scaledImage = kvp.Value.Scale(ListViewZoom);
+                    var bitmap = scaledImage.ToBitmap();
+                    listView.LargeImageList.Images.Add(bitmap);
+                    listView.Items.Add(new ListViewItem(kvp.Key, index++));
+                }
+            };
+
+            populateListView(TileType.Blocking, this.listViewBlocking);
+            populateListView(TileType.NonBlocking, this.listViewNonBlocking);
+            populateListView(TileType.Threat, this.listViewThreat);
+
         }
     }
 }
