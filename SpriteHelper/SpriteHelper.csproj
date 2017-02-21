@@ -56,6 +56,9 @@
       <DependentUpon>BackgroundTilesetCreator.cs</DependentUpon>
     </Compile>
     <Compile Include="Defaults.cs" />
+    <Compile Include="DoubleBufferedPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="LoadLevelDialog.cs">
       <SubType>Form</SubType>
     </Compile>

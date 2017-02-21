@@ -36,7 +36,8 @@ namespace SpriteHelper
         private Stack<string[][]> history;
         private Stack<string[][]> future;
 
-        // The bitmap.
+        // Draw panel.
+        private DoubleBufferedPanel drawPanel;
         private Bitmap bitmap;
         private Graphics graphics;
 
@@ -50,6 +51,16 @@ namespace SpriteHelper
         {
             InitializeComponent();            
             UpdateStatus(null);
+
+            this.history = new Stack<string[][]>();
+            this.future = new Stack<string[][]>();
+
+            this.drawPanel = new DoubleBufferedPanel();
+            this.outerDrawPanel.Controls.Add(this.drawPanel);
+            this.drawPanel.Location = new Point(0, 0);
+            this.drawPanel.MouseClick += new MouseEventHandler(this.DrawPanelMouseClick);
+            this.drawPanel.MouseLeave += new EventHandler(this.DrawPanelMouseLeave);
+            this.drawPanel.MouseMove += new MouseEventHandler(this.DrawPanelMouseMove);
         }
 
         private void LevelEditorLoad(object sender, EventArgs e)
@@ -295,11 +306,7 @@ namespace SpriteHelper
 
         private void SetLevel(string[][] newLevel)
         {
-            if (this.level != null)
-            {
-                this.history.Push(this.level);
-            }
-
+            this.AddHistory();
             this.level = newLevel;
             this.UpdateBitmap();
         }
@@ -478,7 +485,20 @@ namespace SpriteHelper
 
         private void DrawPanelMouseClick(object sender, MouseEventArgs e)
         {
-            // todo: set tile
+            var tile = this.SelectedTile();
+            if (tile == null)
+            {
+                return;
+            }
+
+            var x = e.X / TileWidth;
+            var y = e.Y / TileWidth;
+
+            this.AddHistory();
+            this.level[x][y] = tile;
+            var image = this.tiles[tile][(int)this.Settings];
+            this.graphics.DrawImage(image, new Point(x * TileWidth, y * TileHeight));
+            this.UpdateBitmap();
         }
 
         private void DrawPanelMouseMove(object sender, MouseEventArgs e)
@@ -502,6 +522,22 @@ namespace SpriteHelper
             Grid = 2,
             Type = 4,
             All = 7
+        }
+
+        #endregion
+
+        #region History
+
+        ////
+        //// History stuff
+        ////
+
+        public void AddHistory()
+        {
+            if (this.level != null)
+            {
+                this.history.Push(this.level);
+            }
         }
 
         #endregion

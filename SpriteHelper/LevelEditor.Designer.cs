@@ -31,7 +31,6 @@
             this.splitContainerVertical = new System.Windows.Forms.SplitContainer();
             this.outerOuterDrawPanel = new System.Windows.Forms.Panel();
             this.outerDrawPanel = new System.Windows.Forms.Panel();
-            this.drawPanel = new System.Windows.Forms.Panel();
             this.scrollBar = new System.Windows.Forms.HScrollBar();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPageBlocking = new System.Windows.Forms.TabPage();
@@ -101,22 +100,11 @@
             // 
             // outerDrawPanel
             // 
-            this.outerDrawPanel.Controls.Add(this.drawPanel);
             this.outerDrawPanel.Cursor = System.Windows.Forms.Cursors.Cross;
             this.outerDrawPanel.Location = new System.Drawing.Point(49, 53);
             this.outerDrawPanel.Name = "outerDrawPanel";
             this.outerDrawPanel.Size = new System.Drawing.Size(200, 100);
             this.outerDrawPanel.TabIndex = 1;
-            // 
-            // drawPanel
-            // 
-            this.drawPanel.Location = new System.Drawing.Point(0, 0);
-            this.drawPanel.Name = "drawPanel";
-            this.drawPanel.Size = new System.Drawing.Size(100, 50);
-            this.drawPanel.TabIndex = 0;
-            this.drawPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.DrawPanelMouseClick);
-            this.drawPanel.MouseLeave += new System.EventHandler(this.DrawPanelMouseLeave);
-            this.drawPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.DrawPanelMouseMove);
             // 
             // scrollBar
             // 
@@ -398,7 +386,6 @@
         private System.Windows.Forms.ToolStripMenuItem applyPaletteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem advancedToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem undoToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem redoToolStripMenuItem;
-        private System.Windows.Forms.Panel drawPanel;
+        private System.Windows.Forms.ToolStripMenuItem redoToolStripMenuItem;        
     }
 }
