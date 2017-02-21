@@ -32,8 +32,6 @@
             this.outerDrawPanel = new System.Windows.Forms.Panel();
             this.drawPanel = new System.Windows.Forms.Panel();
             this.scrollBar = new System.Windows.Forms.HScrollBar();
-            this.showGridCheckbox = new System.Windows.Forms.CheckBox();
-            this.editButton = new System.Windows.Forms.Button();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPageBlocking = new System.Windows.Forms.TabPage();
             this.listViewBlocking = new System.Windows.Forms.ListView();
@@ -41,24 +39,22 @@
             this.listViewNonBlocking = new System.Windows.Forms.ListView();
             this.tabPageThreat = new System.Windows.Forms.TabPage();
             this.listViewThreat = new System.Windows.Forms.ListView();
-            this.showTypeCheckbox = new System.Windows.Forms.CheckBox();
-            this.exportButton = new System.Windows.Forms.Button();
-            this.levelLabel = new System.Windows.Forms.Label();
-            this.specTextBox = new System.Windows.Forms.TextBox();
-            this.applyPaletteCheckbox = new System.Windows.Forms.CheckBox();
-            this.specLabel = new System.Windows.Forms.Label();
-            this.zoomPicker = new System.Windows.Forms.NumericUpDown();
-            this.palettesTextBox = new System.Windows.Forms.TextBox();
-            this.zoomLabel = new System.Windows.Forms.Label();
-            this.palettesLabel = new System.Windows.Forms.Label();
-            this.bgColorPanel = new System.Windows.Forms.Panel();
-            this.levelTextBox = new System.Windows.Forms.TextBox();
-            this.bgColorLabel = new System.Windows.Forms.Label();
-            this.loadButton = new System.Windows.Forms.Button();
-            this.bgColorTextBox = new System.Windows.Forms.TextBox();
-            this.saveButton = new System.Windows.Forms.Button();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.menuStrip = new System.Windows.Forms.MenuStrip();
+            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.zoomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showGridToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.applyPaletteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.advancedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerVertical)).BeginInit();
             this.splitContainerVertical.Panel1.SuspendLayout();
             this.splitContainerVertical.Panel2.SuspendLayout();
@@ -68,7 +64,7 @@
             this.tabPageBlocking.SuspendLayout();
             this.tabPageNonBlocking.SuspendLayout();
             this.tabPageThreat.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.zoomPicker)).BeginInit();
+            this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -78,7 +74,7 @@
             this.splitContainerVertical.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainerVertical.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
             this.splitContainerVertical.IsSplitterFixed = true;
-            this.splitContainerVertical.Location = new System.Drawing.Point(0, 0);
+            this.splitContainerVertical.Location = new System.Drawing.Point(0, 24);
             this.splitContainerVertical.Name = "splitContainerVertical";
             // 
             // splitContainerVertical.Panel1
@@ -88,26 +84,8 @@
             // 
             // splitContainerVertical.Panel2
             // 
-            this.splitContainerVertical.Panel2.Controls.Add(this.showGridCheckbox);
-            this.splitContainerVertical.Panel2.Controls.Add(this.editButton);
             this.splitContainerVertical.Panel2.Controls.Add(this.tabControl);
-            this.splitContainerVertical.Panel2.Controls.Add(this.showTypeCheckbox);
-            this.splitContainerVertical.Panel2.Controls.Add(this.exportButton);
-            this.splitContainerVertical.Panel2.Controls.Add(this.levelLabel);
-            this.splitContainerVertical.Panel2.Controls.Add(this.specTextBox);
-            this.splitContainerVertical.Panel2.Controls.Add(this.applyPaletteCheckbox);
-            this.splitContainerVertical.Panel2.Controls.Add(this.specLabel);
-            this.splitContainerVertical.Panel2.Controls.Add(this.zoomPicker);
-            this.splitContainerVertical.Panel2.Controls.Add(this.palettesTextBox);
-            this.splitContainerVertical.Panel2.Controls.Add(this.zoomLabel);
-            this.splitContainerVertical.Panel2.Controls.Add(this.palettesLabel);
-            this.splitContainerVertical.Panel2.Controls.Add(this.bgColorPanel);
-            this.splitContainerVertical.Panel2.Controls.Add(this.levelTextBox);
-            this.splitContainerVertical.Panel2.Controls.Add(this.bgColorLabel);
-            this.splitContainerVertical.Panel2.Controls.Add(this.loadButton);
-            this.splitContainerVertical.Panel2.Controls.Add(this.bgColorTextBox);
-            this.splitContainerVertical.Panel2.Controls.Add(this.saveButton);
-            this.splitContainerVertical.Size = new System.Drawing.Size(1040, 519);
+            this.splitContainerVertical.Size = new System.Drawing.Size(1040, 495);
             this.splitContainerVertical.SplitterDistance = 536;
             this.splitContainerVertical.TabIndex = 999;
             // 
@@ -117,50 +95,25 @@
             this.outerDrawPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.outerDrawPanel.Location = new System.Drawing.Point(0, 0);
             this.outerDrawPanel.Name = "outerDrawPanel";
-            this.outerDrawPanel.Size = new System.Drawing.Size(534, 500);
+            this.outerDrawPanel.Size = new System.Drawing.Size(534, 476);
             this.outerDrawPanel.TabIndex = 2;
             // 
             // drawPanel
             // 
+            this.drawPanel.Cursor = System.Windows.Forms.Cursors.Cross;
             this.drawPanel.Location = new System.Drawing.Point(49, 53);
             this.drawPanel.Name = "drawPanel";
             this.drawPanel.Size = new System.Drawing.Size(200, 100);
             this.drawPanel.TabIndex = 1;
-            this.drawPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.DrawPanelMouseClick);
-            this.drawPanel.MouseLeave += new System.EventHandler(this.DrawPanelMouseLeave);
-            this.drawPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.DrawPanelMouseMove);
             // 
             // scrollBar
             // 
             this.scrollBar.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.scrollBar.LargeChange = 1;
-            this.scrollBar.Location = new System.Drawing.Point(0, 500);
+            this.scrollBar.Location = new System.Drawing.Point(0, 476);
             this.scrollBar.Name = "scrollBar";
             this.scrollBar.Size = new System.Drawing.Size(534, 17);
             this.scrollBar.TabIndex = 0;
-            // 
-            // showGridCheckbox
-            // 
-            this.showGridCheckbox.AutoSize = true;
-            this.showGridCheckbox.Checked = true;
-            this.showGridCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.showGridCheckbox.Location = new System.Drawing.Point(305, 113);
-            this.showGridCheckbox.Name = "showGridCheckbox";
-            this.showGridCheckbox.Size = new System.Drawing.Size(75, 17);
-            this.showGridCheckbox.TabIndex = 48;
-            this.showGridCheckbox.Text = "Show Grid";
-            this.showGridCheckbox.UseVisualStyleBackColor = true;
-            this.showGridCheckbox.CheckedChanged += new System.EventHandler(this.ShowGridCheckboxCheckedChanged);
-            // 
-            // editButton
-            // 
-            this.editButton.Location = new System.Drawing.Point(405, 109);
-            this.editButton.Name = "editButton";
-            this.editButton.Size = new System.Drawing.Size(80, 23);
-            this.editButton.TabIndex = 47;
-            this.editButton.Text = "Edit";
-            this.editButton.UseVisualStyleBackColor = true;
-            this.editButton.Click += new System.EventHandler(this.EditButtonClick);
             // 
             // tabControl
             // 
@@ -171,10 +124,10 @@
             this.tabControl.Controls.Add(this.tabPageBlocking);
             this.tabControl.Controls.Add(this.tabPageNonBlocking);
             this.tabControl.Controls.Add(this.tabPageThreat);
-            this.tabControl.Location = new System.Drawing.Point(19, 144);
+            this.tabControl.Location = new System.Drawing.Point(19, 20);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(464, 358);
+            this.tabControl.Size = new System.Drawing.Size(464, 458);
             this.tabControl.TabIndex = 46;
             // 
             // tabPageBlocking
@@ -183,7 +136,7 @@
             this.tabPageBlocking.Location = new System.Drawing.Point(4, 4);
             this.tabPageBlocking.Name = "tabPageBlocking";
             this.tabPageBlocking.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageBlocking.Size = new System.Drawing.Size(456, 332);
+            this.tabPageBlocking.Size = new System.Drawing.Size(456, 432);
             this.tabPageBlocking.TabIndex = 0;
             this.tabPageBlocking.Text = "Blocking";
             this.tabPageBlocking.UseVisualStyleBackColor = true;
@@ -194,7 +147,7 @@
             this.listViewBlocking.Location = new System.Drawing.Point(3, 3);
             this.listViewBlocking.MultiSelect = false;
             this.listViewBlocking.Name = "listViewBlocking";
-            this.listViewBlocking.Size = new System.Drawing.Size(450, 326);
+            this.listViewBlocking.Size = new System.Drawing.Size(450, 426);
             this.listViewBlocking.TabIndex = 48;
             this.listViewBlocking.TileSize = new System.Drawing.Size(30, 30);
             this.listViewBlocking.UseCompatibleStateImageBehavior = false;
@@ -206,7 +159,7 @@
             this.tabPageNonBlocking.Name = "tabPageNonBlocking";
             this.tabPageNonBlocking.Padding = new System.Windows.Forms.Padding(3);
             this.tabPageNonBlocking.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.tabPageNonBlocking.Size = new System.Drawing.Size(456, 332);
+            this.tabPageNonBlocking.Size = new System.Drawing.Size(456, 432);
             this.tabPageNonBlocking.TabIndex = 1;
             this.tabPageNonBlocking.Text = "Non-blocking";
             this.tabPageNonBlocking.UseVisualStyleBackColor = true;
@@ -217,7 +170,7 @@
             this.listViewNonBlocking.Location = new System.Drawing.Point(3, 3);
             this.listViewNonBlocking.MultiSelect = false;
             this.listViewNonBlocking.Name = "listViewNonBlocking";
-            this.listViewNonBlocking.Size = new System.Drawing.Size(450, 326);
+            this.listViewNonBlocking.Size = new System.Drawing.Size(450, 426);
             this.listViewNonBlocking.TabIndex = 49;
             this.listViewNonBlocking.TileSize = new System.Drawing.Size(30, 30);
             this.listViewNonBlocking.UseCompatibleStateImageBehavior = false;
@@ -227,7 +180,7 @@
             this.tabPageThreat.Controls.Add(this.listViewThreat);
             this.tabPageThreat.Location = new System.Drawing.Point(4, 4);
             this.tabPageThreat.Name = "tabPageThreat";
-            this.tabPageThreat.Size = new System.Drawing.Size(456, 332);
+            this.tabPageThreat.Size = new System.Drawing.Size(456, 432);
             this.tabPageThreat.TabIndex = 2;
             this.tabPageThreat.Text = "Threat";
             this.tabPageThreat.UseVisualStyleBackColor = true;
@@ -238,169 +191,10 @@
             this.listViewThreat.Location = new System.Drawing.Point(0, 0);
             this.listViewThreat.MultiSelect = false;
             this.listViewThreat.Name = "listViewThreat";
-            this.listViewThreat.Size = new System.Drawing.Size(456, 332);
+            this.listViewThreat.Size = new System.Drawing.Size(456, 432);
             this.listViewThreat.TabIndex = 50;
             this.listViewThreat.TileSize = new System.Drawing.Size(30, 30);
             this.listViewThreat.UseCompatibleStateImageBehavior = false;
-            // 
-            // showTypeCheckbox
-            // 
-            this.showTypeCheckbox.AutoSize = true;
-            this.showTypeCheckbox.Checked = true;
-            this.showTypeCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.showTypeCheckbox.Location = new System.Drawing.Point(125, 113);
-            this.showTypeCheckbox.Name = "showTypeCheckbox";
-            this.showTypeCheckbox.Size = new System.Drawing.Size(80, 17);
-            this.showTypeCheckbox.TabIndex = 45;
-            this.showTypeCheckbox.Text = "Show Type";
-            this.showTypeCheckbox.UseVisualStyleBackColor = true;
-            // 
-            // exportButton
-            // 
-            this.exportButton.Location = new System.Drawing.Point(405, 84);
-            this.exportButton.Name = "exportButton";
-            this.exportButton.Size = new System.Drawing.Size(80, 23);
-            this.exportButton.TabIndex = 44;
-            this.exportButton.Text = "Export";
-            this.exportButton.UseVisualStyleBackColor = true;
-            this.exportButton.Click += new System.EventHandler(this.ExportButtonClick);
-            // 
-            // levelLabel
-            // 
-            this.levelLabel.AutoSize = true;
-            this.levelLabel.Location = new System.Drawing.Point(16, 11);
-            this.levelLabel.Name = "levelLabel";
-            this.levelLabel.Size = new System.Drawing.Size(33, 13);
-            this.levelLabel.TabIndex = 35;
-            this.levelLabel.Text = "Level";
-            // 
-            // specTextBox
-            // 
-            this.specTextBox.Location = new System.Drawing.Point(71, 34);
-            this.specTextBox.Name = "specTextBox";
-            this.specTextBox.Size = new System.Drawing.Size(414, 20);
-            this.specTextBox.TabIndex = 30;
-            // 
-            // applyPaletteCheckbox
-            // 
-            this.applyPaletteCheckbox.AutoSize = true;
-            this.applyPaletteCheckbox.Checked = true;
-            this.applyPaletteCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.applyPaletteCheckbox.Location = new System.Drawing.Point(211, 113);
-            this.applyPaletteCheckbox.Name = "applyPaletteCheckbox";
-            this.applyPaletteCheckbox.Size = new System.Drawing.Size(88, 17);
-            this.applyPaletteCheckbox.TabIndex = 43;
-            this.applyPaletteCheckbox.Text = "Apply Palette";
-            this.applyPaletteCheckbox.UseVisualStyleBackColor = true;
-            this.applyPaletteCheckbox.CheckedChanged += new System.EventHandler(this.ApplyPaletteCheckboxCheckedChanged);
-            // 
-            // specLabel
-            // 
-            this.specLabel.AutoSize = true;
-            this.specLabel.Location = new System.Drawing.Point(16, 37);
-            this.specLabel.Name = "specLabel";
-            this.specLabel.Size = new System.Drawing.Size(32, 13);
-            this.specLabel.TabIndex = 31;
-            this.specLabel.Text = "Spec";
-            // 
-            // zoomPicker
-            // 
-            this.zoomPicker.Location = new System.Drawing.Point(71, 112);
-            this.zoomPicker.Maximum = new decimal(new int[] {
-            2,
-            0,
-            0,
-            0});
-            this.zoomPicker.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.zoomPicker.Name = "zoomPicker";
-            this.zoomPicker.Size = new System.Drawing.Size(46, 20);
-            this.zoomPicker.TabIndex = 42;
-            this.zoomPicker.Value = new decimal(new int[] {
-            2,
-            0,
-            0,
-            0});
-            this.zoomPicker.ValueChanged += new System.EventHandler(this.ZoomPickerValueChanged);
-            // 
-            // palettesTextBox
-            // 
-            this.palettesTextBox.Location = new System.Drawing.Point(71, 60);
-            this.palettesTextBox.Name = "palettesTextBox";
-            this.palettesTextBox.Size = new System.Drawing.Size(414, 20);
-            this.palettesTextBox.TabIndex = 32;
-            // 
-            // zoomLabel
-            // 
-            this.zoomLabel.AutoSize = true;
-            this.zoomLabel.Location = new System.Drawing.Point(16, 116);
-            this.zoomLabel.Name = "zoomLabel";
-            this.zoomLabel.Size = new System.Drawing.Size(34, 13);
-            this.zoomLabel.TabIndex = 41;
-            this.zoomLabel.Text = "Zoom";
-            // 
-            // palettesLabel
-            // 
-            this.palettesLabel.AutoSize = true;
-            this.palettesLabel.Location = new System.Drawing.Point(16, 63);
-            this.palettesLabel.Name = "palettesLabel";
-            this.palettesLabel.Size = new System.Drawing.Size(45, 13);
-            this.palettesLabel.TabIndex = 33;
-            this.palettesLabel.Text = "Palettes";
-            // 
-            // bgColorPanel
-            // 
-            this.bgColorPanel.Location = new System.Drawing.Point(155, 86);
-            this.bgColorPanel.Name = "bgColorPanel";
-            this.bgColorPanel.Size = new System.Drawing.Size(20, 20);
-            this.bgColorPanel.TabIndex = 40;
-            // 
-            // levelTextBox
-            // 
-            this.levelTextBox.Location = new System.Drawing.Point(71, 8);
-            this.levelTextBox.Name = "levelTextBox";
-            this.levelTextBox.Size = new System.Drawing.Size(414, 20);
-            this.levelTextBox.TabIndex = 34;
-            // 
-            // bgColorLabel
-            // 
-            this.bgColorLabel.AutoSize = true;
-            this.bgColorLabel.Location = new System.Drawing.Point(16, 89);
-            this.bgColorLabel.Name = "bgColorLabel";
-            this.bgColorLabel.Size = new System.Drawing.Size(49, 13);
-            this.bgColorLabel.TabIndex = 39;
-            this.bgColorLabel.Text = "BG Color";
-            // 
-            // loadButton
-            // 
-            this.loadButton.Location = new System.Drawing.Point(319, 84);
-            this.loadButton.Name = "loadButton";
-            this.loadButton.Size = new System.Drawing.Size(80, 23);
-            this.loadButton.TabIndex = 36;
-            this.loadButton.Text = "Load";
-            this.loadButton.UseVisualStyleBackColor = true;
-            this.loadButton.Click += new System.EventHandler(this.LoadButtonClick);
-            // 
-            // bgColorTextBox
-            // 
-            this.bgColorTextBox.Location = new System.Drawing.Point(71, 86);
-            this.bgColorTextBox.Name = "bgColorTextBox";
-            this.bgColorTextBox.Size = new System.Drawing.Size(78, 20);
-            this.bgColorTextBox.TabIndex = 38;
-            this.bgColorTextBox.TextChanged += new System.EventHandler(this.BgColorTextBoxTextChanged);
-            // 
-            // saveButton
-            // 
-            this.saveButton.Location = new System.Drawing.Point(233, 84);
-            this.saveButton.Name = "saveButton";
-            this.saveButton.Size = new System.Drawing.Size(80, 23);
-            this.saveButton.TabIndex = 37;
-            this.saveButton.Text = "Save Level";
-            this.saveButton.UseVisualStyleBackColor = true;
-            this.saveButton.Click += new System.EventHandler(this.SaveButtonClick);
             // 
             // statusStrip
             // 
@@ -418,6 +212,127 @@
             this.toolStripStatusLabel.Size = new System.Drawing.Size(112, 17);
             this.toolStripStatusLabel.Text = "toolStripStatusLabel";
             // 
+            // menuStrip
+            // 
+            this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem,
+            this.editToolStripMenuItem,
+            this.viewToolStripMenuItem});
+            this.menuStrip.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip.Name = "menuStrip";
+            this.menuStrip.Size = new System.Drawing.Size(1040, 24);
+            this.menuStrip.TabIndex = 2;
+            this.menuStrip.Text = "menuStrip";
+            // 
+            // fileToolStripMenuItem
+            // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openToolStripMenuItem,
+            this.saveToolStripMenuItem,
+            this.exportToolStripMenuItem});
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Text = "&File";
+            // 
+            // openToolStripMenuItem
+            // 
+            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.openToolStripMenuItem.Text = "&Open";
+            this.openToolStripMenuItem.Click += new System.EventHandler(this.OpenToolStripMenuItemClick);
+            // 
+            // saveToolStripMenuItem
+            // 
+            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.saveToolStripMenuItem.Text = "&Save";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.SaveToolStripMenuItemClick);
+            // 
+            // exportToolStripMenuItem
+            // 
+            this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.exportToolStripMenuItem.Text = "&Export";
+            this.exportToolStripMenuItem.Click += new System.EventHandler(this.ExportToolStripMenuItemClick);
+            // 
+            // editToolStripMenuItem
+            // 
+            this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.advancedToolStripMenuItem,
+            this.undoToolStripMenuItem,
+            this.redoToolStripMenuItem});
+            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
+            this.editToolStripMenuItem.Text = "&Edit";
+            // 
+            // viewToolStripMenuItem
+            // 
+            this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.zoomToolStripMenuItem,
+            this.showTypeToolStripMenuItem,
+            this.showGridToolStripMenuItem,
+            this.applyPaletteToolStripMenuItem});
+            this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
+            this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.viewToolStripMenuItem.Text = "&View";
+            // 
+            // zoomToolStripMenuItem
+            // 
+            this.zoomToolStripMenuItem.Checked = true;
+            this.zoomToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.zoomToolStripMenuItem.Name = "zoomToolStripMenuItem";
+            this.zoomToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.zoomToolStripMenuItem.Text = "&Zoom";
+            // 
+            // showTypeToolStripMenuItem
+            // 
+            this.showTypeToolStripMenuItem.CheckOnClick = true;
+            this.showTypeToolStripMenuItem.Name = "showTypeToolStripMenuItem";
+            this.showTypeToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.showTypeToolStripMenuItem.Text = "Show &Type";
+            this.showTypeToolStripMenuItem.Click += new System.EventHandler(this.ShowTypeToolStripMenuItemClick);
+            // 
+            // showGridToolStripMenuItem
+            // 
+            this.showGridToolStripMenuItem.Checked = true;
+            this.showGridToolStripMenuItem.CheckOnClick = true;
+            this.showGridToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.showGridToolStripMenuItem.Name = "showGridToolStripMenuItem";
+            this.showGridToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.showGridToolStripMenuItem.Text = "Show &Grid";
+            this.showGridToolStripMenuItem.Click += new System.EventHandler(this.ShowGridToolStripMenuItemClick);
+            // 
+            // applyPaletteToolStripMenuItem
+            // 
+            this.applyPaletteToolStripMenuItem.Checked = true;
+            this.applyPaletteToolStripMenuItem.CheckOnClick = true;
+            this.applyPaletteToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.applyPaletteToolStripMenuItem.Name = "applyPaletteToolStripMenuItem";
+            this.applyPaletteToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.applyPaletteToolStripMenuItem.Text = "Apply &Palette";
+            this.applyPaletteToolStripMenuItem.Click += new System.EventHandler(this.ApplyPaletteToolStripMenuItemClick);
+            // 
+            // advancedToolStripMenuItem
+            // 
+            this.advancedToolStripMenuItem.Name = "advancedToolStripMenuItem";
+            this.advancedToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.advancedToolStripMenuItem.Text = "&Advanced";
+            this.advancedToolStripMenuItem.Click += new System.EventHandler(this.AdvancedToolStripMenuItemClick);
+            // 
+            // undoToolStripMenuItem
+            // 
+            this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
+            this.undoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.undoToolStripMenuItem.Text = "&Undo";
+            this.undoToolStripMenuItem.Click += new System.EventHandler(this.UndoToolStripMenuItemClick);
+            // 
+            // redoToolStripMenuItem
+            // 
+            this.redoToolStripMenuItem.Name = "redoToolStripMenuItem";
+            this.redoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.redoToolStripMenuItem.Text = "&Redo";
+            this.redoToolStripMenuItem.Click += new System.EventHandler(this.RedoToolStripMenuItemClick);
+            // 
             // LevelEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -425,6 +340,8 @@
             this.ClientSize = new System.Drawing.Size(1040, 541);
             this.Controls.Add(this.splitContainerVertical);
             this.Controls.Add(this.statusStrip);
+            this.Controls.Add(this.menuStrip);
+            this.MainMenuStrip = this.menuStrip;
             this.MinimumSize = new System.Drawing.Size(16, 580);
             this.Name = "LevelEditor";
             this.Text = "Level editor";
@@ -433,7 +350,6 @@
             this.Resize += new System.EventHandler(this.LevelEditorResize);
             this.splitContainerVertical.Panel1.ResumeLayout(false);
             this.splitContainerVertical.Panel2.ResumeLayout(false);
-            this.splitContainerVertical.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerVertical)).EndInit();
             this.splitContainerVertical.ResumeLayout(false);
             this.outerDrawPanel.ResumeLayout(false);
@@ -441,9 +357,10 @@
             this.tabPageBlocking.ResumeLayout(false);
             this.tabPageNonBlocking.ResumeLayout(false);
             this.tabPageThreat.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.zoomPicker)).EndInit();
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
+            this.menuStrip.ResumeLayout(false);
+            this.menuStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -454,33 +371,29 @@
         private System.Windows.Forms.SplitContainer splitContainerVertical;
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
-        private System.Windows.Forms.Label levelLabel;
-        private System.Windows.Forms.TextBox specTextBox;
-        private System.Windows.Forms.CheckBox applyPaletteCheckbox;
-        private System.Windows.Forms.Label specLabel;
-        private System.Windows.Forms.NumericUpDown zoomPicker;
-        private System.Windows.Forms.TextBox palettesTextBox;
-        private System.Windows.Forms.Label zoomLabel;
-        private System.Windows.Forms.Label palettesLabel;
-        private System.Windows.Forms.Panel bgColorPanel;
-        private System.Windows.Forms.TextBox levelTextBox;
-        private System.Windows.Forms.Label bgColorLabel;
-        private System.Windows.Forms.Button loadButton;
-        private System.Windows.Forms.TextBox bgColorTextBox;
-        private System.Windows.Forms.Button saveButton;
-        private System.Windows.Forms.Button exportButton;
-        private System.Windows.Forms.CheckBox showTypeCheckbox;
         private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage tabPageBlocking;
         private System.Windows.Forms.TabPage tabPageNonBlocking;
         private System.Windows.Forms.TabPage tabPageThreat;
-        private System.Windows.Forms.Button editButton;
         private System.Windows.Forms.ListView listViewThreat;
         private System.Windows.Forms.ListView listViewBlocking;
         private System.Windows.Forms.ListView listViewNonBlocking;
-        private System.Windows.Forms.CheckBox showGridCheckbox;
         private System.Windows.Forms.Panel drawPanel;
         private System.Windows.Forms.HScrollBar scrollBar;
         private System.Windows.Forms.Panel outerDrawPanel;
+        private System.Windows.Forms.MenuStrip menuStrip;
+        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem zoomToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem showTypeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem showGridToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem applyPaletteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem advancedToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem undoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem redoToolStripMenuItem;
     }
 }

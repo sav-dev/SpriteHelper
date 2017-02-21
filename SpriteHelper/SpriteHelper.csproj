@@ -56,6 +56,12 @@
       <DependentUpon>BackgroundTilesetCreator.cs</DependentUpon>
     </Compile>
     <Compile Include="Defaults.cs" />
+    <Compile Include="LoadLevelDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LoadLevelDialog.Designer.cs">
+      <DependentUpon>LoadLevelDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="EditLevelDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -86,6 +92,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AnimationHelper.resx">
       <DependentUpon>AnimationHelper.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LoadLevelDialog.resx">
+      <DependentUpon>LoadLevelDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EditLevelDialog.resx">
       <DependentUpon>EditLevelDialog.cs</DependentUpon>

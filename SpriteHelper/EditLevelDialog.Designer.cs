@@ -108,7 +108,7 @@
             this.Controls.Add(this.okButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "EditLevelDialog";
-            this.Text = "EditLevelDialog";
+            this.Text = "Edit Level";
             this.widthPanel.ResumeLayout(false);
             this.widthPanel.PerformLayout();
             this.ResumeLayout(false);
