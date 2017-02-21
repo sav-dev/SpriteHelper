@@ -498,7 +498,7 @@ namespace SpriteHelper
             this.level[x][y] = tile;
             var image = this.tiles[tile][(int)this.Settings];
             this.graphics.DrawImage(image, new Point(x * TileWidth, y * TileHeight));
-            this.UpdateBitmap();
+            this.drawPanel.Refresh();
         }
 
         private void DrawPanelMouseMove(object sender, MouseEventArgs e)
