@@ -32,15 +32,16 @@ namespace SpriteHelper
         // Empty tile for the level.
         private string emptyTile;
 
-        // Current scroll value.
-        private int scroll;
-
         // Current level.
         private string[][] level;
 
         // History/future (for undo-redo).
         private Stack<string[][]> history;
         private Stack<string[][]> future;
+
+        // The bitmap.
+        private Bitmap bitmap;
+        private Graphics graphics;
 
         #region FormRelated
 
@@ -51,7 +52,7 @@ namespace SpriteHelper
         public LevelEditor()
         {
             InitializeComponent();            
-            UpdateToolBar(null);
+            UpdateStatus(null);
         }
 
         private void LevelEditorLoad(object sender, EventArgs e)
@@ -70,9 +71,14 @@ namespace SpriteHelper
             this.LoadLevel(Defaults.Instance.Level, Defaults.Instance.BackgroundSpec, Defaults.Instance.PalettesSpec);
         }
 
-        private void UpdateToolBar(string text)
+        private void UpdateStatus(string text)
         {
             this.toolStripStatusLabel.Text = text;
+        }
+
+        private void UpdateStatus(string format, params object[] args)
+        {
+            this.toolStripStatusLabel.Text = string.Format(format, args);
         }
 
         #endregion
@@ -136,28 +142,27 @@ namespace SpriteHelper
             // empty tile should always be 1st
             this.emptyTile = this.config.Tiles[0].Id;
 
+            string[][] newLevel;
             if (File.Exists(level))
             {
                 // todo load level
+                newLevel = null;
             }
             else
             {
                 var widthInTiles = DefaultWidthInTiles;
-                this.scroll = 0;
-                this.level = new string[widthInTiles][];
+                newLevel = new string[widthInTiles][];
                 for (var i = 0; i < widthInTiles; i++)
                 {
-                    this.level[i] = new string[HeightInTiles];
+                    newLevel[i] = new string[HeightInTiles];
                     for (var j = 0; j < HeightInTiles; j++)
                     {
-                        this.level[i][j] = this.emptyTile;
+                        newLevel[i][j] = this.emptyTile;
                     }
                 }
             }
 
-            this.scroll = 0;
-
-            this.UpdateDrawPanel();
+            this.SetLevel(newLevel);            
         }
 
         #endregion
@@ -218,8 +223,8 @@ namespace SpriteHelper
             ////
 
             var widthInTiles = this.level != null ? this.level.Length : 0;
-            this.drawPanel.Visible = widthInTiles > 0;
-            if (!this.drawPanel.Visible)
+            this.outerDrawPanel.Visible = widthInTiles > 0;
+            if (!this.outerDrawPanel.Visible)
             {
                 this.scrollBar.Minimum = 0;
                 this.scrollBar.Maximum = 0;
@@ -228,32 +233,82 @@ namespace SpriteHelper
             }
 
             ////
-            //// Position, size
+            //// Position of the outer panels.
             ////
 
-            var outerPanelWidth = this.outerDrawPanel.Width;
-            var outerPanelWidthInTiles = outerPanelWidth / TileWidth;
-            var panelWidthInTiles = (int)Math.Min(outerPanelWidthInTiles, widthInTiles);
-            var panelWidth = panelWidthInTiles * TileWidth;
-            var horizontalPadding = (outerPanelWidth - panelWidth) / 2;            
+            var outerOuterPanelWidth = this.outerOuterDrawPanel.Width;
+            var outerOuterPanelWidthInTiles = outerOuterPanelWidth / TileWidth;
+            var outerPanelWidthInTiles = (int)Math.Min(outerOuterPanelWidthInTiles, widthInTiles);
+            var outerPanelWidth = outerPanelWidthInTiles * TileWidth;
+            var horizontalPadding = (outerOuterPanelWidth - outerPanelWidth) / 2;            
         
-            var outerPanelHeight = this.outerDrawPanel.Height;
-            var panelHeightInTiles = HeightInTiles;
-            var panelHeight = panelHeightInTiles * TileHeight;
-            var verticalPadding = (outerPanelHeight - panelHeight) / 2;
+            var outerOuterPanelHeight = this.outerOuterDrawPanel.Height;
+            var outerPanelHeightInTiles = HeightInTiles;
+            var outerPanelHeight = outerPanelHeightInTiles * TileHeight;
+            var verticalPadding = (outerOuterPanelHeight - outerPanelHeight) / 2;
 
-            this.drawPanel.Size = new Size(panelWidth, panelHeight);
-            this.drawPanel.Location = new Point(horizontalPadding, verticalPadding);
+            this.outerDrawPanel.Size = new Size(outerPanelWidth, outerPanelHeight);
+            this.outerDrawPanel.Location = new Point(horizontalPadding, verticalPadding);
 
             ////
             //// Scroll bar
             ////
 
-            this.scrollBar.Enabled = panelWidthInTiles < widthInTiles;
+            var currentScroll = this.scrollBar.Value;
+            this.scrollBar.Enabled = outerPanelWidthInTiles < widthInTiles;
             this.scrollBar.Minimum = 0;
-            this.scrollBar.Maximum = widthInTiles - panelWidthInTiles;
-            this.scroll = (int)Math.Min(this.scroll, this.scrollBar.Maximum);
-            this.scrollBar.Value = this.scroll;
+            this.scrollBar.Maximum = widthInTiles - outerPanelWidthInTiles;
+            this.scrollBar.Value = (int)Math.Min(currentScroll, this.scrollBar.Maximum); ;
+
+            ////
+            //// Draw panel.
+            ////
+
+            this.drawPanel.Size = this.bitmap.Size;
+            this.drawPanel.BackgroundImage = this.bitmap;
+            this.UpdateScroll();
+        }
+
+        private void SetLevel(string[][] newLevel)
+        {
+            if (this.level != null)
+            {
+                this.history.Push(this.level);
+            }
+
+            this.level = newLevel;
+            this.UpdateBitmap();
+        }
+
+        private void UpdateBitmap()
+        {
+            this.bitmap = new Bitmap(this.level.Length * TileWidth, this.level[0].Length * TileHeight);
+            this.graphics = Graphics.FromImage(this.bitmap);
+
+            for (var x = 0; x < this.level.Length; x++)
+            {
+                for (var y = 0; y < this.level[x].Length; y++)
+                {
+                    var key = this.level[x][y];
+                    var image = this.ApplyPalettes ? 
+                        (this.ShowGrid ? this.tilesGridPaletteApplied[key] : this.tilesPaletteApplied[key]) : 
+                        (this.ShowGrid ? this.tilesGrid[key] : this.tiles[key]);
+
+                    this.graphics.DrawImage(image, new Point(x * TileWidth, y * TileHeight));
+                }
+            }
+
+            this.UpdateDrawPanel();
+        }
+
+        private void ScrollBarScroll(object sender, ScrollEventArgs e)
+        {
+            this.UpdateScroll();
+        }
+
+        private void UpdateScroll()
+        {
+            this.drawPanel.Location = new Point(-this.scrollBar.Value * TileWidth, this.drawPanel.Location.Y);
         }
 
         #endregion
@@ -271,13 +326,14 @@ namespace SpriteHelper
 
         private void ShowGridToolStripMenuItemClick(object sender, EventArgs e)
         {
-            // todo: show grid
+            this.UpdateBitmap();
+
         }
 
         private void ApplyPaletteToolStripMenuItemClick(object sender, EventArgs e)
         {
             this.PopulateListViews();
-            // todo: apply palette to draw panel
+            this.UpdateBitmap();
         }
 
         private void ZoomMenuItemClick(object sender, EventArgs e)
@@ -365,6 +421,30 @@ namespace SpriteHelper
             {
                 return this.showTypeToolStripMenuItem.Checked;
             }
+        }
+
+        #endregion
+
+        #region MouseEvents
+
+        ////
+        //// Draw panel mouse events
+        ////
+
+
+        private void DrawPanelMouseLeave(object sender, EventArgs e)
+        {
+            this.UpdateStatus(null);
+        }
+
+        private void DrawPanelMouseClick(object sender, MouseEventArgs e)
+        {
+            // todo
+        }
+
+        private void DrawPanelMouseMove(object sender, MouseEventArgs e)
+        {
+            this.UpdateStatus("{0} / {1}", e.X / TileWidth, e.Y / TileHeight);
         }
 
         #endregion

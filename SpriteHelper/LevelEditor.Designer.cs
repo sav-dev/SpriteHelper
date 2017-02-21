@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.splitContainerVertical = new System.Windows.Forms.SplitContainer();
+            this.outerOuterDrawPanel = new System.Windows.Forms.Panel();
             this.outerDrawPanel = new System.Windows.Forms.Panel();
             this.drawPanel = new System.Windows.Forms.Panel();
             this.scrollBar = new System.Windows.Forms.HScrollBar();
@@ -58,6 +59,7 @@
             this.splitContainerVertical.Panel1.SuspendLayout();
             this.splitContainerVertical.Panel2.SuspendLayout();
             this.splitContainerVertical.SuspendLayout();
+            this.outerOuterDrawPanel.SuspendLayout();
             this.outerDrawPanel.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.tabPageBlocking.SuspendLayout();
@@ -78,7 +80,7 @@
             // 
             // splitContainerVertical.Panel1
             // 
-            this.splitContainerVertical.Panel1.Controls.Add(this.outerDrawPanel);
+            this.splitContainerVertical.Panel1.Controls.Add(this.outerOuterDrawPanel);
             this.splitContainerVertical.Panel1.Controls.Add(this.scrollBar);
             // 
             // splitContainerVertical.Panel2
@@ -88,22 +90,33 @@
             this.splitContainerVertical.SplitterDistance = 570;
             this.splitContainerVertical.TabIndex = 999;
             // 
+            // outerOuterDrawPanel
+            // 
+            this.outerOuterDrawPanel.Controls.Add(this.outerDrawPanel);
+            this.outerOuterDrawPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.outerOuterDrawPanel.Location = new System.Drawing.Point(0, 0);
+            this.outerOuterDrawPanel.Name = "outerOuterDrawPanel";
+            this.outerOuterDrawPanel.Size = new System.Drawing.Size(568, 476);
+            this.outerOuterDrawPanel.TabIndex = 2;
+            // 
             // outerDrawPanel
             // 
             this.outerDrawPanel.Controls.Add(this.drawPanel);
-            this.outerDrawPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.outerDrawPanel.Location = new System.Drawing.Point(0, 0);
+            this.outerDrawPanel.Cursor = System.Windows.Forms.Cursors.Cross;
+            this.outerDrawPanel.Location = new System.Drawing.Point(49, 53);
             this.outerDrawPanel.Name = "outerDrawPanel";
-            this.outerDrawPanel.Size = new System.Drawing.Size(568, 476);
-            this.outerDrawPanel.TabIndex = 2;
+            this.outerDrawPanel.Size = new System.Drawing.Size(200, 100);
+            this.outerDrawPanel.TabIndex = 1;
             // 
             // drawPanel
             // 
-            this.drawPanel.Cursor = System.Windows.Forms.Cursors.Cross;
-            this.drawPanel.Location = new System.Drawing.Point(49, 53);
+            this.drawPanel.Location = new System.Drawing.Point(0, 0);
             this.drawPanel.Name = "drawPanel";
-            this.drawPanel.Size = new System.Drawing.Size(200, 100);
-            this.drawPanel.TabIndex = 1;
+            this.drawPanel.Size = new System.Drawing.Size(100, 50);
+            this.drawPanel.TabIndex = 0;
+            this.drawPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.DrawPanelMouseClick);
+            this.drawPanel.MouseLeave += new System.EventHandler(this.DrawPanelMouseLeave);
+            this.drawPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.DrawPanelMouseMove);
             // 
             // scrollBar
             // 
@@ -113,6 +126,7 @@
             this.scrollBar.Name = "scrollBar";
             this.scrollBar.Size = new System.Drawing.Size(568, 17);
             this.scrollBar.TabIndex = 0;
+            this.scrollBar.Scroll += new System.Windows.Forms.ScrollEventHandler(this.ScrollBarScroll);
             // 
             // tabControl
             // 
@@ -299,7 +313,7 @@
             // 
             this.showTypeToolStripMenuItem.CheckOnClick = true;
             this.showTypeToolStripMenuItem.Name = "showTypeToolStripMenuItem";
-            this.showTypeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.showTypeToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.showTypeToolStripMenuItem.Text = "Show &Type";
             this.showTypeToolStripMenuItem.Click += new System.EventHandler(this.ShowTypeToolStripMenuItemClick);
             // 
@@ -309,7 +323,7 @@
             this.showGridToolStripMenuItem.CheckOnClick = true;
             this.showGridToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.showGridToolStripMenuItem.Name = "showGridToolStripMenuItem";
-            this.showGridToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.showGridToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.showGridToolStripMenuItem.Text = "Show &Grid";
             this.showGridToolStripMenuItem.Click += new System.EventHandler(this.ShowGridToolStripMenuItemClick);
             // 
@@ -319,7 +333,7 @@
             this.applyPaletteToolStripMenuItem.CheckOnClick = true;
             this.applyPaletteToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.applyPaletteToolStripMenuItem.Name = "applyPaletteToolStripMenuItem";
-            this.applyPaletteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.applyPaletteToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.applyPaletteToolStripMenuItem.Text = "Apply &Palette";
             this.applyPaletteToolStripMenuItem.Click += new System.EventHandler(this.ApplyPaletteToolStripMenuItemClick);
             // 
@@ -342,6 +356,7 @@
             this.splitContainerVertical.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerVertical)).EndInit();
             this.splitContainerVertical.ResumeLayout(false);
+            this.outerOuterDrawPanel.ResumeLayout(false);
             this.outerDrawPanel.ResumeLayout(false);
             this.tabControl.ResumeLayout(false);
             this.tabPageBlocking.ResumeLayout(false);
@@ -368,9 +383,9 @@
         private System.Windows.Forms.ListView listViewThreat;
         private System.Windows.Forms.ListView listViewBlocking;
         private System.Windows.Forms.ListView listViewNonBlocking;
-        private System.Windows.Forms.Panel drawPanel;
-        private System.Windows.Forms.HScrollBar scrollBar;
         private System.Windows.Forms.Panel outerDrawPanel;
+        private System.Windows.Forms.HScrollBar scrollBar;
+        private System.Windows.Forms.Panel outerOuterDrawPanel;
         private System.Windows.Forms.MenuStrip menuStrip;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
@@ -384,5 +399,6 @@
         private System.Windows.Forms.ToolStripMenuItem advancedToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem undoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem redoToolStripMenuItem;
+        private System.Windows.Forms.Panel drawPanel;
     }
 }
