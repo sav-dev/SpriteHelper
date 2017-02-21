@@ -232,5 +232,21 @@ namespace SpriteHelper
 
             return string.Format("Bitmap {0} x {1}", this.width, this.height);
         }
+
+        public bool IsSolidColor(Color color)
+        {
+            for (var x = 0; x < this.width; x++)
+            {
+                for (var y = 0; y < this.height; y++)
+                {
+                    if (this.pixels[x][y] != color)
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
     }
 }

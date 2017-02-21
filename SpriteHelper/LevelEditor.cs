@@ -158,7 +158,7 @@ namespace SpriteHelper
 
             this.PopulateListViews();
 
-            // empty tile should always be 1st
+            // empty tile should always be the 1st one
             this.emptyTile = this.config.Tiles[0].Id;
 
             string[][] newLevel;

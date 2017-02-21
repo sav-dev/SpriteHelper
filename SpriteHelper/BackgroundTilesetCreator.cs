@@ -95,8 +95,8 @@ namespace SpriteHelper
                                     BackgroundFileId = config.BackgroundFiles.First(bf => bf.FileName == bitmap.FileName).Id,
                                     HeightSprites = Constants.BackgroundTileHeight / Constants.SpriteHeight,
                                     WidthInSprites = Constants.BackgroundTileWidth / Constants.SpriteWidth,
-                                    PaletteMappingId = paletteId,                                    
-                                    Type = tileType,
+                                    PaletteMappingId = paletteId,
+                                    Type = newTile.IsSolidColor(this.GetBgColor()) ? TileType.NonBlocking : tileType, // all bg color is always non-blocking
                                     X = x,
                                     Y = y
                                 };
