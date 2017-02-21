@@ -54,7 +54,6 @@
             this.showTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showGridToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.applyPaletteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.zoomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerVertical)).BeginInit();
             this.splitContainerVertical.Panel1.SuspendLayout();
             this.splitContainerVertical.Panel2.SuspendLayout();
@@ -159,7 +158,7 @@
             this.tabPageNonBlocking.Name = "tabPageNonBlocking";
             this.tabPageNonBlocking.Padding = new System.Windows.Forms.Padding(3);
             this.tabPageNonBlocking.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.tabPageNonBlocking.Size = new System.Drawing.Size(453, 432);
+            this.tabPageNonBlocking.Size = new System.Drawing.Size(422, 432);
             this.tabPageNonBlocking.TabIndex = 1;
             this.tabPageNonBlocking.Text = "Non-blocking";
             this.tabPageNonBlocking.UseVisualStyleBackColor = true;
@@ -170,7 +169,7 @@
             this.listViewNonBlocking.Location = new System.Drawing.Point(3, 3);
             this.listViewNonBlocking.MultiSelect = false;
             this.listViewNonBlocking.Name = "listViewNonBlocking";
-            this.listViewNonBlocking.Size = new System.Drawing.Size(447, 426);
+            this.listViewNonBlocking.Size = new System.Drawing.Size(416, 426);
             this.listViewNonBlocking.TabIndex = 49;
             this.listViewNonBlocking.TileSize = new System.Drawing.Size(30, 30);
             this.listViewNonBlocking.UseCompatibleStateImageBehavior = false;
@@ -180,7 +179,7 @@
             this.tabPageThreat.Controls.Add(this.listViewThreat);
             this.tabPageThreat.Location = new System.Drawing.Point(4, 4);
             this.tabPageThreat.Name = "tabPageThreat";
-            this.tabPageThreat.Size = new System.Drawing.Size(453, 432);
+            this.tabPageThreat.Size = new System.Drawing.Size(422, 432);
             this.tabPageThreat.TabIndex = 2;
             this.tabPageThreat.Text = "Threat";
             this.tabPageThreat.UseVisualStyleBackColor = true;
@@ -191,7 +190,7 @@
             this.listViewThreat.Location = new System.Drawing.Point(0, 0);
             this.listViewThreat.MultiSelect = false;
             this.listViewThreat.Name = "listViewThreat";
-            this.listViewThreat.Size = new System.Drawing.Size(453, 432);
+            this.listViewThreat.Size = new System.Drawing.Size(422, 432);
             this.listViewThreat.TabIndex = 50;
             this.listViewThreat.TileSize = new System.Drawing.Size(30, 30);
             this.listViewThreat.UseCompatibleStateImageBehavior = false;
@@ -291,8 +290,7 @@
             this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.showTypeToolStripMenuItem,
             this.showGridToolStripMenuItem,
-            this.applyPaletteToolStripMenuItem,
-            this.zoomToolStripMenuItem});
+            this.applyPaletteToolStripMenuItem});
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
             this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.viewToolStripMenuItem.Text = "&View";
@@ -324,16 +322,6 @@
             this.applyPaletteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.applyPaletteToolStripMenuItem.Text = "Apply &Palette";
             this.applyPaletteToolStripMenuItem.Click += new System.EventHandler(this.ApplyPaletteToolStripMenuItemClick);
-            // 
-            // zoomToolStripMenuItem
-            // 
-            this.zoomToolStripMenuItem.Checked = true;
-            this.zoomToolStripMenuItem.CheckOnClick = true;
-            this.zoomToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.zoomToolStripMenuItem.Name = "zoomToolStripMenuItem";
-            this.zoomToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.zoomToolStripMenuItem.Text = "&Zoom";
-            this.zoomToolStripMenuItem.Click += new System.EventHandler(this.ZoomMenuItemClick);
             // 
             // LevelEditor
             // 
@@ -396,6 +384,5 @@
         private System.Windows.Forms.ToolStripMenuItem advancedToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem undoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem redoToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem zoomToolStripMenuItem;
     }
 }

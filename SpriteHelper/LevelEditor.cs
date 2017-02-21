@@ -10,20 +10,37 @@ namespace SpriteHelper
 {
     public partial class LevelEditor : Form
     {
+        // Configs.
         private Palettes palettes;
         private BackgroundConfig config;
 
-        private Dictionary<string, MyBitmap> tiles;
-        private Dictionary<string, MyBitmap> tilesPaletteApplied;
-        private Dictionary<string, MyBitmap> tilesGrid;
-        private Dictionary<string, MyBitmap> tilesGridPaletteApplied;
+        // Cached bitmaps.
+        private Dictionary<string, Bitmap> tiles;
+        private Dictionary<string, Bitmap> tilesPaletteApplied;
+        private Dictionary<string, Bitmap> tilesGrid;
+        private Dictionary<string, Bitmap> tilesGridPaletteApplied;
 
-        private int widthInTiles;
+        // Default size.
         private const int DefaultWidthInTiles = 64;
-        private const int HeightInTiles = 15; // in tiles
+        private const int HeightInTiles = 15;
+
+        // Zoom and tile width
+        private const int Zoom = 2;
+        private const int TileWidth = Constants.BackgroundTileWidth * Zoom;
+        private const int TileHeight = Constants.BackgroundTileHeight * Zoom;
+
+        // Empty tile for the level.
         private string emptyTile;
-        private string[][] level;    
+
+        // Current scroll value.
         private int scroll;
+
+        // Current level.
+        private string[][] level;
+
+        // History/future (for undo-redo).
+        private Stack<string[][]> history;
+        private Stack<string[][]> future;
 
         #region FormRelated
 
@@ -77,20 +94,20 @@ namespace SpriteHelper
                 bitmaps[file.Id] = MyBitmap.FromFile(file.FileName);
             }
 
-            this.tiles = new Dictionary<string, MyBitmap>();
-            this.tilesPaletteApplied = new Dictionary<string, MyBitmap>();
-            this.tilesGrid = new Dictionary<string, MyBitmap>();
-            this.tilesGridPaletteApplied = new Dictionary<string, MyBitmap>();
+            this.tiles = new Dictionary<string, Bitmap>();
+            this.tilesPaletteApplied = new Dictionary<string, Bitmap>();
+            this.tilesGrid = new Dictionary<string, Bitmap>();
+            this.tilesGridPaletteApplied = new Dictionary<string, Bitmap>();
 
             foreach (var tile in this.config.Tiles)
             {
                 var bitmap = bitmaps[tile.BackgroundFileId];
-                var tileBitmap = bitmap.GetPart(tile.X, tile.Y, tile.WidthInSprites * Constants.SpriteWidth, tile.HeightSprites * Constants.SpriteHeight);
-                this.tiles.Add(tile.Id, tileBitmap);
+                var tileBitmap = bitmap.GetPart(tile.X, tile.Y, tile.WidthInSprites * Constants.SpriteWidth, tile.HeightSprites * Constants.SpriteHeight).Scale(Zoom);
+                this.tiles.Add(tile.Id, tileBitmap.ToBitmap());
 
                 var tileBitmapGrid = tileBitmap.Clone();
                 tileBitmapGrid.DrawGrid();
-                this.tilesGrid.Add(tile.Id, tileBitmapGrid);
+                this.tilesGrid.Add(tile.Id, tileBitmapGrid.ToBitmap());
 
                 var paletteMapping = this.config.PaletteMappings.First(pm => pm.Id == tile.PaletteMappingId);
                 var palette = this.palettes.BackgroundPalette[paletteMapping.ToPalette];
@@ -107,11 +124,11 @@ namespace SpriteHelper
                     }
                 }
                 
-                this.tilesPaletteApplied.Add(tile.Id, tileBitmapWithPaletteApplied);
+                this.tilesPaletteApplied.Add(tile.Id, tileBitmapWithPaletteApplied.ToBitmap());
 
                 var tileBitmapGridWithPaletteApplied = tileBitmapWithPaletteApplied.Clone();
                 tileBitmapGridWithPaletteApplied.DrawGrid();
-                this.tilesGridPaletteApplied.Add(tile.Id, tileBitmapGridWithPaletteApplied);
+                this.tilesGridPaletteApplied.Add(tile.Id, tileBitmapGridWithPaletteApplied.ToBitmap());
             }
 
             this.PopulateListViews();
@@ -125,10 +142,10 @@ namespace SpriteHelper
             }
             else
             {
-                this.widthInTiles = DefaultWidthInTiles;
+                var widthInTiles = DefaultWidthInTiles;
                 this.scroll = 0;
-                this.level = new string[this.widthInTiles][];
-                for (var i = 0; i < this.widthInTiles; i++)
+                this.level = new string[widthInTiles][];
+                for (var i = 0; i < widthInTiles; i++)
                 {
                     this.level[i] = new string[HeightInTiles];
                     for (var j = 0; j < HeightInTiles; j++)
@@ -153,11 +170,10 @@ namespace SpriteHelper
 
         private void PopulateListViews()
         {
-            const int ListViewZoom = 2;           
             Action<TileType, ListView> populateListView = (tileType, listView) =>
             {
                 listView.Items.Clear();
-                listView.LargeImageList = new ImageList { ImageSize = new Size(Constants.BackgroundTileWidth * ListViewZoom, Constants.BackgroundTileHeight * ListViewZoom) };
+                listView.LargeImageList = new ImageList { ImageSize = new Size(TileWidth, TileHeight) };
                 var index = 0;
                 foreach (var kvp in this.ApplyPalettes ? this.tilesPaletteApplied : tiles)
                 {
@@ -166,9 +182,7 @@ namespace SpriteHelper
                         continue;
                     }
 
-                    var scaledImage = kvp.Value.Scale(ListViewZoom);
-                    var bitmap = scaledImage.ToBitmap();
-                    listView.LargeImageList.Images.Add(bitmap);
+                    listView.LargeImageList.Images.Add(kvp.Value);
                     listView.Items.Add(new ListViewItem(kvp.Key, index++));
                 }
             };
@@ -203,7 +217,8 @@ namespace SpriteHelper
             //// Pre-checks
             ////
 
-            this.drawPanel.Visible = this.widthInTiles > 0;
+            var widthInTiles = this.level != null ? this.level.Length : 0;
+            this.drawPanel.Visible = widthInTiles > 0;
             if (!this.drawPanel.Visible)
             {
                 this.scrollBar.Minimum = 0;
@@ -216,18 +231,15 @@ namespace SpriteHelper
             //// Position, size
             ////
 
-            var tileWidth = Constants.BackgroundTileWidth * this.Zoom;
-            var tileHeight = Constants.BackgroundTileHeight * this.Zoom;
-
             var outerPanelWidth = this.outerDrawPanel.Width;
-            var outerPanelWidthInTiles = outerPanelWidth / tileWidth;
-            var panelWidthInTiles = (int)Math.Min(outerPanelWidthInTiles, this.widthInTiles);
-            var panelWidth = panelWidthInTiles * tileWidth;
+            var outerPanelWidthInTiles = outerPanelWidth / TileWidth;
+            var panelWidthInTiles = (int)Math.Min(outerPanelWidthInTiles, widthInTiles);
+            var panelWidth = panelWidthInTiles * TileWidth;
             var horizontalPadding = (outerPanelWidth - panelWidth) / 2;            
         
             var outerPanelHeight = this.outerDrawPanel.Height;
             var panelHeightInTiles = HeightInTiles;
-            var panelHeight = panelHeightInTiles * tileHeight;
+            var panelHeight = panelHeightInTiles * TileHeight;
             var verticalPadding = (outerPanelHeight - panelHeight) / 2;
 
             this.drawPanel.Size = new Size(panelWidth, panelHeight);
@@ -237,9 +249,9 @@ namespace SpriteHelper
             //// Scroll bar
             ////
 
-            this.scrollBar.Enabled = panelWidthInTiles < this.widthInTiles;
+            this.scrollBar.Enabled = panelWidthInTiles < widthInTiles;
             this.scrollBar.Minimum = 0;
-            this.scrollBar.Maximum = this.widthInTiles - panelWidthInTiles;
+            this.scrollBar.Maximum = widthInTiles - panelWidthInTiles;
             this.scroll = (int)Math.Min(this.scroll, this.scrollBar.Maximum);
             this.scrollBar.Value = this.scroll;
         }
@@ -299,13 +311,12 @@ namespace SpriteHelper
 
         private void AdvancedToolStripMenuItemClick(object sender, EventArgs e)
         {
-            var editLevelDialog = new EditLevelDialog(this.widthInTiles);
+            var editLevelDialog = new EditLevelDialog(this.level.Length);
             editLevelDialog.FormClosed += (notUsed1, notUsed2) =>
             {
                 switch (editLevelDialog.Result)
                 {
                     case EditLevelDialogResult.WidthChange:
-                        this.widthInTiles = editLevelDialog.LevelWidth;
                         // todo: change width
                         break;
                 }
@@ -353,14 +364,6 @@ namespace SpriteHelper
             get
             {
                 return this.showTypeToolStripMenuItem.Checked;
-            }
-        }
-
-        public int Zoom
-        {
-            get
-            {
-                return this.zoomToolStripMenuItem.Checked ? 2 : 1;
             }
         }
 
