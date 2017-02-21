@@ -29,6 +29,10 @@
         private void InitializeComponent()
         {
             this.splitContainerVertical = new System.Windows.Forms.SplitContainer();
+            this.outerDrawPanel = new System.Windows.Forms.Panel();
+            this.drawPanel = new System.Windows.Forms.Panel();
+            this.scrollBar = new System.Windows.Forms.HScrollBar();
+            this.showGridCheckbox = new System.Windows.Forms.CheckBox();
             this.editButton = new System.Windows.Forms.Button();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPageBlocking = new System.Windows.Forms.TabPage();
@@ -55,10 +59,11 @@
             this.saveButton = new System.Windows.Forms.Button();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.showGridCheckbox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerVertical)).BeginInit();
+            this.splitContainerVertical.Panel1.SuspendLayout();
             this.splitContainerVertical.Panel2.SuspendLayout();
             this.splitContainerVertical.SuspendLayout();
+            this.outerDrawPanel.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.tabPageBlocking.SuspendLayout();
             this.tabPageNonBlocking.SuspendLayout();
@@ -69,11 +74,17 @@
             // 
             // splitContainerVertical
             // 
+            this.splitContainerVertical.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.splitContainerVertical.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainerVertical.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
             this.splitContainerVertical.IsSplitterFixed = true;
             this.splitContainerVertical.Location = new System.Drawing.Point(0, 0);
             this.splitContainerVertical.Name = "splitContainerVertical";
+            // 
+            // splitContainerVertical.Panel1
+            // 
+            this.splitContainerVertical.Panel1.Controls.Add(this.outerDrawPanel);
+            this.splitContainerVertical.Panel1.Controls.Add(this.scrollBar);
             // 
             // splitContainerVertical.Panel2
             // 
@@ -100,6 +111,47 @@
             this.splitContainerVertical.SplitterDistance = 536;
             this.splitContainerVertical.TabIndex = 999;
             // 
+            // outerDrawPanel
+            // 
+            this.outerDrawPanel.Controls.Add(this.drawPanel);
+            this.outerDrawPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.outerDrawPanel.Location = new System.Drawing.Point(0, 0);
+            this.outerDrawPanel.Name = "outerDrawPanel";
+            this.outerDrawPanel.Size = new System.Drawing.Size(534, 500);
+            this.outerDrawPanel.TabIndex = 2;
+            // 
+            // drawPanel
+            // 
+            this.drawPanel.Location = new System.Drawing.Point(49, 53);
+            this.drawPanel.Name = "drawPanel";
+            this.drawPanel.Size = new System.Drawing.Size(200, 100);
+            this.drawPanel.TabIndex = 1;
+            this.drawPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.DrawPanelMouseClick);
+            this.drawPanel.MouseLeave += new System.EventHandler(this.DrawPanelMouseLeave);
+            this.drawPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.DrawPanelMouseMove);
+            // 
+            // scrollBar
+            // 
+            this.scrollBar.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.scrollBar.LargeChange = 1;
+            this.scrollBar.Location = new System.Drawing.Point(0, 500);
+            this.scrollBar.Name = "scrollBar";
+            this.scrollBar.Size = new System.Drawing.Size(534, 17);
+            this.scrollBar.TabIndex = 0;
+            // 
+            // showGridCheckbox
+            // 
+            this.showGridCheckbox.AutoSize = true;
+            this.showGridCheckbox.Checked = true;
+            this.showGridCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.showGridCheckbox.Location = new System.Drawing.Point(305, 113);
+            this.showGridCheckbox.Name = "showGridCheckbox";
+            this.showGridCheckbox.Size = new System.Drawing.Size(75, 17);
+            this.showGridCheckbox.TabIndex = 48;
+            this.showGridCheckbox.Text = "Show Grid";
+            this.showGridCheckbox.UseVisualStyleBackColor = true;
+            this.showGridCheckbox.CheckedChanged += new System.EventHandler(this.ShowGridCheckboxCheckedChanged);
+            // 
             // editButton
             // 
             this.editButton.Location = new System.Drawing.Point(405, 109);
@@ -122,7 +174,7 @@
             this.tabControl.Location = new System.Drawing.Point(19, 144);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(466, 360);
+            this.tabControl.Size = new System.Drawing.Size(464, 358);
             this.tabControl.TabIndex = 46;
             // 
             // tabPageBlocking
@@ -131,7 +183,7 @@
             this.tabPageBlocking.Location = new System.Drawing.Point(4, 4);
             this.tabPageBlocking.Name = "tabPageBlocking";
             this.tabPageBlocking.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageBlocking.Size = new System.Drawing.Size(458, 334);
+            this.tabPageBlocking.Size = new System.Drawing.Size(456, 332);
             this.tabPageBlocking.TabIndex = 0;
             this.tabPageBlocking.Text = "Blocking";
             this.tabPageBlocking.UseVisualStyleBackColor = true;
@@ -142,7 +194,7 @@
             this.listViewBlocking.Location = new System.Drawing.Point(3, 3);
             this.listViewBlocking.MultiSelect = false;
             this.listViewBlocking.Name = "listViewBlocking";
-            this.listViewBlocking.Size = new System.Drawing.Size(452, 328);
+            this.listViewBlocking.Size = new System.Drawing.Size(450, 326);
             this.listViewBlocking.TabIndex = 48;
             this.listViewBlocking.TileSize = new System.Drawing.Size(30, 30);
             this.listViewBlocking.UseCompatibleStateImageBehavior = false;
@@ -154,7 +206,7 @@
             this.tabPageNonBlocking.Name = "tabPageNonBlocking";
             this.tabPageNonBlocking.Padding = new System.Windows.Forms.Padding(3);
             this.tabPageNonBlocking.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.tabPageNonBlocking.Size = new System.Drawing.Size(458, 334);
+            this.tabPageNonBlocking.Size = new System.Drawing.Size(456, 332);
             this.tabPageNonBlocking.TabIndex = 1;
             this.tabPageNonBlocking.Text = "Non-blocking";
             this.tabPageNonBlocking.UseVisualStyleBackColor = true;
@@ -165,7 +217,7 @@
             this.listViewNonBlocking.Location = new System.Drawing.Point(3, 3);
             this.listViewNonBlocking.MultiSelect = false;
             this.listViewNonBlocking.Name = "listViewNonBlocking";
-            this.listViewNonBlocking.Size = new System.Drawing.Size(452, 328);
+            this.listViewNonBlocking.Size = new System.Drawing.Size(450, 326);
             this.listViewNonBlocking.TabIndex = 49;
             this.listViewNonBlocking.TileSize = new System.Drawing.Size(30, 30);
             this.listViewNonBlocking.UseCompatibleStateImageBehavior = false;
@@ -175,7 +227,7 @@
             this.tabPageThreat.Controls.Add(this.listViewThreat);
             this.tabPageThreat.Location = new System.Drawing.Point(4, 4);
             this.tabPageThreat.Name = "tabPageThreat";
-            this.tabPageThreat.Size = new System.Drawing.Size(458, 334);
+            this.tabPageThreat.Size = new System.Drawing.Size(456, 332);
             this.tabPageThreat.TabIndex = 2;
             this.tabPageThreat.Text = "Threat";
             this.tabPageThreat.UseVisualStyleBackColor = true;
@@ -186,7 +238,7 @@
             this.listViewThreat.Location = new System.Drawing.Point(0, 0);
             this.listViewThreat.MultiSelect = false;
             this.listViewThreat.Name = "listViewThreat";
-            this.listViewThreat.Size = new System.Drawing.Size(458, 334);
+            this.listViewThreat.Size = new System.Drawing.Size(456, 332);
             this.listViewThreat.TabIndex = 50;
             this.listViewThreat.TileSize = new System.Drawing.Size(30, 30);
             this.listViewThreat.UseCompatibleStateImageBehavior = false;
@@ -366,19 +418,6 @@
             this.toolStripStatusLabel.Size = new System.Drawing.Size(112, 17);
             this.toolStripStatusLabel.Text = "toolStripStatusLabel";
             // 
-            // showGridCheckbox
-            // 
-            this.showGridCheckbox.AutoSize = true;
-            this.showGridCheckbox.Checked = true;
-            this.showGridCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.showGridCheckbox.Location = new System.Drawing.Point(305, 113);
-            this.showGridCheckbox.Name = "showGridCheckbox";
-            this.showGridCheckbox.Size = new System.Drawing.Size(75, 17);
-            this.showGridCheckbox.TabIndex = 48;
-            this.showGridCheckbox.Text = "Show Grid";
-            this.showGridCheckbox.UseVisualStyleBackColor = true;
-            this.showGridCheckbox.CheckedChanged += new System.EventHandler(this.ShowGridCheckboxCheckedChanged);
-            // 
             // LevelEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -386,14 +425,18 @@
             this.ClientSize = new System.Drawing.Size(1040, 541);
             this.Controls.Add(this.splitContainerVertical);
             this.Controls.Add(this.statusStrip);
+            this.MinimumSize = new System.Drawing.Size(16, 580);
             this.Name = "LevelEditor";
             this.Text = "Level editor";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.LevelEditorLoad);
+            this.Resize += new System.EventHandler(this.LevelEditorResize);
+            this.splitContainerVertical.Panel1.ResumeLayout(false);
             this.splitContainerVertical.Panel2.ResumeLayout(false);
             this.splitContainerVertical.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerVertical)).EndInit();
             this.splitContainerVertical.ResumeLayout(false);
+            this.outerDrawPanel.ResumeLayout(false);
             this.tabControl.ResumeLayout(false);
             this.tabPageBlocking.ResumeLayout(false);
             this.tabPageNonBlocking.ResumeLayout(false);
@@ -436,5 +479,8 @@
         private System.Windows.Forms.ListView listViewBlocking;
         private System.Windows.Forms.ListView listViewNonBlocking;
         private System.Windows.Forms.CheckBox showGridCheckbox;
+        private System.Windows.Forms.Panel drawPanel;
+        private System.Windows.Forms.HScrollBar scrollBar;
+        private System.Windows.Forms.Panel outerDrawPanel;
     }
 }

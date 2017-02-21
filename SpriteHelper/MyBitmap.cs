@@ -32,6 +32,34 @@ namespace SpriteHelper
             return result;
         }
 
+        public MyBitmap Clone()
+        {
+            var newBitmap = new MyBitmap(this.Width, this.Height);
+            for (var i = 0; i < this.Width; i++)
+            {
+                for (var j = 0; j < this.Height; j++)
+                {
+                    newBitmap.SetPixel(this.GetPixel(i, j), i, j);
+                }
+            }
+
+            return newBitmap;
+        }
+
+        public void DrawGrid()
+        {
+            var gridColor = Color.FromArgb(235, 235, 180); // beige
+            for (var i = 0; i < this.width; i++)
+            {
+                this.SetPixel(gridColor, i, this.height - 1);
+            }
+
+            for (var i = 0; i < this.height; i++)
+            {
+                this.SetPixel(gridColor, this.width - 1, i);
+            }
+        }
+
         public Bitmap ToBitmap()
         {
             var result = new Bitmap(this.width, this.height);
