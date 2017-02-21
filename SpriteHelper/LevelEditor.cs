@@ -58,8 +58,9 @@ namespace SpriteHelper
             this.drawPanel = new DoubleBufferedPanel();
             this.outerDrawPanel.Controls.Add(this.drawPanel);
             this.drawPanel.Location = new Point(0, 0);
-            this.drawPanel.MouseLeave += new EventHandler(this.DrawPanelMouseLeave);
-            this.drawPanel.MouseMove += new MouseEventHandler(this.DrawPanelMouseMove);
+            this.drawPanel.MouseDown += this.DrawPanelMouseDown;
+            this.drawPanel.MouseLeave += this.DrawPanelMouseLeave;
+            this.drawPanel.MouseMove += this.DrawPanelMouseMove;
         }
 
         private void LevelEditorLoad(object sender, EventArgs e)
@@ -482,6 +483,13 @@ namespace SpriteHelper
             this.UpdateStatus(null);
         }
 
+        private void DrawPanelMouseDown(object sender, MouseEventArgs e)
+        {
+            var x = e.X / TileWidth;
+            var y = e.Y / TileWidth;
+            this.SetTile(x, y);
+        }
+
         private void DrawPanelMouseMove(object sender, MouseEventArgs e)
         {
             var x = e.X / TileWidth;
@@ -490,23 +498,33 @@ namespace SpriteHelper
 
             if (e.Button.HasFlag(MouseButtons.Left))
             {
-                var tile = this.SelectedTile();
-                if (tile == null)
-                {
-                    return;
-                }
-
-                if (this.level[x][y] == tile)
-                {
-                    return;
-                }
-
-                this.AddHistory();
-                this.level[x][y] = tile;
-                var image = this.tiles[tile][(int)this.Settings];
-                this.graphics.DrawImage(image, new Point(x * TileWidth, y * TileHeight));
-                this.drawPanel.Refresh();
+                this.SetTile(x, y);
             }
+        }
+
+        public void SetTile(int x, int y)
+        {
+            var tile = this.SelectedTile();
+            if (tile == null)
+            {
+                return;
+            }
+
+            if (x >= this.level.Length || y >= this.level[0].Length)
+            {
+                return;
+            }
+
+            if (this.level[x][y] == tile)
+            {
+                return;
+            }
+
+            this.AddHistory();
+            this.level[x][y] = tile;
+            var image = this.tiles[tile][(int)this.Settings];
+            this.graphics.DrawImage(image, new Point(x * TileWidth, y * TileHeight));
+            this.drawPanel.Refresh();
         }
 
         #endregion

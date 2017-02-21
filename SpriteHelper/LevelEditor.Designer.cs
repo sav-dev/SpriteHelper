@@ -59,7 +59,6 @@
             this.splitContainerVertical.Panel2.SuspendLayout();
             this.splitContainerVertical.SuspendLayout();
             this.outerOuterDrawPanel.SuspendLayout();
-            this.outerDrawPanel.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.tabPageBlocking.SuspendLayout();
             this.tabPageNonBlocking.SuspendLayout();
@@ -160,7 +159,7 @@
             this.tabPageNonBlocking.Name = "tabPageNonBlocking";
             this.tabPageNonBlocking.Padding = new System.Windows.Forms.Padding(3);
             this.tabPageNonBlocking.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.tabPageNonBlocking.Size = new System.Drawing.Size(422, 432);
+            this.tabPageNonBlocking.Size = new System.Drawing.Size(422, 472);
             this.tabPageNonBlocking.TabIndex = 1;
             this.tabPageNonBlocking.Text = "Non-blocking";
             this.tabPageNonBlocking.UseVisualStyleBackColor = true;
@@ -171,7 +170,7 @@
             this.listViewNonBlocking.Location = new System.Drawing.Point(3, 3);
             this.listViewNonBlocking.MultiSelect = false;
             this.listViewNonBlocking.Name = "listViewNonBlocking";
-            this.listViewNonBlocking.Size = new System.Drawing.Size(416, 426);
+            this.listViewNonBlocking.Size = new System.Drawing.Size(416, 466);
             this.listViewNonBlocking.TabIndex = 49;
             this.listViewNonBlocking.TileSize = new System.Drawing.Size(30, 30);
             this.listViewNonBlocking.UseCompatibleStateImageBehavior = false;
@@ -181,7 +180,7 @@
             this.tabPageThreat.Controls.Add(this.listViewThreat);
             this.tabPageThreat.Location = new System.Drawing.Point(4, 4);
             this.tabPageThreat.Name = "tabPageThreat";
-            this.tabPageThreat.Size = new System.Drawing.Size(422, 432);
+            this.tabPageThreat.Size = new System.Drawing.Size(422, 472);
             this.tabPageThreat.TabIndex = 2;
             this.tabPageThreat.Text = "Threat";
             this.tabPageThreat.UseVisualStyleBackColor = true;
@@ -192,7 +191,7 @@
             this.listViewThreat.Location = new System.Drawing.Point(0, 0);
             this.listViewThreat.MultiSelect = false;
             this.listViewThreat.Name = "listViewThreat";
-            this.listViewThreat.Size = new System.Drawing.Size(422, 432);
+            this.listViewThreat.Size = new System.Drawing.Size(422, 472);
             this.listViewThreat.TabIndex = 50;
             this.listViewThreat.TileSize = new System.Drawing.Size(30, 30);
             this.listViewThreat.UseCompatibleStateImageBehavior = false;
@@ -269,21 +268,21 @@
             // advancedToolStripMenuItem
             // 
             this.advancedToolStripMenuItem.Name = "advancedToolStripMenuItem";
-            this.advancedToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.advancedToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.advancedToolStripMenuItem.Text = "&Advanced";
             this.advancedToolStripMenuItem.Click += new System.EventHandler(this.AdvancedToolStripMenuItemClick);
             // 
             // undoToolStripMenuItem
             // 
             this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
-            this.undoToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.undoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.undoToolStripMenuItem.Text = "&Undo";
             this.undoToolStripMenuItem.Click += new System.EventHandler(this.UndoToolStripMenuItemClick);
             // 
             // redoToolStripMenuItem
             // 
             this.redoToolStripMenuItem.Name = "redoToolStripMenuItem";
-            this.redoToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.redoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.redoToolStripMenuItem.Text = "&Redo";
             this.redoToolStripMenuItem.Click += new System.EventHandler(this.RedoToolStripMenuItemClick);
             // 
@@ -301,17 +300,15 @@
             // 
             this.showTypeToolStripMenuItem.CheckOnClick = true;
             this.showTypeToolStripMenuItem.Name = "showTypeToolStripMenuItem";
-            this.showTypeToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.showTypeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.showTypeToolStripMenuItem.Text = "Show &Type";
             this.showTypeToolStripMenuItem.Click += new System.EventHandler(this.ShowTypeToolStripMenuItemClick);
             // 
             // showGridToolStripMenuItem
             // 
-            this.showGridToolStripMenuItem.Checked = true;
             this.showGridToolStripMenuItem.CheckOnClick = true;
-            this.showGridToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.showGridToolStripMenuItem.Name = "showGridToolStripMenuItem";
-            this.showGridToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.showGridToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.showGridToolStripMenuItem.Text = "Show &Grid";
             this.showGridToolStripMenuItem.Click += new System.EventHandler(this.ShowGridToolStripMenuItemClick);
             // 
@@ -321,7 +318,7 @@
             this.applyPaletteToolStripMenuItem.CheckOnClick = true;
             this.applyPaletteToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.applyPaletteToolStripMenuItem.Name = "applyPaletteToolStripMenuItem";
-            this.applyPaletteToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.applyPaletteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.applyPaletteToolStripMenuItem.Text = "Apply &Palette";
             this.applyPaletteToolStripMenuItem.Click += new System.EventHandler(this.ApplyPaletteToolStripMenuItemClick);
             // 
@@ -345,7 +342,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerVertical)).EndInit();
             this.splitContainerVertical.ResumeLayout(false);
             this.outerOuterDrawPanel.ResumeLayout(false);
-            this.outerDrawPanel.ResumeLayout(false);
             this.tabControl.ResumeLayout(false);
             this.tabPageBlocking.ResumeLayout(false);
             this.tabPageNonBlocking.ResumeLayout(false);
