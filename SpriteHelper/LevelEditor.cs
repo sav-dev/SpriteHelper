@@ -487,7 +487,7 @@ namespace SpriteHelper
         {
             var x = e.X / TileWidth;
             var y = e.Y / TileWidth;
-            this.SetTile(x, y);
+            this.SetTile(x, y, e.Button);
         }
 
         private void DrawPanelMouseMove(object sender, MouseEventArgs e)
@@ -495,26 +495,34 @@ namespace SpriteHelper
             var x = e.X / TileWidth;
             var y = e.Y / TileWidth;
             this.UpdateStatus("{0} / {1}", x, y);
-
-            if (e.Button.HasFlag(MouseButtons.Left))
-            {
-                this.SetTile(x, y);
-            }
+            this.SetTile(x, y, e.Button);
         }
 
-        public void SetTile(int x, int y)
+        public void SetTile(int x, int y, MouseButtons buttons)
         {
-            var tile = this.SelectedTile();
-            if (tile == null)
-            {
-                return;
-            }
-
             if (x >= this.level.Length || y >= this.level[0].Length)
             {
                 return;
             }
 
+            string tile;
+            if (buttons.HasFlag(MouseButtons.Left))
+            {
+                tile = this.SelectedTile();
+                if (tile == null)
+                {
+                    return;
+                }
+            }
+            else if (buttons.HasFlag(MouseButtons.Right))
+            {
+                tile = emptyTile;
+            }
+            else
+            {
+                return;
+            }
+            
             if (this.level[x][y] == tile)
             {
                 return;
