@@ -47,14 +47,14 @@
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.zoomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.showTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.showGridToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.applyPaletteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.advancedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showGridToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.applyPaletteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.zoomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerVertical)).BeginInit();
             this.splitContainerVertical.Panel1.SuspendLayout();
             this.splitContainerVertical.Panel2.SuspendLayout();
@@ -64,8 +64,8 @@
             this.tabPageBlocking.SuspendLayout();
             this.tabPageNonBlocking.SuspendLayout();
             this.tabPageThreat.SuspendLayout();
-            this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
+            this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainerVertical
@@ -86,7 +86,7 @@
             // 
             this.splitContainerVertical.Panel2.Controls.Add(this.tabControl);
             this.splitContainerVertical.Size = new System.Drawing.Size(1040, 495);
-            this.splitContainerVertical.SplitterDistance = 536;
+            this.splitContainerVertical.SplitterDistance = 570;
             this.splitContainerVertical.TabIndex = 999;
             // 
             // outerDrawPanel
@@ -95,7 +95,7 @@
             this.outerDrawPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.outerDrawPanel.Location = new System.Drawing.Point(0, 0);
             this.outerDrawPanel.Name = "outerDrawPanel";
-            this.outerDrawPanel.Size = new System.Drawing.Size(534, 476);
+            this.outerDrawPanel.Size = new System.Drawing.Size(568, 476);
             this.outerDrawPanel.TabIndex = 2;
             // 
             // drawPanel
@@ -112,7 +112,7 @@
             this.scrollBar.LargeChange = 1;
             this.scrollBar.Location = new System.Drawing.Point(0, 476);
             this.scrollBar.Name = "scrollBar";
-            this.scrollBar.Size = new System.Drawing.Size(534, 17);
+            this.scrollBar.Size = new System.Drawing.Size(568, 17);
             this.scrollBar.TabIndex = 0;
             // 
             // tabControl
@@ -127,7 +127,7 @@
             this.tabControl.Location = new System.Drawing.Point(19, 20);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(464, 458);
+            this.tabControl.Size = new System.Drawing.Size(430, 458);
             this.tabControl.TabIndex = 46;
             // 
             // tabPageBlocking
@@ -136,7 +136,7 @@
             this.tabPageBlocking.Location = new System.Drawing.Point(4, 4);
             this.tabPageBlocking.Name = "tabPageBlocking";
             this.tabPageBlocking.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageBlocking.Size = new System.Drawing.Size(456, 432);
+            this.tabPageBlocking.Size = new System.Drawing.Size(422, 432);
             this.tabPageBlocking.TabIndex = 0;
             this.tabPageBlocking.Text = "Blocking";
             this.tabPageBlocking.UseVisualStyleBackColor = true;
@@ -147,7 +147,7 @@
             this.listViewBlocking.Location = new System.Drawing.Point(3, 3);
             this.listViewBlocking.MultiSelect = false;
             this.listViewBlocking.Name = "listViewBlocking";
-            this.listViewBlocking.Size = new System.Drawing.Size(450, 426);
+            this.listViewBlocking.Size = new System.Drawing.Size(416, 426);
             this.listViewBlocking.TabIndex = 48;
             this.listViewBlocking.TileSize = new System.Drawing.Size(30, 30);
             this.listViewBlocking.UseCompatibleStateImageBehavior = false;
@@ -159,7 +159,7 @@
             this.tabPageNonBlocking.Name = "tabPageNonBlocking";
             this.tabPageNonBlocking.Padding = new System.Windows.Forms.Padding(3);
             this.tabPageNonBlocking.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.tabPageNonBlocking.Size = new System.Drawing.Size(456, 432);
+            this.tabPageNonBlocking.Size = new System.Drawing.Size(453, 432);
             this.tabPageNonBlocking.TabIndex = 1;
             this.tabPageNonBlocking.Text = "Non-blocking";
             this.tabPageNonBlocking.UseVisualStyleBackColor = true;
@@ -170,7 +170,7 @@
             this.listViewNonBlocking.Location = new System.Drawing.Point(3, 3);
             this.listViewNonBlocking.MultiSelect = false;
             this.listViewNonBlocking.Name = "listViewNonBlocking";
-            this.listViewNonBlocking.Size = new System.Drawing.Size(450, 426);
+            this.listViewNonBlocking.Size = new System.Drawing.Size(447, 426);
             this.listViewNonBlocking.TabIndex = 49;
             this.listViewNonBlocking.TileSize = new System.Drawing.Size(30, 30);
             this.listViewNonBlocking.UseCompatibleStateImageBehavior = false;
@@ -180,7 +180,7 @@
             this.tabPageThreat.Controls.Add(this.listViewThreat);
             this.tabPageThreat.Location = new System.Drawing.Point(4, 4);
             this.tabPageThreat.Name = "tabPageThreat";
-            this.tabPageThreat.Size = new System.Drawing.Size(456, 432);
+            this.tabPageThreat.Size = new System.Drawing.Size(453, 432);
             this.tabPageThreat.TabIndex = 2;
             this.tabPageThreat.Text = "Threat";
             this.tabPageThreat.UseVisualStyleBackColor = true;
@@ -191,7 +191,7 @@
             this.listViewThreat.Location = new System.Drawing.Point(0, 0);
             this.listViewThreat.MultiSelect = false;
             this.listViewThreat.Name = "listViewThreat";
-            this.listViewThreat.Size = new System.Drawing.Size(456, 432);
+            this.listViewThreat.Size = new System.Drawing.Size(453, 432);
             this.listViewThreat.TabIndex = 50;
             this.listViewThreat.TileSize = new System.Drawing.Size(30, 30);
             this.listViewThreat.UseCompatibleStateImageBehavior = false;
@@ -265,30 +265,43 @@
             this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
             this.editToolStripMenuItem.Text = "&Edit";
             // 
+            // advancedToolStripMenuItem
+            // 
+            this.advancedToolStripMenuItem.Name = "advancedToolStripMenuItem";
+            this.advancedToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.advancedToolStripMenuItem.Text = "&Advanced";
+            this.advancedToolStripMenuItem.Click += new System.EventHandler(this.AdvancedToolStripMenuItemClick);
+            // 
+            // undoToolStripMenuItem
+            // 
+            this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
+            this.undoToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.undoToolStripMenuItem.Text = "&Undo";
+            this.undoToolStripMenuItem.Click += new System.EventHandler(this.UndoToolStripMenuItemClick);
+            // 
+            // redoToolStripMenuItem
+            // 
+            this.redoToolStripMenuItem.Name = "redoToolStripMenuItem";
+            this.redoToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.redoToolStripMenuItem.Text = "&Redo";
+            this.redoToolStripMenuItem.Click += new System.EventHandler(this.RedoToolStripMenuItemClick);
+            // 
             // viewToolStripMenuItem
             // 
             this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.zoomToolStripMenuItem,
             this.showTypeToolStripMenuItem,
             this.showGridToolStripMenuItem,
-            this.applyPaletteToolStripMenuItem});
+            this.applyPaletteToolStripMenuItem,
+            this.zoomToolStripMenuItem});
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
             this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.viewToolStripMenuItem.Text = "&View";
-            // 
-            // zoomToolStripMenuItem
-            // 
-            this.zoomToolStripMenuItem.Checked = true;
-            this.zoomToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.zoomToolStripMenuItem.Name = "zoomToolStripMenuItem";
-            this.zoomToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
-            this.zoomToolStripMenuItem.Text = "&Zoom";
             // 
             // showTypeToolStripMenuItem
             // 
             this.showTypeToolStripMenuItem.CheckOnClick = true;
             this.showTypeToolStripMenuItem.Name = "showTypeToolStripMenuItem";
-            this.showTypeToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.showTypeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.showTypeToolStripMenuItem.Text = "Show &Type";
             this.showTypeToolStripMenuItem.Click += new System.EventHandler(this.ShowTypeToolStripMenuItemClick);
             // 
@@ -298,7 +311,7 @@
             this.showGridToolStripMenuItem.CheckOnClick = true;
             this.showGridToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.showGridToolStripMenuItem.Name = "showGridToolStripMenuItem";
-            this.showGridToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.showGridToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.showGridToolStripMenuItem.Text = "Show &Grid";
             this.showGridToolStripMenuItem.Click += new System.EventHandler(this.ShowGridToolStripMenuItemClick);
             // 
@@ -308,30 +321,19 @@
             this.applyPaletteToolStripMenuItem.CheckOnClick = true;
             this.applyPaletteToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.applyPaletteToolStripMenuItem.Name = "applyPaletteToolStripMenuItem";
-            this.applyPaletteToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.applyPaletteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.applyPaletteToolStripMenuItem.Text = "Apply &Palette";
             this.applyPaletteToolStripMenuItem.Click += new System.EventHandler(this.ApplyPaletteToolStripMenuItemClick);
             // 
-            // advancedToolStripMenuItem
+            // zoomToolStripMenuItem
             // 
-            this.advancedToolStripMenuItem.Name = "advancedToolStripMenuItem";
-            this.advancedToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.advancedToolStripMenuItem.Text = "&Advanced";
-            this.advancedToolStripMenuItem.Click += new System.EventHandler(this.AdvancedToolStripMenuItemClick);
-            // 
-            // undoToolStripMenuItem
-            // 
-            this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
-            this.undoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.undoToolStripMenuItem.Text = "&Undo";
-            this.undoToolStripMenuItem.Click += new System.EventHandler(this.UndoToolStripMenuItemClick);
-            // 
-            // redoToolStripMenuItem
-            // 
-            this.redoToolStripMenuItem.Name = "redoToolStripMenuItem";
-            this.redoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.redoToolStripMenuItem.Text = "&Redo";
-            this.redoToolStripMenuItem.Click += new System.EventHandler(this.RedoToolStripMenuItemClick);
+            this.zoomToolStripMenuItem.Checked = true;
+            this.zoomToolStripMenuItem.CheckOnClick = true;
+            this.zoomToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.zoomToolStripMenuItem.Name = "zoomToolStripMenuItem";
+            this.zoomToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.zoomToolStripMenuItem.Text = "&Zoom";
+            this.zoomToolStripMenuItem.Click += new System.EventHandler(this.ZoomMenuItemClick);
             // 
             // LevelEditor
             // 
@@ -388,12 +390,12 @@
         private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem zoomToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem showTypeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem showGridToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem applyPaletteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem advancedToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem undoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem redoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem zoomToolStripMenuItem;
     }
 }

@@ -16,6 +16,7 @@ namespace SpriteHelper
 
         public LoadLevelDialog()
         {
+            this.InitializeComponent();
             this.clickedOk = false;
         }
 
