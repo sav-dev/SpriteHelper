@@ -58,7 +58,6 @@ namespace SpriteHelper
             this.drawPanel = new DoubleBufferedPanel();
             this.outerDrawPanel.Controls.Add(this.drawPanel);
             this.drawPanel.Location = new Point(0, 0);
-            this.drawPanel.MouseClick += new MouseEventHandler(this.DrawPanelMouseClick);
             this.drawPanel.MouseLeave += new EventHandler(this.DrawPanelMouseLeave);
             this.drawPanel.MouseMove += new MouseEventHandler(this.DrawPanelMouseMove);
         }
@@ -483,27 +482,31 @@ namespace SpriteHelper
             this.UpdateStatus(null);
         }
 
-        private void DrawPanelMouseClick(object sender, MouseEventArgs e)
-        {
-            var tile = this.SelectedTile();
-            if (tile == null)
-            {
-                return;
-            }
-
-            var x = e.X / TileWidth;
-            var y = e.Y / TileWidth;
-
-            this.AddHistory();
-            this.level[x][y] = tile;
-            var image = this.tiles[tile][(int)this.Settings];
-            this.graphics.DrawImage(image, new Point(x * TileWidth, y * TileHeight));
-            this.drawPanel.Refresh();
-        }
-
         private void DrawPanelMouseMove(object sender, MouseEventArgs e)
         {
-            this.UpdateStatus("{0} / {1}", e.X / TileWidth, e.Y / TileHeight);
+            var x = e.X / TileWidth;
+            var y = e.Y / TileWidth;
+            this.UpdateStatus("{0} / {1}", x, y);
+
+            if (e.Button.HasFlag(MouseButtons.Left))
+            {
+                var tile = this.SelectedTile();
+                if (tile == null)
+                {
+                    return;
+                }
+
+                if (this.level[x][y] == tile)
+                {
+                    return;
+                }
+
+                this.AddHistory();
+                this.level[x][y] = tile;
+                var image = this.tiles[tile][(int)this.Settings];
+                this.graphics.DrawImage(image, new Point(x * TileWidth, y * TileHeight));
+                this.drawPanel.Refresh();
+            }
         }
 
         #endregion
