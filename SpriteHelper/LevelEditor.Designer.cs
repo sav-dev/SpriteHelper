@@ -86,7 +86,7 @@
             // splitContainerVertical.Panel2
             // 
             this.splitContainerVertical.Panel2.Controls.Add(this.tabControl);
-            this.splitContainerVertical.Size = new System.Drawing.Size(1040, 495);
+            this.splitContainerVertical.Size = new System.Drawing.Size(1040, 535);
             this.splitContainerVertical.SplitterDistance = 570;
             this.splitContainerVertical.TabIndex = 999;
             // 
@@ -96,7 +96,7 @@
             this.outerOuterDrawPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.outerOuterDrawPanel.Location = new System.Drawing.Point(0, 0);
             this.outerOuterDrawPanel.Name = "outerOuterDrawPanel";
-            this.outerOuterDrawPanel.Size = new System.Drawing.Size(568, 476);
+            this.outerOuterDrawPanel.Size = new System.Drawing.Size(568, 516);
             this.outerOuterDrawPanel.TabIndex = 2;
             // 
             // outerDrawPanel
@@ -122,7 +122,7 @@
             // 
             this.scrollBar.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.scrollBar.LargeChange = 1;
-            this.scrollBar.Location = new System.Drawing.Point(0, 476);
+            this.scrollBar.Location = new System.Drawing.Point(0, 516);
             this.scrollBar.Name = "scrollBar";
             this.scrollBar.Size = new System.Drawing.Size(568, 17);
             this.scrollBar.TabIndex = 0;
@@ -140,7 +140,7 @@
             this.tabControl.Location = new System.Drawing.Point(19, 20);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(430, 458);
+            this.tabControl.Size = new System.Drawing.Size(430, 498);
             this.tabControl.TabIndex = 46;
             // 
             // tabPageBlocking
@@ -149,7 +149,7 @@
             this.tabPageBlocking.Location = new System.Drawing.Point(4, 4);
             this.tabPageBlocking.Name = "tabPageBlocking";
             this.tabPageBlocking.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageBlocking.Size = new System.Drawing.Size(422, 432);
+            this.tabPageBlocking.Size = new System.Drawing.Size(422, 472);
             this.tabPageBlocking.TabIndex = 0;
             this.tabPageBlocking.Text = "Blocking";
             this.tabPageBlocking.UseVisualStyleBackColor = true;
@@ -160,7 +160,7 @@
             this.listViewBlocking.Location = new System.Drawing.Point(3, 3);
             this.listViewBlocking.MultiSelect = false;
             this.listViewBlocking.Name = "listViewBlocking";
-            this.listViewBlocking.Size = new System.Drawing.Size(416, 426);
+            this.listViewBlocking.Size = new System.Drawing.Size(416, 466);
             this.listViewBlocking.TabIndex = 48;
             this.listViewBlocking.TileSize = new System.Drawing.Size(30, 30);
             this.listViewBlocking.UseCompatibleStateImageBehavior = false;
@@ -213,7 +213,7 @@
             // 
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel});
-            this.statusStrip.Location = new System.Drawing.Point(0, 519);
+            this.statusStrip.Location = new System.Drawing.Point(0, 559);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(1040, 22);
             this.statusStrip.TabIndex = 1;
@@ -341,12 +341,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1040, 541);
+            this.ClientSize = new System.Drawing.Size(1040, 581);
             this.Controls.Add(this.splitContainerVertical);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.menuStrip);
             this.MainMenuStrip = this.menuStrip;
-            this.MinimumSize = new System.Drawing.Size(16, 580);
+            this.MinimumSize = new System.Drawing.Size(16, 620);
             this.Name = "LevelEditor";
             this.Text = "Level editor";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;

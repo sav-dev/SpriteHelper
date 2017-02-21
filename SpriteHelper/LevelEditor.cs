@@ -15,11 +15,8 @@ namespace SpriteHelper
         private BackgroundConfig config;
 
         // Cached bitmaps.
-        private Dictionary<string, Bitmap> tiles;
-        private Dictionary<string, Bitmap> tilesPaletteApplied;
-        private Dictionary<string, Bitmap> tilesGrid;
-        private Dictionary<string, Bitmap> tilesGridPaletteApplied;
-
+        private Dictionary<string, Bitmap[]> tiles;
+        
         // Default size.
         private const int DefaultWidthInTiles = 64;
         private const int HeightInTiles = 15;
@@ -63,7 +60,7 @@ namespace SpriteHelper
         
         private void LevelEditorResize(object sender, EventArgs e)
         {
-            // todo: resize
+            this.UpdateDrawPanel();
         }
         
         private void PreLoad()
@@ -100,41 +97,63 @@ namespace SpriteHelper
                 bitmaps[file.Id] = MyBitmap.FromFile(file.FileName);
             }
 
-            this.tiles = new Dictionary<string, Bitmap>();
-            this.tilesPaletteApplied = new Dictionary<string, Bitmap>();
-            this.tilesGrid = new Dictionary<string, Bitmap>();
-            this.tilesGridPaletteApplied = new Dictionary<string, Bitmap>();
+            this.tiles = new Dictionary<string, Bitmap[]>();
 
             foreach (var tile in this.config.Tiles)
             {
-                var bitmap = bitmaps[tile.BackgroundFileId];
-                var tileBitmap = bitmap.GetPart(tile.X, tile.Y, tile.WidthInSprites * Constants.SpriteWidth, tile.HeightSprites * Constants.SpriteHeight).Scale(Zoom);
-                this.tiles.Add(tile.Id, tileBitmap.ToBitmap());
+                var tileBitmaps = new Bitmap[(int)TileVersion.All + 1];               
+                var tileBitmap = bitmaps[tile.BackgroundFileId].GetPart(tile.X, tile.Y, tile.WidthInSprites * Constants.SpriteWidth, tile.HeightSprites * Constants.SpriteHeight).Scale(Zoom);
 
+                // None
+                tileBitmaps[(int)TileVersion.None] = tileBitmap.ToBitmap();
+
+                // Grid
                 var tileBitmapGrid = tileBitmap.Clone();
                 tileBitmapGrid.DrawGrid();
-                this.tilesGrid.Add(tile.Id, tileBitmapGrid.ToBitmap());
+                tileBitmaps[(int)TileVersion.Grid] = tileBitmapGrid.ToBitmap();
 
+                // Palette
                 var paletteMapping = this.config.PaletteMappings.First(pm => pm.Id == tile.PaletteMappingId);
                 var palette = this.palettes.BackgroundPalette[paletteMapping.ToPalette];
-                var tileBitmapWithPaletteApplied = new MyBitmap(tileBitmap.Width, tileBitmap.Height);
-
-                for (var x = 0; x < tileBitmap.Width; x++)
-                {
-                    for (var y = 0; y < tileBitmap.Height; y++)
-                    {
-                        var color = tileBitmap.GetPixel(x, y);
-                        var mappedColorId = paletteMapping.ColorMappings.First(c => c.Color == color).To;
-                        var mappedColor = palette.ActualColors[mappedColorId];
-                        tileBitmapWithPaletteApplied.SetPixel(mappedColor, x, y);
-                    }
-                }
+                var tileBitmapPalette = tileBitmap.Clone();
+                tileBitmapPalette.UpdateColors(paletteMapping.ColorMappings.OrderBy(cm => cm.To).Select(cm => Color.FromArgb(cm.R, cm.G, cm.B)).ToArray(), palette.ActualColors);
+                tileBitmaps[(int)TileVersion.Palettes] = tileBitmapPalette.ToBitmap();
                 
-                this.tilesPaletteApplied.Add(tile.Id, tileBitmapWithPaletteApplied.ToBitmap());
-
-                var tileBitmapGridWithPaletteApplied = tileBitmapWithPaletteApplied.Clone();
+                // Palette and grid
+                var tileBitmapGridWithPaletteApplied = tileBitmapPalette.Clone();
                 tileBitmapGridWithPaletteApplied.DrawGrid();
-                this.tilesGridPaletteApplied.Add(tile.Id, tileBitmapGridWithPaletteApplied.ToBitmap());
+                tileBitmaps[(int)(TileVersion.Palettes | TileVersion.Grid)] = tileBitmapGridWithPaletteApplied.ToBitmap();
+
+                // Type
+                foreach (var tileVersion in new[] { TileVersion.None, TileVersion.Grid, TileVersion.Palettes, TileVersion.Palettes | TileVersion.Grid })
+                {
+                    var bitmapForVersion = tileBitmaps[(int)tileVersion];
+                    var bitmapCopy = new Bitmap(bitmapForVersion);
+
+                    Brush brush = null;
+                    switch (tile.Type)
+                    {
+                        case TileType.Blocking:
+                            brush = new SolidBrush(Color.FromArgb(100, 0, 255, 0));
+                            break;
+
+                        case TileType.Threat:
+                            brush = new SolidBrush(Color.FromArgb(100, 255, 0, 0));
+                            break;
+                    }
+
+                    if (brush != null)
+                    { 
+                        using (var graphics = Graphics.FromImage(bitmapCopy))
+                        {
+                            graphics.FillRectangle(brush, 0, 0, bitmapCopy.Width, bitmapCopy.Height);                                
+                        }
+                    }
+
+                    tileBitmaps[(int)(tileVersion | TileVersion.Type)] = bitmapCopy;
+                }
+
+                this.tiles.Add(tile.Id, tileBitmaps);
             }
 
             this.PopulateListViews();
@@ -145,7 +164,7 @@ namespace SpriteHelper
             string[][] newLevel;
             if (File.Exists(level))
             {
-                // todo load level
+                // todo: load level
                 newLevel = null;
             }
             else
@@ -180,14 +199,14 @@ namespace SpriteHelper
                 listView.Items.Clear();
                 listView.LargeImageList = new ImageList { ImageSize = new Size(TileWidth, TileHeight) };
                 var index = 0;
-                foreach (var kvp in this.ApplyPalettes ? this.tilesPaletteApplied : tiles)
+                foreach (var kvp in this.tiles)
                 {
                     if (this.config.Tiles.First(t => t.Id == kvp.Key).Type != tileType)
                     {
                         continue;
                     }
 
-                    listView.LargeImageList.Images.Add(kvp.Value);
+                    listView.LargeImageList.Images.Add(kvp.Value[this.ApplyPalettes ? (int)TileVersion.Palettes : (int)TileVersion.None]);
                     listView.Items.Add(new ListViewItem(kvp.Key, index++));
                 }
             };
@@ -269,6 +288,11 @@ namespace SpriteHelper
             this.UpdateScroll();
         }
 
+        private void ChangeWidth(int width)
+        {
+            // todo: change width
+        }
+
         private void SetLevel(string[][] newLevel)
         {
             if (this.level != null)
@@ -290,10 +314,7 @@ namespace SpriteHelper
                 for (var y = 0; y < this.level[x].Length; y++)
                 {
                     var key = this.level[x][y];
-                    var image = this.ApplyPalettes ? 
-                        (this.ShowGrid ? this.tilesGridPaletteApplied[key] : this.tilesPaletteApplied[key]) : 
-                        (this.ShowGrid ? this.tilesGrid[key] : this.tiles[key]);
-
+                    var image = this.tiles[key][(int)this.Settings];
                     this.graphics.DrawImage(image, new Point(x * TileWidth, y * TileHeight));
                 }
             }
@@ -321,24 +342,18 @@ namespace SpriteHelper
 
         private void ShowTypeToolStripMenuItemClick(object sender, EventArgs e)
         {
-            // todo: show type
+            this.UpdateBitmap();
         }
 
         private void ShowGridToolStripMenuItemClick(object sender, EventArgs e)
         {
             this.UpdateBitmap();
-
         }
 
         private void ApplyPaletteToolStripMenuItemClick(object sender, EventArgs e)
         {
             this.PopulateListViews();
             this.UpdateBitmap();
-        }
-
-        private void ZoomMenuItemClick(object sender, EventArgs e)
-        {
-            // todo: zoom
         }
 
         private void OpenToolStripMenuItemClick(object sender, EventArgs e)
@@ -373,7 +388,7 @@ namespace SpriteHelper
                 switch (editLevelDialog.Result)
                 {
                     case EditLevelDialogResult.WidthChange:
-                        // todo: change width
+                        this.ChangeWidth(editLevelDialog.Width);
                         break;
                 }
             };
@@ -423,6 +438,30 @@ namespace SpriteHelper
             }
         }
 
+        public TileVersion Settings
+        {
+            get
+            {
+                var result = TileVersion.None;
+                if (this.ApplyPalettes)
+                {
+                    result = result | TileVersion.Palettes;
+                }
+
+                if (this.ShowGrid)
+                {
+                    result = result | TileVersion.Grid;
+                }
+
+                if (this.ShowType)
+                {
+                    result = result | TileVersion.Type;
+                }
+
+                return result;
+            }
+        }
+
         #endregion
 
         #region MouseEvents
@@ -439,12 +478,30 @@ namespace SpriteHelper
 
         private void DrawPanelMouseClick(object sender, MouseEventArgs e)
         {
-            // todo
+            // todo: set tile
         }
 
         private void DrawPanelMouseMove(object sender, MouseEventArgs e)
         {
             this.UpdateStatus("{0} / {1}", e.X / TileWidth, e.Y / TileHeight);
+        }
+
+        #endregion
+
+        #region HelperTypes
+
+        ////
+        //// Helper types
+        ////
+
+        [Flags]
+        public enum TileVersion
+        {
+            None = 0,
+            Palettes = 1,
+            Grid = 2,
+            Type = 4,
+            All = 7
         }
 
         #endregion
