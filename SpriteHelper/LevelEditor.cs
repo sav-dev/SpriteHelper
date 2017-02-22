@@ -302,7 +302,24 @@ namespace SpriteHelper
 
         private void ChangeWidth(int width)
         {
-            // todo: change width
+            if (width == this.level.Length)
+            {
+                return;
+            }
+
+            this.AddHistory();
+
+            var newLevel = new string[width][];
+            for (var x = 0; x < newLevel.Length; x++)
+            {
+                newLevel[x] = new string[HeightInTiles];
+                for (var y = 0; y < HeightInTiles; y++)
+                {
+                    newLevel[x][y] = x < this.level.Length ? this.level[x][y] : emptyTile;
+                }
+            }
+
+            this.SetLevel(newLevel);
         }
 
         private void SetLevel(string[][] newLevel)
@@ -395,7 +412,7 @@ namespace SpriteHelper
                 switch (editLevelDialog.Result)
                 {
                     case EditLevelDialogResult.WidthChange:
-                        this.ChangeWidth(editLevelDialog.Width);
+                        this.ChangeWidth(editLevelDialog.LevelWidth);
                         break;
                 }
             };
