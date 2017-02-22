@@ -425,7 +425,7 @@ namespace SpriteHelper
 
         private void ExportToolStripMenuItemClick(object sender, EventArgs e)
         {
-            // todo: export level
+            // todo: export level and attributes
         }
 
         private void PropertiesToolStripMenuItemClick(object sender, EventArgs e)
