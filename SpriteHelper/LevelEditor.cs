@@ -306,6 +306,11 @@ namespace SpriteHelper
                 return;
             }
 
+            if (!(width % 2 == 0))
+            {
+                MessageBox.Show("Width must be a multiple of 2", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);   
+            }
+
             this.AddHistory();
 
             var newLevel = new string[width][];
