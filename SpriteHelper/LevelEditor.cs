@@ -569,9 +569,24 @@ namespace SpriteHelper
             this.redoToolStripMenuItem.Enabled = false;
         }
 
+        public string[][] CloneLevel()
+        {
+            var newLevel = new string[this.level.Length][];
+            for (var x = 0; x < this.level.Length; x++)
+            {
+                newLevel[x] = new string[this.level[x].Length];
+                for (var y = 0; y < this.level[x].Length; y++)
+                {
+                    newLevel[x][y] = this.level[x][y];
+                }
+            }
+
+            return newLevel;
+        }        
+
         public void AddHistory()
         {
-            this.history.Push(this.level);
+            this.history.Push(this.CloneLevel());
             this.undoToolStripMenuItem.Enabled = true;
             this.future.Clear();
             this.redoToolStripMenuItem.Enabled = false;
@@ -584,7 +599,8 @@ namespace SpriteHelper
                 return;
             }
 
-            this.future.Push(this.level);
+            this.future.Push(this.CloneLevel());
+            this.redoToolStripMenuItem.Enabled = true;
             this.SetLevel(this.history.Pop());
 
             if (this.history.Count == 0)
@@ -600,7 +616,8 @@ namespace SpriteHelper
                 return;
             }
 
-            this.history.Push(this.level);
+            this.history.Push(this.CloneLevel());
+            this.undoToolStripMenuItem.Enabled = true;
             this.SetLevel(this.future.Pop());
 
             if (this.future.Count == 0)
