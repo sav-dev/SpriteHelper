@@ -55,10 +55,12 @@
     <Compile Include="BackgroundTilesetCreator.Designer.cs">
       <DependentUpon>BackgroundTilesetCreator.cs</DependentUpon>
     </Compile>
+    <Compile Include="DateMemberAttribute.cs" />
     <Compile Include="Defaults.cs" />
     <Compile Include="DoubleBufferedPanel.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Level.cs" />
     <Compile Include="LoadLevelDialog.cs">
       <SubType>Form</SubType>
     </Compile>

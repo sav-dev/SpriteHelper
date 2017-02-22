@@ -76,7 +76,7 @@ namespace SpriteHelper
         
         private void PreLoad()
         {
-            this.LoadLevel(Defaults.Instance.Level, Defaults.Instance.BackgroundSpec, Defaults.Instance.PalettesSpec);
+            this.LoadLevel(null, Defaults.Instance.BackgroundSpec, Defaults.Instance.PalettesSpec);
         }
 
         private void UpdateStatus(string text)
@@ -175,8 +175,7 @@ namespace SpriteHelper
             string[][] newLevel;
             if (File.Exists(level))
             {
-                // todo: load level
-                newLevel = null;
+                newLevel = Level.Read(level).Tiles;
             }
             else
             {
@@ -410,7 +409,13 @@ namespace SpriteHelper
 
         private void SaveToolStripMenuItemClick(object sender, EventArgs e)
         {
-            // todo: save level
+            var saveFileDialog = new SaveFileDialog { InitialDirectory = Defaults.Instance.DefaultDir, Filter = "xml files (*.xml)|*.xml" };
+            saveFileDialog.ShowDialog();
+            if (!string.IsNullOrEmpty(saveFileDialog.FileName))
+            {
+                var level = new Level { Tiles = this.level };
+                level.Write(saveFileDialog.FileName);
+            }
         }
 
         private void ExportToolStripMenuItemClick(object sender, EventArgs e)

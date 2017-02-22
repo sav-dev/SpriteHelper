@@ -19,5 +19,5 @@
   <DefaultBgColor>0,1,0</DefaultBgColor>
   <BackgroundChr>C:\Users\tomas\Documents\NES\GitHub\Platformer\Graphics\Backgrounds\back_01_chr.png</BackgroundChr>
   <BackgroundSpec>C:\Users\tomas\Documents\NES\GitHub\Platformer\Graphics\Backgrounds\back_01.xml</BackgroundSpec>
-  <Level>C:\Users\tomas\Desktop\Level.xml</Level>
+  <DefaultDir>C:\Users\tomas\Documents\NES\GitHub\Platformer\Graphics\Backgrounds</DefaultDir>
 </Defaults>
