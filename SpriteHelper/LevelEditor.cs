@@ -382,7 +382,7 @@ namespace SpriteHelper
 
         private void OpenToolStripMenuItemClick(object sender, EventArgs e)
         {
-            var loadLevelDialog = new LoadLevelDialog();
+            var loadLevelDialog = new LoadLevelDialog(true);
             loadLevelDialog.FormClosed += (notUsed1, notUsed2) =>
             {
                 if (loadLevelDialog.ClickedOk)
@@ -394,14 +394,28 @@ namespace SpriteHelper
             loadLevelDialog.ShowDialog();
         }
 
+        private void NewToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            var loadLevelDialog = new LoadLevelDialog(false);
+            loadLevelDialog.FormClosed += (notUsed1, notUsed2) =>
+            {
+                if (loadLevelDialog.ClickedOk)
+                {
+                    this.LoadLevel(null, loadLevelDialog.Spec, loadLevelDialog.Palettes);
+                }
+            };
+
+            loadLevelDialog.ShowDialog();
+        }
+
         private void SaveToolStripMenuItemClick(object sender, EventArgs e)
         {
-            // todo: save
+            // todo: save level
         }
 
         private void ExportToolStripMenuItemClick(object sender, EventArgs e)
         {
-            // todo: export
+            // todo: export level
         }
 
         private void PropertiesToolStripMenuItemClick(object sender, EventArgs e)

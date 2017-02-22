@@ -36,6 +36,9 @@
             this.palettesTextBox = new System.Windows.Forms.TextBox();
             this.palettesLabel = new System.Windows.Forms.Label();
             this.levelTextBox = new System.Windows.Forms.TextBox();
+            this.browseLevelButton = new System.Windows.Forms.Button();
+            this.browseSpecButton = new System.Windows.Forms.Button();
+            this.browsePalettesButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // okButton
@@ -106,11 +109,44 @@
             this.levelTextBox.Size = new System.Drawing.Size(414, 20);
             this.levelTextBox.TabIndex = 46;
             // 
+            // browseLevelButton
+            // 
+            this.browseLevelButton.Location = new System.Drawing.Point(487, 6);
+            this.browseLevelButton.Name = "browseLevelButton";
+            this.browseLevelButton.Size = new System.Drawing.Size(75, 23);
+            this.browseLevelButton.TabIndex = 48;
+            this.browseLevelButton.Text = "Browse";
+            this.browseLevelButton.UseVisualStyleBackColor = true;
+            this.browseLevelButton.Click += new System.EventHandler(this.BrowseLevelButtonClick);
+            // 
+            // browseSpecButton
+            // 
+            this.browseSpecButton.Location = new System.Drawing.Point(487, 31);
+            this.browseSpecButton.Name = "browseSpecButton";
+            this.browseSpecButton.Size = new System.Drawing.Size(75, 23);
+            this.browseSpecButton.TabIndex = 49;
+            this.browseSpecButton.Text = "Browse";
+            this.browseSpecButton.UseVisualStyleBackColor = true;
+            this.browseSpecButton.Click += new System.EventHandler(this.BrowseSpecButtonClick);
+            // 
+            // browsePalettesButton
+            // 
+            this.browsePalettesButton.Location = new System.Drawing.Point(487, 56);
+            this.browsePalettesButton.Name = "browsePalettesButton";
+            this.browsePalettesButton.Size = new System.Drawing.Size(75, 23);
+            this.browsePalettesButton.TabIndex = 50;
+            this.browsePalettesButton.Text = "Browse";
+            this.browsePalettesButton.UseVisualStyleBackColor = true;
+            this.browsePalettesButton.Click += new System.EventHandler(this.BrowsePalettesButtonClick);
+            // 
             // LoadLevelDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(491, 115);
+            this.ClientSize = new System.Drawing.Size(580, 115);
+            this.Controls.Add(this.browsePalettesButton);
+            this.Controls.Add(this.browseSpecButton);
+            this.Controls.Add(this.browseLevelButton);
             this.Controls.Add(this.levelLabel);
             this.Controls.Add(this.specTextBox);
             this.Controls.Add(this.specLabel);
@@ -121,7 +157,8 @@
             this.Controls.Add(this.okButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "LoadLevelDialog";
-            this.Text = "Load Level";
+            this.Text = "Open Level";
+            this.Load += new System.EventHandler(this.LoadLevelDialogLoad);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -136,5 +173,8 @@
         private System.Windows.Forms.TextBox palettesTextBox;
         private System.Windows.Forms.Label palettesLabel;
         private System.Windows.Forms.TextBox levelTextBox;
+        private System.Windows.Forms.Button browseLevelButton;
+        private System.Windows.Forms.Button browseSpecButton;
+        private System.Windows.Forms.Button browsePalettesButton;
     }
 }
