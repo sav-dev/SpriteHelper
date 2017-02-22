@@ -192,7 +192,8 @@ namespace SpriteHelper
                 }
             }
 
-            this.SetLevel(newLevel);            
+            this.SetLevel(newLevel);
+            this.ClearHistory();
         }
 
         #endregion
@@ -306,7 +307,6 @@ namespace SpriteHelper
 
         private void SetLevel(string[][] newLevel)
         {
-            this.AddHistory();
             this.level = newLevel;
             this.UpdateBitmap();
         }
@@ -387,7 +387,7 @@ namespace SpriteHelper
             // todo: export
         }
 
-        private void AdvancedToolStripMenuItemClick(object sender, EventArgs e)
+        private void PropertiesToolStripMenuItemClick(object sender, EventArgs e)
         {
             var editLevelDialog = new EditLevelDialog(this.level.Length);
             editLevelDialog.FormClosed += (notUsed1, notUsed2) =>
@@ -405,12 +405,12 @@ namespace SpriteHelper
 
         private void UndoToolStripMenuItemClick(object sender, EventArgs e)
         {
-            // todo: undo
+            this.Undo();
         }
 
         private void RedoToolStripMenuItemClick(object sender, EventArgs e)
         {
-            // todo: redo
+            this.Redo();
         }
 
         #endregion
@@ -500,7 +500,7 @@ namespace SpriteHelper
 
         public void SetTile(int x, int y, MouseButtons buttons)
         {
-            if (x >= this.level.Length || y >= this.level[0].Length)
+            if (x >= this.level.Length || y >= this.level[0].Length || x < 0 || y < 0)
             {
                 return;
             }
@@ -561,11 +561,51 @@ namespace SpriteHelper
         //// History stuff
         ////
 
+        public void ClearHistory()
+        {
+            this.history.Clear();
+            this.future.Clear();
+            this.undoToolStripMenuItem.Enabled = false;
+            this.redoToolStripMenuItem.Enabled = false;
+        }
+
         public void AddHistory()
         {
-            if (this.level != null)
+            this.history.Push(this.level);
+            this.undoToolStripMenuItem.Enabled = true;
+            this.future.Clear();
+            this.redoToolStripMenuItem.Enabled = false;
+        }
+
+        public void Undo()
+        {
+            if (this.history.Count == 0)
             {
-                this.history.Push(this.level);
+                return;
+            }
+
+            this.future.Push(this.level);
+            this.SetLevel(this.history.Pop());
+
+            if (this.history.Count == 0)
+            {
+                this.undoToolStripMenuItem.Enabled = false;
+            }
+        }
+
+        public void Redo()
+        {
+            if (this.future.Count == 0)
+            {
+                return;
+            }
+
+            this.history.Push(this.level);
+            this.SetLevel(this.future.Pop());
+
+            if (this.future.Count == 0)
+            {
+                this.redoToolStripMenuItem.Enabled = false;
             }
         }
 
