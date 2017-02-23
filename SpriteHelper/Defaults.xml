@@ -10,7 +10,8 @@
     <string>C:\Users\tomas\Documents\NES\GitHub\Platformer\Graphics\Backgrounds\01\back_01_pipes_blocking.png</string>
   </BlockingBackgrounds>
   <NonBlockingBackgrounds>
-    <string>C:\Users\tomas\Documents\NES\GitHub\Platformer\Graphics\Backgrounds\01\back_01_pipes_nonblocking.png</string>    
+    <string>C:\Users\tomas\Documents\NES\GitHub\Platformer\Graphics\Backgrounds\01\back_01_pipes_nonblocking.png</string>
+    <string>C:\Users\tomas\Documents\NES\GitHub\Platformer\Graphics\Backgrounds\01\back_01_water_nonblocking.png</string>
   </NonBlockingBackgrounds>  
   <ThreatBackgrounds>
     <string>C:\Users\tomas\Documents\NES\GitHub\Platformer\Graphics\Backgrounds\01\back_01_pipes_threat.png</string>
