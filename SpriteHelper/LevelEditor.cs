@@ -428,6 +428,11 @@ namespace SpriteHelper
             // todo: export level and attributes
         }
 
+        private void TransformToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            // todo: open the transform dialog
+        }
+
         private void PropertiesToolStripMenuItemClick(object sender, EventArgs e)
         {
             var editLevelDialog = new EditLevelDialog(this.level.Length);
