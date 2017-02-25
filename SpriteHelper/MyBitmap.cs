@@ -10,6 +10,7 @@ namespace SpriteHelper
         private static readonly Color[] NesGreyscale = new[] { NesPalette.Colors[15], NesPalette.Colors[0], NesPalette.Colors[16], NesPalette.Colors[32] };
 
         private string fileName;
+
         private int width;
         private int height;
         private Color[][] pixels;
@@ -117,12 +118,43 @@ namespace SpriteHelper
             this.pixels[x][y] = color;
         }
 
-        public void DrawImage(MyBitmap image, int x, int y)
+        public void Resize(int newWidth, int newHeight, Color? backColor = null)
         {
+            var newBitmap = new MyBitmap(newWidth, newHeight, backColor);
+            newBitmap.DrawImage(this, 0, 0);
+            this.Set(newBitmap);
+        }
+
+        private void Set(MyBitmap newBitmap)
+        {
+            this.pixels = newBitmap.pixels;
+            this.width = newBitmap.width;
+            this.height = newBitmap.height;
+        }
+
+        public void DrawImage(MyBitmap image, int x, int y, bool resize = false, Color? backColor = null)
+        {
+            if ((x + image.width > this.width || y + image.height > this.height) && resize)
+            {
+                this.Resize(Math.Max(x + image.width, this.width), Math.Max(y + image.height, this.height), backColor);
+            }
+
+            // todo: not go out of bounds
+
             for (var i = 0; i < image.Width; i++)
             {
+                if (i + x >= this.width)
+                {
+                    break;
+                }
+
                 for (var j = 0; j < image.Height; j++)
                 {
+                    if (j + y >= this.height)
+                    {
+                        break;
+                    }
+
                     this.SetPixel(image.GetPixel(i, j), i + x, j + y);
                 }
             }

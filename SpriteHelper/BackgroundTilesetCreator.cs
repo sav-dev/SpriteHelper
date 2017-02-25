@@ -57,25 +57,31 @@ namespace SpriteHelper
                     bitmap.MakeNesGreyscale();
                 }
 
-                return CreateSingleBitmap(bitmaps);
+                // todo: test Resize
+
+                // todo: uncomment
+                //return CreateSingleBitmap(bitmaps);
+
+                // todo: delete
+                return null;
             };
 
-            var nonBlockingBitmap = process(nonBlocking);
-            var blockingBitmap = process(blocking);
-            var threatBitmap = process(threat);
-
-            nonBlockingBitmap.ToBitmap().Save(directory + "\\_nonblocking_gs.png");
-            blockingBitmap.ToBitmap().Save(directory + "\\_blocking_gs.png");
-            threatBitmap.ToBitmap().Save(directory + "\\_threat.png");
-
             // todo: uncomment
+            //var nonBlockingBitmap = process(nonBlocking);
+            //var blockingBitmap = process(blocking);
+            //var threatBitmap = process(threat);
+            //
+            //nonBlockingBitmap.ToBitmap().Save(directory + "\\_nonblocking_gs.png");
+            //blockingBitmap.ToBitmap().Save(directory + "\\_blocking_gs.png");
+            //threatBitmap.ToBitmap().Save(directory + "\\_threat.png");
+            //
             //Process(directory + "\\_nonblocking_gs.png", directory + "\\_blocking_gs.png", directory + "\\_threat.png");
         }
 
         private MyBitmap CreateSingleBitmap(MyBitmap[] bitmaps)
         {
             // todo: implement
-            throw new NotImplementedException();
+            throw new NotImplementedException();            
         }
 
         private void Process(string nonBlockingFile, string blockingFile, string threatFile)
