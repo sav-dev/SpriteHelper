@@ -7,6 +7,9 @@ namespace SpriteHelper
 {
     public class MyBitmap : IEquatable<MyBitmap>
     {
+        private static readonly Color NesBlack = NesPalette.Colors[15];
+        private static readonly Color[] NesGreyscale = new[] { NesBlack, NesPalette.Colors[0], NesPalette.Colors[16], NesPalette.Colors[32] };
+
         private string fileName;
         private int width;
         private int height;
@@ -188,10 +191,20 @@ namespace SpriteHelper
             return true;
         }
 
-        public void UpdateToGreyscale(Color[] sourceColors)
+        public void ValidateIsGreyscale()
         {
-            var targetColors = new[] { NesPalette.Colors[15], NesPalette.Colors[0], NesPalette.Colors[16], NesPalette.Colors[32] };
-            this.UpdateColors(sourceColors, targetColors);
+            foreach (var color in this.UniqueColors())
+            {
+                if (color.R != color.G || color.G != color.B)
+                {
+                    throw new Exception("Bitmap not in greyscale");
+                }
+            }
+        }
+
+        public void MakeNesGreyscale()
+        {
+            this.UpdateColors(this.UniqueColors(), NesGreyscale);
         }
 
         public void UpdateColors(Color[] sourceColors, Color[] targetColors)
@@ -231,6 +244,11 @@ namespace SpriteHelper
             }
 
             return string.Format("Bitmap {0} x {1}", this.width, this.height);
+        }
+
+        public bool IsNesColor(int i)
+        {
+            return this.IsSolidColor(NesGreyscale[i]);
         }
 
         public bool IsSolidColor(Color color)

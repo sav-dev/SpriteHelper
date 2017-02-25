@@ -4,21 +4,11 @@
   <AnimationSpec>C:\users\tomas\documents\nes\github\platformer\graphics\sprites\gunner_spec.xml</AnimationSpec>
   <Palette>C:\users\tomas\documents\nes\github\platformer\graphics\palettes\palette.png</Palette>
   <PalettesSpec>C:\users\tomas\documents\nes\github\platformer\graphics\palettes\palettes_01.xml</PalettesSpec>
-  <BlockingBackgrounds>
-    <string>C:\Users\tomas\Documents\NES\GitHub\Platformer\Graphics\Backgrounds\01\back_01_ground_blocking.png</string>
-    <string>C:\Users\tomas\Documents\NES\GitHub\Platformer\Graphics\Backgrounds\01\back_01_large_pipes_blocking.png</string>
-    <string>C:\Users\tomas\Documents\NES\GitHub\Platformer\Graphics\Backgrounds\01\back_01_pipes_blocking.png</string>
-  </BlockingBackgrounds>
-  <NonBlockingBackgrounds>
-    <string>C:\Users\tomas\Documents\NES\GitHub\Platformer\Graphics\Backgrounds\01\back_01_pipes_nonblocking.png</string>
-    <string>C:\Users\tomas\Documents\NES\GitHub\Platformer\Graphics\Backgrounds\01\back_01_water_nonblocking.png</string>
-  </NonBlockingBackgrounds>  
-  <ThreatBackgrounds>
-    <string>C:\Users\tomas\Documents\NES\GitHub\Platformer\Graphics\Backgrounds\01\back_01_pipes_threat.png</string>
-    <string>C:\Users\tomas\Documents\NES\GitHub\Platformer\Graphics\Backgrounds\01\back_01_water_threat.png</string>
-  </ThreatBackgrounds>  
-  <DefaultBgColor>0,1,0</DefaultBgColor>
-  <BackgroundChr>C:\Users\tomas\Documents\NES\GitHub\Platformer\Graphics\Backgrounds\01\back_01_chr.png</BackgroundChr>
-  <BackgroundSpec>C:\Users\tomas\Documents\NES\GitHub\Platformer\Graphics\Backgrounds\01\back_01.xml</BackgroundSpec>
-  <DefaultDir>C:\Users\tomas\Documents\NES\GitHub\Platformer\Graphics\Backgrounds</DefaultDir>
+  <NonBlockingBackground>C:\Users\tomas\Desktop\bg02\greyscale\nonblocking.png</NonBlockingBackground>
+  <BlockingBackground>C:\Users\tomas\Desktop\bg02\greyscale\blocking.png</BlockingBackground>
+  <ThreatBackground>C:\Users\tomas\Desktop\bg02\greyscale\threat.png</ThreatBackground>  
+  <BgColor>0</BgColor>
+  <BackgroundChr>C:\Users\tomas\Desktop\bg02\chr.png</BackgroundChr>
+  <BackgroundSpec>C:\Users\tomas\Desktop\bg02\back.xml</BackgroundSpec>
+  <DefaultDir>C:\Users\tomas\Desktop\bg02</DefaultDir>
 </Defaults>

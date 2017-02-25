@@ -8,10 +8,13 @@ namespace SpriteHelper
     public class BackgroundConfig
     {
         [DataMember]
-        public BackgroundFile[] BackgroundFiles { get; set; }
+        public string NonBlockingFile { get; set; }
 
         [DataMember]
-        public PaletteMapping[] PaletteMappings { get; set; }
+        public string BlockingFile { get; set; }
+
+        [DataMember]
+        public string ThreatFile { get; set; }
 
         [DataMember]
         public Tile[] Tiles { get; set; }
@@ -67,12 +70,9 @@ namespace SpriteHelper
         {
             get
             {
-                return string.Format("{0}-{1}-{2}-{3}-{4}", this.BackgroundFileId, this.X, this.Y, this.WidthInSprites, this.HeightSprites);
+                return string.Format("{0}-{1}-{2}-{3}-{4}", this.Type, this.X, this.Y, this.WidthInSprites, this.HeightSprites);
             }
         }
-
-        [DataMember]
-        public int BackgroundFileId { get; set; }
 
         [DataMember]
         public int X { get; set; }
@@ -88,10 +88,7 @@ namespace SpriteHelper
 
         [DataMember]
         public int HeightSprites { get; set; }
-
-        [DataMember]
-        public int PaletteMappingId { get; set; }
-
+        
         // 0 1 2
         // 3 4 5
         // 6 7 8
