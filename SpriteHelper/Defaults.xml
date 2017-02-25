@@ -1,14 +1,16 @@
 ﻿<Defaults>
-  <AppToRun>Level</AppToRun>
-  <AnimationImage>C: \users\tomas\documents\nes\github\platformer\graphics\sprites\gunner_sprites.png</AnimationImage>
-  <AnimationSpec>C:\users\tomas\documents\nes\github\platformer\graphics\sprites\gunner_spec.xml</AnimationSpec>
-  <Palette>C:\users\tomas\documents\nes\github\platformer\graphics\palettes\palette.png</Palette>
-  <PalettesSpec>C:\users\tomas\documents\nes\github\platformer\graphics\palettes\palettes_01.xml</PalettesSpec>
-  <NonBlockingBackground>C:\Users\tomas\Desktop\bg02\greyscale\nonblocking.png</NonBlockingBackground>
-  <BlockingBackground>C:\Users\tomas\Desktop\bg02\greyscale\blocking.png</BlockingBackground>
-  <ThreatBackground>C:\Users\tomas\Desktop\bg02\greyscale\threat.png</ThreatBackground>  
+  <AppToRun>Background</AppToRun>
+    
+         <AnimationImage>C:\users\tomas\documents\nes\github\platformer\graphics\sprites\gunner_sprites.png</AnimationImage>
+          <AnimationSpec>C:\users\tomas\documents\nes\github\platformer\graphics\sprites\gunner_spec.xml</AnimationSpec>
+                <Palette>C:\users\tomas\documents\nes\github\platformer\graphics\palettes\palette.png</Palette>
+           <PalettesSpec>C:\users\tomas\documents\nes\github\platformer\graphics\palettes\palettes_01.xml</PalettesSpec>
+  <NonBlockingBackground>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\01\nonblocking.png</NonBlockingBackground>
+     <BlockingBackground>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\01\blocking.png</BlockingBackground>
+       <ThreatBackground>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\01\threat.png</ThreatBackground>    
+          <BackgroundChr>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\01\chr.png</BackgroundChr>
+         <BackgroundSpec>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\01\back.xml</BackgroundSpec>
+             <DefaultDir>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\01\</DefaultDir>
+  
   <BgColor>0</BgColor>
-  <BackgroundChr>C:\Users\tomas\Desktop\bg02\chr.png</BackgroundChr>
-  <BackgroundSpec>C:\Users\tomas\Desktop\bg02\back.xml</BackgroundSpec>
-  <DefaultDir>C:\Users\tomas\Desktop\bg02</DefaultDir>
 </Defaults>
