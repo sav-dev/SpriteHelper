@@ -7,20 +7,34 @@ namespace SpriteHelper
 {
     public class MyBitmap : IEquatable<MyBitmap>
     {
-        private static readonly Color NesBlack = NesPalette.Colors[15];
-        private static readonly Color[] NesGreyscale = new[] { NesBlack, NesPalette.Colors[0], NesPalette.Colors[16], NesPalette.Colors[32] };
+        private static readonly Color[] NesGreyscale = new[] { NesPalette.Colors[15], NesPalette.Colors[0], NesPalette.Colors[16], NesPalette.Colors[32] };
 
         private string fileName;
         private int width;
         private int height;
         private Color[][] pixels;
 
+        private int? colorSkip;
+
         public int Width { get { return this.width; } }
         public int Height { get { return this.height; } }
         public string FileName { get { return this.fileName; } }
 
-        public static MyBitmap FromFile(string file)
+        public static MyBitmap FromFileWithParams(string file)
         {
+            var split = file.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+            var bitmap = FromFile(split[0]);
+            if (split.Length > 1)
+            {
+                var colorSkip = int.Parse(split[1]);
+                bitmap.colorSkip = colorSkip;
+            }
+
+            return bitmap;
+        }
+
+        public static MyBitmap FromFile(string file)
+        {        
             var bitmap = new Bitmap(file);
             var result = new MyBitmap(bitmap.Width, bitmap.Height);
             for (var i = 0; i < bitmap.Width; i++)
@@ -161,8 +175,8 @@ namespace SpriteHelper
                     results.Add(color);
                 }
             }
-
-            return results.Distinct().OrderBy(c => string.Format("{0},{1},{2}", c.R, c.G, c.B)).ToArray();
+            
+            return results.Distinct().OrderBy(c => c.Luminance()).ToArray();
         }
 
         public bool Equals(MyBitmap other)
@@ -191,17 +205,6 @@ namespace SpriteHelper
             return true;
         }
 
-        public void ValidateIsGreyscale()
-        {
-            foreach (var color in this.UniqueColors())
-            {
-                if (color.R != color.G || color.G != color.B)
-                {
-                    throw new Exception("Bitmap not in greyscale");
-                }
-            }
-        }
-
         public void MakeNesGreyscale()
         {
             this.UpdateColors(this.UniqueColors(), NesGreyscale);
@@ -214,6 +217,11 @@ namespace SpriteHelper
 
         public void UpdateColors(List<Color> sourceColors, List<Color> targetColors)
         {
+            if (this.colorSkip.HasValue)
+            {
+                targetColors.RemoveAt(this.colorSkip.Value);
+            }
+
             if (sourceColors.Count != targetColors.Count)
             {
                 throw new Exception("Invalid number of colors provided");

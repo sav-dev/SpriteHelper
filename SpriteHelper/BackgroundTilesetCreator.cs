@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -20,9 +21,9 @@ namespace SpriteHelper
 
         private void PreLoad()
         {
-            this.nonBlockingTextBox.Text = Defaults.Instance.NonBlockingBackground;
-            this.blockingTextBox.Text = Defaults.Instance.BlockingBackground;            
-            this.threatTextBox.Text = Defaults.Instance.ThreatBackground;
+            this.nonBlockingTextBox.Lines = Defaults.Instance.NonBlockingBackgrounds;
+            this.blockingTextBox.Lines = Defaults.Instance.BlockingBackgrounds;
+            this.threatTextBox.Lines = Defaults.Instance.ThreatBackgrounds;
             this.bgColorComboBox.SelectedIndex = Defaults.Instance.BgColor;
             this.outputImageTextBox.Text = Defaults.Instance.BackgroundChr;
             this.outputSpecTextBox.Text = Defaults.Instance.BackgroundSpec;
@@ -36,14 +37,57 @@ namespace SpriteHelper
 
         private void Process()
         {
+            var allFiles = this.nonBlockingTextBox.Lines.Union(this.blockingTextBox.Lines).Union(this.threatTextBox.Lines);
+            var directories = allFiles.Select(f => new FileInfo(f).Directory.ToString()).Distinct();
+            if (directories.Count() > 1)
+            {
+                throw new Exception("All input files should be in the same directory");
+            }
+
+            var directory = directories.First();
+
+            var nonBlocking = this.nonBlockingTextBox.Lines.Select(l => MyBitmap.FromFileWithParams(l)).ToArray();
+            var blocking = this.blockingTextBox.Lines.Select(l => MyBitmap.FromFileWithParams(l)).ToArray();
+            var threat = this.threatTextBox.Lines.Select(l => MyBitmap.FromFileWithParams(l)).ToArray();
+
+            Func<MyBitmap[], MyBitmap> process = bitmaps =>
+            {
+                foreach (var bitmap in bitmaps)
+                {
+                    bitmap.MakeNesGreyscale();
+                }
+
+                return CreateSingleBitmap(bitmaps);
+            };
+
+            var nonBlockingBitmap = process(nonBlocking);
+            var blockingBitmap = process(blocking);
+            var threatBitmap = process(threat);
+
+            nonBlockingBitmap.ToBitmap().Save(directory + "\\_nonblocking_gs.png");
+            blockingBitmap.ToBitmap().Save(directory + "\\_blocking_gs.png");
+            threatBitmap.ToBitmap().Save(directory + "\\_threat.png");
+
+            // todo: uncomment
+            //Process(directory + "\\_nonblocking_gs.png", directory + "\\_blocking_gs.png", directory + "\\_threat.png");
+        }
+
+        private MyBitmap CreateSingleBitmap(MyBitmap[] bitmaps)
+        {
+            // todo: implement
+            throw new NotImplementedException();
+        }
+
+        private void Process(string nonBlockingFile, string blockingFile, string threatFile)
+        {
             // Create config with file names.
             var config = new BackgroundConfig
             {
-                NonBlockingFile = this.nonBlockingTextBox.Text,
-                BlockingFile = this.blockingTextBox.Text,
-                ThreatFile = this.threatTextBox.Text
+                NonBlockingFile = nonBlockingFile,
+                BlockingFile = blockingFile,
+                ThreatFile = threatFile
             };
-
+            
             // Get all files
             var nonBlocking = MyBitmap.FromFile(config.NonBlockingFile);
             var blocking = MyBitmap.FromFile(config.BlockingFile);
@@ -53,13 +97,13 @@ namespace SpriteHelper
             var allTiles = new List<MyBitmap>();
             var tiles = new List<Tile>();
             var sprites = new List<MyBitmap>();
-
+            
             // Processing function
             string emptyTileId = null;
             Action<MyBitmap, TileType> processList = (bitmap, tileType) =>
             {                
                 bitmap.MakeNesGreyscale();
-
+            
                 for (var x = 0; x < bitmap.Width; x += Constants.BackgroundTileWidth)
                 {
                     for (var y = 0; y < bitmap.Height; y += Constants.BackgroundTileHeight)
@@ -72,15 +116,15 @@ namespace SpriteHelper
                             {
                                 throw new Exception(string.Format("Tile {0}/{1} in file {2} is repeated somewhere", x, y, bitmap.FileName));
                             }
-
+            
                             continue;
                         }
-
+            
                         if (isEmptyTile && tileType != TileType.NonBlocking)
                         {
                             throw new Exception("Empty tile found first in file other than non-blocking");
                         }
-
+            
                         var tileConfig = new Tile
                         {
                             HeightSprites = Constants.BackgroundTileHeight / Constants.SpriteHeight,
@@ -89,14 +133,14 @@ namespace SpriteHelper
                             X = x,
                             Y = y
                         };
-
+            
                         if (isEmptyTile)
                         {
                             emptyTileId = tileConfig.Id;
                         }
-
+            
                         tileConfig.Sprites = new int[tileConfig.WidthInSprites * tileConfig.HeightSprites];
-
+            
                         var spritesInTile = new MyBitmap[] 
                         {
                             newTile.GetPart(0, 0, Constants.SpriteWidth, Constants.SpriteHeight),
@@ -104,7 +148,7 @@ namespace SpriteHelper
                             newTile.GetPart(0, Constants.SpriteHeight, Constants.SpriteWidth, Constants.SpriteHeight),
                             newTile.GetPart(Constants.SpriteWidth, Constants.SpriteHeight, Constants.SpriteWidth, Constants.SpriteHeight)
                         };
-
+            
                         for (var i = 0; i < spritesInTile.Length; i++)
                         {
                             var sprite = spritesInTile[i];
@@ -123,26 +167,26 @@ namespace SpriteHelper
                             
                             tileConfig.Sprites[i] = indexOfSprite;
                         }
-
+            
                         tiles.Add(tileConfig);
                         allTiles.Add(newTile);
                     }
                 }
             };
-
+            
             // Process all tiles (non blocking first)
             processList(nonBlocking, TileType.NonBlocking);
             processList(blocking, TileType.Blocking);            
             processList(threat, TileType.Threat);
-
+            
             // Move empty tile to the 1st place
             var emptyTile = tiles.First(t => t.Id == emptyTileId);
             tiles.Remove(emptyTile);
             tiles.Insert(0, emptyTile);
-
+            
             // Set tiles in the config
             config.Tiles = tiles.ToArray();
-
+            
             // Generate chrFile
             var chrFile = new MyBitmap(Constants.SpriteWidth * Constants.ChrFileSpritesPerRow, Constants.SpriteHeight * Constants.ChrFileRows, Color.Black);
             {                

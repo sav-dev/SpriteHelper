@@ -23,13 +23,13 @@ namespace SpriteHelper
         public string PalettesSpec { get; set; }
 
         [DataMember]
-        public string NonBlockingBackground { get; set; }
+        public string[] NonBlockingBackgrounds { get; set; }
 
         [DataMember]
-        public string BlockingBackground { get; set; }
+        public string[] BlockingBackgrounds { get; set; }
 
         [DataMember]
-        public string ThreatBackground { get; set; }
+        public string[] ThreatBackgrounds { get; set; }
 
         [DataMember]
         public int BgColor { get; set; }

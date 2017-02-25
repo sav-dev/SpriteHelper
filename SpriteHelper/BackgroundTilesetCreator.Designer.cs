@@ -45,7 +45,7 @@
             // 
             // outputImageTextBox
             // 
-            this.outputImageTextBox.Location = new System.Drawing.Point(86, 130);
+            this.outputImageTextBox.Location = new System.Drawing.Point(86, 197);
             this.outputImageTextBox.Name = "outputImageTextBox";
             this.outputImageTextBox.Size = new System.Drawing.Size(395, 20);
             this.outputImageTextBox.TabIndex = 3;
@@ -53,7 +53,7 @@
             // blockingLabel
             // 
             this.blockingLabel.AutoSize = true;
-            this.blockingLabel.Location = new System.Drawing.Point(13, 37);
+            this.blockingLabel.Location = new System.Drawing.Point(13, 65);
             this.blockingLabel.Name = "blockingLabel";
             this.blockingLabel.Size = new System.Drawing.Size(48, 13);
             this.blockingLabel.TabIndex = 4;
@@ -62,7 +62,7 @@
             // specLabel
             // 
             this.specLabel.AutoSize = true;
-            this.specLabel.Location = new System.Drawing.Point(12, 133);
+            this.specLabel.Location = new System.Drawing.Point(12, 200);
             this.specLabel.Name = "specLabel";
             this.specLabel.Size = new System.Drawing.Size(70, 13);
             this.specLabel.TabIndex = 5;
@@ -71,7 +71,7 @@
             // palettesLabel
             // 
             this.palettesLabel.AutoSize = true;
-            this.palettesLabel.Location = new System.Drawing.Point(12, 159);
+            this.palettesLabel.Location = new System.Drawing.Point(12, 226);
             this.palettesLabel.Name = "palettesLabel";
             this.palettesLabel.Size = new System.Drawing.Size(65, 13);
             this.palettesLabel.TabIndex = 15;
@@ -79,22 +79,23 @@
             // 
             // outputSpecTextBox
             // 
-            this.outputSpecTextBox.Location = new System.Drawing.Point(86, 156);
+            this.outputSpecTextBox.Location = new System.Drawing.Point(86, 223);
             this.outputSpecTextBox.Name = "outputSpecTextBox";
             this.outputSpecTextBox.Size = new System.Drawing.Size(395, 20);
             this.outputSpecTextBox.TabIndex = 14;
             // 
             // blockingTextBox
             // 
-            this.blockingTextBox.Location = new System.Drawing.Point(86, 34);
+            this.blockingTextBox.Location = new System.Drawing.Point(86, 62);
+            this.blockingTextBox.Multiline = true;
             this.blockingTextBox.Name = "blockingTextBox";
-            this.blockingTextBox.Size = new System.Drawing.Size(395, 20);
+            this.blockingTextBox.Size = new System.Drawing.Size(395, 48);
             this.blockingTextBox.TabIndex = 16;
             this.blockingTextBox.WordWrap = false;
             // 
             // processButton
             // 
-            this.processButton.Location = new System.Drawing.Point(406, 191);
+            this.processButton.Location = new System.Drawing.Point(406, 258);
             this.processButton.Name = "processButton";
             this.processButton.Size = new System.Drawing.Size(75, 23);
             this.processButton.TabIndex = 17;
@@ -105,7 +106,7 @@
             // bgColorLabel
             // 
             this.bgColorLabel.AutoSize = true;
-            this.bgColorLabel.Location = new System.Drawing.Point(12, 89);
+            this.bgColorLabel.Location = new System.Drawing.Point(12, 173);
             this.bgColorLabel.Name = "bgColorLabel";
             this.bgColorLabel.Size = new System.Drawing.Size(49, 13);
             this.bgColorLabel.TabIndex = 19;
@@ -114,8 +115,9 @@
             // nonBlockingTextBox
             // 
             this.nonBlockingTextBox.Location = new System.Drawing.Point(86, 8);
+            this.nonBlockingTextBox.Multiline = true;
             this.nonBlockingTextBox.Name = "nonBlockingTextBox";
-            this.nonBlockingTextBox.Size = new System.Drawing.Size(395, 20);
+            this.nonBlockingTextBox.Size = new System.Drawing.Size(395, 48);
             this.nonBlockingTextBox.TabIndex = 22;
             this.nonBlockingTextBox.WordWrap = false;
             // 
@@ -128,18 +130,19 @@
             this.nonBlockingLabel.TabIndex = 21;
             this.nonBlockingLabel.Text = "Non-blocking";
             // 
-            // threatsTextBox
+            // threatTextBox
             // 
-            this.threatTextBox.Location = new System.Drawing.Point(86, 60);
-            this.threatTextBox.Name = "threatsTextBox";
-            this.threatTextBox.Size = new System.Drawing.Size(395, 20);
+            this.threatTextBox.Location = new System.Drawing.Point(86, 116);
+            this.threatTextBox.Multiline = true;
+            this.threatTextBox.Name = "threatTextBox";
+            this.threatTextBox.Size = new System.Drawing.Size(395, 48);
             this.threatTextBox.TabIndex = 24;
             this.threatTextBox.WordWrap = false;
             // 
             // ThreatsLabel
             // 
             this.ThreatsLabel.AutoSize = true;
-            this.ThreatsLabel.Location = new System.Drawing.Point(12, 63);
+            this.ThreatsLabel.Location = new System.Drawing.Point(12, 119);
             this.ThreatsLabel.Name = "ThreatsLabel";
             this.ThreatsLabel.Size = new System.Drawing.Size(43, 13);
             this.ThreatsLabel.TabIndex = 23;
@@ -150,10 +153,10 @@
             this.bgColorComboBox.FormattingEnabled = true;
             this.bgColorComboBox.Items.AddRange(new object[] {
             "Black",
-            "Light Grey",
+            "Dark Grey",
             "Medium Grey",
-            "Dark Grey"});
-            this.bgColorComboBox.Location = new System.Drawing.Point(86, 86);
+            "Light Grey"});
+            this.bgColorComboBox.Location = new System.Drawing.Point(86, 170);
             this.bgColorComboBox.Name = "bgColorComboBox";
             this.bgColorComboBox.Size = new System.Drawing.Size(121, 21);
             this.bgColorComboBox.TabIndex = 25;
@@ -162,7 +165,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(489, 219);
+            this.ClientSize = new System.Drawing.Size(489, 287);
             this.Controls.Add(this.bgColorComboBox);
             this.Controls.Add(this.threatTextBox);
             this.Controls.Add(this.ThreatsLabel);

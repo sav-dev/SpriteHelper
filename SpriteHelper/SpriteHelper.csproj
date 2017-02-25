@@ -60,6 +60,7 @@
     <Compile Include="DoubleBufferedPanel.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Extensions.cs" />
     <Compile Include="Level.cs" />
     <Compile Include="LoadLevelDialog.cs">
       <SubType>Form</SubType>
