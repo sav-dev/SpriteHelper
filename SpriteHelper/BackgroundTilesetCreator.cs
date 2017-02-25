@@ -45,6 +45,16 @@ namespace SpriteHelper
             }
 
             var directory = directories.First();
+            var nonBlockingFile = directory + "\\_nonblocking_gs.png";
+            var blockingFile = directory + "\\_blocking_gs.png";
+            var threatFile = directory + "\\_threat.png";
+
+            if (allFiles.Any(f => new FileInfo(f).FullName == new FileInfo(nonBlockingFile).FullName ||
+                                  new FileInfo(f).FullName == new FileInfo(blockingFile).FullName ||
+                                  new FileInfo(f).FullName == new FileInfo(threatFile).FullName))
+            {
+                throw new Exception("One input file called like the intermediate ouputs");
+            }
 
             var nonBlocking = this.nonBlockingTextBox.Lines.Select(l => MyBitmap.FromFileWithParams(l)).ToArray();
             var blocking = this.blockingTextBox.Lines.Select(l => MyBitmap.FromFileWithParams(l)).ToArray();
@@ -57,31 +67,39 @@ namespace SpriteHelper
                     bitmap.MakeNesGreyscale();
                 }
 
-                // todo: test Resize
-
-                // todo: uncomment
-                //return CreateSingleBitmap(bitmaps);
-
-                // todo: delete
-                return null;
+                return CreateSingleBitmap(bitmaps);                
             };
 
-            // todo: uncomment
-            //var nonBlockingBitmap = process(nonBlocking);
-            //var blockingBitmap = process(blocking);
-            //var threatBitmap = process(threat);
-            //
-            //nonBlockingBitmap.ToBitmap().Save(directory + "\\_nonblocking_gs.png");
-            //blockingBitmap.ToBitmap().Save(directory + "\\_blocking_gs.png");
-            //threatBitmap.ToBitmap().Save(directory + "\\_threat.png");
-            //
-            //Process(directory + "\\_nonblocking_gs.png", directory + "\\_blocking_gs.png", directory + "\\_threat.png");
+            var nonBlockingBitmap = process(nonBlocking);
+            var blockingBitmap = process(blocking);
+            var threatBitmap = process(threat);
+            
+            nonBlockingBitmap.ToBitmap().Save(nonBlockingFile);
+            blockingBitmap.ToBitmap().Save(blockingFile);
+            threatBitmap.ToBitmap().Save(threatFile);
+            
+            Process(directory + "\\_nonblocking_gs.png", directory + "\\_blocking_gs.png", directory + "\\_threat.png");
         }
 
         private MyBitmap CreateSingleBitmap(MyBitmap[] bitmaps)
-        {
-            // todo: implement
-            throw new NotImplementedException();            
+        {            
+            var positions = Packer.Pack(bitmaps.Select(b => b.Size), Constants.PickerWidth);
+            var bitmapsCopy = bitmaps.ToList();
+            var backColor = MyBitmap.NesGreyscale[bgColorComboBox.SelectedIndex];
+            var resultBitmap = new MyBitmap(1, 1, backColor);
+
+            foreach (var tuple in positions)
+            {
+                var position = tuple.Item1;
+                var size = tuple.Item2;
+
+                var bitmap = bitmapsCopy.First(b => b.Size == size);
+                bitmapsCopy.Remove(bitmap);
+
+                resultBitmap.DrawImage(bitmap, position.X, position.Y, true, backColor);
+            }
+
+            return resultBitmap;
         }
 
         private void Process(string nonBlockingFile, string blockingFile, string threatFile)

@@ -12,5 +12,8 @@
         public const int ChrFileRows = 16;          // never change
 
         public const int MaxZoom = 10;
+
+        public const int PickerWidthInTiles = 6;
+        public const int PickerWidth = PickerWidthInTiles * BackgroundTileWidth;
     }
 }

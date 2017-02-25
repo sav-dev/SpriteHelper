@@ -7,7 +7,7 @@ namespace SpriteHelper
 {
     public class MyBitmap : IEquatable<MyBitmap>
     {
-        private static readonly Color[] NesGreyscale = new[] { NesPalette.Colors[15], NesPalette.Colors[0], NesPalette.Colors[16], NesPalette.Colors[32] };
+        public static readonly Color[] NesGreyscale = new[] { NesPalette.Colors[15], NesPalette.Colors[0], NesPalette.Colors[16], NesPalette.Colors[32] };
 
         private string fileName;
 
@@ -19,6 +19,7 @@ namespace SpriteHelper
 
         public int Width { get { return this.width; } }
         public int Height { get { return this.height; } }
+        public Size Size { get { return new Size(this.width, this.height); } }
         public string FileName { get { return this.fileName; } }
 
         public static MyBitmap FromFileWithParams(string file)

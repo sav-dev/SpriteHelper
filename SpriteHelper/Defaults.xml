@@ -19,8 +19,8 @@
     <string>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\01\threat1.png</string>
     <string>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\01\threat2.png</string>
   </ThreatBackgrounds>
-  <BackgroundChr>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\01\chr.png</BackgroundChr>
-  <BackgroundSpec>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\01\back.xml</BackgroundSpec>
+  <BackgroundChr>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\01\_chr.png</BackgroundChr>
+  <BackgroundSpec>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\01\_back.xml</BackgroundSpec>
   <DefaultDir>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\01\</DefaultDir>  
   <BgColor>0</BgColor>
 </Defaults>

@@ -80,6 +80,7 @@
     <Compile Include="LevelEditor.Designer.cs">
       <DependentUpon>LevelEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Packer.cs" />
     <Compile Include="SpriteConfig.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="AnimationHelper.cs">
