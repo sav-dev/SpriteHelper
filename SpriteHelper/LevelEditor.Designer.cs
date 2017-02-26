@@ -56,6 +56,8 @@
             this.showGridToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.selectedTileLabel = new System.Windows.Forms.Label();
             this.selectedTilePictureBox = new System.Windows.Forms.PictureBox();
+            this.uniqueTilesLabel = new System.Windows.Forms.Label();
+            this.uniqueTilesCountLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerVertical)).BeginInit();
             this.splitContainerVertical.Panel1.SuspendLayout();
             this.splitContainerVertical.Panel2.SuspendLayout();
@@ -83,6 +85,8 @@
             // 
             // splitContainerVertical.Panel2
             // 
+            this.splitContainerVertical.Panel2.Controls.Add(this.uniqueTilesCountLabel);
+            this.splitContainerVertical.Panel2.Controls.Add(this.uniqueTilesLabel);
             this.splitContainerVertical.Panel2.Controls.Add(this.selectedTilePictureBox);
             this.splitContainerVertical.Panel2.Controls.Add(this.selectedTileLabel);
             this.splitContainerVertical.Panel2.Controls.Add(this.mainTabControl);
@@ -334,6 +338,24 @@
             this.selectedTilePictureBox.TabIndex = 49;
             this.selectedTilePictureBox.TabStop = false;
             // 
+            // uniqueTilesLabel
+            // 
+            this.uniqueTilesLabel.AutoSize = true;
+            this.uniqueTilesLabel.Location = new System.Drawing.Point(171, 24);
+            this.uniqueTilesLabel.Name = "uniqueTilesLabel";
+            this.uniqueTilesLabel.Size = new System.Drawing.Size(68, 13);
+            this.uniqueTilesLabel.TabIndex = 50;
+            this.uniqueTilesLabel.Text = "Unique tiles: ";
+            // 
+            // uniqueTilesCountLabel
+            // 
+            this.uniqueTilesCountLabel.AutoSize = true;
+            this.uniqueTilesCountLabel.Location = new System.Drawing.Point(235, 24);
+            this.uniqueTilesCountLabel.Name = "uniqueTilesCountLabel";
+            this.uniqueTilesCountLabel.Size = new System.Drawing.Size(13, 13);
+            this.uniqueTilesCountLabel.TabIndex = 51;
+            this.uniqueTilesCountLabel.Text = "0";
+            // 
             // LevelEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -396,5 +418,7 @@
         private System.Windows.Forms.TabPage threatTilesTabPage;
         private System.Windows.Forms.PictureBox selectedTilePictureBox;
         private System.Windows.Forms.Label selectedTileLabel;
+        private System.Windows.Forms.Label uniqueTilesLabel;
+        private System.Windows.Forms.Label uniqueTilesCountLabel;
     }
 }

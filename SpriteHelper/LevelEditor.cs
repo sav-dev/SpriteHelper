@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -98,9 +96,16 @@ namespace SpriteHelper
             this.toolStripStatusLabel.Text = text;
         }
 
-        private void UpdateStatus(string format, params object[] args)
+        private bool UpdateStatus(string format, params object[] args)
         {
-            this.toolStripStatusLabel.Text = string.Format(format, args);
+            var newStatus = string.Format(format, args);
+            if (this.toolStripStatusLabel.Text == newStatus)
+            {
+                return false;
+            }
+
+            this.toolStripStatusLabel.Text = newStatus;
+            return true;
         }
 
         #endregion
@@ -357,6 +362,7 @@ namespace SpriteHelper
         private void SetLevel(string[][] newLevel)
         {
             this.level = newLevel;
+            this.UpdateTileCount();
             this.UpdateBitmap();
         }
 
@@ -543,28 +549,52 @@ namespace SpriteHelper
         private void DrawPanelMouseLeave(object sender, EventArgs e)
         {
             this.UpdateStatus(null);
+            this.drawPanel.BackgroundImage = this.bitmap;
+            this.drawPanel.Refresh();
         }
 
         private void DrawPanelMouseDown(object sender, MouseEventArgs e)
         {
             var x = e.X / TileWidth;
             var y = e.Y / TileWidth;
-            this.SetTile(x, y, e.Button);
+            if (this.SetTile(x, y, e.Button))
+            {
+                var bitmapClone = new Bitmap(this.bitmap);
+                using (var graphics = Graphics.FromImage(bitmapClone))
+                {
+                    graphics.DrawRectangle(new Pen(Color.Wheat, 2), x * TileWidth + 1, y * TileHeight + 1, TileWidth - 2, TileHeight - 2);
+                }
+
+                drawPanel.BackgroundImage = bitmapClone;
+                drawPanel.Refresh();
+            }
+
         }
 
         private void DrawPanelMouseMove(object sender, MouseEventArgs e)
         {
             var x = e.X / TileWidth;
             var y = e.Y / TileWidth;
-            this.UpdateStatus("{0} / {1}", x, y);
-            this.SetTile(x, y, e.Button);
+            if (this.UpdateStatus("{0} / {1}", x, y))
+            {
+                this.SetTile(x, y, e.Button);
+
+                var bitmapClone = new Bitmap(this.bitmap);
+                using (var graphics = Graphics.FromImage(bitmapClone))
+                {
+                    graphics.DrawRectangle(new Pen(Color.Wheat, 2), x * TileWidth + 1, y * TileHeight + 1, TileWidth - 2, TileHeight - 2);
+                }
+
+                drawPanel.BackgroundImage = bitmapClone;
+                drawPanel.Refresh();
+            }
         }
 
-        public void SetTile(int x, int y, MouseButtons buttons)
+        public bool SetTile(int x, int y, MouseButtons buttons)
         {
             if (x >= this.level.Length || y >= this.level[0].Length || x < 0 || y < 0)
             {
-                return;
+                return false;
             }
 
             string tile;
@@ -573,7 +603,7 @@ namespace SpriteHelper
                 tile = this.selectedTile;
                 if (tile == null)
                 {
-                    return;
+                    return false;
                 }
             }
             else if (buttons.HasFlag(MouseButtons.Right))
@@ -582,12 +612,12 @@ namespace SpriteHelper
             }
             else
             {
-                return;
+                return false;
             }
             
             if (this.level[x][y] == tile)
             {
-                return;
+                return false;
             }
 
             this.AddHistory();
@@ -595,6 +625,13 @@ namespace SpriteHelper
             var image = this.tiles[tile][(int)this.Settings];
             this.graphics.DrawImage(image, new Point(x * TileWidth, y * TileHeight));
             this.drawPanel.Refresh();
+            this.UpdateTileCount();
+            return true;
+        }
+
+        private void UpdateTileCount()
+        {
+            this.uniqueTilesCountLabel.Text = this.level.SelectMany(l => l).Distinct().Count().ToString();
         }
 
         #endregion
