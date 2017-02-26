@@ -1,5 +1,5 @@
 ﻿<Defaults>
-  <AppToRun>Background</AppToRun>
+  <AppToRun>Level</AppToRun>
   <AnimationImage>C:\users\tomas\documents\nes\github\platformer\graphics\sprites\gunner_sprites.png</AnimationImage>
   <AnimationSpec>C:\users\tomas\documents\nes\github\platformer\graphics\sprites\gunner_spec.xml</AnimationSpec>
   <Palette>C:\users\tomas\documents\nes\github\platformer\graphics\palettes\palette.png</Palette>

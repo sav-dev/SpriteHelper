@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
@@ -83,7 +84,8 @@ namespace SpriteHelper
         
         private void LevelEditorResize(object sender, EventArgs e)
         {
-            this.UpdateDrawPanel();
+            // todo: uncomment
+            //this.UpdateDrawPanel();
         }
         
         private void PreLoad()
@@ -231,7 +233,15 @@ namespace SpriteHelper
 
                 for (var palette = 0; palette < 4; palette++)
                 {
+                    var tileSelector = new TileSelector(this.bitmaps[type][palette]);
+                    
+                    var tableLayoutPanel = new TableLayoutPanel { Dock = DockStyle.Fill };
+                    tableLayoutPanel.ColumnCount = 1;
+                    tableLayoutPanel.RowCount = 1;
+                    tableLayoutPanel.Controls.Add(tileSelector, 0, 0);
+
                     var tabPage = new TabPage { Text = string.Format("Palette {0}", palette) };
+                    tabPage.Controls.Add(tableLayoutPanel);
                     paletteTabControl.Controls.Add(tabPage);
                 }
 
@@ -241,8 +251,25 @@ namespace SpriteHelper
 
         public string SelectedTile()
         {
-            // todo: implement
-            return null;
+            var tabControl = this.mainTabControl.SelectedTab.Controls.Cast<object>().FirstOrDefault(c => c is TabControl) as TabControl;
+            if (tabControl == null)
+            {
+                return null;
+            }
+
+            var panel = tabControl.SelectedTab.Controls.Cast<object>().FirstOrDefault(c => c is TableLayoutPanel) as TableLayoutPanel;
+            if (panel == null)
+            {
+                return null;
+            }
+
+            var selector = panel.Controls.Cast<object>().FirstOrDefault(c => c is TileSelector) as TileSelector;
+            if (selector == null)
+            {
+                return null;
+            }
+
+            return selector.SelectedTile;
         }
 
         #endregion
@@ -579,23 +606,6 @@ namespace SpriteHelper
 
         #endregion
 
-        #region HelperTypes
-
-        ////
-        //// Helper types
-        ////
-
-        [Flags]
-        public enum TileVersion
-        {
-            None = 0,
-            Grid = 1,
-            Type = 2,
-            All = 3
-        }
-
-        #endregion
-
         #region History
 
         ////
@@ -665,6 +675,37 @@ namespace SpriteHelper
             {
                 this.redoToolStripMenuItem.Enabled = false;
             }
+        }
+
+        #endregion
+
+        #region HelperTypes
+
+        ////
+        //// Helper types
+        ////
+
+        [Flags]
+        public enum TileVersion
+        {
+            None = 0,
+            Grid = 1,
+            Type = 2,
+            All = 3
+        }
+
+        public class TileSelector : PictureBox
+        {
+            public TileSelector(MyBitmap image)
+            {
+                this.Anchor = AnchorStyles.None;
+                this.Image = image.Scale(Zoom).ToBitmap();
+                this.Size = this.Image.Size;
+            }
+
+            public string SelectedTile { get; private set; }
+
+            // todo: implement this control
         }
 
         #endregion

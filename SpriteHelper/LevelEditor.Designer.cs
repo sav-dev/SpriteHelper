@@ -32,6 +32,10 @@
             this.outerOuterDrawPanel = new System.Windows.Forms.Panel();
             this.outerDrawPanel = new System.Windows.Forms.Panel();
             this.scrollBar = new System.Windows.Forms.HScrollBar();
+            this.mainTabControl = new System.Windows.Forms.TabControl();
+            this.blockingTilesTabPage = new System.Windows.Forms.TabPage();
+            this.nonBlockingTilesTabPage = new System.Windows.Forms.TabPage();
+            this.threatTilesTabPage = new System.Windows.Forms.TabPage();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
@@ -50,18 +54,14 @@
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showGridToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.threatTilesTabPage = new System.Windows.Forms.TabPage();
-            this.nonBlockingTilesTabPage = new System.Windows.Forms.TabPage();
-            this.blockingTilesTabPage = new System.Windows.Forms.TabPage();
-            this.mainTabControl = new System.Windows.Forms.TabControl();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerVertical)).BeginInit();
             this.splitContainerVertical.Panel1.SuspendLayout();
             this.splitContainerVertical.Panel2.SuspendLayout();
             this.splitContainerVertical.SuspendLayout();
             this.outerOuterDrawPanel.SuspendLayout();
+            this.mainTabControl.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.menuStrip.SuspendLayout();
-            this.mainTabControl.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainerVertical
@@ -111,6 +111,49 @@
             this.scrollBar.Size = new System.Drawing.Size(568, 17);
             this.scrollBar.TabIndex = 0;
             this.scrollBar.Scroll += new System.Windows.Forms.ScrollEventHandler(this.ScrollBarScroll);
+            // 
+            // mainTabControl
+            // 
+            this.mainTabControl.Alignment = System.Windows.Forms.TabAlignment.Bottom;
+            this.mainTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.mainTabControl.Controls.Add(this.blockingTilesTabPage);
+            this.mainTabControl.Controls.Add(this.nonBlockingTilesTabPage);
+            this.mainTabControl.Controls.Add(this.threatTilesTabPage);
+            this.mainTabControl.Location = new System.Drawing.Point(14, 14);
+            this.mainTabControl.Multiline = true;
+            this.mainTabControl.Name = "mainTabControl";
+            this.mainTabControl.SelectedIndex = 0;
+            this.mainTabControl.Size = new System.Drawing.Size(439, 502);
+            this.mainTabControl.TabIndex = 47;
+            // 
+            // blockingTilesTabPage
+            // 
+            this.blockingTilesTabPage.Location = new System.Drawing.Point(4, 4);
+            this.blockingTilesTabPage.Name = "blockingTilesTabPage";
+            this.blockingTilesTabPage.Size = new System.Drawing.Size(431, 476);
+            this.blockingTilesTabPage.TabIndex = 2;
+            this.blockingTilesTabPage.Text = "Blocking";
+            this.blockingTilesTabPage.UseVisualStyleBackColor = true;
+            // 
+            // nonBlockingTilesTabPage
+            // 
+            this.nonBlockingTilesTabPage.Location = new System.Drawing.Point(4, 4);
+            this.nonBlockingTilesTabPage.Name = "nonBlockingTilesTabPage";
+            this.nonBlockingTilesTabPage.Size = new System.Drawing.Size(431, 476);
+            this.nonBlockingTilesTabPage.TabIndex = 3;
+            this.nonBlockingTilesTabPage.Text = "Non-blocking";
+            this.nonBlockingTilesTabPage.UseVisualStyleBackColor = true;
+            // 
+            // threatTilesTabPage
+            // 
+            this.threatTilesTabPage.Location = new System.Drawing.Point(4, 4);
+            this.threatTilesTabPage.Name = "threatTilesTabPage";
+            this.threatTilesTabPage.Size = new System.Drawing.Size(431, 476);
+            this.threatTilesTabPage.TabIndex = 4;
+            this.threatTilesTabPage.Text = "Threat";
+            this.threatTilesTabPage.UseVisualStyleBackColor = true;
             // 
             // statusStrip
             // 
@@ -267,49 +310,6 @@
             this.showGridToolStripMenuItem.Text = "Show &Grid";
             this.showGridToolStripMenuItem.Click += new System.EventHandler(this.ShowGridToolStripMenuItemClick);
             // 
-            // threatTilesTabPage
-            // 
-            this.threatTilesTabPage.Location = new System.Drawing.Point(4, 4);
-            this.threatTilesTabPage.Name = "threatTilesTabPage";
-            this.threatTilesTabPage.Size = new System.Drawing.Size(431, 476);
-            this.threatTilesTabPage.TabIndex = 4;
-            this.threatTilesTabPage.Text = "Threat";
-            this.threatTilesTabPage.UseVisualStyleBackColor = true;
-            // 
-            // nonBlockingTilesTabPage
-            // 
-            this.nonBlockingTilesTabPage.Location = new System.Drawing.Point(4, 4);
-            this.nonBlockingTilesTabPage.Name = "nonBlockingTilesTabPage";
-            this.nonBlockingTilesTabPage.Size = new System.Drawing.Size(431, 476);
-            this.nonBlockingTilesTabPage.TabIndex = 3;
-            this.nonBlockingTilesTabPage.Text = "Non-blocking";
-            this.nonBlockingTilesTabPage.UseVisualStyleBackColor = true;
-            // 
-            // blockingTilesTabPage
-            // 
-            this.blockingTilesTabPage.Location = new System.Drawing.Point(4, 4);
-            this.blockingTilesTabPage.Name = "blockingTilesTabPage";
-            this.blockingTilesTabPage.Size = new System.Drawing.Size(431, 476);
-            this.blockingTilesTabPage.TabIndex = 2;
-            this.blockingTilesTabPage.Text = "Blocking";
-            this.blockingTilesTabPage.UseVisualStyleBackColor = true;
-            // 
-            // mainTabControl
-            // 
-            this.mainTabControl.Alignment = System.Windows.Forms.TabAlignment.Bottom;
-            this.mainTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.mainTabControl.Controls.Add(this.blockingTilesTabPage);
-            this.mainTabControl.Controls.Add(this.nonBlockingTilesTabPage);
-            this.mainTabControl.Controls.Add(this.threatTilesTabPage);
-            this.mainTabControl.Location = new System.Drawing.Point(14, 14);
-            this.mainTabControl.Multiline = true;
-            this.mainTabControl.Name = "mainTabControl";
-            this.mainTabControl.SelectedIndex = 0;
-            this.mainTabControl.Size = new System.Drawing.Size(439, 502);
-            this.mainTabControl.TabIndex = 47;
-            // 
             // LevelEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -319,7 +319,7 @@
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.menuStrip);
             this.MainMenuStrip = this.menuStrip;
-            this.MinimumSize = new System.Drawing.Size(16, 620);
+            this.MinimumSize = new System.Drawing.Size(600, 620);
             this.Name = "LevelEditor";
             this.Text = "Level editor";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
@@ -330,11 +330,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerVertical)).EndInit();
             this.splitContainerVertical.ResumeLayout(false);
             this.outerOuterDrawPanel.ResumeLayout(false);
+            this.mainTabControl.ResumeLayout(false);
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
-            this.mainTabControl.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
