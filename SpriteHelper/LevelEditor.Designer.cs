@@ -32,6 +32,10 @@
             this.outerOuterDrawPanel = new System.Windows.Forms.Panel();
             this.outerDrawPanel = new System.Windows.Forms.Panel();
             this.scrollBar = new System.Windows.Forms.HScrollBar();
+            this.uniqueTilesCountLabel = new System.Windows.Forms.Label();
+            this.uniqueTilesLabel = new System.Windows.Forms.Label();
+            this.selectedTilePictureBox = new System.Windows.Forms.PictureBox();
+            this.selectedTileLabel = new System.Windows.Forms.Label();
             this.mainTabControl = new System.Windows.Forms.TabControl();
             this.blockingTilesTabPage = new System.Windows.Forms.TabPage();
             this.nonBlockingTilesTabPage = new System.Windows.Forms.TabPage();
@@ -54,19 +58,15 @@
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showGridToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.selectedTileLabel = new System.Windows.Forms.Label();
-            this.selectedTilePictureBox = new System.Windows.Forms.PictureBox();
-            this.uniqueTilesLabel = new System.Windows.Forms.Label();
-            this.uniqueTilesCountLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerVertical)).BeginInit();
             this.splitContainerVertical.Panel1.SuspendLayout();
             this.splitContainerVertical.Panel2.SuspendLayout();
             this.splitContainerVertical.SuspendLayout();
             this.outerOuterDrawPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.selectedTilePictureBox)).BeginInit();
             this.mainTabControl.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.menuStrip.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.selectedTilePictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // splitContainerVertical
@@ -121,6 +121,45 @@
             this.scrollBar.TabIndex = 0;
             this.scrollBar.Scroll += new System.Windows.Forms.ScrollEventHandler(this.ScrollBarScroll);
             // 
+            // uniqueTilesCountLabel
+            // 
+            this.uniqueTilesCountLabel.AutoSize = true;
+            this.uniqueTilesCountLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.uniqueTilesCountLabel.ForeColor = System.Drawing.Color.Red;
+            this.uniqueTilesCountLabel.Location = new System.Drawing.Point(235, 24);
+            this.uniqueTilesCountLabel.Name = "uniqueTilesCountLabel";
+            this.uniqueTilesCountLabel.Size = new System.Drawing.Size(14, 13);
+            this.uniqueTilesCountLabel.TabIndex = 51;
+            this.uniqueTilesCountLabel.Text = "0";
+            // 
+            // uniqueTilesLabel
+            // 
+            this.uniqueTilesLabel.AutoSize = true;
+            this.uniqueTilesLabel.Location = new System.Drawing.Point(171, 24);
+            this.uniqueTilesLabel.Name = "uniqueTilesLabel";
+            this.uniqueTilesLabel.Size = new System.Drawing.Size(68, 13);
+            this.uniqueTilesLabel.TabIndex = 50;
+            this.uniqueTilesLabel.Text = "Unique tiles: ";
+            // 
+            // selectedTilePictureBox
+            // 
+            this.selectedTilePictureBox.BackColor = System.Drawing.Color.White;
+            this.selectedTilePictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.selectedTilePictureBox.Location = new System.Drawing.Point(100, 14);
+            this.selectedTilePictureBox.Name = "selectedTilePictureBox";
+            this.selectedTilePictureBox.Size = new System.Drawing.Size(32, 32);
+            this.selectedTilePictureBox.TabIndex = 49;
+            this.selectedTilePictureBox.TabStop = false;
+            // 
+            // selectedTileLabel
+            // 
+            this.selectedTileLabel.AutoSize = true;
+            this.selectedTileLabel.Location = new System.Drawing.Point(22, 24);
+            this.selectedTileLabel.Name = "selectedTileLabel";
+            this.selectedTileLabel.Size = new System.Drawing.Size(72, 13);
+            this.selectedTileLabel.TabIndex = 48;
+            this.selectedTileLabel.Text = "Selected Tile:";
+            // 
             // mainTabControl
             // 
             this.mainTabControl.Alignment = System.Windows.Forms.TabAlignment.Bottom;
@@ -150,7 +189,7 @@
             // 
             this.nonBlockingTilesTabPage.Location = new System.Drawing.Point(4, 4);
             this.nonBlockingTilesTabPage.Name = "nonBlockingTilesTabPage";
-            this.nonBlockingTilesTabPage.Size = new System.Drawing.Size(431, 476);
+            this.nonBlockingTilesTabPage.Size = new System.Drawing.Size(301, 437);
             this.nonBlockingTilesTabPage.TabIndex = 3;
             this.nonBlockingTilesTabPage.Text = "Non-blocking";
             this.nonBlockingTilesTabPage.UseVisualStyleBackColor = true;
@@ -159,7 +198,7 @@
             // 
             this.threatTilesTabPage.Location = new System.Drawing.Point(4, 4);
             this.threatTilesTabPage.Name = "threatTilesTabPage";
-            this.threatTilesTabPage.Size = new System.Drawing.Size(431, 476);
+            this.threatTilesTabPage.Size = new System.Drawing.Size(301, 437);
             this.threatTilesTabPage.TabIndex = 4;
             this.threatTilesTabPage.Text = "Threat";
             this.threatTilesTabPage.UseVisualStyleBackColor = true;
@@ -319,43 +358,6 @@
             this.showGridToolStripMenuItem.Text = "Show &Grid";
             this.showGridToolStripMenuItem.Click += new System.EventHandler(this.ShowGridToolStripMenuItemClick);
             // 
-            // selectedTileLabel
-            // 
-            this.selectedTileLabel.AutoSize = true;
-            this.selectedTileLabel.Location = new System.Drawing.Point(22, 24);
-            this.selectedTileLabel.Name = "selectedTileLabel";
-            this.selectedTileLabel.Size = new System.Drawing.Size(72, 13);
-            this.selectedTileLabel.TabIndex = 48;
-            this.selectedTileLabel.Text = "Selected Tile:";
-            // 
-            // selectedTilePictureBox
-            // 
-            this.selectedTilePictureBox.BackColor = System.Drawing.Color.White;
-            this.selectedTilePictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.selectedTilePictureBox.Location = new System.Drawing.Point(100, 14);
-            this.selectedTilePictureBox.Name = "selectedTilePictureBox";
-            this.selectedTilePictureBox.Size = new System.Drawing.Size(32, 32);
-            this.selectedTilePictureBox.TabIndex = 49;
-            this.selectedTilePictureBox.TabStop = false;
-            // 
-            // uniqueTilesLabel
-            // 
-            this.uniqueTilesLabel.AutoSize = true;
-            this.uniqueTilesLabel.Location = new System.Drawing.Point(171, 24);
-            this.uniqueTilesLabel.Name = "uniqueTilesLabel";
-            this.uniqueTilesLabel.Size = new System.Drawing.Size(68, 13);
-            this.uniqueTilesLabel.TabIndex = 50;
-            this.uniqueTilesLabel.Text = "Unique tiles: ";
-            // 
-            // uniqueTilesCountLabel
-            // 
-            this.uniqueTilesCountLabel.AutoSize = true;
-            this.uniqueTilesCountLabel.Location = new System.Drawing.Point(235, 24);
-            this.uniqueTilesCountLabel.Name = "uniqueTilesCountLabel";
-            this.uniqueTilesCountLabel.Size = new System.Drawing.Size(13, 13);
-            this.uniqueTilesCountLabel.TabIndex = 51;
-            this.uniqueTilesCountLabel.Text = "0";
-            // 
             // LevelEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -377,12 +379,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerVertical)).EndInit();
             this.splitContainerVertical.ResumeLayout(false);
             this.outerOuterDrawPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.selectedTilePictureBox)).EndInit();
             this.mainTabControl.ResumeLayout(false);
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.selectedTilePictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

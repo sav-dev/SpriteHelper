@@ -559,16 +559,8 @@ namespace SpriteHelper
             var y = e.Y / TileWidth;
             if (this.SetTile(x, y, e.Button))
             {
-                var bitmapClone = new Bitmap(this.bitmap);
-                using (var graphics = Graphics.FromImage(bitmapClone))
-                {
-                    graphics.DrawRectangle(new Pen(Color.Wheat, 2), x * TileWidth + 1, y * TileHeight + 1, TileWidth - 2, TileHeight - 2);
-                }
-
-                drawPanel.BackgroundImage = bitmapClone;
-                drawPanel.Refresh();
+                this.DrawPanelDrawCursor(x, y);
             }
-
         }
 
         private void DrawPanelMouseMove(object sender, MouseEventArgs e)
@@ -578,16 +570,20 @@ namespace SpriteHelper
             if (this.UpdateStatus("{0} / {1}", x, y))
             {
                 this.SetTile(x, y, e.Button);
-
-                var bitmapClone = new Bitmap(this.bitmap);
-                using (var graphics = Graphics.FromImage(bitmapClone))
-                {
-                    graphics.DrawRectangle(new Pen(Color.Wheat, 2), x * TileWidth + 1, y * TileHeight + 1, TileWidth - 2, TileHeight - 2);
-                }
-
-                drawPanel.BackgroundImage = bitmapClone;
-                drawPanel.Refresh();
+                this.DrawPanelDrawCursor(x, y);
             }
+        }
+
+        private void DrawPanelDrawCursor(int x, int y)
+        {
+            var bitmapClone = new Bitmap(this.bitmap);
+            using (var graphics = Graphics.FromImage(bitmapClone))
+            {
+                graphics.DrawRectangle(new Pen(MyBitmap.GridColor, 2), x * TileWidth + 1, y * TileHeight + 1, TileWidth - 2, TileHeight - 2);
+            }
+
+            drawPanel.BackgroundImage = bitmapClone;
+            drawPanel.Refresh();
         }
 
         public bool SetTile(int x, int y, MouseButtons buttons)
@@ -624,14 +620,15 @@ namespace SpriteHelper
             this.level[x][y] = tile;
             var image = this.tiles[tile][(int)this.Settings];
             this.graphics.DrawImage(image, new Point(x * TileWidth, y * TileHeight));
-            this.drawPanel.Refresh();
             this.UpdateTileCount();
             return true;
         }
 
         private void UpdateTileCount()
         {
-            this.uniqueTilesCountLabel.Text = this.level.SelectMany(l => l).Distinct().Count().ToString();
+            var tileCount = this.level.SelectMany(l => l).Distinct().Count();
+            this.uniqueTilesCountLabel.Text = tileCount.ToString();
+            this.uniqueTilesCountLabel.ForeColor = tileCount <= 32 ? Color.Black : Color.Red;
         }
 
         #endregion
@@ -768,7 +765,7 @@ namespace SpriteHelper
                 var bitmapClone = new Bitmap(this.bitmap);
                 using (var graphics = Graphics.FromImage(bitmapClone))
                 {
-                    graphics.DrawRectangle(new Pen(Color.Wheat, 2), x * TileWidth + 1, y * TileHeight + 1, TileWidth - 2, TileHeight - 2);
+                    graphics.DrawRectangle(new Pen(MyBitmap.GridColor, 2), x * TileWidth + 1, y * TileHeight + 1, TileWidth - 2, TileHeight - 2);
                 }
 
                 this.Image = bitmapClone;

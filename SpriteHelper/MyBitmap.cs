@@ -7,6 +7,7 @@ namespace SpriteHelper
 {
     public class MyBitmap : IEquatable<MyBitmap>
     {
+        public static readonly Color GridColor = Color.FromArgb(235, 235, 180);
         public static readonly Color[] NesGreyscale = new[] { NesPalette.Colors[15], NesPalette.Colors[0], NesPalette.Colors[16], NesPalette.Colors[32] };
 
         private string fileName;
@@ -67,7 +68,18 @@ namespace SpriteHelper
 
         public void DrawGrid()
         {
-            var gridColor = Color.FromArgb(235, 235, 180); // beige
+            var gridColor = GridColor;
+
+            for (var i = 0; i < this.width; i++)
+            {
+                this.SetPixel(gridColor, i, 0);
+            }
+
+            for (var i = 0; i < this.height; i++)
+            {
+                this.SetPixel(gridColor, 0, i);
+            }
+
             for (var i = 0; i < this.width; i++)
             {
                 this.SetPixel(gridColor, i, this.height - 1);
