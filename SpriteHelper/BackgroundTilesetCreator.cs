@@ -123,7 +123,7 @@ namespace SpriteHelper
             var sprites = new List<MyBitmap>();
             
             // Processing function
-            string emptyTileId = null;
+            Tile emptyTile = null;
             Action<MyBitmap, TileType> processList = (bitmap, tileType) =>
             {                
                 bitmap.MakeNesGreyscale();
@@ -152,13 +152,13 @@ namespace SpriteHelper
                         var tileConfig = new Tile
                         {
                             Type = tileType,
-                            X = x,
-                            Y = y
+                            X = x / Constants.BackgroundTileWidth,
+                            Y = y / Constants.BackgroundTileHeight
                         };
             
                         if (isEmptyTile)
                         {
-                            emptyTileId = tileConfig.Id;
+                            emptyTile = tileConfig;
                         }
             
                         tileConfig.Sprites = new int[4];
@@ -200,9 +200,13 @@ namespace SpriteHelper
             processList(nonBlocking, TileType.NonBlocking);
             processList(blocking, TileType.Blocking);            
             processList(threat, TileType.Threat);
-            
+
             // Move empty tile to the 1st place
-            var emptyTile = tiles.First(t => t.Id == emptyTileId);
+            if (emptyTile == null)
+            {
+                throw new Exception("Empty tile not found");
+            }
+
             tiles.Remove(emptyTile);
             tiles.Insert(0, emptyTile);
             

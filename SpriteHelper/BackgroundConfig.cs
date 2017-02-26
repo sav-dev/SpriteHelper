@@ -66,14 +66,6 @@ namespace SpriteHelper
     [DataContract]
     public class Tile
     {
-        public string Id
-        {
-            get
-            {
-                return string.Format("{0}-{1}-{2}", (int)this.Type, this.X, this.Y);
-            }
-        }
-
         [DataMember]
         public int X { get; set; }
 
@@ -87,18 +79,21 @@ namespace SpriteHelper
         // 2 3
         [DataMember]        
         public int[] Sprites { get; set; }
-
-        public override string ToString()
-        {
-            return this.Id;
-        }
     }
 
     [DataContract]
     public enum TileType
     {
-        Blocking,
-        NonBlocking,
-        Threat
+        Blocking = 0,
+        NonBlocking = 1,
+        Threat = 2
+    }
+
+    public static class TileIds
+    {
+        public static string TileId(int palette, TileType tileType, int x, int y)
+        {
+            return string.Format("{0}-{1}-{2}-{3}", palette, (int)tileType, x, y);
+        }
     }
 }

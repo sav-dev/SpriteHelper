@@ -23,6 +23,7 @@ namespace SpriteHelper
 
         // Cached tiles. Key is tile ID + palette.
         private Dictionary<string, Bitmap[]> tiles;
+        private string selectedTile;
         
         // Default size.
         private const int DefaultWidthInTiles = 64;
@@ -84,8 +85,7 @@ namespace SpriteHelper
         
         private void LevelEditorResize(object sender, EventArgs e)
         {
-            // todo: uncomment
-            //this.UpdateDrawPanel();
+            this.UpdateDrawPanel();
         }
         
         private void PreLoad()
@@ -139,57 +139,57 @@ namespace SpriteHelper
                 this.bitmaps.Add(type, dictionary);
             }
 
-            // todo: implement
-            //this.tiles = new Dictionary<string, Bitmap[]>();            
-            //foreach (var tile in this.config.Tiles)
-            //{
-            //    var tileBitmaps = new Bitmap[(int)TileVersion.All + 1];               
-            //    var tileBitmap = bitmaps[tile.Type].GetPart(tile.X, tile.Y, tile.WidthInSprites * Constants.SpriteWidth, tile.HeightSprites * Constants.SpriteHeight).Scale(Zoom);
-            //
-            //    // None
-            //    tileBitmaps[(int)TileVersion.None] = tileBitmap.ToBitmap();
-            //
-            //    // Grid
-            //    var tileBitmapGrid = tileBitmap.Clone();
-            //    tileBitmapGrid.DrawGrid();
-            //    tileBitmaps[(int)TileVersion.Grid] = tileBitmapGrid.ToBitmap();
-            //
-            //    // Type
-            //    foreach (var tileVersion in new[] { TileVersion.None, TileVersion.Grid })
-            //    {
-            //        var bitmapForVersion = tileBitmaps[(int)tileVersion];
-            //        var bitmapCopy = new Bitmap(bitmapForVersion);
-            //
-            //        Brush brush = null;
-            //        switch (tile.Type)
-            //        {
-            //            case TileType.Blocking:
-            //                brush = new SolidBrush(Color.FromArgb(100, 0, 255, 0));
-            //                break;
-            //
-            //            case TileType.Threat:
-            //                brush = new SolidBrush(Color.FromArgb(100, 255, 0, 0));
-            //                break;
-            //        }
-            //
-            //        if (brush != null)
-            //        { 
-            //            using (var graphics = Graphics.FromImage(bitmapCopy))
-            //            {
-            //                graphics.FillRectangle(brush, 0, 0, bitmapCopy.Width, bitmapCopy.Height);                                
-            //            }
-            //        }
-            //
-            //        tileBitmaps[(int)(tileVersion | TileVersion.Type)] = bitmapCopy;
-            //    }
-            //
-            //    this.tiles.Add(tile.Id, tileBitmaps);
-            //}
-            
-            this.PopulateTiles();
-            
+            this.tiles = new Dictionary<string, Bitmap[]>();            
+            foreach (var tile in this.config.Tiles)
+            {
+                for (var palette = 0; palette < 4; palette++)
+                {
+                    var tileBitmaps = new Bitmap[(int)TileVersion.All + 1];
+                    var tileBitmap = bitmaps[tile.Type][palette].GetPart(tile.X * Constants.BackgroundTileWidth, tile.Y * Constants.BackgroundTileHeight, Constants.BackgroundTileWidth, Constants.BackgroundTileHeight).Scale(Zoom);
+
+                    // None
+                    tileBitmaps[(int)TileVersion.None] = tileBitmap.ToBitmap();
+
+                    // Grid
+                    var tileBitmapGrid = tileBitmap.Clone();
+                    tileBitmapGrid.DrawGrid();
+                    tileBitmaps[(int)TileVersion.Grid] = tileBitmapGrid.ToBitmap();
+
+                    // Type
+                    foreach (var tileVersion in new[] { TileVersion.None, TileVersion.Grid })
+                    {
+                        var bitmapForVersion = tileBitmaps[(int)tileVersion];
+                        var bitmapCopy = new Bitmap(bitmapForVersion);
+
+                        Brush brush = null;
+                        switch (tile.Type)
+                        {
+                            case TileType.Blocking:
+                                brush = new SolidBrush(Color.FromArgb(100, 0, 255, 0));
+                                break;
+
+                            case TileType.Threat:
+                                brush = new SolidBrush(Color.FromArgb(100, 255, 0, 0));
+                                break;
+                        }
+
+                        if (brush != null)
+                        {
+                            using (var graphics = Graphics.FromImage(bitmapCopy))
+                            {
+                                graphics.FillRectangle(brush, 0, 0, bitmapCopy.Width, bitmapCopy.Height);
+                            }
+                        }
+
+                        tileBitmaps[(int)(tileVersion | TileVersion.Type)] = bitmapCopy;
+                    }
+
+                    this.tiles.Add(TileIds.TileId(palette, tile.Type, tile.X, tile.Y), tileBitmaps);
+                }
+            }
+                        
             // Empty tile should always be the 1st one
-            this.emptyTile = this.config.Tiles[0].Id;
+            this.emptyTile = TileIds.TileId(0, this.config.Tiles[0].Type, this.config.Tiles[0].X, this.config.Tiles[0].Y);
             
             string[][] newLevel;
             if (File.Exists(level))
@@ -209,7 +209,8 @@ namespace SpriteHelper
                     }
                 }
             }
-            
+
+            this.PopulateTiles();
             this.SetLevel(newLevel);
             this.ClearHistory();
         }
@@ -224,6 +225,8 @@ namespace SpriteHelper
 
         private void PopulateTiles()
         {
+            this.SetSelectedTile(this.emptyTile);
+
             foreach (var type in new[] { TileType.Blocking, TileType.NonBlocking, TileType.Threat })
             {
                 var tab = this.tileTabs[type];
@@ -233,9 +236,9 @@ namespace SpriteHelper
 
                 for (var palette = 0; palette < 4; palette++)
                 {
-                    var tileSelector = new TileSelector(this.bitmaps[type][palette]);
+                    var tileSelector = new TileSelector(this.bitmaps[type][palette], type, palette, id => this.SetSelectedTile(id) );
                     
-                    var tableLayoutPanel = new TableLayoutPanel { Dock = DockStyle.Fill };
+                    var tableLayoutPanel = new TableLayoutPanel { Dock = DockStyle.Fill, BackColor = this.palettes.BackgroundPalette[0].ActualColors[0] };
                     tableLayoutPanel.ColumnCount = 1;
                     tableLayoutPanel.RowCount = 1;
                     tableLayoutPanel.Controls.Add(tileSelector, 0, 0);
@@ -249,27 +252,18 @@ namespace SpriteHelper
             }
         }
 
-        public string SelectedTile()
+        private void SetSelectedTile(string id)
         {
-            var tabControl = this.mainTabControl.SelectedTab.Controls.Cast<object>().FirstOrDefault(c => c is TabControl) as TabControl;
-            if (tabControl == null)
+            if (tiles.Keys.Any(k => k == id))
             {
-                return null;
+                this.selectedTile = id;
+            }
+            else
+            {
+                this.selectedTile = emptyTile;
             }
 
-            var panel = tabControl.SelectedTab.Controls.Cast<object>().FirstOrDefault(c => c is TableLayoutPanel) as TableLayoutPanel;
-            if (panel == null)
-            {
-                return null;
-            }
-
-            var selector = panel.Controls.Cast<object>().FirstOrDefault(c => c is TileSelector) as TileSelector;
-            if (selector == null)
-            {
-                return null;
-            }
-
-            return selector.SelectedTile;
+            this.selectedTilePictureBox.Image = this.tiles[this.selectedTile][(int)TileVersion.None];
         }
 
         #endregion
@@ -368,21 +362,20 @@ namespace SpriteHelper
 
         private void UpdateBitmap()
         {
-            // todo fix
-            //this.bitmap = new Bitmap(this.level.Length * TileWidth, this.level[0].Length * TileHeight);
-            //this.graphics = Graphics.FromImage(this.bitmap);
-            //
-            //for (var x = 0; x < this.level.Length; x++)
-            //{
-            //    for (var y = 0; y < this.level[x].Length; y++)
-            //    {
-            //        var key = this.level[x][y];
-            //        var image = this.tiles[key][(int)this.Settings];
-            //        this.graphics.DrawImage(image, new Point(x * TileWidth, y * TileHeight));
-            //    }
-            //}
-            //
-            //this.UpdateDrawPanel();
+            this.bitmap = new Bitmap(this.level.Length * TileWidth, this.level[0].Length * TileHeight);
+            this.graphics = Graphics.FromImage(this.bitmap);
+            
+            for (var x = 0; x < this.level.Length; x++)
+            {
+                for (var y = 0; y < this.level[x].Length; y++)
+                {
+                    var key = this.level[x][y];
+                    var image = this.tiles[key][(int)this.Settings];
+                    this.graphics.DrawImage(image, new Point(x * TileWidth, y * TileHeight));
+                }
+            }
+            
+            this.UpdateDrawPanel();
         }
 
         private void ScrollBarScroll(object sender, ScrollEventArgs e)
@@ -577,7 +570,7 @@ namespace SpriteHelper
             string tile;
             if (buttons.HasFlag(MouseButtons.Left))
             {
-                tile = this.SelectedTile();
+                tile = this.selectedTile;
                 if (tile == null)
                 {
                     return;
@@ -696,16 +689,54 @@ namespace SpriteHelper
 
         public class TileSelector : PictureBox
         {
-            public TileSelector(MyBitmap image)
+            private Bitmap bitmap;
+            private Action<string> onClick;
+            private TileType tileType;
+            private int palette;
+
+            public TileSelector(MyBitmap image, TileType tileType, int palette, Action<string> onClick)
             {
                 this.Anchor = AnchorStyles.None;
-                this.Image = image.Scale(Zoom).ToBitmap();
-                this.Size = this.Image.Size;
+                this.bitmap = image.Scale(Zoom).ToBitmap();
+                this.Image = this.bitmap;
+                this.Size = this.bitmap.Size;
+                this.Cursor = Cursors.Cross;
+                this.onClick = onClick;
+                this.tileType = tileType;
+                this.palette = palette;
+
+                this.MouseMove += TileSelectorMouseMove;
+                this.MouseLeave += TileSelectorMouseLeave;
+                this.MouseDown += TileSelectorMouseDown;
             }
 
-            public string SelectedTile { get; private set; }
+            private void TileSelectorMouseDown(object sender, MouseEventArgs e)
+            {
+                var x = e.X / TileWidth;
+                var y = e.Y / TileHeight;
+                onClick(TileIds.TileId(this.palette, this.tileType, x, y));
 
-            // todo: implement this control
+            }
+
+            private void TileSelectorMouseLeave(object sender, EventArgs e)
+            {
+                this.Image = this.bitmap;
+                this.Refresh();
+            }
+
+            private void TileSelectorMouseMove(object sender, MouseEventArgs e)
+            {
+                var x = e.X / TileWidth;
+                var y = e.Y / TileHeight;
+                var bitmapClone = new Bitmap(this.bitmap);
+                using (var graphics = Graphics.FromImage(bitmapClone))
+                {
+                    graphics.DrawRectangle(new Pen(Color.Wheat, 2), x * TileWidth + 1, y * TileHeight + 1, TileWidth - 2, TileHeight - 2);
+                }
+
+                this.Image = bitmapClone;
+                this.Refresh();
+            }
         }
 
         #endregion
