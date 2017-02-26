@@ -151,8 +151,6 @@ namespace SpriteHelper
             
                         var tileConfig = new Tile
                         {
-                            HeightSprites = Constants.BackgroundTileHeight / Constants.SpriteHeight,
-                            WidthInSprites = Constants.BackgroundTileWidth / Constants.SpriteWidth,
                             Type = tileType,
                             X = x,
                             Y = y
@@ -163,7 +161,7 @@ namespace SpriteHelper
                             emptyTileId = tileConfig.Id;
                         }
             
-                        tileConfig.Sprites = new int[tileConfig.WidthInSprites * tileConfig.HeightSprites];
+                        tileConfig.Sprites = new int[4];
             
                         var spritesInTile = new MyBitmap[] 
                         {

@@ -14,7 +14,13 @@ namespace SpriteHelper
         private Palettes palettes;
         private BackgroundConfig config;
 
-        // Cached bitmaps.
+        // Palette tabs.
+        private Dictionary<TileType, TabPage> tileTabs;
+
+        // Bitmaps.
+        private Dictionary<TileType, Dictionary<int, MyBitmap>> bitmaps;
+
+        // Cached tiles. Key is tile ID + palette.
         private Dictionary<string, Bitmap[]> tiles;
         
         // Default size.
@@ -61,6 +67,12 @@ namespace SpriteHelper
             this.drawPanel.MouseDown += this.DrawPanelMouseDown;
             this.drawPanel.MouseLeave += this.DrawPanelMouseLeave;
             this.drawPanel.MouseMove += this.DrawPanelMouseMove;
+
+            this.tileTabs = new Dictionary<TileType, TabPage>();
+            this.tileTabs.Add(TileType.Blocking, blockingTilesTabPage);
+            this.tileTabs.Add(TileType.NonBlocking, nonBlockingTilesTabPage);
+            this.tileTabs.Add(TileType.Threat, threatTilesTabPage);
+
         }
 
         private void LevelEditorLoad(object sender, EventArgs e)
@@ -99,21 +111,38 @@ namespace SpriteHelper
 
         private void LoadLevel(string level, string spec, string palettes)
         {
-            //this.palettes = Palettes.Read(palettes);
-            //this.config = BackgroundConfig.Read(spec);
-            //
-            //var bitmaps = new MyBitmap[this.config.BackgroundFiles.Max(f => f.Id) + 1];
-            //foreach (var file in this.config.BackgroundFiles)
-            //{
-            //    bitmaps[file.Id] = MyBitmap.FromFile(file.FileName);
-            //}
-            //
-            //this.tiles = new Dictionary<string, Bitmap[]>();
-            //
+            this.palettes = Palettes.Read(palettes);
+            this.config = BackgroundConfig.Read(spec);
+
+            this.bitmaps = new Dictionary<TileType, Dictionary<int, MyBitmap>>();
+
+            foreach (var kvp in new Dictionary<TileType, MyBitmap>
+                                    {
+                                        { TileType.NonBlocking, MyBitmap.FromFile(config.NonBlockingFile) },
+                                        { TileType.Blocking, MyBitmap.FromFile(config.BlockingFile) },
+                                        { TileType.Threat, MyBitmap.FromFile(config.ThreatFile) },
+                                    })
+            {
+                var type = kvp.Key;
+                var bitmap = kvp.Value;
+                var dictionary = new Dictionary<int, MyBitmap>();
+
+                for (var i = 0; i < 4; i++)
+                {
+                    var clone = bitmap.Clone();
+                    clone.UpdateColors(clone.UniqueColors(), this.palettes.BackgroundPalette[i].ActualColors);
+                    dictionary.Add(i, clone);
+                }
+
+                this.bitmaps.Add(type, dictionary);
+            }
+
+            // todo: implement
+            //this.tiles = new Dictionary<string, Bitmap[]>();            
             //foreach (var tile in this.config.Tiles)
             //{
             //    var tileBitmaps = new Bitmap[(int)TileVersion.All + 1];               
-            //    var tileBitmap = bitmaps[tile.BackgroundFileId].GetPart(tile.X, tile.Y, tile.WidthInSprites * Constants.SpriteWidth, tile.HeightSprites * Constants.SpriteHeight).Scale(Zoom);
+            //    var tileBitmap = bitmaps[tile.Type].GetPart(tile.X, tile.Y, tile.WidthInSprites * Constants.SpriteWidth, tile.HeightSprites * Constants.SpriteHeight).Scale(Zoom);
             //
             //    // None
             //    tileBitmaps[(int)TileVersion.None] = tileBitmap.ToBitmap();
@@ -154,33 +183,33 @@ namespace SpriteHelper
             //
             //    this.tiles.Add(tile.Id, tileBitmaps);
             //}
-            //
-            //this.PopulateListViews();
-            //
-            //// empty tile should always be the 1st one
-            //this.emptyTile = this.config.Tiles[0].Id;
-            //
-            //string[][] newLevel;
-            //if (File.Exists(level))
-            //{
-            //    newLevel = Level.Read(level).Tiles;
-            //}
-            //else
-            //{
-            //    var widthInTiles = DefaultWidthInTiles;
-            //    newLevel = new string[widthInTiles][];
-            //    for (var i = 0; i < widthInTiles; i++)
-            //    {
-            //        newLevel[i] = new string[HeightInTiles];
-            //        for (var j = 0; j < HeightInTiles; j++)
-            //        {
-            //            newLevel[i][j] = this.emptyTile;
-            //        }
-            //    }
-            //}
-            //
-            //this.SetLevel(newLevel);
-            //this.ClearHistory();
+            
+            this.PopulateTiles();
+            
+            // Empty tile should always be the 1st one
+            this.emptyTile = this.config.Tiles[0].Id;
+            
+            string[][] newLevel;
+            if (File.Exists(level))
+            {
+                newLevel = Level.Read(level).Tiles;
+            }
+            else
+            {
+                var widthInTiles = DefaultWidthInTiles;
+                newLevel = new string[widthInTiles][];
+                for (var i = 0; i < widthInTiles; i++)
+                {
+                    newLevel[i] = new string[HeightInTiles];
+                    for (var j = 0; j < HeightInTiles; j++)
+                    {
+                        newLevel[i][j] = this.emptyTile;
+                    }
+                }
+            }
+            
+            this.SetLevel(newLevel);
+            this.ClearHistory();
         }
 
         #endregion
@@ -191,39 +220,29 @@ namespace SpriteHelper
         //// ListView related stuff
         ////
 
-        private void PopulateListViews()
+        private void PopulateTiles()
         {
-            Action<TileType, ListView> populateListView = (tileType, listView) =>
+            foreach (var type in new[] { TileType.Blocking, TileType.NonBlocking, TileType.Threat })
             {
-                listView.Items.Clear();
-                listView.LargeImageList = new ImageList { ImageSize = new Size(TileWidth, TileHeight) };
-                var index = 0;
-                foreach (var kvp in this.tiles)
+                var tab = this.tileTabs[type];
+                tab.Controls.Clear();
+
+                var paletteTabControl = new TabControl { Alignment = TabAlignment.Bottom, Dock = DockStyle.Fill };
+
+                for (var palette = 0; palette < 4; palette++)
                 {
-                    if (this.config.Tiles.First(t => t.Id == kvp.Key).Type != tileType)
-                    {
-                        continue;
-                    }
-
-                    listView.LargeImageList.Images.Add(kvp.Value[(int)TileVersion.None]);
-                    listView.Items.Add(new ListViewItem(kvp.Key, index++));
+                    var tabPage = new TabPage { Text = string.Format("Palette {0}", palette) };
+                    paletteTabControl.Controls.Add(tabPage);
                 }
-            };
 
-            populateListView(TileType.Blocking, this.listViewBlocking);
-            populateListView(TileType.NonBlocking, this.listViewNonBlocking);
-            populateListView(TileType.Threat, this.listViewThreat);
+                tab.Controls.Add(paletteTabControl);
+            }
         }
 
         public string SelectedTile()
         {
-            var selectedListView = this.tabControl.SelectedTab.Controls.Cast<object>().First(c => c is ListView) as ListView;
-            if (selectedListView.SelectedItems.Count == 0)
-            {
-                return null;
-            }
-
-            return selectedListView.SelectedItems[0].Text;
+            // todo: implement
+            return null;
         }
 
         #endregion
@@ -322,20 +341,21 @@ namespace SpriteHelper
 
         private void UpdateBitmap()
         {
-            this.bitmap = new Bitmap(this.level.Length * TileWidth, this.level[0].Length * TileHeight);
-            this.graphics = Graphics.FromImage(this.bitmap);
-
-            for (var x = 0; x < this.level.Length; x++)
-            {
-                for (var y = 0; y < this.level[x].Length; y++)
-                {
-                    var key = this.level[x][y];
-                    var image = this.tiles[key][(int)this.Settings];
-                    this.graphics.DrawImage(image, new Point(x * TileWidth, y * TileHeight));
-                }
-            }
-
-            this.UpdateDrawPanel();
+            // todo fix
+            //this.bitmap = new Bitmap(this.level.Length * TileWidth, this.level[0].Length * TileHeight);
+            //this.graphics = Graphics.FromImage(this.bitmap);
+            //
+            //for (var x = 0; x < this.level.Length; x++)
+            //{
+            //    for (var y = 0; y < this.level[x].Length; y++)
+            //    {
+            //        var key = this.level[x][y];
+            //        var image = this.tiles[key][(int)this.Settings];
+            //        this.graphics.DrawImage(image, new Point(x * TileWidth, y * TileHeight));
+            //    }
+            //}
+            //
+            //this.UpdateDrawPanel();
         }
 
         private void ScrollBarScroll(object sender, ScrollEventArgs e)
@@ -368,7 +388,7 @@ namespace SpriteHelper
 
         private void ApplyPaletteToolStripMenuItemClick(object sender, EventArgs e)
         {
-            this.PopulateListViews();
+            this.PopulateTiles();
             this.UpdateBitmap();
         }
 

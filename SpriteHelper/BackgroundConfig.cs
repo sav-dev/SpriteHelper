@@ -70,7 +70,7 @@ namespace SpriteHelper
         {
             get
             {
-                return string.Format("{0}-{1}-{2}-{3}-{4}", this.Type, this.X, this.Y, this.WidthInSprites, this.HeightSprites);
+                return string.Format("{0}-{1}-{2}", (int)this.Type, this.X, this.Y);
             }
         }
 
@@ -82,17 +82,9 @@ namespace SpriteHelper
 
         [DataMember]
         public TileType Type { get; set; }
-
-        [DataMember]
-        public int WidthInSprites { get; set; }
-
-        [DataMember]
-        public int HeightSprites { get; set; }
         
-        // 0 1 2
-        // 3 4 5
-        // 6 7 8
-        // ...
+        // 0 1
+        // 2 3
         [DataMember]        
         public int[] Sprites { get; set; }
 
