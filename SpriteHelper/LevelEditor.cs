@@ -464,7 +464,86 @@ namespace SpriteHelper
 
         private void TransformToolStripMenuItemClick(object sender, EventArgs e)
         {
-            // todo: open the transform dialog
+            var transformDialog = new TransformDialog(this.selectedTile, this.selectedTilePictureBox.Image);
+            transformDialog.FormClosed += (notUsed1, notUsed2) =>
+            {
+                switch (transformDialog.Result.Operation)
+                {
+                    case TransformDialog.TransformDialogResult.Fill:
+                        this.Fill((TransformDialog.FillOperation)transformDialog.Result);
+                        break;
+                    case TransformDialog.TransformDialogResult.Clone:
+                        this.Clone((TransformDialog.CloneOperation)transformDialog.Result);
+                        break;
+                }
+            };
+
+            transformDialog.ShowDialog();
+        }
+
+        private void Fill(TransformDialog.FillOperation result)
+        {
+            var changed = false;
+            var newLevel = this.CloneLevel();
+            for (var x = result.X; x < (this.level.Length) && x < result.X + result.Width; x++)
+            {
+                for (var y = result.Y; y < (this.level[0].Length) && y < result.Y + result.Height; y++)
+                {
+                    if (!changed && newLevel[x][y] != selectedTile)
+                    {
+                        changed = true;
+                    }
+
+                    newLevel[x][y] = result.SelectedTile;
+                }
+            }
+
+            if (changed)
+            {
+                this.AddHistory();
+                this.SetLevel(newLevel);
+            }
+        }
+
+        private void Clone(TransformDialog.CloneOperation result)
+        {
+            var changed = false;
+            var newLevel = this.CloneLevel();
+
+            var dx = 0;
+            for (var x = result.X; x < (this.level.Length) && x < result.X + result.Width; x++, dx++)
+            {
+                var newX = result.NewX + dx;
+                if (newX >= this.level.Length)
+                {
+                    break;
+                }
+
+                var dy = 0;
+                for (var y = result.Y; y < (this.level[0].Length) && y < result.Y + result.Height; y++, dy++)
+                {
+                    var newY = result.NewY + dy;
+                    if (newY >= this.level[0].Length)
+                    {
+                        break;
+                    }
+
+                    var newTile = newLevel[x][y];
+
+                    if (!changed && newLevel[newX][newY] != newTile)
+                    {
+                        changed = true;
+                    }
+                    
+                    newLevel[newX][newY] = newTile;
+                }
+            }
+
+            if (changed)
+            {
+                this.AddHistory();
+                this.SetLevel(newLevel);
+            }
         }
 
         private void PropertiesToolStripMenuItemClick(object sender, EventArgs e)
