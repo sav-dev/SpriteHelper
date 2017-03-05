@@ -279,6 +279,11 @@ namespace SpriteHelper
                 bytes.AddRange(highBits);
             }        
 
+            while (bytes.Count < 4096)
+            {
+                bytes.Add(0);
+            }
+
             // Save everything
             chrImage.ToBitmap().Save(outputImageTextBox.Text);
 
