@@ -52,12 +52,12 @@
             // 
             this.palettesTextBox.Location = new System.Drawing.Point(80, 12);
             this.palettesTextBox.Name = "palettesTextBox";
-            this.palettesTextBox.Size = new System.Drawing.Size(399, 20);
+            this.palettesTextBox.Size = new System.Drawing.Size(522, 20);
             this.palettesTextBox.TabIndex = 16;
             // 
             // processButton
             // 
-            this.processButton.Location = new System.Drawing.Point(405, 90);
+            this.processButton.Location = new System.Drawing.Point(528, 90);
             this.processButton.Name = "processButton";
             this.processButton.Size = new System.Drawing.Size(75, 23);
             this.processButton.TabIndex = 18;
@@ -67,12 +67,12 @@
             // 
             // palettesPictureBox
             // 
-            this.palettesPictureBox.BackColor = System.Drawing.Color.White;
+            this.palettesPictureBox.BackColor = System.Drawing.Color.Black;
             this.palettesPictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.palettesPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.palettesPictureBox.Location = new System.Drawing.Point(14, 129);
             this.palettesPictureBox.Name = "palettesPictureBox";
-            this.palettesPictureBox.Size = new System.Drawing.Size(466, 146);
+            this.palettesPictureBox.Size = new System.Drawing.Size(589, 124);
             this.palettesPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.palettesPictureBox.TabIndex = 19;
             this.palettesPictureBox.TabStop = false;
@@ -90,7 +90,7 @@
             // 
             this.spritesTextBox.Location = new System.Drawing.Point(81, 38);
             this.spritesTextBox.Name = "spritesTextBox";
-            this.spritesTextBox.Size = new System.Drawing.Size(399, 20);
+            this.spritesTextBox.Size = new System.Drawing.Size(522, 20);
             this.spritesTextBox.TabIndex = 20;
             // 
             // backgroundLabel
@@ -106,14 +106,14 @@
             // 
             this.backgroundTextBox.Location = new System.Drawing.Point(81, 64);
             this.backgroundTextBox.Name = "backgroundTextBox";
-            this.backgroundTextBox.Size = new System.Drawing.Size(399, 20);
+            this.backgroundTextBox.Size = new System.Drawing.Size(522, 20);
             this.backgroundTextBox.TabIndex = 22;
             // 
             // PaletteProcessor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(492, 283);
+            this.ClientSize = new System.Drawing.Size(615, 264);
             this.Controls.Add(this.backgroundLabel);
             this.Controls.Add(this.backgroundTextBox);
             this.Controls.Add(this.spritesLabel);
