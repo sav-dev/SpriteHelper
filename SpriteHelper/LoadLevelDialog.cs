@@ -29,7 +29,10 @@ namespace SpriteHelper
 
         private void LoadLevelDialogLoad(object sender, EventArgs e)
         {
-            this.PreLoad();
+            if (Defaults.Instance.ApplyDefaults)
+            {
+                this.PreLoad();
+            }
         }
 
         private void PreLoad()

@@ -77,7 +77,11 @@ namespace SpriteHelper
 
         private void LevelEditorLoad(object sender, EventArgs e)
         {
-            this.PreLoad();
+            if (Defaults.Instance.ApplyDefaults)
+            {
+                this.PreLoad();
+            }
+
             this.splitContainerVertical.Panel2.Focus();
         }
 

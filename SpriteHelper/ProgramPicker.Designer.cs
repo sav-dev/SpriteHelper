@@ -100,6 +100,7 @@
             this.MinimizeBox = false;
             this.Name = "ProgramPicker";
             this.Text = "ProgramPicker";
+            this.Load += new System.EventHandler(this.ProgramPickerLoad);
             this.ResumeLayout(false);
 
         }

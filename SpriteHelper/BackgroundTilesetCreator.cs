@@ -16,7 +16,10 @@ namespace SpriteHelper
 
         private void MainFormLoad(object sender, EventArgs e)
         {
-            this.PreLoad();
+            if (Defaults.Instance.ApplyDefaults)
+            {
+                this.PreLoad();
+            }
         }
 
         private void PreLoad()

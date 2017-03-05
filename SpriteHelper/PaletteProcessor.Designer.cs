@@ -126,6 +126,7 @@
             this.MaximizeBox = false;
             this.Name = "PaletteProcessor";
             this.Text = "Palette Processor";
+            this.Load += new System.EventHandler(this.PaletteProcessorLoad);
             ((System.ComponentModel.ISupportInitialize)(this.palettesPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

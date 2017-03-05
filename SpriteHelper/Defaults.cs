@@ -8,6 +8,12 @@ namespace SpriteHelper
     public class Defaults
     {
         [DataMember]
+        public string DefaultApp { get; set; }
+
+        [DataMember]
+        public bool ApplyDefaults { get; set; }
+
+        [DataMember]
         public string AnimationImage { get; set; }
 
         [DataMember]

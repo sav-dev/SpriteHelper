@@ -10,6 +10,33 @@ namespace SpriteHelper
             InitializeComponent();
         }
 
+        private void ProgramPickerLoad(object sender, EventArgs e)
+        {
+            if (Defaults.Instance.ApplyDefaults)
+            {
+                this.PreLoad();
+            }
+        }
+
+        private void PreLoad()
+        {
+            switch (Defaults.Instance.DefaultApp)
+            {
+                case "Animation":
+                    new AnimationHelper().ShowDialog();
+                    break;
+                case "Palettes":
+                    new PaletteProcessor().ShowDialog();
+                    break;
+                case "Background":
+                    new BackgroundTilesetCreator().ShowDialog();
+                    break;
+                case "Level":
+                    new LevelEditor().ShowDialog();
+                    break;
+            }
+        }
+
         private void AnimationButtonClick(object sender, EventArgs e)
         {
             new AnimationHelper().ShowDialog();
