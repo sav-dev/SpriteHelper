@@ -98,7 +98,7 @@ namespace SpriteHelper
 
         private void OpenXmlFile(TextBox target)
         {
-            var openFileDialog = new OpenFileDialog { InitialDirectory = Defaults.Instance.DefaultDir };
+            var openFileDialog = new OpenFileDialog { InitialDirectory = Defaults.Instance.GraphicsDefaultDir };
             openFileDialog.ShowDialog();
             if (!string.IsNullOrEmpty(openFileDialog.FileName))
             {

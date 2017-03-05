@@ -21,7 +21,8 @@
   </ThreatBackgrounds>
   <BackgroundChr>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\01\_chr.png</BackgroundChr>
   <BackgroundSpec>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\01\_back.xml</BackgroundSpec>
-  <DefaultDir>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\01\</DefaultDir>
+  <GraphicsDefaultDir>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\01\</GraphicsDefaultDir> 
   <DefaultLevel>C:\Users\tomas\Documents\NES\GitHub\Platformer\graphics\Backgrounds\01\_level.xml</DefaultLevel>
+  <LevelsDefaultDir>C:\users\tomas\documents\nes\github\platformer\data\levels\</LevelsDefaultDir>
   <BgColor>0</BgColor>
 </Defaults>

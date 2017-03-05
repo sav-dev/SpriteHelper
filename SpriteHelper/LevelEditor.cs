@@ -448,7 +448,7 @@ namespace SpriteHelper
 
         private void SaveToolStripMenuItemClick(object sender, EventArgs e)
         {
-            var saveFileDialog = new SaveFileDialog { InitialDirectory = Defaults.Instance.DefaultDir, Filter = "xml files (*.xml)|*.xml" };
+            var saveFileDialog = new SaveFileDialog { InitialDirectory = Defaults.Instance.GraphicsDefaultDir, Filter = "xml files (*.xml)|*.xml" };
             saveFileDialog.ShowDialog();
             if (!string.IsNullOrEmpty(saveFileDialog.FileName))
             {
@@ -459,7 +459,7 @@ namespace SpriteHelper
 
         private void ExportLevelToolStripMenuItemClick(object sender, EventArgs e)
         {
-            var saveFileDialog = new SaveFileDialog { InitialDirectory = Defaults.Instance.DefaultDir, Filter = "binary files (*.bin)|*.bin" };
+            var saveFileDialog = new SaveFileDialog { InitialDirectory = Defaults.Instance.LevelsDefaultDir, Filter = "binary files (*.bin)|*.bin" };
             saveFileDialog.ShowDialog();
             if (!string.IsNullOrEmpty(saveFileDialog.FileName))
             {

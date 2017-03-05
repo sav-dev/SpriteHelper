@@ -41,10 +41,13 @@ namespace SpriteHelper
         public string BackgroundSpec { get; set; }
         
         [DataMember]
-        public string DefaultDir { get; set; }
+        public string GraphicsDefaultDir { get; set; }
 
         [DataMember]
         public string DefaultLevel { get; set; }
+
+        [DataMember]
+        public string LevelsDefaultDir { get; set; }
 
         private static Defaults instance;
         public static Defaults Instance
