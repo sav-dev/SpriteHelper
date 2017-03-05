@@ -1,6 +1,6 @@
 ﻿<Defaults>
   <!--<DefaultApp>Animation</DefaultApp>-->
-  <DefaultApp>Palettes</DefaultApp>
+  <!--<DefaultApp>Palettes</DefaultApp>-->
   <!--<DefaultApp>Background</DefaultApp>-->
   <!--<DefaultApp>Level</DefaultApp>-->
   <ApplyDefaults>true</ApplyDefaults>

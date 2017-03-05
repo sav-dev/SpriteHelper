@@ -58,6 +58,7 @@
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showGridToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerVertical)).BeginInit();
             this.splitContainerVertical.Panel1.SuspendLayout();
             this.splitContainerVertical.Panel2.SuspendLayout();
@@ -237,7 +238,8 @@
             this.newToolStripMenuItem,
             this.openToolStripMenuItem,
             this.saveToolStripMenuItem,
-            this.exportLevelToolStripMenuItem});
+            this.exportLevelToolStripMenuItem,
+            this.exportImageToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "&File";
@@ -246,7 +248,7 @@
             // 
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
             this.newToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.newToolStripMenuItem.Text = "&New";
             this.newToolStripMenuItem.Click += new System.EventHandler(this.NewToolStripMenuItemClick);
             // 
@@ -254,7 +256,7 @@
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.openToolStripMenuItem.Text = "&Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.OpenToolStripMenuItemClick);
             // 
@@ -262,7 +264,7 @@
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveToolStripMenuItem.Text = "&Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.SaveToolStripMenuItemClick);
             // 
@@ -270,7 +272,7 @@
             // 
             this.exportLevelToolStripMenuItem.Name = "exportLevelToolStripMenuItem";
             this.exportLevelToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-            this.exportLevelToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exportLevelToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exportLevelToolStripMenuItem.Text = "&Export";
             this.exportLevelToolStripMenuItem.Click += new System.EventHandler(this.ExportLevelToolStripMenuItemClick);
             // 
@@ -358,6 +360,14 @@
             this.showGridToolStripMenuItem.Text = "Show &Grid";
             this.showGridToolStripMenuItem.Click += new System.EventHandler(this.ShowGridToolStripMenuItemClick);
             // 
+            // exportImageToolStripMenuItem
+            // 
+            this.exportImageToolStripMenuItem.Name = "exportImageToolStripMenuItem";
+            this.exportImageToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I)));
+            this.exportImageToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exportImageToolStripMenuItem.Text = "Export Image";
+            this.exportImageToolStripMenuItem.Click += new System.EventHandler(this.ExportImageToolStripMenuItemClick);
+            // 
             // LevelEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -422,5 +432,6 @@
         private System.Windows.Forms.Label selectedTileLabel;
         private System.Windows.Forms.Label uniqueTilesLabel;
         private System.Windows.Forms.Label uniqueTilesCountLabel;
+        private System.Windows.Forms.ToolStripMenuItem exportImageToolStripMenuItem;
     }
 }

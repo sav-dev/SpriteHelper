@@ -406,6 +406,16 @@ namespace SpriteHelper
         //// Menu Items
         ////
 
+        private void ExportImageToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            var saveFileDialog = new SaveFileDialog { InitialDirectory = Defaults.Instance.GraphicsDefaultDir, Filter = "png files (*.png)|*.png" };
+            saveFileDialog.ShowDialog();
+            if (!string.IsNullOrEmpty(saveFileDialog.FileName))
+            {
+                this.bitmap.Save(saveFileDialog.FileName);
+            }
+        }
+
         private void ShowTypeToolStripMenuItemClick(object sender, EventArgs e)
         {
             this.UpdateBitmap();
