@@ -22,7 +22,7 @@ namespace SpriteHelper
         // Cached tiles. Key is tile ID + palette.
         private Dictionary<string, Bitmap[]> tiles;
         private string selectedTile;
-        
+
         // Default size.
         private const int DefaultWidthInTiles = 64;
         private const int HeightInTiles = 15;
@@ -55,7 +55,7 @@ namespace SpriteHelper
 
         public LevelEditor()
         {
-            InitializeComponent();            
+            InitializeComponent();
             UpdateStatus(null);
 
             this.history = new Stack<string[][]>();
@@ -80,15 +80,15 @@ namespace SpriteHelper
             this.PreLoad();
             this.splitContainerVertical.Panel2.Focus();
         }
-        
+
         private void LevelEditorResize(object sender, EventArgs e)
         {
             this.UpdateDrawPanel();
         }
-        
+
         private void PreLoad()
         {
-            this.LoadLevel(null, Defaults.Instance.BackgroundSpec, Defaults.Instance.PalettesSpec);
+            this.LoadLevel(Defaults.Instance.DefaultLevel, Defaults.Instance.BackgroundSpec, Defaults.Instance.PalettesSpec);
         }
 
         private void UpdateStatus(string text)
@@ -144,7 +144,7 @@ namespace SpriteHelper
                 this.bitmaps.Add(type, dictionary);
             }
 
-            this.tiles = new Dictionary<string, Bitmap[]>();            
+            this.tiles = new Dictionary<string, Bitmap[]>();
             foreach (var tile in this.config.Tiles)
             {
                 for (var palette = 0; palette < 4; palette++)
@@ -189,13 +189,13 @@ namespace SpriteHelper
                         tileBitmaps[(int)(tileVersion | TileVersion.Type)] = bitmapCopy;
                     }
 
-                    this.tiles.Add(TileIds.TileId(palette, tile.Type, tile.X, tile.Y), tileBitmaps);
+                    this.tiles.Add(TileIds.PaletteTileId(palette, tile.Id), tileBitmaps);
                 }
             }
-                        
+
             // Empty tile should always be the 1st one
-            this.emptyTile = TileIds.TileId(0, this.config.Tiles[0].Type, this.config.Tiles[0].X, this.config.Tiles[0].Y);
-            
+            this.emptyTile = TileIds.PaletteTileId(0, this.config.Tiles[0].Id);
+
             string[][] newLevel;
             if (File.Exists(level))
             {
@@ -241,8 +241,8 @@ namespace SpriteHelper
 
                 for (var palette = 0; palette < 4; palette++)
                 {
-                    var tileSelector = new TileSelector(this.bitmaps[type][palette], type, palette, id => this.SetSelectedTile(id) );
-                    
+                    var tileSelector = new TileSelector(this.bitmaps[type][palette], type, palette, id => this.SetSelectedTile(id));
+
                     var tableLayoutPanel = new TableLayoutPanel { Dock = DockStyle.Fill, BackColor = this.palettes.BackgroundPalette[0].ActualColors[0] };
                     tableLayoutPanel.ColumnCount = 1;
                     tableLayoutPanel.RowCount = 1;
@@ -303,8 +303,8 @@ namespace SpriteHelper
             var outerOuterPanelWidthInTiles = outerOuterPanelWidth / TileWidth;
             var outerPanelWidthInTiles = (int)Math.Min(outerOuterPanelWidthInTiles, widthInTiles);
             var outerPanelWidth = outerPanelWidthInTiles * TileWidth;
-            var horizontalPadding = (outerOuterPanelWidth - outerPanelWidth) / 2;            
-        
+            var horizontalPadding = (outerOuterPanelWidth - outerPanelWidth) / 2;
+
             var outerOuterPanelHeight = this.outerOuterDrawPanel.Height;
             var outerPanelHeightInTiles = HeightInTiles;
             var outerPanelHeight = outerPanelHeightInTiles * TileHeight;
@@ -341,7 +341,7 @@ namespace SpriteHelper
 
             if (!(width % 2 == 0))
             {
-                MessageBox.Show("Width must be a multiple of 2", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);   
+                MessageBox.Show("Width must be a multiple of 2", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             this.AddHistory();
@@ -370,7 +370,7 @@ namespace SpriteHelper
         {
             this.bitmap = new Bitmap(this.level.Length * TileWidth, this.level[0].Length * TileHeight);
             this.graphics = Graphics.FromImage(this.bitmap);
-            
+
             for (var x = 0; x < this.level.Length; x++)
             {
                 for (var y = 0; y < this.level[x].Length; y++)
@@ -380,7 +380,7 @@ namespace SpriteHelper
                     this.graphics.DrawImage(image, new Point(x * TileWidth, y * TileHeight));
                 }
             }
-            
+
             this.UpdateDrawPanel();
         }
 
@@ -457,9 +457,73 @@ namespace SpriteHelper
             }
         }
 
-        private void ExportToolStripMenuItemClick(object sender, EventArgs e)
+        private void ExportLevelToolStripMenuItemClick(object sender, EventArgs e)
         {
-            // todo: export level and attributes
+            var saveFileDialog = new SaveFileDialog { InitialDirectory = Defaults.Instance.DefaultDir, Filter = "binary files (*.bin)|*.bin" };
+            saveFileDialog.ShowDialog();
+            if (!string.IsNullOrEmpty(saveFileDialog.FileName))
+            {
+                this.Export(saveFileDialog.FileName);
+            }
+        }
+
+        private void Export(string fileName)
+        {
+            //
+            // Current format:
+            // todo: optimize this
+            //
+            // BYTES 0 - (unique tiles * 5): TILE DEFINITION
+            //   Byte 0: number of unique tiles
+            //   Bytes 1-4: sprites for tile 0
+            //   Byte 5: atts for tile 0
+            //   Bytes 6-9: sprites for tile 1
+            //   Byte 10: atts for tile 1
+            //   and so on
+            //
+            // REST: LEVEL DEFINITION
+            //   Byte 0: number of columns
+            //   Byte 1-15: tiles in column 0
+            //   Byte 16-30: tiles in column 1
+            //   and so on
+            //
+            // todo: add information about platforms, spikes etc
+            //
+
+            var result = new List<byte>();
+            result.Add((byte)this.UniqueTilesCount());
+
+            byte id = 0;
+            var tileIds = new Dictionary<string, byte>();
+            foreach (var tileId in this.UniqueTiles())
+            {
+                // Assign a one byte id to the tile (to be used later).
+                tileIds.Add(tileId, id++);
+
+                // Parse the id, Item1 is palette id, Item2 is config id.
+                var parsedId = TileIds.ParsePaletteId(tileId);
+
+                // Find the tile config, get sprites, append to the result.
+                result.AddRange(this.config.Tiles.First(t => t.Id == parsedId.Item2).Sprites.Select(s => (byte)s));
+
+                // Append the palette id.
+                result.Add((byte)parsedId.Item1);
+            }
+
+            for (var x = 0; x < this.level.Length; x++)
+            {
+                for (var y = 0; y < this.level[x].Length; y++)
+                {
+                    result.Add(tileIds[this.level[x][y]]);
+                }
+            }
+
+            if (File.Exists(fileName))
+            {
+                File.Delete(fileName);
+            }
+
+            File.WriteAllBytes(fileName, result.ToArray());
         }
 
         private void TransformToolStripMenuItemClick(object sender, EventArgs e)
@@ -534,7 +598,7 @@ namespace SpriteHelper
                     {
                         changed = true;
                     }
-                    
+
                     newLevel[newX][newY] = newTile;
                 }
             }
@@ -689,7 +753,7 @@ namespace SpriteHelper
             {
                 return false;
             }
-            
+
             if (this.level[x][y] == tile)
             {
                 return false;
@@ -703,11 +767,21 @@ namespace SpriteHelper
             return true;
         }
 
+        private List<string> UniqueTiles()
+        {
+            return this.level.SelectMany(l => l).Distinct().ToList();
+        }
+
+        private int UniqueTilesCount()
+        {
+            return this.UniqueTiles().Count();
+        }
+
         private void UpdateTileCount()
         {
-            var tileCount = this.level.SelectMany(l => l).Distinct().Count();
+            var tileCount = this.UniqueTilesCount();
             this.uniqueTilesCountLabel.Text = tileCount.ToString();
-            this.uniqueTilesCountLabel.ForeColor = tileCount <= 32 ? Color.Black : Color.Red;
+            this.uniqueTilesCountLabel.ForeColor = tileCount <= Constants.MaxUniqueTiles ? Color.Black : Color.Red;
         }
 
         #endregion
@@ -827,8 +901,7 @@ namespace SpriteHelper
             {
                 var x = e.X / TileWidth;
                 var y = e.Y / TileHeight;
-                onClick(TileIds.TileId(this.palette, this.tileType, x, y));
-
+                onClick(TileIds.PaletteTileId(this.palette, this.tileType, x, y));            
             }
 
             private void TileSelectorMouseLeave(object sender, EventArgs e)

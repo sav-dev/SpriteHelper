@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
@@ -66,6 +67,8 @@ namespace SpriteHelper
     [DataContract]
     public class Tile
     {
+        public string Id { get { return TileIds.ConfigTileId(this.Type, this.X, this.Y); } }
+
         [DataMember]
         public int X { get; set; }
 
@@ -91,9 +94,25 @@ namespace SpriteHelper
 
     public static class TileIds
     {
-        public static string TileId(int palette, TileType tileType, int x, int y)
+        public static string ConfigTileId(TileType tileType, int x, int y)
         {
-            return string.Format("{0}-{1}-{2}-{3}", palette, (int)tileType, x, y);
+            return string.Format("{0}-{1}-{2}", (int)tileType, x, y);
+        }
+
+        public static string PaletteTileId(int palette, TileType tileType, int x, int y)
+        {
+            return PaletteTileId(palette, ConfigTileId(tileType, x, y));
+        }
+
+        public static string PaletteTileId(int palette, string configId)
+        {
+            return string.Format("{0}-{1}", palette, configId);
+        }
+
+        public static Tuple<int, string> ParsePaletteId(string paletteId)
+        {
+            var split = paletteId.Split(new[] { '-' }, 2);
+            return Tuple.Create(int.Parse(split[0]), split[1]);
         }
     }
 }

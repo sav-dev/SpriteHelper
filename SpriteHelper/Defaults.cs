@@ -43,6 +43,9 @@ namespace SpriteHelper
         [DataMember]
         public string DefaultDir { get; set; }
 
+        [DataMember]
+        public string DefaultLevel { get; set; }
+
         private static Defaults instance;
         public static Defaults Instance
         {
