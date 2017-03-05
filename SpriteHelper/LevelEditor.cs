@@ -485,52 +485,49 @@ namespace SpriteHelper
         {
             //
             // Current format:
-            // todo: optimize this
             //
-            // BYTES 0 - (unique tiles * 5): TILE DEFINITION
-            //   Byte 0: number of unique tiles
-            //   Bytes 1-4: sprites for tile 0
-            //   Byte 5: atts for tile 0
-            //   Bytes 6-9: sprites for tile 1
-            //   Byte 10: atts for tile 1
-            //   and so on
-            //
-            // REST: LEVEL DEFINITION
-            //   Byte 0: number of columns
-            //   Byte 1-15: tiles in column 0
-            //   Byte 16-30: tiles in column 1
-            //   and so on
+            // - number of unique tiles (1 byte)
+            // - sprites for each tile (4 bytes each)
+            // - number of columns (1 byte)
+            // - tiles in each column (15 bytes each)
+            // - attributes (# of columns x 4 bytes)
             //
             // todo: add information about platforms, spikes etc
             //
 
-            var result = new List<byte>();
+            // Result byte list.
+            var result = new List<byte>();            
+
+            // Local ids dictionary.            
+            var localIds = new Dictionary<string, byte>();
+            byte id = 0;
+
+            // Number of unique tiles.
             result.Add((byte)this.UniqueTilesCount());
 
-            byte id = 0;
-            var tileIds = new Dictionary<string, byte>();
+            // Sprites for each tile.
             foreach (var tileId in this.UniqueTiles())
             {
-                // Assign a one byte id to the tile (to be used later).
-                tileIds.Add(tileId, id++);
-
-                // Parse the id, Item1 is palette id, Item2 is config id.
-                var parsedId = TileIds.ParsePaletteId(tileId);
+                // Assign a one byte id to the tile.
+                localIds.Add(tileId, id++);
 
                 // Find the tile config, get sprites, append to the result.
-                result.AddRange(this.config.Tiles.First(t => t.Id == parsedId.Item2).Sprites.Select(s => (byte)s));
-
-                // Append the palette id.
-                result.Add((byte)parsedId.Item1);
+                result.AddRange(this.config.Tiles.First(t => t.Id == TileIds.ParsePaletteId(tileId).Item2).Sprites.Select(s => (byte)s));
             }
 
+            // Number of columns.
+            result.Add((byte)this.level.Length);
+
+            // Tiles in each column.        
             for (var x = 0; x < this.level.Length; x++)
             {
                 for (var y = 0; y < this.level[x].Length; y++)
                 {
-                    result.Add(tileIds[this.level[x][y]]);
+                    result.Add(localIds[this.level[x][y]]);
                 }
             }
+
+            // todo: add attributes
 
             if (File.Exists(fileName))
             {
