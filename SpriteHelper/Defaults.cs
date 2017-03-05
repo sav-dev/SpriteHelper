@@ -8,9 +8,6 @@ namespace SpriteHelper
     public class Defaults
     {
         [DataMember]
-        public string AppToRun { get; set; }
-
-        [DataMember]
         public string AnimationImage { get; set; }
 
         [DataMember]
@@ -51,6 +48,12 @@ namespace SpriteHelper
 
         [DataMember]
         public string LevelsDefaultDir { get; set; }
+
+        [DataMember]
+        public string SpritesPalette { get; set; }
+
+        [DataMember]
+        public string BackgroundPalette { get; set; }
 
         private static Defaults instance;
         public static Defaults Instance

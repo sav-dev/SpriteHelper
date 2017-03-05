@@ -227,6 +227,7 @@
             this.Controls.Add(this.framesListBox);
             this.Controls.Add(this.pictureBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.MaximizeBox = false;
             this.Name = "AnimationHelper";
             this.Text = "Animation Helper";
             this.Load += new System.EventHandler(this.MainFormLoad);

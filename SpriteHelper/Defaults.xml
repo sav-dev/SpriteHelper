@@ -1,29 +1,30 @@
 ﻿<Defaults>
-  <AppToRun>Background</AppToRun>
   <AnimationImage>C:\users\tomas\documents\nes\github\platformer\graphics\sprites\gunner_sprites.png</AnimationImage>
   <AnimationSpec>C:\users\tomas\documents\nes\github\platformer\graphics\sprites\gunner_spec.xml</AnimationSpec>
   <Palette>C:\users\tomas\documents\nes\github\platformer\graphics\palettes\palette.png</Palette>
-  <PalettesSpec>C:\users\tomas\documents\nes\github\platformer\graphics\palettes\palettes_01.xml</PalettesSpec>
+  <PalettesSpec>C:\users\tomas\documents\nes\github\platformer\graphics\palettes\palettes_00.xml</PalettesSpec>
   <NonBlockingBackgrounds>
-    <string>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\01\nonblocking1.png;3</string>
-    <string>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\01\nonblocking2.png;3</string>
-    <string>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\01\nonblocking3.png</string>
-    <string>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\01\nonblocking4.png</string>
-    <string>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\01\nonblocking5.png</string>
+    <string>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\00\nonblocking1.png;3</string>
+    <string>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\00\nonblocking2.png;3</string>
+    <string>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\00\nonblocking3.png</string>
+    <string>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\00\nonblocking4.png</string>
+    <string>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\00\nonblocking5.png</string>
   </NonBlockingBackgrounds>
   <BlockingBackgrounds>
-    <string>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\01\blocking1.png</string>
-    <string>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\01\blocking2.png</string>
+    <string>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\00\blocking1.png</string>
+    <string>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\00\blocking2.png</string>
   </BlockingBackgrounds>
   <ThreatBackgrounds>
-    <string>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\01\threat1.png</string>
-    <string>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\01\threat2.png</string>
+    <string>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\00\threat1.png</string>
+    <string>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\00\threat2.png</string>
   </ThreatBackgrounds>
-  <BackgroundImage>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\01\_chr.png</BackgroundImage>
-  <BackgroundSpec>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\01\_back.xml</BackgroundSpec>
+  <BackgroundImage>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\00\_chr.png</BackgroundImage>
+  <BackgroundSpec>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\00\_back.xml</BackgroundSpec>
   <BackgroundChr>C:\users\tomas\documents\nes\github\platformer\graphics\chr\bg_00.chr</BackgroundChr>
-  <GraphicsDefaultDir>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\01\</GraphicsDefaultDir> 
-  <DefaultLevel>C:\Users\tomas\Documents\NES\GitHub\Platformer\graphics\Backgrounds\01\_level.xml</DefaultLevel>
+  <GraphicsDefaultDir>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\00\</GraphicsDefaultDir> 
+  <DefaultLevel>C:\Users\tomas\Documents\NES\GitHub\Platformer\graphics\Backgrounds\00\_level.xml</DefaultLevel>
   <LevelsDefaultDir>C:\users\tomas\documents\nes\github\platformer\data\levels\</LevelsDefaultDir>
+  <SpritesPalette>C:\users\tomas\documents\nes\github\platformer\graphics\palettes\spr_00.bin</SpritesPalette>
+  <BackgroundPalette>C:\users\tomas\documents\nes\github\platformer\graphics\palettes\bg_00.bin</BackgroundPalette>
   <BgColor>0</BgColor>
 </Defaults>

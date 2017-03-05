@@ -172,10 +172,10 @@
             this.outputChrLabel.TabIndex = 27;
             this.outputChrLabel.Text = "Output chr";
             // 
-            // outputChrTextbox
+            // outputChrTextBox
             // 
             this.outputChrTextBox.Location = new System.Drawing.Point(86, 249);
-            this.outputChrTextBox.Name = "outputChrTextbox";
+            this.outputChrTextBox.Name = "outputChrTextBox";
             this.outputChrTextBox.Size = new System.Drawing.Size(395, 20);
             this.outputChrTextBox.TabIndex = 26;
             // 
@@ -200,6 +200,7 @@
             this.Controls.Add(this.blockingLabel);
             this.Controls.Add(this.outputImageTextBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.MaximizeBox = false;
             this.Name = "BackgroundTilesetCreator";
             this.Text = "Background tileset creator";
             this.Load += new System.EventHandler(this.MainFormLoad);
