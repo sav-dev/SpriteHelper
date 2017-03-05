@@ -25,8 +25,9 @@ namespace SpriteHelper
             this.blockingTextBox.Lines = Defaults.Instance.BlockingBackgrounds;
             this.threatTextBox.Lines = Defaults.Instance.ThreatBackgrounds;
             this.bgColorComboBox.SelectedIndex = Defaults.Instance.BgColor;
-            this.outputImageTextBox.Text = Defaults.Instance.BackgroundChr;
+            this.outputImageTextBox.Text = Defaults.Instance.BackgroundImage;
             this.outputSpecTextBox.Text = Defaults.Instance.BackgroundSpec;
+            this.outputChrTextBox.Text = Defaults.Instance.BackgroundChr;
             this.Process();
         }
 
@@ -213,15 +214,15 @@ namespace SpriteHelper
             // Set tiles in the config
             config.Tiles = tiles.ToArray();
             
-            // Generate chrFile
-            var chrFile = new MyBitmap(Constants.SpriteWidth * Constants.ChrFileSpritesPerRow, Constants.SpriteHeight * Constants.ChrFileRows, Color.Black);
+            // Generate chr image
+            var chrImage = new MyBitmap(Constants.SpriteWidth * Constants.ChrFileSpritesPerRow, Constants.SpriteHeight * Constants.ChrFileRows, Color.Black);
             {                
                 var x = 0;
                 var y = 0;
             
                 foreach (var sprite in sprites)
                 {
-                    chrFile.DrawImage(sprite, x, y);
+                    chrImage.DrawImage(sprite, x, y);
                     x += 8;
                     if (x >= Constants.SpriteWidth * Constants.ChrFileSpritesPerRow)
                     {
@@ -230,10 +231,62 @@ namespace SpriteHelper
                     }
                 }
             }
-            
-            // Save chrFile and spec
-            chrFile.ToBitmap().Save(outputImageTextBox.Text);            
+
+            // Generate actual chr file
+            // CHR format:
+            //  each sprite is 16 bytes:
+            //  first 8 bytes are low bits per sprite row
+            //  second 8 bytes are high bits per sprite row
+            var bytes = new List<byte>();
+            foreach (var sprite in sprites)
+            {
+                var lowBits = new List<byte>();
+                var highBits = new List<byte>();
+
+                for (var y = 0; y < Constants.SpriteHeight; y++)
+                {
+                    byte lowBit = 0;
+                    byte highBit = 0;
+
+                    for (var x = 0; x < Constants.SpriteWidth; x++)
+                    {
+                        lowBit = (byte)(lowBit << 1);
+                        highBit = (byte)(highBit << 1);
+
+                        var pixel = sprite.GetNesPixel(x, y);
+
+                        if (pixel == 1 || pixel == 3)
+                        {
+                            // low bit set
+                            lowBit |= 1;
+                        }
+
+                        if (pixel == 2 || pixel == 3)
+                        {
+                            // high bit set
+                            highBit |= 1;
+                        }
+                    }
+
+                    lowBits.Add(lowBit);
+                    highBits.Add(highBit);
+                }
+
+                bytes.AddRange(lowBits);
+                bytes.AddRange(highBits);
+            }        
+
+            // Save everything
+            chrImage.ToBitmap().Save(outputImageTextBox.Text);
+
             config.Write(outputSpecTextBox.Text);
+
+            if (File.Exists(outputChrTextBox.Text))
+            {
+                File.Delete(outputChrTextBox.Text);
+            }
+
+            File.WriteAllBytes(outputChrTextBox.Text, bytes.ToArray());
         }
     }
 }

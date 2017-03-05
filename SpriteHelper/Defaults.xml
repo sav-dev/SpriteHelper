@@ -1,5 +1,5 @@
 ﻿<Defaults>
-  <AppToRun>Level</AppToRun>
+  <AppToRun>Background</AppToRun>
   <AnimationImage>C:\users\tomas\documents\nes\github\platformer\graphics\sprites\gunner_sprites.png</AnimationImage>
   <AnimationSpec>C:\users\tomas\documents\nes\github\platformer\graphics\sprites\gunner_spec.xml</AnimationSpec>
   <Palette>C:\users\tomas\documents\nes\github\platformer\graphics\palettes\palette.png</Palette>
@@ -19,8 +19,9 @@
     <string>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\01\threat1.png</string>
     <string>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\01\threat2.png</string>
   </ThreatBackgrounds>
-  <BackgroundChr>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\01\_chr.png</BackgroundChr>
+  <BackgroundImage>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\01\_chr.png</BackgroundImage>
   <BackgroundSpec>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\01\_back.xml</BackgroundSpec>
+  <BackgroundChr>C:\users\tomas\documents\nes\github\platformer\graphics\chr\bg_00.chr</BackgroundChr>
   <GraphicsDefaultDir>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\01\</GraphicsDefaultDir> 
   <DefaultLevel>C:\Users\tomas\Documents\NES\GitHub\Platformer\graphics\Backgrounds\01\_level.xml</DefaultLevel>
   <LevelsDefaultDir>C:\users\tomas\documents\nes\github\platformer\data\levels\</LevelsDefaultDir>

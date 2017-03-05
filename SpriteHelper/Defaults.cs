@@ -35,11 +35,14 @@ namespace SpriteHelper
         public int BgColor { get; set; }
 
         [DataMember]
-        public string BackgroundChr { get; set; }
+        public string BackgroundImage { get; set; }
         
         [DataMember]
         public string BackgroundSpec { get; set; }
-        
+
+        [DataMember]
+        public string BackgroundChr { get; set; }
+
         [DataMember]
         public string GraphicsDefaultDir { get; set; }
 

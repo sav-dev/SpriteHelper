@@ -30,8 +30,8 @@
         {
             this.outputImageTextBox = new System.Windows.Forms.TextBox();
             this.blockingLabel = new System.Windows.Forms.Label();
-            this.specLabel = new System.Windows.Forms.Label();
-            this.palettesLabel = new System.Windows.Forms.Label();
+            this.outputImageLabel = new System.Windows.Forms.Label();
+            this.outputSpecLabel = new System.Windows.Forms.Label();
             this.outputSpecTextBox = new System.Windows.Forms.TextBox();
             this.blockingTextBox = new System.Windows.Forms.TextBox();
             this.processButton = new System.Windows.Forms.Button();
@@ -39,8 +39,10 @@
             this.nonBlockingTextBox = new System.Windows.Forms.TextBox();
             this.nonBlockingLabel = new System.Windows.Forms.Label();
             this.threatTextBox = new System.Windows.Forms.TextBox();
-            this.ThreatsLabel = new System.Windows.Forms.Label();
+            this.threatsLabel = new System.Windows.Forms.Label();
             this.bgColorComboBox = new System.Windows.Forms.ComboBox();
+            this.outputChrLabel = new System.Windows.Forms.Label();
+            this.outputChrTextBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // outputImageTextBox
@@ -59,23 +61,23 @@
             this.blockingLabel.TabIndex = 4;
             this.blockingLabel.Text = "Blocking";
             // 
-            // specLabel
+            // outputImageLabel
             // 
-            this.specLabel.AutoSize = true;
-            this.specLabel.Location = new System.Drawing.Point(12, 200);
-            this.specLabel.Name = "specLabel";
-            this.specLabel.Size = new System.Drawing.Size(70, 13);
-            this.specLabel.TabIndex = 5;
-            this.specLabel.Text = "Output image";
+            this.outputImageLabel.AutoSize = true;
+            this.outputImageLabel.Location = new System.Drawing.Point(12, 200);
+            this.outputImageLabel.Name = "outputImageLabel";
+            this.outputImageLabel.Size = new System.Drawing.Size(70, 13);
+            this.outputImageLabel.TabIndex = 5;
+            this.outputImageLabel.Text = "Output image";
             // 
-            // palettesLabel
+            // outputSpecLabel
             // 
-            this.palettesLabel.AutoSize = true;
-            this.palettesLabel.Location = new System.Drawing.Point(12, 226);
-            this.palettesLabel.Name = "palettesLabel";
-            this.palettesLabel.Size = new System.Drawing.Size(65, 13);
-            this.palettesLabel.TabIndex = 15;
-            this.palettesLabel.Text = "Output spec";
+            this.outputSpecLabel.AutoSize = true;
+            this.outputSpecLabel.Location = new System.Drawing.Point(12, 226);
+            this.outputSpecLabel.Name = "outputSpecLabel";
+            this.outputSpecLabel.Size = new System.Drawing.Size(65, 13);
+            this.outputSpecLabel.TabIndex = 15;
+            this.outputSpecLabel.Text = "Output spec";
             // 
             // outputSpecTextBox
             // 
@@ -95,7 +97,7 @@
             // 
             // processButton
             // 
-            this.processButton.Location = new System.Drawing.Point(406, 258);
+            this.processButton.Location = new System.Drawing.Point(406, 275);
             this.processButton.Name = "processButton";
             this.processButton.Size = new System.Drawing.Size(75, 23);
             this.processButton.TabIndex = 17;
@@ -139,14 +141,14 @@
             this.threatTextBox.TabIndex = 24;
             this.threatTextBox.WordWrap = false;
             // 
-            // ThreatsLabel
+            // threatsLabel
             // 
-            this.ThreatsLabel.AutoSize = true;
-            this.ThreatsLabel.Location = new System.Drawing.Point(12, 119);
-            this.ThreatsLabel.Name = "ThreatsLabel";
-            this.ThreatsLabel.Size = new System.Drawing.Size(43, 13);
-            this.ThreatsLabel.TabIndex = 23;
-            this.ThreatsLabel.Text = "Threats";
+            this.threatsLabel.AutoSize = true;
+            this.threatsLabel.Location = new System.Drawing.Point(12, 119);
+            this.threatsLabel.Name = "threatsLabel";
+            this.threatsLabel.Size = new System.Drawing.Size(43, 13);
+            this.threatsLabel.TabIndex = 23;
+            this.threatsLabel.Text = "Threats";
             // 
             // bgColorComboBox
             // 
@@ -161,22 +163,40 @@
             this.bgColorComboBox.Size = new System.Drawing.Size(121, 21);
             this.bgColorComboBox.TabIndex = 25;
             // 
+            // outputChrLabel
+            // 
+            this.outputChrLabel.AutoSize = true;
+            this.outputChrLabel.Location = new System.Drawing.Point(12, 252);
+            this.outputChrLabel.Name = "outputChrLabel";
+            this.outputChrLabel.Size = new System.Drawing.Size(57, 13);
+            this.outputChrLabel.TabIndex = 27;
+            this.outputChrLabel.Text = "Output chr";
+            // 
+            // outputChrTextbox
+            // 
+            this.outputChrTextBox.Location = new System.Drawing.Point(86, 249);
+            this.outputChrTextBox.Name = "outputChrTextbox";
+            this.outputChrTextBox.Size = new System.Drawing.Size(395, 20);
+            this.outputChrTextBox.TabIndex = 26;
+            // 
             // BackgroundTilesetCreator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(489, 287);
+            this.ClientSize = new System.Drawing.Size(489, 306);
+            this.Controls.Add(this.outputChrLabel);
+            this.Controls.Add(this.outputChrTextBox);
             this.Controls.Add(this.bgColorComboBox);
             this.Controls.Add(this.threatTextBox);
-            this.Controls.Add(this.ThreatsLabel);
+            this.Controls.Add(this.threatsLabel);
             this.Controls.Add(this.nonBlockingTextBox);
             this.Controls.Add(this.nonBlockingLabel);
             this.Controls.Add(this.bgColorLabel);
             this.Controls.Add(this.processButton);
             this.Controls.Add(this.blockingTextBox);
-            this.Controls.Add(this.palettesLabel);
+            this.Controls.Add(this.outputSpecLabel);
             this.Controls.Add(this.outputSpecTextBox);
-            this.Controls.Add(this.specLabel);
+            this.Controls.Add(this.outputImageLabel);
             this.Controls.Add(this.blockingLabel);
             this.Controls.Add(this.outputImageTextBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
@@ -191,8 +211,8 @@
         #endregion
         private System.Windows.Forms.TextBox outputImageTextBox;
         private System.Windows.Forms.Label blockingLabel;
-        private System.Windows.Forms.Label specLabel;
-        private System.Windows.Forms.Label palettesLabel;
+        private System.Windows.Forms.Label outputImageLabel;
+        private System.Windows.Forms.Label outputSpecLabel;
         private System.Windows.Forms.TextBox outputSpecTextBox;
         private System.Windows.Forms.TextBox blockingTextBox;
         private System.Windows.Forms.Button processButton;
@@ -200,8 +220,10 @@
         private System.Windows.Forms.TextBox nonBlockingTextBox;
         private System.Windows.Forms.Label nonBlockingLabel;
         private System.Windows.Forms.TextBox threatTextBox;
-        private System.Windows.Forms.Label ThreatsLabel;
+        private System.Windows.Forms.Label threatsLabel;
         private System.Windows.Forms.ComboBox bgColorComboBox;
+        private System.Windows.Forms.Label outputChrLabel;
+        private System.Windows.Forms.TextBox outputChrTextBox;
     }
 }
 

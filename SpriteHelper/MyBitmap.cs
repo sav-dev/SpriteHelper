@@ -126,6 +126,11 @@ namespace SpriteHelper
             return this.pixels[x][y];
         }
 
+        public int GetNesPixel(int x, int y)
+        {
+            return NesGreyscale.ToList().IndexOf(this.pixels[x][y]);
+        }
+
         public void SetPixel(Color color, int x, int y)
         {
             this.pixels[x][y] = color;
