@@ -342,10 +342,17 @@ namespace SpriteHelper
             {
                 return;
             }
-
-            if (!(width % 2 == 0))
+            
+            if (width < 16 | width > 252)
             {
-                MessageBox.Show("Width must be a multiple of 2", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Wrongh width: min is 16, max is 252", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (!(width % 4 == 0))
+            {
+                MessageBox.Show("Width must be a multiple of 4", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
 
             this.AddHistory();
@@ -527,7 +534,38 @@ namespace SpriteHelper
                 }
             }
 
-            // todo: add attributes
+            // Attributes
+            for (var x = 0; x < this.level.Length; x += 2)
+            {
+                for (var y = 0; y < this.level[x].Length; y += 2)
+                {
+                    // Atts:
+                    //  0 1
+                    //  2 3
+                    //
+                    // So if atts are assigned as the numbers, the value will be:
+                    //  11 10 01 00
+
+                    byte palette0, palette1, palette2, palette3;
+
+                    palette0 = (byte)TileIds.ParsePaletteId(this.level[x][y]).Item1;
+                    palette1 = (byte)TileIds.ParsePaletteId(this.level[x + 1][y]).Item1;
+
+                    if (y + 1 < this.level[x].Length)
+                    {
+                        palette2 = (byte)TileIds.ParsePaletteId(this.level[x][y + 1]).Item1;
+                        palette3 = (byte)TileIds.ParsePaletteId(this.level[x + 1][y + 1]).Item1;
+                    }
+                    else
+                    {
+                        palette2 = 0;
+                        palette3 = 0;
+                    }
+
+                    var atts = (byte)(palette3 << 6 | palette2 << 4 | palette1 << 2 | palette0);
+                    result.Add(atts);
+                }
+            }
 
             if (File.Exists(fileName))
             {
