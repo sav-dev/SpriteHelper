@@ -170,9 +170,9 @@ namespace SpriteHelper
                         var spritesInTile = new MyBitmap[] 
                         {
                             newTile.GetPart(0, 0, Constants.SpriteWidth, Constants.SpriteHeight),
-                            newTile.GetPart(Constants.SpriteWidth, 0, Constants.SpriteWidth, Constants.SpriteHeight),
                             newTile.GetPart(0, Constants.SpriteHeight, Constants.SpriteWidth, Constants.SpriteHeight),
-                            newTile.GetPart(Constants.SpriteWidth, Constants.SpriteHeight, Constants.SpriteWidth, Constants.SpriteHeight)
+                            newTile.GetPart(Constants.SpriteWidth, 0, Constants.SpriteWidth, Constants.SpriteHeight),                          
+                            newTile.GetPart(Constants.SpriteWidth, Constants.SpriteHeight, Constants.SpriteWidth, Constants.SpriteHeight),
                         };
             
                         for (var i = 0; i < spritesInTile.Length; i++)
