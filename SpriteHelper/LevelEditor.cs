@@ -494,7 +494,8 @@ namespace SpriteHelper
             // Current format:
             //
             // - number of unique tiles (1 byte)
-            // - sprites for each tile (4 bytes each)
+            // - sprites for each tile in the left column (2 bytes each)
+            // - sprites for each tile in the right column (2 bytes each)
             // - number of columns (1 byte)
             // - tiles in each column (15 bytes each)
             // - attributes (# of columns x 4 bytes)
@@ -512,15 +513,25 @@ namespace SpriteHelper
             // Number of unique tiles.
             result.Add((byte)this.UniqueTilesCount());
 
-            // Sprites for each tile.
+            // Sprites in the right column.
+            var spritesInRightColumn = new List<byte>();
+
+            // Sprites for each tile in the left column.
             foreach (var tileId in this.UniqueTiles())
             {
                 // Assign a one byte id to the tile.
                 localIds.Add(tileId, id++);
 
-                // Find the tile config, get sprites, append to the result.
-                result.AddRange(this.config.Tiles.First(t => t.Id == TileIds.ParsePaletteId(tileId).Item2).Sprites.Select(s => (byte)s));
+                // Find the tile config, get sprites, append to the result (sprites 0 and 1) and to the second list (2 and 3)
+                var tileConfig = this.config.Tiles.First(t => t.Id == TileIds.ParsePaletteId(tileId).Item2);
+                result.Add((byte)tileConfig.Sprites[0]);
+                result.Add((byte)tileConfig.Sprites[1]);
+                spritesInRightColumn.Add((byte)tileConfig.Sprites[2]);
+                spritesInRightColumn.Add((byte)tileConfig.Sprites[3]);
             }
+
+            // Add sprites in the right column to the result.
+            result.AddRange(spritesInRightColumn);
 
             // Number of columns.
             result.Add((byte)this.level.Length);
