@@ -2,7 +2,7 @@
   <!--<DefaultApp>Animation</DefaultApp>-->
   <!--<DefaultApp>Palettes</DefaultApp>-->
   <!--<DefaultApp>Background</DefaultApp>-->
-  <DefaultApp>Level</DefaultApp>
+  <!--<DefaultApp>Level</DefaultApp>-->
   <ApplyDefaults>true</ApplyDefaults>
   <AnimationImage>C:\users\tomas\documents\nes\github\platformer\graphics\sprites\gunner_sprites.png</AnimationImage>
   <AnimationSpec>C:\users\tomas\documents\nes\github\platformer\graphics\sprites\gunner_spec.xml</AnimationSpec>
@@ -12,12 +12,12 @@
     <string>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\00\nonblocking1.png;3</string>
     <string>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\00\nonblocking2.png;3</string>
     <string>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\00\nonblocking3.png</string>
-    <string>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\00\nonblocking4.png</string>
-    <string>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\00\nonblocking5.png</string>
   </NonBlockingBackgrounds>
   <BlockingBackgrounds>
     <string>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\00\blocking1.png</string>
     <string>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\00\blocking2.png</string>
+    <string>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\00\blocking3.png</string>
+    <string>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\00\blocking4.png</string>
   </BlockingBackgrounds>
   <ThreatBackgrounds>
     <string>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\00\threat1.png</string>
