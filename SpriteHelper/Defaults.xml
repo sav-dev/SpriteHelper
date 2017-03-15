@@ -2,7 +2,7 @@
   <!--<DefaultApp>Animation</DefaultApp>-->
   <!--<DefaultApp>Palettes</DefaultApp>-->
   <!--<DefaultApp>Background</DefaultApp>-->
-  <!--<DefaultApp>Level</DefaultApp>-->
+  <DefaultApp>Level</DefaultApp>
   <ApplyDefaults>true</ApplyDefaults>
   <AnimationImage>C:\users\tomas\documents\nes\github\platformer\graphics\sprites\gunner_sprites.png</AnimationImage>
   <AnimationSpec>C:\users\tomas\documents\nes\github\platformer\graphics\sprites\gunner_spec.xml</AnimationSpec>

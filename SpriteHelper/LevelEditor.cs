@@ -486,105 +486,7 @@ namespace SpriteHelper
             {
                 this.Export(saveFileDialog.FileName);
             }
-        }
-
-        private void Export(string fileName)
-        {
-            //
-            // Current format:
-            //
-            // - number of unique tiles (1 byte)
-            // - sprites for each tile in the left column (2 bytes each)
-            // - sprites for each tile in the right column (2 bytes each)
-            // - number of columns (1 byte)
-            // - tiles in each column (15 bytes each)
-            // - attributes (# of columns x 4 bytes)
-            //
-            // todo: add information about platforms, spikes etc
-            //
-
-            // Result byte list.
-            var result = new List<byte>();            
-
-            // Local ids dictionary.            
-            var localIds = new Dictionary<string, byte>();
-            byte id = 0;
-
-            // Number of unique tiles.
-            result.Add((byte)this.UniqueTilesCount());
-
-            // Sprites in the right column.
-            var spritesInRightColumn = new List<byte>();
-
-            // Sprites for each tile in the left column.
-            foreach (var tileId in this.UniqueTiles())
-            {
-                // Assign a one byte id to the tile.
-                localIds.Add(tileId, id++);
-
-                // Find the tile config, get sprites, append to the result (sprites 0 and 1) and to the second list (2 and 3)
-                var tileConfig = this.config.Tiles.First(t => t.Id == TileIds.ParsePaletteId(tileId).Item2);
-                result.Add((byte)tileConfig.Sprites[0]);
-                result.Add((byte)tileConfig.Sprites[1]);
-                spritesInRightColumn.Add((byte)tileConfig.Sprites[2]);
-                spritesInRightColumn.Add((byte)tileConfig.Sprites[3]);
-            }
-
-            // Add sprites in the right column to the result.
-            result.AddRange(spritesInRightColumn);
-
-            // Number of columns.
-            result.Add((byte)this.level.Length);
-
-            // Tiles in each column.        
-            for (var x = 0; x < this.level.Length; x++)
-            {
-                for (var y = 0; y < this.level[x].Length; y++)
-                {
-                    result.Add(localIds[this.level[x][y]]);
-                }
-            }
-
-            // Attributes
-            for (var x = 0; x < this.level.Length; x += 2)
-            {
-                for (var y = 0; y < this.level[x].Length; y += 2)
-                {
-                    // Atts:
-                    //  0 1
-                    //  2 3
-                    //
-                    // So if atts are assigned as the numbers, the value will be:
-                    //  11 10 01 00
-
-                    byte palette0, palette1, palette2, palette3;
-
-                    palette0 = (byte)TileIds.ParsePaletteId(this.level[x][y]).Item1;
-                    palette1 = (byte)TileIds.ParsePaletteId(this.level[x + 1][y]).Item1;
-
-                    if (y + 1 < this.level[x].Length)
-                    {
-                        palette2 = (byte)TileIds.ParsePaletteId(this.level[x][y + 1]).Item1;
-                        palette3 = (byte)TileIds.ParsePaletteId(this.level[x + 1][y + 1]).Item1;
-                    }
-                    else
-                    {
-                        palette2 = 0;
-                        palette3 = 0;
-                    }
-
-                    var atts = (byte)(palette3 << 6 | palette2 << 4 | palette1 << 2 | palette0);
-                    result.Add(atts);
-                }
-            }
-
-            if (File.Exists(fileName))
-            {
-                File.Delete(fileName);
-            }
-
-            File.WriteAllBytes(fileName, result.ToArray());
-        }
+        }        
 
         private void TransformToolStripMenuItemClick(object sender, EventArgs e)
         {
@@ -694,6 +596,18 @@ namespace SpriteHelper
         private void RedoToolStripMenuItemClick(object sender, EventArgs e)
         {
             this.Redo();
+        }
+
+        private void ViewPlatformsToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            var dialog = new LevelSplitView(this.level, TileType.Blocking);
+            dialog.ShowDialog();
+        }
+
+        private void ViewThreatsToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            var dialog = new LevelSplitView(this.level, TileType.Threat);
+            dialog.ShowDialog();
         }
 
         #endregion
@@ -915,6 +829,226 @@ namespace SpriteHelper
             {
                 this.redoToolStripMenuItem.Enabled = false;
             }
+        }
+
+        #endregion
+
+        #region Exporting
+
+        private void Export(string fileName)
+        {
+            //
+            // Current format:
+            //
+            // - number of unique tiles (1 byte)
+            // - sprites for each tile in the left column (2 bytes each)
+            // - sprites for each tile in the right column (2 bytes each)
+            // - number of columns (1 byte)
+            // - tiles in each column (15 bytes each)
+            // - attributes (# of columns x 4 bytes)
+            //
+            // todo: add information about platforms, spikes etc
+            //
+
+            // Result byte list.
+            var result = new List<byte>();
+
+            // Local ids dictionary.            
+            var localIds = new Dictionary<string, byte>();
+            byte id = 0;
+
+            // Number of unique tiles.
+            result.Add((byte)this.UniqueTilesCount());
+
+            // Sprites in the right column.
+            var spritesInRightColumn = new List<byte>();
+
+            // Sprites for each tile in the left column.
+            foreach (var tileId in this.UniqueTiles())
+            {
+                // Assign a one byte id to the tile.
+                localIds.Add(tileId, id++);
+
+                // Find the tile config, get sprites, append to the result (sprites 0 and 1) and to the second list (2 and 3)
+                var tileConfig = this.config.Tiles.First(t => t.Id == TileIds.ParsePaletteId(tileId).Item2);
+                result.Add((byte)tileConfig.Sprites[0]);
+                result.Add((byte)tileConfig.Sprites[1]);
+                spritesInRightColumn.Add((byte)tileConfig.Sprites[2]);
+                spritesInRightColumn.Add((byte)tileConfig.Sprites[3]);
+            }
+
+            // Add sprites in the right column to the result.
+            result.AddRange(spritesInRightColumn);
+
+            // Number of columns.
+            result.Add((byte)this.level.Length);
+
+            // Tiles in each column.        
+            for (var x = 0; x < this.level.Length; x++)
+            {
+                for (var y = 0; y < this.level[x].Length; y++)
+                {
+                    result.Add(localIds[this.level[x][y]]);
+                }
+            }
+
+            // Attributes
+            for (var x = 0; x < this.level.Length; x += 2)
+            {
+                for (var y = 0; y < this.level[x].Length; y += 2)
+                {
+                    // Atts:
+                    //  0 1
+                    //  2 3
+                    //
+                    // So if atts are assigned as the numbers, the value will be:
+                    //  11 10 01 00
+
+                    byte palette0, palette1, palette2, palette3;
+
+                    palette0 = (byte)TileIds.ParsePaletteId(this.level[x][y]).Item1;
+                    palette1 = (byte)TileIds.ParsePaletteId(this.level[x + 1][y]).Item1;
+
+                    if (y + 1 < this.level[x].Length)
+                    {
+                        palette2 = (byte)TileIds.ParsePaletteId(this.level[x][y + 1]).Item1;
+                        palette3 = (byte)TileIds.ParsePaletteId(this.level[x + 1][y + 1]).Item1;
+                    }
+                    else
+                    {
+                        palette2 = 0;
+                        palette3 = 0;
+                    }
+
+                    var atts = (byte)(palette3 << 6 | palette2 << 4 | palette1 << 2 | palette0);
+                    result.Add(atts);
+                }
+            }
+
+            if (File.Exists(fileName))
+            {
+                File.Delete(fileName);
+            }
+
+            File.WriteAllBytes(fileName, result.ToArray());
+        }
+
+        public static Dictionary<int, Tuple<Point, Point>[]> SplitIntoRectangles(bool[][] input)
+        {
+            var result = new Dictionary<int, Tuple<Point, Point>[]>();
+            var width = input.Length;
+            var numberOfScreens = (width + Constants.ScreenWidthInTiles - 1) / Constants.ScreenWidthInTiles;
+            var lastScreenWidth = width - ((width / Constants.ScreenWidthInTiles) * Constants.ScreenWidthInTiles);
+
+            for (var screen = 0; screen < numberOfScreens; screen++)
+            {
+                var segmentWidth = screen == numberOfScreens - 1 ? lastScreenWidth : Constants.ScreenWidthInTiles;
+                var newInput = new bool[segmentWidth][];
+
+                for (var x = 0; x < segmentWidth; x++)
+                {
+                    var sourceX = screen * Constants.ScreenWidthInTiles + x;
+                    if (sourceX >= input.Length)
+                    {
+                        break;
+                    }
+
+                    newInput[x] = new bool[input[sourceX].Length];
+                    for (var y = 0; y < input[sourceX].Length; y++)
+                    {
+                        newInput[x][y] = input[sourceX][y];
+                    }
+                }
+
+                result.Add(screen, SplitSectionRectangles(newInput));
+            }
+
+            return result;
+        }
+
+        private static Tuple<Point, Point>[] SplitSectionRectangles(bool[][] input)
+        {
+            var result = new List<Tuple<Point, Point>>();
+            var width = input.Length;
+            var height = input[0].Length;
+
+            while (true)
+            {
+                // Find a set cell.
+                int x = 0, y = 0, x2 = 0, y2 = 0;
+                var found = false;
+                for (x = 0; x < width; x++)
+                {
+                    for (y = 0; y < height; y++)
+                    {
+                        if (input[x][y])
+                        {
+                            found = true;
+                            break;
+                        }
+                    }
+
+                    if (found)
+                    {
+                        break;
+                    }
+                }
+
+                if (!found)
+                {
+                    // No set cells left.
+                    break;
+                }
+
+                // Go down as long as possilble
+                y2 = y;
+                while (true)
+                {
+                    input[x][y2] = false;
+
+                    if (y2 < height - 1)
+                    {
+                        y2++;
+                        if (!input[x][y2])
+                        {
+                            y2--;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+
+                // Go right as long as possible
+                x2 = x;
+                while (x2 < width - 1)
+                {
+                    x2++;
+
+                    var canErase = true;
+                    for (var yPos = y; yPos <= y2 && canErase; yPos++)
+                    {
+                        canErase = input[x2][yPos];
+                    }
+
+                    if (!canErase)
+                    {
+                        x2--;
+                        break;
+                    }
+
+                    for (var yPos = y; yPos <= y2 && canErase; yPos++)
+                    {
+                        input[x2][yPos] = false;
+                    }
+                }
+
+                result.Add(Tuple.Create(new Point(x, y), new Point(x2, y2)));
+            }
+
+            return result.ToArray();
         }
 
         #endregion

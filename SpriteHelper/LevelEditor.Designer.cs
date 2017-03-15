@@ -48,6 +48,7 @@
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportLevelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.propertiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -58,7 +59,9 @@
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showGridToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exportImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
+            this.viewPlatformsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewThreatsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerVertical)).BeginInit();
             this.splitContainerVertical.Panel1.SuspendLayout();
             this.splitContainerVertical.Panel2.SuspendLayout();
@@ -276,6 +279,14 @@
             this.exportLevelToolStripMenuItem.Text = "&Export";
             this.exportLevelToolStripMenuItem.Click += new System.EventHandler(this.ExportLevelToolStripMenuItemClick);
             // 
+            // exportImageToolStripMenuItem
+            // 
+            this.exportImageToolStripMenuItem.Name = "exportImageToolStripMenuItem";
+            this.exportImageToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I)));
+            this.exportImageToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exportImageToolStripMenuItem.Text = "Export Image";
+            this.exportImageToolStripMenuItem.Click += new System.EventHandler(this.ExportImageToolStripMenuItemClick);
+            // 
             // editToolStripMenuItem
             // 
             this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -335,7 +346,10 @@
             // 
             this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.showTypeToolStripMenuItem,
-            this.showGridToolStripMenuItem});
+            this.showGridToolStripMenuItem,
+            this.toolStripMenuItem2,
+            this.viewPlatformsToolStripMenuItem,
+            this.viewThreatsToolStripMenuItem});
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
             this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.viewToolStripMenuItem.Text = "&View";
@@ -346,7 +360,7 @@
             this.showTypeToolStripMenuItem.Name = "showTypeToolStripMenuItem";
             this.showTypeToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.T)));
-            this.showTypeToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
+            this.showTypeToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
             this.showTypeToolStripMenuItem.Text = "Show &Type";
             this.showTypeToolStripMenuItem.Click += new System.EventHandler(this.ShowTypeToolStripMenuItemClick);
             // 
@@ -356,17 +370,32 @@
             this.showGridToolStripMenuItem.Name = "showGridToolStripMenuItem";
             this.showGridToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.G)));
-            this.showGridToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
+            this.showGridToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
             this.showGridToolStripMenuItem.Text = "Show &Grid";
             this.showGridToolStripMenuItem.Click += new System.EventHandler(this.ShowGridToolStripMenuItemClick);
             // 
-            // exportImageToolStripMenuItem
+            // toolStripMenuItem2
             // 
-            this.exportImageToolStripMenuItem.Name = "exportImageToolStripMenuItem";
-            this.exportImageToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I)));
-            this.exportImageToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.exportImageToolStripMenuItem.Text = "Export Image";
-            this.exportImageToolStripMenuItem.Click += new System.EventHandler(this.ExportImageToolStripMenuItemClick);
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(223, 6);
+            // 
+            // viewPlatformsToolStripMenuItem
+            // 
+            this.viewPlatformsToolStripMenuItem.Name = "viewPlatformsToolStripMenuItem";
+            this.viewPlatformsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.V)));
+            this.viewPlatformsToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.viewPlatformsToolStripMenuItem.Text = "View Platforms";
+            this.viewPlatformsToolStripMenuItem.Click += new System.EventHandler(this.ViewPlatformsToolStripMenuItemClick);
+            // 
+            // viewThreatsToolStripMenuItem
+            // 
+            this.viewThreatsToolStripMenuItem.Name = "viewThreatsToolStripMenuItem";
+            this.viewThreatsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.I)));
+            this.viewThreatsToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.viewThreatsToolStripMenuItem.Text = "View Threats";
+            this.viewThreatsToolStripMenuItem.Click += new System.EventHandler(this.ViewThreatsToolStripMenuItemClick);
             // 
             // LevelEditor
             // 
@@ -433,5 +462,8 @@
         private System.Windows.Forms.Label uniqueTilesLabel;
         private System.Windows.Forms.Label uniqueTilesCountLabel;
         private System.Windows.Forms.ToolStripMenuItem exportImageToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem viewPlatformsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem viewThreatsToolStripMenuItem;
     }
 }
