@@ -33,22 +33,12 @@ namespace SpriteHelper
                                       Color.LightGray
                                   };
 
-        public LevelSplitView(string[][] level, TileType tileType)
+        public LevelSplitView(bool[][] level)
         {
             InitializeComponent();
 
             var width = level.Length;
             var height = level[0].Length;
-            var parsed = new bool[width][];
-            for (var x = 0; x < width; x++)
-            {
-                parsed[x] = new bool[height];
-                for (var y = 0; y < height; y++)
-                {
-                    parsed[x][y] = int.Parse(level[x][y].Split('-')[1]) == (int)tileType;
-                }
-            }
-
             this.scale = this.pictureBox.Width / width;
 
             // Bitmap 1 - black and white
@@ -58,14 +48,14 @@ namespace SpriteHelper
                 bitmap1Array[x] = new int[height];
                 for (var y = 0; y < height; y++)
                 {
-                    bitmap1Array[x][y] = parsed[x][y] ? 1 : 0;
+                    bitmap1Array[x][y] = level[x][y] ? 1 : 0;
                 }
             }
 
             this.bitmap1 = this.CreateBitmap(bitmap1Array, width, height);
 
             // Bitmap 2 - with colors
-            var result = LevelEditor.SplitIntoRectangles(parsed);
+            var result = LevelEditor.SplitIntoRectangles(level);
             var bitmap2Array = new int[width][];
             for (var x = 0; x < width; x++)
             {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 
 namespace SpriteHelper
@@ -600,14 +601,24 @@ namespace SpriteHelper
 
         private void ViewPlatformsToolStripMenuItemClick(object sender, EventArgs e)
         {
-            var dialog = new LevelSplitView(this.level, TileType.Blocking);
+            var dialog = new LevelSplitView(this.GetSplittingInput(TileType.Blocking));
             dialog.ShowDialog();
         }
 
         private void ViewThreatsToolStripMenuItemClick(object sender, EventArgs e)
         {
-            var dialog = new LevelSplitView(this.level, TileType.Threat);
+            var dialog = new LevelSplitView(this.GetSplittingInput(TileType.Threat));
             dialog.ShowDialog();
+        }
+
+        private void ExportCheckToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            var builder = new StringBuilder();
+            var writer = new StringWriter(builder);
+            var bytes = GetExportPayload(writer);            
+            ///writer.WriteLineIfNotNull();
+            writer.WriteLineIfNotNull("Total size: {0} bytes", bytes.Length);
+            MessageBox.Show(builder.ToString(), "Export data", MessageBoxButtons.OK);
         }
 
         #endregion
@@ -837,8 +848,36 @@ namespace SpriteHelper
 
         private void Export(string fileName)
         {
-            //
-            // Current format:
+            var bytes = GetExportPayload();
+
+            if (File.Exists(fileName))
+            {
+                File.Delete(fileName);
+            }
+
+            File.WriteAllBytes(fileName, bytes);
+        }
+
+        private byte[] GetExportPayload(TextWriter logger = null)
+        {
+            // Result byte list.
+            var result = new List<byte>();
+
+            // Tiles data.
+            result.AddRange(GetExportTilesData(logger));
+            logger.WriteLineIfNotNull();
+
+            // Platform & threat data.
+            result.AddRange(GetPlatformAndThreatData(logger));
+            logger.WriteLineIfNotNull();
+
+            // todo: add information about starting position, enemies etc
+
+            return result.ToArray();
+        }
+
+        private byte[] GetExportTilesData(TextWriter logger = null)
+        {
             //
             // - number of unique tiles (1 byte)
             // - sprites for each tile in the left column (2 bytes each)
@@ -846,8 +885,6 @@ namespace SpriteHelper
             // - number of columns (1 byte)
             // - tiles in each column (15 bytes each)
             // - attributes (# of columns x 4 bytes)
-            //
-            // todo: add information about platforms, spikes etc
             //
 
             // Result byte list.
@@ -858,7 +895,10 @@ namespace SpriteHelper
             byte id = 0;
 
             // Number of unique tiles.
-            result.Add((byte)this.UniqueTilesCount());
+            var uniqueTilesCount = (byte)this.UniqueTilesCount();
+            result.Add(uniqueTilesCount);
+            logger.WriteLineIfNotNull("Unique tiles ({0}): 1 byte", uniqueTilesCount);
+            logger.WriteLineIfNotNull("Tiles spec: {0} bytes", uniqueTilesCount * 4);
 
             // Sprites in the right column.
             var spritesInRightColumn = new List<byte>();
@@ -881,9 +921,12 @@ namespace SpriteHelper
             result.AddRange(spritesInRightColumn);
 
             // Number of columns.
-            result.Add((byte)this.level.Length);
+            var columnsCount = (byte)this.level.Length;
+            result.Add(columnsCount);
+            logger.WriteLineIfNotNull("Number of columns ({0}) - 1 byte", columnsCount);
 
-            // Tiles in each column.        
+            // Tiles in each column.
+            var countBefore = result.Count;
             for (var x = 0; x < this.level.Length; x++)
             {
                 for (var y = 0; y < this.level[x].Length; y++)
@@ -891,6 +934,9 @@ namespace SpriteHelper
                     result.Add(localIds[this.level[x][y]]);
                 }
             }
+
+            logger.WriteLineIfNotNull("Columns data - {0} bytes", result.Count - countBefore);
+            countBefore = result.Count;
 
             // Attributes
             for (var x = 0; x < this.level.Length; x += 2)
@@ -925,12 +971,91 @@ namespace SpriteHelper
                 }
             }
 
-            if (File.Exists(fileName))
+            logger.WriteLineIfNotNull("Attributes data - {0} bytes", result.Count - countBefore);            
+            return result.ToArray();
+        }
+
+        private byte[] GetPlatformAndThreatData(TextWriter logger = null)
+        {
+            var result = new List<byte>();
+            result.AddRange(GetPlatformOrThreatData(TileType.Blocking, logger));
+            result.AddRange(GetPlatformOrThreatData(TileType.Threat, logger));
+            return result.ToArray();
+        }
+
+        private byte[] GetPlatformOrThreatData(TileType tileType, TextWriter logger = null)
+        {
+            //
+            // - platforms in the following format:
+            //   - pointer to next screen: (n x 4) + 4 (1 byte)
+            //   - number of platforms (1 byte)
+            //   - n times platform data (x1, y1, x2, y2) (n x 4 bytes)
+            //     both checks should be greater/less or equal - e.g. values will be x1 = 0, x2 = 15
+            //   - pointer to the previous screen: (n x 4) + 4 (1 byte)
+            // - threats in the same format
+            // - at the end there's one entry with 0 platforms/threats
+
+            var result = new List<byte>();
+            var splitted = SplitIntoRectangles(GetSplittingInput(tileType));
+
+            foreach (var kvp in splitted)
             {
-                File.Delete(fileName);
+                var screen = kvp.Key;
+                var rectangles = kvp.Value;
+                var n = (byte)rectangles.Length;
+                
+                // Pointer to the next screen
+                result.Add((byte)(n * 4 + 4));
+
+                // Number of objects
+                result.Add(n);
+
+                // Object data - order by x1
+                foreach (var rectangle in rectangles.OrderBy(r => r.Item1.X))
+                {
+                    var x1 = rectangle.Item1.X * Constants.BackgroundTileWidth;
+                    var y1 = rectangle.Item1.Y * Constants.BackgroundTileHeight;
+                    var x2 = rectangle.Item2.X * Constants.BackgroundTileWidth + (Constants.BackgroundTileWidth - 1);
+                    var y2 = rectangle.Item2.Y * Constants.BackgroundTileHeight + (Constants.BackgroundTileHeight - 1);   
+
+                    result.Add((byte)x1);
+                    result.Add((byte)y1);
+                    result.Add((byte)x2);
+                    result.Add((byte)y2);
+                }
+
+                // Pointer to the previous screen
+                result.Add((byte)(n * 4 + 4));
             }
 
-            File.WriteAllBytes(fileName, result.ToArray());
+            // Last screen with 0 objects
+            var lastScreen = splitted.Keys.Max();
+
+            // Pointer to the next screen - doesn't matter, will never be used; set 0
+            result.Add(0);
+
+            // Number of objects - 0
+            result.Add(0);
+
+            logger.WriteLineIfNotNull("Total bytes for {0} data: {1}", tileType, result.Count);
+            return result.ToArray();
+        }
+
+        public bool[][] GetSplittingInput(TileType tileType)
+        {
+            var width = this.level.Length;
+            var height = this.level[0].Length;
+            var parsed = new bool[width][];
+            for (var x = 0; x < width; x++)
+            {
+                parsed[x] = new bool[height];
+                for (var y = 0; y < height; y++)
+                {
+                    parsed[x][y] = int.Parse(level[x][y].Split('-')[1]) == (int)tileType;
+                }
+            }
+
+            return parsed;
         }
 
         public static Dictionary<int, Tuple<Point, Point>[]> SplitIntoRectangles(bool[][] input)
@@ -1119,6 +1244,6 @@ namespace SpriteHelper
             }
         }
 
-        #endregion
+        #endregion        
     }
 }
