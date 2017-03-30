@@ -9,6 +9,10 @@
         public const int BackgroundTileHeight = 16; // never change
 
         public const int ScreenWidthInTiles = 16;   // never change
+        public const int ScreenHeightInTiles = 15;  // never change
+
+        public const int ScreenWidthInAtts = 8;     // never change
+        public const int ScreenHeightInAtts = 8;    // never change
 
         public const int ChrFileSpritesPerRow = 16; // never change
         public const int ChrFileRows = 16;          // never change

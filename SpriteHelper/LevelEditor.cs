@@ -883,8 +883,12 @@ namespace SpriteHelper
             // - sprites for each tile in the left column (2 bytes each)
             // - sprites for each tile in the right column (2 bytes each)
             // - number of columns (1 byte)
+            // - column of 0s
             // - tiles in each column (15 bytes each)
+            // - column of 0s
+            // - atts column of 0s
             // - attributes (# of columns x 4 bytes)
+            // - atts column of 0s
             //
 
             // Result byte list.
@@ -925,6 +929,12 @@ namespace SpriteHelper
             result.Add(columnsCount);
             logger.WriteLineIfNotNull("Number of columns ({0}) - 1 byte", columnsCount);
 
+            // Column of 0s
+            for (var i = 0; i < Constants.ScreenHeightInTiles; i++)
+            {
+                result.Add(0);
+            }
+
             // Tiles in each column.
             var countBefore = result.Count;
             for (var x = 0; x < this.level.Length; x++)
@@ -935,8 +945,20 @@ namespace SpriteHelper
                 }
             }
 
+            // Column of 0s
+            for (var i = 0; i < Constants.ScreenHeightInTiles; i++)
+            {
+                result.Add(0);
+            }
+
             logger.WriteLineIfNotNull("Columns data - {0} bytes", result.Count - countBefore);
             countBefore = result.Count;
+
+            // Atts column of 0s
+            for (var i = 0; i < Constants.ScreenHeightInAtts; i++)
+            {
+                result.Add(0);
+            }
 
             // Attributes
             for (var x = 0; x < this.level.Length; x += 2)
@@ -969,6 +991,12 @@ namespace SpriteHelper
                     var atts = (byte)(palette3 << 6 | palette2 << 4 | palette1 << 2 | palette0);
                     result.Add(atts);
                 }
+            }
+
+            // Atts column of 0s
+            for (var i = 0; i < Constants.ScreenHeightInAtts; i++)
+            {
+                result.Add(0);
             }
 
             logger.WriteLineIfNotNull("Attributes data - {0} bytes", result.Count - countBefore);            
