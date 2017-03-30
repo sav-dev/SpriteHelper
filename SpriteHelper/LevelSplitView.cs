@@ -122,12 +122,17 @@ namespace SpriteHelper
 
             if (addLines)
             {
-                for (var screen = Constants.ScreenWidthInTiles * this.scale; screen < width * this.scale; screen += Constants.ScreenWidthInTiles * this.scale)
+                for (var screen = 0; screen < width * this.scale; screen += Constants.ScreenWidthInTiles * this.scale)
                 {
                     for (var y = 0; y < height * this.scale; y++)
                     {
                         scaledBitmap.SetPixel(Color.Black, screen, y);
-                    }                    
+                    }      
+                }
+
+                for (var y = 0; y < height * this.scale; y++)
+                {
+                    scaledBitmap.SetPixel(Color.Black, width * this.scale - 1, y);
                 }
             }
 
