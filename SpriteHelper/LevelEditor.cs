@@ -1089,7 +1089,8 @@ namespace SpriteHelper
                     }
                 }
 
-                result.Add(screen, SplitSectionRectangles(newInput));
+                // todo - fix an issue with screen width being 0
+                result.Add(screen, SplitSectionRectangles(newInput));                
             }
 
             return result;
