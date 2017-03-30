@@ -993,7 +993,7 @@ namespace SpriteHelper
             //     both checks should be greater/less or equal - e.g. values will be x1 = 0, x2 = 15
             //   - pointer to the previous screen: (n x 4) + 3 (1 byte)
             // - threats in the same format
-            // - at the end there's one entry with 0 platforms/threats
+            //
 
             var result = new List<byte>();
             var splitted = SplitIntoRectangles(GetSplittingInput(tileType));
@@ -1029,18 +1029,6 @@ namespace SpriteHelper
                 result.Add(pointer);
             }
 
-            // Last screen with 0 objects
-            var lastScreen = splitted.Keys.Max();
-
-            // Pointer to the next screen - i.e. pointer to next segment - 3
-            result.Add(3);
-
-            // Number of objects - 0
-            result.Add(0);
-
-            // Pointer to previous screen - may never be used - 3
-            result.Add(3);
-
             logger.WriteLineIfNotNull("Total bytes for {0} data: {1}", tileType, result.Count);
             return result.ToArray();
         }
@@ -1066,12 +1054,14 @@ namespace SpriteHelper
         {
             var result = new Dictionary<int, Tuple<Point, Point>[]>();
             var width = input.Length;
-            var numberOfScreens = (width + Constants.ScreenWidthInTiles - 1) / Constants.ScreenWidthInTiles;
-            var lastScreenWidth = width - ((width / Constants.ScreenWidthInTiles) * Constants.ScreenWidthInTiles);
+
+            var numberOfScreens = (width / Constants.ScreenWidthInTiles) + 1;
+            var lastScreenWidth = width - ((numberOfScreens - 1) * Constants.ScreenWidthInTiles);
 
             for (var screen = 0; screen < numberOfScreens; screen++)
             {
-                var segmentWidth = screen == numberOfScreens - 1 ? lastScreenWidth : Constants.ScreenWidthInTiles;
+                var isLastScreen = screen == numberOfScreens - 1;
+                var segmentWidth = isLastScreen ? lastScreenWidth : Constants.ScreenWidthInTiles;
                 var newInput = new bool[segmentWidth][];
 
                 for (var x = 0; x < segmentWidth; x++)
@@ -1089,7 +1079,6 @@ namespace SpriteHelper
                     }
                 }
 
-                // todo - fix an issue with screen width being 0
                 result.Add(screen, SplitSectionRectangles(newInput));                
             }
 
@@ -1100,6 +1089,12 @@ namespace SpriteHelper
         {
             var result = new List<Tuple<Point, Point>>();
             var width = input.Length;
+
+            if (width == 0)
+            {
+                return result.ToArray();
+            }
+
             var height = input[0].Length;
 
             while (true)
