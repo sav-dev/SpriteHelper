@@ -987,11 +987,11 @@ namespace SpriteHelper
         {
             //
             // - platforms in the following format:
-            //   - pointer to next screen: (n x 4) + 4 (1 byte)
+            //   - pointer to next screen: (n x 4) + 3 (1 byte)
             //   - number of platforms (1 byte)
             //   - n times platform data (x1, y1, x2, y2) (n x 4 bytes)
             //     both checks should be greater/less or equal - e.g. values will be x1 = 0, x2 = 15
-            //   - pointer to the previous screen: (n x 4) + 4 (1 byte)
+            //   - pointer to the previous screen: (n x 4) + 3 (1 byte)
             // - threats in the same format
             // - at the end there's one entry with 0 platforms/threats
 
@@ -1003,9 +1003,10 @@ namespace SpriteHelper
                 var screen = kvp.Key;
                 var rectangles = kvp.Value;
                 var n = (byte)rectangles.Length;
-                
+                var pointer = (byte)(n * 4 + 3);
+
                 // Pointer to the next screen
-                result.Add((byte)(n * 4 + 4));
+                result.Add(pointer);
 
                 // Number of objects
                 result.Add(n);
@@ -1025,17 +1026,20 @@ namespace SpriteHelper
                 }
 
                 // Pointer to the previous screen
-                result.Add((byte)(n * 4 + 4));
+                result.Add(pointer);
             }
 
             // Last screen with 0 objects
             var lastScreen = splitted.Keys.Max();
 
-            // Pointer to the next screen - doesn't matter, will never be used; set 0
-            result.Add(0);
+            // Pointer to the next screen - i.e. pointer to next segment - 3
+            result.Add(3);
 
             // Number of objects - 0
             result.Add(0);
+
+            // Pointer to previous screen - may never be used - 3
+            result.Add(3);
 
             logger.WriteLineIfNotNull("Total bytes for {0} data: {1}", tileType, result.Count);
             return result.ToArray();
