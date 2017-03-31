@@ -928,6 +928,7 @@ namespace SpriteHelper
             var columnsCount = (byte)this.level.Length;
             result.Add(columnsCount);
             logger.WriteLineIfNotNull("Number of columns ({0}) - 1 byte", columnsCount);
+            var countBefore = result.Count;
 
             // Column of 0s
             for (var i = 0; i < Constants.ScreenHeightInTiles; i++)
@@ -936,7 +937,6 @@ namespace SpriteHelper
             }
 
             // Tiles in each column.
-            var countBefore = result.Count;
             for (var x = 0; x < this.level.Length; x++)
             {
                 for (var y = 0; y < this.level[x].Length; y++)
