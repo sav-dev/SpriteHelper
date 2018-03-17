@@ -71,6 +71,7 @@ namespace SpriteHelper
             {
                 foreach (var sprite in frame.Sprites)
                 {
+                    sprite.ReversedX = 2 * config.X - sprite.X + Constants.SpriteWidth;
                     sprite.ActualSprite = config.Sprites.First(s => s.Id == sprite.Id);
                 }
             }
@@ -157,6 +158,9 @@ namespace SpriteHelper
 
         [DataMember]
         public int X { get; set; }
+
+        [DataMember]
+        public int ReversedX { get; set; }
 
         [DataMember]
         public int Y { get; set; }
@@ -267,7 +271,7 @@ namespace SpriteHelper
                 return dictionary[flags];
             }
 
-            var width = this.Sprites.Max(s => s.X) + Constants.SpriteWidth + config.X;
+            var width = config.Frames.Max(f => f.Sprites.Max(s => Math.Max(s.ReversedX, s.X))) + Constants.SpriteWidth;
             var height = this.Sprites.Max(s => s.Y) + Constants.SpriteHeight;
             var image = new MyBitmap(width, height, backColor);
 
@@ -275,14 +279,9 @@ namespace SpriteHelper
             {
                 var spriteImage = sprite.GetSprite(applyPalettes, reversed);
 
-                var x = sprite.X;
+                var x = reversed ? sprite.ReversedX : sprite.X;
                 var y = sprite.Y;
-
-                if (reversed)
-                {
-                    x = width - x - 8 - config.X / 2 + 1;
-                }
-
+                
                 image.DrawImage(spriteImage, x, y);
             }
 

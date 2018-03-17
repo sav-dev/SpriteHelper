@@ -92,7 +92,7 @@ namespace SpriteHelper
             this.outputTextBox.Text = Defaults.Instance.AnimationOutput;
             this.codeTextBox.Text = Defaults.Instance.PlayerGeneratedOutput;
             this.LoadFiles();
-            this.CodeButtonClick(null, null);
+            //this.CodeButtonClick(null, null);
         }
 
         private void LoadFiles()
@@ -268,7 +268,7 @@ namespace SpriteHelper
                 builder.AppendLineFormat("  LDA playerAnimationFrame");
                 for (var i = state.Frames.Length; i >= 2; i--)
                 {                    
-                    builder.AppendLineFormat("  CMP ${0}", i.ToString("X2"));
+                    builder.AppendLineFormat("  CMP #${0}", i.ToString("X2"));
                     builder.AppendLineFormat("  BEQ .jump{0}{1}{2}", name, left ? "Left" : "Right", i);
                 }
 
@@ -294,6 +294,7 @@ namespace SpriteHelper
             const int MaxSprites = 9;
 
             var builder = new StringBuilder();
+            builder.AppendLineFormat(";{0}", frame.Name);
             for (var i = 0; i < frame.Sprites.Length; i++)
             {
                 builder.AppendLine(GetSpriteCode(frame, i, left));
@@ -312,6 +313,42 @@ namespace SpriteHelper
         {
             var builder = new StringBuilder();
             var sprite = frame.Sprites[i];
+
+            builder.AppendLineFormat("  LDA #${0}", sprite.Id.ToString("X2"));
+            builder.AppendLineFormat("  STA SPRITES_PLAYER + TILE_OFF + SPRITE_SIZE * ${0}", i.ToString("X2"));
+
+            var attributes = sprite.ActualSprite.Mapping;
+            if (left)
+            {
+                attributes += 64; // 64 = %01000000 = flip horizontally flag
+            }
+
+            builder.AppendLineFormat("  LDA #${0}", attributes.ToString("X2"));
+            builder.AppendLineFormat("  STA SPRITES_PLAYER + ATTS_OFF + SPRITE_SIZE * ${0}", i.ToString("X2"));
+
+            builder.AppendLineFormat("  LDA playerX");
+
+            var x = left ? (2 * config.X - sprite.X + Constants.SpriteWidth) : sprite.X;
+            var xOffset = x - this.config.X;
+            
+            if (xOffset > 0)
+            {
+                builder.AppendLineFormat("  CLC");
+                builder.AppendLineFormat("  ADC #${0}", xOffset.ToString("X2"));
+            }
+            else if (xOffset < 0)
+            {
+                builder.AppendLineFormat("  SEC");
+                builder.AppendLineFormat("  SBC #${0}", Math.Abs(xOffset).ToString("X2"));
+            }
+
+            builder.AppendLineFormat("  STA SPRITES_PLAYER + X_OFF + SPRITE_SIZE * ${0}", i.ToString("X2"));
+
+            var y = 0;
+            builder.AppendLineFormat("  LDA #${0}", (sprite.Y + 50).ToString("X2"));
+            builder.AppendLineFormat("  STA SPRITES_PLAYER + Y_OFF + SPRITE_SIZE * ${0}", i.ToString("X2"));
+
+            return builder.ToString();
         }
     }
 }
