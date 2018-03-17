@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -10,6 +11,12 @@ namespace SpriteHelper
     [DataContract]
     public class SpriteConfig
     {
+        [DataMember]
+        public int X { get; set; }
+
+        [DataMember]
+        public int Y { get; set; }
+
         [DataMember]
         public PaletteMapping[] PaletteMappings { get; set; }
 
@@ -57,6 +64,7 @@ namespace SpriteHelper
                 }
 
                 sprite.PreparePalettes(palettes, mapping);
+                sprite.PrepareReversed();
             }
 
             foreach (var frame in config.Frames)
@@ -141,6 +149,8 @@ namespace SpriteHelper
 
         private MyBitmap sprite;
         private MyBitmap spriteWithPalettesApplied;
+        private MyBitmap spriteReversed;
+        private MyBitmap spriteWithPalettesAppliedReversed;
 
         [DataMember]
         public int Id { get; set; }
@@ -161,8 +171,7 @@ namespace SpriteHelper
                 throw new Exception("Not expected");
             }
 
-            this.sprite = source.GetPart(this.X, this.Y, Constants.SpriteWidth, Constants.SpriteHeight);
-           
+            this.sprite = source.GetPart(this.X, this.Y, Constants.SpriteWidth, Constants.SpriteHeight);           
         }
 
         public void PreparePalettes(Palettes palettes, PaletteMapping paletteMapping)
@@ -182,15 +191,32 @@ namespace SpriteHelper
             }    
         }
 
-        public MyBitmap GetSprite(bool applyPalettes = false)
+        public void PrepareReversed()
+        {
+            this.spriteWithPalettesAppliedReversed = this.spriteWithPalettesApplied.Reverse();
+            this.spriteReversed = this.sprite.Reverse();
+        }
+
+        public MyBitmap GetSprite(bool applyPalettes = false, bool reversed = false)
         {
             if (this.ActualSprite != null)
             {
-                return this.ActualSprite.GetSprite(applyPalettes);
+                return this.ActualSprite.GetSprite(applyPalettes, reversed);
             }
 
-            return applyPalettes ? spriteWithPalettesApplied : sprite;
+            return applyPalettes ?
+                (reversed ? spriteWithPalettesAppliedReversed : spriteWithPalettesApplied) :
+                (reversed ? spriteReversed : sprite);
         }
+    }
+
+    [Flags]
+    public enum FrameFlags
+    {
+        None = 0,
+        Palettes = 1,
+        Boxes = 2,
+        Reversed = 4
     }
 
     [DataContract]
@@ -205,46 +231,83 @@ namespace SpriteHelper
         [DataMember]
         public string Name { get; set; }
 
-        private Bitmap[] cachedBitmaps;
-        private Bitmap[] cachedBitmapsWithPalettesApplied;
-
+        private IDictionary<FrameFlags, Bitmap>[] cachedBitmaps;
+        
         public Frame()
         {
-            this.cachedBitmaps = new Bitmap[Constants.MaxZoom - 1];
-            this.cachedBitmapsWithPalettesApplied = new Bitmap[Constants.MaxZoom - 1];
+            this.cachedBitmaps = new IDictionary<FrameFlags, Bitmap>[Constants.MaxZoom - 1];
+            for (var i = 0; i < Constants.MaxZoom - 1; i++)
+            {
+                cachedBitmaps[i] = new Dictionary<FrameFlags, Bitmap>();
+            }            
         }
 
-        public Bitmap GetBitmap(SpriteConfig config, Color backColor, bool applyPalettes, int zoom)
+        public Bitmap GetBitmap(SpriteConfig config, Color backColor, bool applyPalettes, bool showBoxes, bool reversed, int zoom)
         {
-            if (applyPalettes && this.cachedBitmapsWithPalettesApplied[zoom - 1] != null)
-            {
-                return this.cachedBitmapsWithPalettesApplied[zoom - 1];
-            }
-            else if (!applyPalettes && this.cachedBitmaps[zoom - 1] != null)
-            {
-                return this.cachedBitmaps[zoom - 1];
-            }            
+            var flags = FrameFlags.None;
 
-            var width = this.Sprites.Max(s => s.X) + Constants.SpriteWidth;
+            if (applyPalettes)
+            {
+                flags |= FrameFlags.Palettes;
+            }
+
+            if (showBoxes)
+            {
+                flags |= FrameFlags.Boxes;
+            }
+
+            if (reversed)
+            {
+                flags |= FrameFlags.Reversed;
+            }
+
+            var dictionary = this.cachedBitmaps[zoom - 1];
+            if (dictionary.ContainsKey(flags))
+            {
+                return dictionary[flags];
+            }
+
+            var width = this.Sprites.Max(s => s.X) + Constants.SpriteWidth + config.X;
             var height = this.Sprites.Max(s => s.Y) + Constants.SpriteHeight;
             var image = new MyBitmap(width, height, backColor);
 
             foreach (var sprite in this.Sprites)
             {
-                var spriteImage = sprite.GetSprite(applyPalettes);
-                image.DrawImage(spriteImage, sprite.X, sprite.Y);
+                var spriteImage = sprite.GetSprite(applyPalettes, reversed);
+
+                var x = sprite.X;
+                var y = sprite.Y;
+
+                if (reversed)
+                {
+                    x = width - x - 8 - config.X / 2 + 1;
+                }
+
+                image.DrawImage(spriteImage, x, y);
+            }
+
+            if (showBoxes)
+            {
+                //if (this.Name == "Crouch")
+                //{
+                //    image.DrawRectangle(MyBitmap.PlatformBoxColor, config.X, config.Y - 23, config.X + 15, config.Y);
+                //}
+                //else
+                //{
+                //    image.DrawRectangle(MyBitmap.PlatformBoxColor, config.X, config.Y - 31, config.X + 15, config.Y);
+                //}
+
+                // Platform box: hardcoded
+                image.DrawRectangle(MyBitmap.PlatformBoxColor, config.X, config.Y - 31, config.X + 15, config.Y);
+
+                // Threat boxes: hardcoded
+
+                image.SetPixel(MyBitmap.XYColor, config.X, config.Y);
             }
 
             var result = image.Scale(zoom).ToBitmap();
 
-            if (applyPalettes)
-            {
-                this.cachedBitmapsWithPalettesApplied[zoom - 1] = result;
-            }
-            else
-            {
-                this.cachedBitmaps[zoom - 1] = result;
-            }
+            dictionary.Add(flags, result);
 
             return result;
         }

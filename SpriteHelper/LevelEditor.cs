@@ -1046,6 +1046,7 @@ namespace SpriteHelper
                     var x2 = rectangle.Item2.X * Constants.BackgroundTileWidth + (Constants.BackgroundTileWidth - 1);
                     var y2 = rectangle.Item2.Y * Constants.BackgroundTileHeight + (Constants.BackgroundTileHeight - 1);   
 
+                    // todo - for threats have a smaller rectangle?
                     result.Add((byte)x1);
                     result.Add((byte)y1);
                     result.Add((byte)x2);

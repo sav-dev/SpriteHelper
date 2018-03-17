@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using System.IO;
+using System.Text;
 
 namespace SpriteHelper
 {
@@ -32,6 +33,12 @@ namespace SpriteHelper
             {
                 logger.WriteLine(string.Format(format, args));
             }            
+        }
+
+        public static void AppendLineFormat(this StringBuilder builder, string format, params object[] args)
+        {
+            builder.AppendFormat(format, args);
+            builder.AppendLine();
         }
     }
 }

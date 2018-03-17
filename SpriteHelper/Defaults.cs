@@ -26,6 +26,12 @@ namespace SpriteHelper
         public string PalettesSpec { get; set; }
 
         [DataMember]
+        public string AnimationOutput { get; set; }
+
+        [DataMember]
+        public string PlayerGeneratedOutput { get; set; }
+
+        [DataMember]
         public string[] NonBlockingBackgrounds { get; set; }
 
         [DataMember]

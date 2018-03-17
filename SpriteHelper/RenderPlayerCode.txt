@@ -1,0 +1,106 @@
+;****************************************************************
+; PlayerController_generated                                    ;
+; Generated code for rendering the player                       ;
+;****************************************************************
+
+;****************************************************************
+; Name:                                                         ;
+;   RenderPlayer                                                ;
+;                                                               ;
+; Description:                                                  ;
+;   Sets all player sprites based on position, state etc.       ;
+;   Generated with the tool                                     ;
+;****************************************************************
+
+RenderPlayer:
+
+  .checkStand:
+    LDA playerState
+    ;CMP #PLAYER_STAND      ; PLAYER_STAND = 0
+    BNE .checkJump
+    JMP .playerStand
+  
+  .checkJump:
+    CMP #PLAYER_JUMP  
+    BNE .checkRun
+    JMP .playerJump 
+    
+  .checkRun:
+    CMP #PLAYER_RUN 
+    BNE .playerCrouch  
+    JMP .playerRun
+      
+  .playerCrouch:  
+    LDA playerDirection 
+    BEQ .jumpCrouchLeft     ; DIRECTION_LEFT = 0
+    JMP .crouchRight
+    .jumpCrouchLeft:
+      JMP .crouchLeft
+                            
+    .crouchRight:           
+;; GENERATED CODE ;;        
+{0}                         
+;;;;;;;;;;;;;;;;;;;;        
+      RTS                   
+                            
+    .crouchLeft:            
+;; GENERATED CODE ;;        
+{1}                         
+;;;;;;;;;;;;;;;;;;;;        
+    RTS                     
+                            
+  .playerStand:             
+    LDA playerDirection     
+    BEQ .jumpStandLeft      ; DIRECTION_LEFT = 0
+    JMP .standRight
+    .jumpStandLeft:
+      JMP .standLeft
+                            
+    .standRight:            
+;; GENERATED CODE ;;        
+{2}                         
+;;;;;;;;;;;;;;;;;;;;        
+      RTS                   
+                            
+    .standLeft:             
+;; GENERATED CODE ;;        
+{3}                         
+;;;;;;;;;;;;;;;;;;;;        
+      RTS                   
+                            
+  .playerJump:              
+    LDA playerDirection     
+    BEQ .jumpJumpLeft       ; DIRECTION_LEFT = 0
+    JMP .jumpRight
+    .jumpJumpLeft:
+      JMP .jumpLeft
+                    
+    .jumpRight:             
+;; GENERATED CODE ;;        
+{4}                         
+;;;;;;;;;;;;;;;;;;;;        
+      RTS                   
+                            
+    .jumpLeft:              
+;; GENERATED CODE ;;        
+{5}                         
+;;;;;;;;;;;;;;;;;;;;        
+      RTS                   
+                            
+  .playerRun:               
+    LDA playerDirection     
+    BEQ .jumpRunLeft        ; DIRECTION_LEFT = 0
+    JMP .runRight
+    .jumpRunLeft:
+      JMP .runLeft
+    
+    .runRight:
+;; GENERATED CODE ;;
+{6}
+;;;;;;;;;;;;;;;;;;;;
+      RTS
+  
+    .runLeft:
+;; GENERATED CODE ;;
+{7}
+;;;;;;;;;;;;;;;;;;;;

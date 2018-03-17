@@ -8,6 +8,10 @@ namespace SpriteHelper
     public class MyBitmap : IEquatable<MyBitmap>
     {
         public static readonly Color GridColor = Color.FromArgb(235, 235, 180);
+
+        public static readonly Color XYColor = Color.Yellow;
+        public static readonly Color PlatformBoxColor = Color.Blue;
+
         public static readonly Color[] NesGreyscale = new[] { NesPalette.Colors[15], NesPalette.Colors[0], NesPalette.Colors[16], NesPalette.Colors[32] };
 
         private string fileName;
@@ -37,7 +41,7 @@ namespace SpriteHelper
         }
 
         public static MyBitmap FromFile(string file)
-        {        
+        {
             var bitmap = new Bitmap(file);
             var result = new MyBitmap(bitmap.Width, bitmap.Height);
             for (var i = 0; i < bitmap.Width; i++)
@@ -136,6 +140,21 @@ namespace SpriteHelper
             this.pixels[x][y] = color;
         }
 
+        public void DrawRectangle(Color color, int x1, int y1, int x2, int y2)
+        {
+            for (var x = x1; x <= x2; x++)
+            {
+                this.SetPixel(color, x, y1);
+                this.SetPixel(color, x, y2);
+            }
+
+            for (var y = y1; y <= y2; y++)
+            {
+                this.SetPixel(color, x1, y);
+                this.SetPixel(color, x2, y);
+            }
+        }
+
         public void Resize(int newWidth, int newHeight, Color? backColor = null)
         {
             var newBitmap = new MyBitmap(newWidth, newHeight, backColor);
@@ -208,7 +227,20 @@ namespace SpriteHelper
                             result.SetPixel(pixel, x * zoom + xx, y * zoom + yy);
                         }
                     }
+                }
+            }
 
+            return result;
+        }
+
+        public MyBitmap Reverse()
+        {
+            var result = new MyBitmap(this.width, this.height);
+            for (var x = 0; x < this.width; x++)
+            {
+                for (var y = 0; y < this.height; y++)
+                {
+                    result.SetPixel(this.GetPixel(x, y), this.width - x - 1, y);
                 }
             }
 

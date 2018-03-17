@@ -1,12 +1,14 @@
 ﻿<Defaults>
-  <!--<DefaultApp>Animation</DefaultApp>-->
+  <DefaultApp>Animation</DefaultApp>
   <!--<DefaultApp>Palettes</DefaultApp>-->
   <!--<DefaultApp>Background</DefaultApp>-->
-  <DefaultApp>Level</DefaultApp>
+  <!--<DefaultApp>Level</DefaultApp>-->
   <ApplyDefaults>true</ApplyDefaults>
   <AnimationImage>C:\users\tomas\documents\nes\github\platformer\graphics\sprites\gunner_sprites.png</AnimationImage>
   <AnimationSpec>C:\users\tomas\documents\nes\github\platformer\graphics\sprites\gunner_spec.xml</AnimationSpec>
   <Palette>C:\users\tomas\documents\nes\github\platformer\graphics\palettes\palette.png</Palette>
+  <AnimationOutput>C:\Users\tomas\Documents\NES\GitHub\Platformer\graphics\Chr\spr_00.chr</AnimationOutput>
+  <PlayerGeneratedOutput>C:\Users\tomas\Documents\NES\GitHub\Platformer\generated\playerController_generated.asm</PlayerGeneratedOutput>
   <PalettesSpec>C:\users\tomas\documents\nes\github\platformer\graphics\palettes\palettes_00.xml</PalettesSpec>
   <NonBlockingBackgrounds>
     <string>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\00\nonblocking1.png;3</string>

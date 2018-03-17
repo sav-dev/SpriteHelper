@@ -1,0 +1,75 @@
+RenderPlayer:
+
+  LDA playerState
+  ;CMP #PLAYER_STAND
+  BEQ .playerStand        ; PLAYER_STAND = 0
+  CMP #PLAYER_JUMP  
+  BEQ .playerJump 
+  CMP #PLAYER_RUN 
+  BEQ .playerRun  
+  ;CMP #PLAYER_CROUCH 
+  ;BEQ .playerCrouch  
+    
+  .playerCrouch:  
+    LDA playerDirection 
+    BEQ .crouchLeft       ; DIRECTION_LEFT = 0
+    
+    .crouchRight:
+;; GENERATED CODE ;;
+{0}
+;;;;;;;;;;;;;;;;;;;;
+      RTS
+  
+    .crouchLeft:
+;; GENERATED CODE ;;
+{1}
+;;;;;;;;;;;;;;;;;;;;
+    RTS
+  
+  .playerStand:
+    LDA playerDirection 
+    BEQ .standLeft        ; DIRECTION_LEFT = 0
+    
+    .standRight:
+;; GENERATED CODE ;;
+{2}
+;;;;;;;;;;;;;;;;;;;;
+      RTS
+  
+    .standLeft:
+;; GENERATED CODE ;;
+{3}
+;;;;;;;;;;;;;;;;;;;;
+      RTS
+  
+  .playerJump:
+    LDA playerDirection 
+    BEQ .jumpLeft         ; DIRECTION_LEFT = 0
+    
+    .jumpRight:
+;; GENERATED CODE ;;
+{4}
+;;;;;;;;;;;;;;;;;;;;
+      RTS
+  
+    .jumpLeft:
+;; GENERATED CODE ;;
+{5}
+;;;;;;;;;;;;;;;;;;;;
+      RTS  
+  
+  .playerRun:
+    LDA playerDirection 
+    BEQ .runLeft          ; DIRECTION_LEFT = 0
+    
+    .runRight:
+;; GENERATED CODE ;;
+{6}
+;;;;;;;;;;;;;;;;;;;;
+      RTS
+  
+    .runLeft:
+;; GENERATED CODE ;;
+{7}
+;;;;;;;;;;;;;;;;;;;;
+      RTS  

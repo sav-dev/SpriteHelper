@@ -45,6 +45,14 @@
             this.applyPaletteCheckbox = new System.Windows.Forms.CheckBox();
             this.palettesLabel = new System.Windows.Forms.Label();
             this.palettesTextBox = new System.Windows.Forms.TextBox();
+            this.directionCheckBox = new System.Windows.Forms.CheckBox();
+            this.showBoxesCheckBox = new System.Windows.Forms.CheckBox();
+            this.exportButton = new System.Windows.Forms.Button();
+            this.outputTextBox = new System.Windows.Forms.TextBox();
+            this.outputLabel = new System.Windows.Forms.Label();
+            this.codeButton = new System.Windows.Forms.Button();
+            this.codeLabel = new System.Windows.Forms.Label();
+            this.codeTextBox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.zoomPicker)).BeginInit();
             this.SuspendLayout();
@@ -53,7 +61,7 @@
             // 
             this.pictureBox.BackColor = System.Drawing.Color.White;
             this.pictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox.Location = new System.Drawing.Point(15, 134);
+            this.pictureBox.Location = new System.Drawing.Point(15, 200);
             this.pictureBox.Name = "pictureBox";
             this.pictureBox.Size = new System.Drawing.Size(270, 303);
             this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -63,7 +71,7 @@
             // framesListBox
             // 
             this.framesListBox.FormattingEnabled = true;
-            this.framesListBox.Location = new System.Drawing.Point(389, 134);
+            this.framesListBox.Location = new System.Drawing.Point(389, 200);
             this.framesListBox.Name = "framesListBox";
             this.framesListBox.Size = new System.Drawing.Size(92, 303);
             this.framesListBox.TabIndex = 1;
@@ -103,7 +111,7 @@
             // 
             // loadButton
             // 
-            this.loadButton.Location = new System.Drawing.Point(406, 93);
+            this.loadButton.Location = new System.Drawing.Point(229, 138);
             this.loadButton.Name = "loadButton";
             this.loadButton.Size = new System.Drawing.Size(75, 23);
             this.loadButton.TabIndex = 6;
@@ -114,7 +122,7 @@
             // zoomLabel
             // 
             this.zoomLabel.AutoSize = true;
-            this.zoomLabel.Location = new System.Drawing.Point(12, 98);
+            this.zoomLabel.Location = new System.Drawing.Point(14, 143);
             this.zoomLabel.Name = "zoomLabel";
             this.zoomLabel.Size = new System.Drawing.Size(34, 13);
             this.zoomLabel.TabIndex = 7;
@@ -122,7 +130,7 @@
             // 
             // zoomPicker
             // 
-            this.zoomPicker.Location = new System.Drawing.Point(54, 96);
+            this.zoomPicker.Location = new System.Drawing.Point(67, 141);
             this.zoomPicker.Maximum = new decimal(new int[] {
             10,
             0,
@@ -146,7 +154,7 @@
             // animationsListBox
             // 
             this.animationsListBox.FormattingEnabled = true;
-            this.animationsListBox.Location = new System.Drawing.Point(291, 133);
+            this.animationsListBox.Location = new System.Drawing.Point(291, 199);
             this.animationsListBox.Name = "animationsListBox";
             this.animationsListBox.Size = new System.Drawing.Size(92, 303);
             this.animationsListBox.TabIndex = 10;
@@ -155,7 +163,7 @@
             // stopButton
             // 
             this.stopButton.Enabled = false;
-            this.stopButton.Location = new System.Drawing.Point(325, 93);
+            this.stopButton.Location = new System.Drawing.Point(389, 164);
             this.stopButton.Name = "stopButton";
             this.stopButton.Size = new System.Drawing.Size(75, 23);
             this.stopButton.TabIndex = 11;
@@ -165,7 +173,7 @@
             // 
             // startButton
             // 
-            this.startButton.Location = new System.Drawing.Point(244, 93);
+            this.startButton.Location = new System.Drawing.Point(308, 164);
             this.startButton.Name = "startButton";
             this.startButton.Size = new System.Drawing.Size(75, 23);
             this.startButton.TabIndex = 12;
@@ -175,6 +183,7 @@
             // 
             // timer
             // 
+            this.timer.Interval = 1;
             this.timer.Tick += new System.EventHandler(this.TimerTick);
             // 
             // applyPaletteCheckbox
@@ -182,7 +191,7 @@
             this.applyPaletteCheckbox.AutoSize = true;
             this.applyPaletteCheckbox.Checked = true;
             this.applyPaletteCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.applyPaletteCheckbox.Location = new System.Drawing.Point(150, 97);
+            this.applyPaletteCheckbox.Location = new System.Drawing.Point(15, 170);
             this.applyPaletteCheckbox.Name = "applyPaletteCheckbox";
             this.applyPaletteCheckbox.Size = new System.Drawing.Size(88, 17);
             this.applyPaletteCheckbox.TabIndex = 13;
@@ -206,11 +215,93 @@
             this.palettesTextBox.Size = new System.Drawing.Size(414, 20);
             this.palettesTextBox.TabIndex = 14;
             // 
+            // directionCheckBox
+            // 
+            this.directionCheckBox.AutoSize = true;
+            this.directionCheckBox.Location = new System.Drawing.Point(114, 170);
+            this.directionCheckBox.Name = "directionCheckBox";
+            this.directionCheckBox.Size = new System.Drawing.Size(75, 17);
+            this.directionCheckBox.TabIndex = 18;
+            this.directionCheckBox.Text = "Going Left";
+            this.directionCheckBox.UseVisualStyleBackColor = true;
+            this.directionCheckBox.CheckedChanged += new System.EventHandler(this.DirectionCheckBoxCheckedChanged);
+            // 
+            // showBoxesCheckBox
+            // 
+            this.showBoxesCheckBox.AutoSize = true;
+            this.showBoxesCheckBox.Location = new System.Drawing.Point(200, 170);
+            this.showBoxesCheckBox.Name = "showBoxesCheckBox";
+            this.showBoxesCheckBox.Size = new System.Drawing.Size(85, 17);
+            this.showBoxesCheckBox.TabIndex = 19;
+            this.showBoxesCheckBox.Text = "Show Boxes";
+            this.showBoxesCheckBox.UseVisualStyleBackColor = true;
+            this.showBoxesCheckBox.CheckedChanged += new System.EventHandler(this.ShowBoxesCheckBoxCheckedChanged);
+            // 
+            // exportButton
+            // 
+            this.exportButton.Location = new System.Drawing.Point(308, 138);
+            this.exportButton.Name = "exportButton";
+            this.exportButton.Size = new System.Drawing.Size(75, 23);
+            this.exportButton.TabIndex = 20;
+            this.exportButton.Text = "Export";
+            this.exportButton.UseVisualStyleBackColor = true;
+            this.exportButton.Click += new System.EventHandler(this.ExportButtonClick);
+            // 
+            // outputTextBox
+            // 
+            this.outputTextBox.Location = new System.Drawing.Point(67, 86);
+            this.outputTextBox.Name = "outputTextBox";
+            this.outputTextBox.Size = new System.Drawing.Size(414, 20);
+            this.outputTextBox.TabIndex = 21;
+            // 
+            // outputLabel
+            // 
+            this.outputLabel.AutoSize = true;
+            this.outputLabel.Location = new System.Drawing.Point(12, 89);
+            this.outputLabel.Name = "outputLabel";
+            this.outputLabel.Size = new System.Drawing.Size(39, 13);
+            this.outputLabel.TabIndex = 22;
+            this.outputLabel.Text = "Output";
+            // 
+            // codeButton
+            // 
+            this.codeButton.Location = new System.Drawing.Point(389, 138);
+            this.codeButton.Name = "codeButton";
+            this.codeButton.Size = new System.Drawing.Size(75, 23);
+            this.codeButton.TabIndex = 23;
+            this.codeButton.Text = "Code";
+            this.codeButton.UseVisualStyleBackColor = true;
+            this.codeButton.Click += new System.EventHandler(this.CodeButtonClick);
+            // 
+            // codeLabel
+            // 
+            this.codeLabel.AutoSize = true;
+            this.codeLabel.Location = new System.Drawing.Point(12, 115);
+            this.codeLabel.Name = "codeLabel";
+            this.codeLabel.Size = new System.Drawing.Size(32, 13);
+            this.codeLabel.TabIndex = 25;
+            this.codeLabel.Text = "Code";
+            // 
+            // codeTextBox
+            // 
+            this.codeTextBox.Location = new System.Drawing.Point(67, 112);
+            this.codeTextBox.Name = "codeTextBox";
+            this.codeTextBox.Size = new System.Drawing.Size(414, 20);
+            this.codeTextBox.TabIndex = 24;
+            // 
             // AnimationHelper
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(489, 449);
+            this.ClientSize = new System.Drawing.Size(489, 524);
+            this.Controls.Add(this.codeLabel);
+            this.Controls.Add(this.codeTextBox);
+            this.Controls.Add(this.codeButton);
+            this.Controls.Add(this.outputLabel);
+            this.Controls.Add(this.outputTextBox);
+            this.Controls.Add(this.exportButton);
+            this.Controls.Add(this.showBoxesCheckBox);
+            this.Controls.Add(this.directionCheckBox);
             this.Controls.Add(this.palettesLabel);
             this.Controls.Add(this.palettesTextBox);
             this.Controls.Add(this.applyPaletteCheckbox);
@@ -256,6 +347,14 @@
         private System.Windows.Forms.CheckBox applyPaletteCheckbox;
         private System.Windows.Forms.Label palettesLabel;
         private System.Windows.Forms.TextBox palettesTextBox;
+        private System.Windows.Forms.CheckBox directionCheckBox;
+        private System.Windows.Forms.CheckBox showBoxesCheckBox;
+        private System.Windows.Forms.Button exportButton;
+        private System.Windows.Forms.TextBox outputTextBox;
+        private System.Windows.Forms.Label outputLabel;
+        private System.Windows.Forms.Button codeButton;
+        private System.Windows.Forms.Label codeLabel;
+        private System.Windows.Forms.TextBox codeTextBox;
     }
 }
 

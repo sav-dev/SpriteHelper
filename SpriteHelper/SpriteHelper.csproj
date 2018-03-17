@@ -55,6 +55,12 @@
     <Compile Include="BackgroundTilesetCreator.Designer.cs">
       <DependentUpon>BackgroundTilesetCreator.cs</DependentUpon>
     </Compile>
+    <Compile Include="CodeWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CodeWindow.Designer.cs">
+      <DependentUpon>CodeWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="DateMemberAttribute.cs" />
     <Compile Include="Defaults.cs" />
     <Compile Include="DoubleBufferedPanel.cs">
@@ -124,6 +130,9 @@
     <EmbeddedResource Include="AnimationHelper.resx">
       <DependentUpon>AnimationHelper.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="CodeWindow.resx">
+      <DependentUpon>CodeWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="LevelSplitView.resx">
       <DependentUpon>LevelSplitView.cs</DependentUpon>
     </EmbeddedResource>
@@ -171,6 +180,9 @@
     <Content Include="Defaults.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
+    </Content>
+    <Content Include="RenderPlayerCode.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
