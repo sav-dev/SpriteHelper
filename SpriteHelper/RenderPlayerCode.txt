@@ -104,5 +104,3 @@ RenderPlayer:
 ;; GENERATED CODE ;;
 {7}
 ;;;;;;;;;;;;;;;;;;;;
-
-  INC needDmaLocal

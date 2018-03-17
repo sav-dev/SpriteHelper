@@ -257,7 +257,7 @@ namespace SpriteHelper
         private string GetStateCode(string name, bool left = false)
         {
             var state = this.config.Animations.First(a => a.Name == name);
-            
+
             if (state.Frames.Length == 1)
             {
                 return GetFrameCode(state.Frames.First(), left);
@@ -294,26 +294,31 @@ namespace SpriteHelper
             const int MaxSprites = 9;
 
             var builder = new StringBuilder();
-            builder.AppendLineFormat(";{0}", frame.Name);
-            for (var i = 0; i < frame.Sprites.Length; i++)
-            {
-                builder.AppendLine(GetSpriteCode(frame, i, left));
-            }
+            var label = frame.Name.Replace(" ", "");
+            builder.AppendLineFormat(";{0}", label);
 
-            for (var i = frame.Sprites.Length; i < MaxSprites; i++)
+            // Clear all sprites.
+            for (var i = 0; i < MaxSprites; i++)
             {
                 builder.AppendLineFormat("  LDA #CLEAR_SPRITE");
                 builder.AppendLineFormat("  STA SPRITES_PLAYER + Y_OFF + SPRITE_SIZE * ${0}", i.ToString("X2"));
             }
 
+            // Draw actual sprites.
+            // Order by Y so we start drawing from the bottom.
+            var sprites = frame.Sprites.OrderByDescending(s => s.Y).ToArray();
+            for (var i = 0; i < sprites.Length; i++)
+            {
+                builder.AppendLine(GetSpriteCode(label, sprites[i], i, left));
+            }
+
             return builder.ToString();
         }
 
-        private string GetSpriteCode(Frame frame, int i, bool left)
+        private string GetSpriteCode(string label, Sprite sprite, int i, bool left)
         {
             var builder = new StringBuilder();
-            var sprite = frame.Sprites[i];
-
+            
             builder.AppendLineFormat("  LDA #${0}", sprite.Id.ToString("X2"));
             builder.AppendLineFormat("  STA SPRITES_PLAYER + TILE_OFF + SPRITE_SIZE * ${0}", i.ToString("X2"));
 
@@ -344,8 +349,28 @@ namespace SpriteHelper
 
             builder.AppendLineFormat("  STA SPRITES_PLAYER + X_OFF + SPRITE_SIZE * ${0}", i.ToString("X2"));
 
-            var y = 0;
-            builder.AppendLineFormat("  LDA #${0}", (sprite.Y + 50).ToString("X2"));
+            builder.AppendLineFormat("  LDA playerY");
+
+            var y = sprite.Y;
+            var yOffset = y - this.config.Y - 1; // -1 for sprite scan line thing
+
+            if (yOffset > 0)
+            {
+                builder.AppendLineFormat("  CLC");
+                builder.AppendLineFormat("  ADC #${0}", yOffset.ToString("X2"));
+            }
+            else
+            {
+                builder.AppendLineFormat("  SEC");
+                builder.AppendLineFormat("  SBC #${0}", Math.Abs(yOffset).ToString("X2"));
+                builder.AppendLineFormat("  BCS .draw{0}{1}{2}", label, left ? "Left" : "Right", i);
+
+                // If carry is cleared above, it means we're off screen to the top.
+                // Sprites are sorted by y descending so no need to draw any more of them.
+                builder.AppendLineFormat("  RTS");
+            }
+
+            builder.AppendLineFormat(".draw{0}{1}{2}:", label, left ? "Left" : "Right", i);
             builder.AppendLineFormat("  STA SPRITES_PLAYER + Y_OFF + SPRITE_SIZE * ${0}", i.ToString("X2"));
 
             return builder.ToString();
