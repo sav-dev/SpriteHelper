@@ -40,5 +40,10 @@ namespace SpriteHelper
             builder.AppendFormat(format, args);
             builder.AppendLine();
         }
+
+        public static void AppendLineFormat(this StringBuilder builder)
+        {
+            builder.AppendLine();
+        }
     }
 }

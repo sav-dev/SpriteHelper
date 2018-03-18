@@ -2,6 +2,8 @@
 {
     public class Constants
     {
+        public const int PlayerSprites = 9;
+
         public const int SpriteWidth = 8;           // never change
         public const int SpriteHeight = 8;          // never change
 

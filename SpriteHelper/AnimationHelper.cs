@@ -90,9 +90,7 @@ namespace SpriteHelper
             this.specTextBox.Text = Defaults.Instance.AnimationSpec;
             this.palettesTextBox.Text = Defaults.Instance.PalettesSpec;
             this.outputTextBox.Text = Defaults.Instance.AnimationOutput;
-            this.codeTextBox.Text = Defaults.Instance.PlayerGeneratedOutput;
             this.LoadFiles();
-            //this.CodeButtonClick(null, null);
         }
 
         private void LoadFiles()
@@ -233,7 +231,6 @@ namespace SpriteHelper
         private void CodeButtonClick(object sender, EventArgs e)
         {
             var code = this.GetCode();
-            File.WriteAllText(this.codeTextBox.Text, code);
             new CodeWindow(code).ShowDialog();
         }
 
@@ -241,138 +238,87 @@ namespace SpriteHelper
 
         private string GetCode()
         {
-            var code = File.ReadAllText("RenderPlayerCode.txt");
-            return string.Format(
-                code,
-                GetStateCode("Crouch"),
-                GetStateCode("Crouch", true),
-                GetStateCode("Stand"),
-                GetStateCode("Stand", true),
-                GetStateCode("Jump"),
-                GetStateCode("Jump", true),
-                GetStateCode("Run"),
-                GetStateCode("Run", true));
-        }
-
-        private string GetStateCode(string name, bool left = false)
-        {
-            var state = this.config.Animations.First(a => a.Name == name);
-
-            if (state.Frames.Length == 1)
-            {
-                return GetFrameCode(state.Frames.First(), left);
-            }
-            else
-            {
-                var builder = new StringBuilder();
-                builder.AppendLineFormat("  LDA playerAnimationFrame");
-                for (var i = state.Frames.Length; i >= 2; i--)
-                {                    
-                    builder.AppendLineFormat("  CMP #${0}", i.ToString("X2"));
-                    builder.AppendLineFormat("  BEQ .jump{0}{1}{2}", name, left ? "Left" : "Right", i);
-                }
-
-                for (var i = 1; i <= state.Frames.Length; i++)
-                {
-                    builder.AppendLineFormat(".jump{0}{1}{2}:", name, left ? "Left" : "Right", i);
-                    builder.AppendLineFormat("  JMP .{0}{1}{2}", name, left ? "Left" : "Right", i);                   
-                }
-
-                for (var i = 1; i <= state.Frames.Length; i++)
-                {
-                    builder.AppendLineFormat(".{0}{1}{2}:", name, left ? "Left" : "Right", i);
-                    builder.AppendLine(GetFrameCode(state.Frames[state.Frames.Length - i], left));
-                    builder.AppendLineFormat("  RTS", name, i);
-                }
-
-                return builder.ToString();
-            }
-        }
-
-        private string GetFrameCode(Frame frame, bool left)
-        {
-            const int MaxSprites = 9;
-
             var builder = new StringBuilder();
-            var label = frame.Name.Replace(" ", "");
-            builder.AppendLineFormat(";{0}", label);
 
-            // Clear all sprites.
-            for (var i = 0; i < MaxSprites; i++)
-            {
-                builder.AppendLineFormat("  LDA #CLEAR_SPRITE");
-                builder.AppendLineFormat("  STA SPRITES_PLAYER + Y_OFF + SPRITE_SIZE * ${0}", i.ToString("X2"));
-            }
+            /////// STAND RENDER ///////
 
-            // Draw actual sprites.
-            // Order by Y so we start drawing from the bottom.
-            var sprites = frame.Sprites.OrderByDescending(s => s.Y).ToArray();
-            for (var i = 0; i < sprites.Length; i++)
-            {
-                builder.AppendLine(GetSpriteCode(label, sprites[i], i, left));
-            }
+            var sprites = 
+                this.config.Frames.First(a => a.Name == "Stand").Sprites.OrderBy(s => s.GameSprite).ToList();
+
+            builder.AppendLineFormat("initialTiles:");
+            builder.AppendLineFormat(
+                "  .byte {0}, CLEAR_SPRITE", 
+                string.Join(", ", sprites.Select(s => "$" + s.Id.ToString("X2"))));
+
+            sprites.Add(
+                this.config.Frames.First(a => a.Name == "Run 2").Sprites.First(s => s.GameSprite == Constants.PlayerSprites - 1));
+
+            builder.AppendLineFormat("initialAtts:");
+            builder.AppendLineFormat(
+                "  .byte {0}",
+                string.Join(", ", sprites.Select(s => "$" + s.ActualSprite.Mapping.ToString("X2"))));
+
+            builder.AppendLineFormat("initialXOff:");
+            builder.AppendLineFormat(
+                " .byte {0}",
+                string.Join(", ", sprites.Select(s =>
+                {
+                    var xOffset = s.X - this.config.X;
+                    xOffset = 256 + xOffset;
+                    xOffset = xOffset % 256;
+                    return "$" + xOffset.ToString("X2");
+                })));
+            
+            builder.AppendLineFormat("initialYOff:");
+            builder.AppendLineFormat(
+                " .byte {0}",
+                string.Join(", ", sprites.Select(s =>
+                {
+                    var yOffset = s.Y - this.config.Y - 1; // -1 for scan line
+                    yOffset = 256 + yOffset;
+                    yOffset = yOffset % 256;
+                    return "$" + yOffset.ToString("X2");
+                })));
+            
+            // ANIMATIONS
+
+            GetAnimation(builder, "Stand");
+            GetAnimation(builder, "Jump");
+            GetAnimation(builder, "Crouch");
+            GetAnimation(builder, "Run");
 
             return builder.ToString();
         }
 
-        private string GetSpriteCode(string label, Sprite sprite, int i, bool left)
+        private string GetAnimation(StringBuilder builder, string name)
         {
-            var builder = new StringBuilder();
-            
-            builder.AppendLineFormat("  LDA #${0}", sprite.Id.ToString("X2"));
-            builder.AppendLineFormat("  STA SPRITES_PLAYER + TILE_OFF + SPRITE_SIZE * ${0}", i.ToString("X2"));
+            var animation = this.config.Animations.First(f => f.Name == name);
 
-            var attributes = sprite.ActualSprite.Mapping;
-            if (left)
+            builder.AppendLineFormat("tiles{0}:", name);
+
+            // if there are 4 frames, they are executed in order: 4 -> 3 -> 2 -> 1
+            // so start with the last one etc.
+
+            for (var i = animation.Frames.Length - 1; i >= 0; i--)
             {
-                attributes += 64; // 64 = %01000000 = flip horizontally flag
+                var frame = animation.Frames[i];
+                var sprites = new List<string>();
+                for (var j = 4; j < Constants.PlayerSprites; j++)
+                {
+                    var sprite = frame.Sprites.FirstOrDefault(s => s.GameSprite == j);
+                    if (sprite == null)
+                    {
+                        sprites.Add("CLEAR_SPRITE");
+                    }
+                    else
+                    {
+                        sprites.Add("$" + sprite.Id.ToString("X2"));
+                    }
+                }
+
+                builder.AppendLineFormat(" .byte {0} ; {1}", string.Join(", ", sprites), frame.Name);
             }
-
-            builder.AppendLineFormat("  LDA #${0}", attributes.ToString("X2"));
-            builder.AppendLineFormat("  STA SPRITES_PLAYER + ATTS_OFF + SPRITE_SIZE * ${0}", i.ToString("X2"));
-
-            builder.AppendLineFormat("  LDA playerX");
-
-            var x = left ? (2 * config.X - sprite.X + Constants.SpriteWidth) : sprite.X;
-            var xOffset = x - this.config.X;
-            
-            if (xOffset > 0)
-            {
-                builder.AppendLineFormat("  CLC");
-                builder.AppendLineFormat("  ADC #${0}", xOffset.ToString("X2"));
-            }
-            else if (xOffset < 0)
-            {
-                builder.AppendLineFormat("  SEC");
-                builder.AppendLineFormat("  SBC #${0}", Math.Abs(xOffset).ToString("X2"));
-            }
-
-            builder.AppendLineFormat("  STA SPRITES_PLAYER + X_OFF + SPRITE_SIZE * ${0}", i.ToString("X2"));
-
-            builder.AppendLineFormat("  LDA playerY");
-
-            var y = sprite.Y;
-            var yOffset = y - this.config.Y - 1; // -1 for sprite scan line thing
-
-            if (yOffset > 0)
-            {
-                builder.AppendLineFormat("  CLC");
-                builder.AppendLineFormat("  ADC #${0}", yOffset.ToString("X2"));
-            }
-            else
-            {
-                builder.AppendLineFormat("  SEC");
-                builder.AppendLineFormat("  SBC #${0}", Math.Abs(yOffset).ToString("X2"));
-                builder.AppendLineFormat("  BCS .draw{0}{1}{2}", label, left ? "Left" : "Right", i);
-
-                // If carry is cleared above, it means we're off screen to the top.
-                // Sprites are sorted by y descending so no need to draw any more of them.
-                builder.AppendLineFormat("  RTS");
-            }
-
-            builder.AppendLineFormat(".draw{0}{1}{2}:", label, left ? "Left" : "Right", i);
-            builder.AppendLineFormat("  STA SPRITES_PLAYER + Y_OFF + SPRITE_SIZE * ${0}", i.ToString("X2"));
-
+        
             return builder.ToString();
         }
     }

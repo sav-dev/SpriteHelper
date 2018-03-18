@@ -29,9 +29,6 @@ namespace SpriteHelper
         public string AnimationOutput { get; set; }
 
         [DataMember]
-        public string PlayerGeneratedOutput { get; set; }
-
-        [DataMember]
         public string[] NonBlockingBackgrounds { get; set; }
 
         [DataMember]

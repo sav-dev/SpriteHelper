@@ -157,16 +157,18 @@ namespace SpriteHelper
         public int Id { get; set; }
 
         [DataMember]
-        public int X { get; set; }
-
-        [DataMember]
-        public int ReversedX { get; set; }
+        public int X { get; set; }        
 
         [DataMember]
         public int Y { get; set; }
 
         [DataMember]
+        public int GameSprite { get; set; }
+
+        [DataMember]
         public int Mapping { get; set; }
+
+        public int ReversedX { get; set; }
 
         public void PrepareSprite(MyBitmap source)
         {
