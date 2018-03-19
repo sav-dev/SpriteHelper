@@ -288,20 +288,36 @@ namespace SpriteHelper
             }
 
             if (showBoxes)
-            {
-                //if (this.Name == "Crouch")
-                //{
-                //    image.DrawRectangle(MyBitmap.PlatformBoxColor, config.X, config.Y - 23, config.X + 15, config.Y);
-                //}
-                //else
-                //{
-                //    image.DrawRectangle(MyBitmap.PlatformBoxColor, config.X, config.Y - 31, config.X + 15, config.Y);
-                //}
-
+            {            
                 // Platform box: hardcoded
                 image.DrawRectangle(MyBitmap.PlatformBoxColor, config.X, config.Y - 31, config.X + 15, config.Y);
 
                 // Threat boxes: hardcoded
+                // todo
+
+                // Gun point: hardcoded
+                if (this.Name == "Crouch")
+                {
+                    if (reversed)
+                    {
+                        image.SetPixel(MyBitmap.GunColor, config.X - 3, config.Y - 12);
+                    }
+                    else
+                    {
+                        image.SetPixel(MyBitmap.GunColor, config.X + 18, config.Y - 12); 
+                    }                    
+                }
+                else
+                {
+                    if (reversed)
+                    {
+                        image.SetPixel(MyBitmap.GunColor, config.X - 3, config.Y - 20);
+                    }
+                    else
+                    {
+                        image.SetPixel(MyBitmap.GunColor, config.X + 18, config.Y - 20);
+                    }
+                }
 
                 image.SetPixel(MyBitmap.XYColor, config.X, config.Y);
             }
