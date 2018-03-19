@@ -1,5 +1,6 @@
 ﻿<Defaults>
-  <DefaultApp>Animation</DefaultApp>
+  <!--<DefaultApp>Animation</DefaultApp>-->
+  <DefaultApp>CHR Combine</DefaultApp>
   <!--<DefaultApp>Palettes</DefaultApp>-->
   <!--<DefaultApp>Background</DefaultApp>-->
   <!--<DefaultApp>Level</DefaultApp>-->
@@ -7,7 +8,9 @@
   <AnimationImage>C:\users\tomas\documents\nes\github\platformer\graphics\sprites\gunner_sprites.png</AnimationImage>
   <AnimationSpec>C:\users\tomas\documents\nes\github\platformer\graphics\sprites\gunner_spec.xml</AnimationSpec>
   <Palette>C:\users\tomas\documents\nes\github\platformer\graphics\palettes\palette.png</Palette>
-  <AnimationOutput>C:\Users\tomas\Documents\NES\GitHub\Platformer\graphics\Chr\spr_00.chr</AnimationOutput>
+  <AnimationOutput>C:\Users\tomas\Documents\NES\GitHub\Platformer\graphics\Chr\player.chr</AnimationOutput>
+  <ConstChrInput>C:\Users\tomas\Documents\NES\GitHub\Platformer\graphics\Chr\const.chr</ConstChrInput>
+  <CombinedChrOutput>C:\Users\tomas\Documents\NES\GitHub\Platformer\graphics\Chr\spr_00.chr</CombinedChrOutput>
   <PalettesSpec>C:\users\tomas\documents\nes\github\platformer\graphics\palettes\palettes_00.xml</PalettesSpec>
   <NonBlockingBackgrounds>
     <string>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\00\nonblocking1.png;3</string>

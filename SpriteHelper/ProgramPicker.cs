@@ -34,6 +34,9 @@ namespace SpriteHelper
                 case "Level":
                     new LevelEditor().ShowDialog();
                     break;
+                case "CHR Combine":
+                    new ChrCombine().ShowDialog();
+                    break;
             }
         }
 
@@ -55,6 +58,16 @@ namespace SpriteHelper
         private void LevelEditorButtonClick(object sender, EventArgs e)
         {
             new LevelEditor().ShowDialog();
+        }
+
+        private void EnemiesButtonClick(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ChrButtonClick(object sender, EventArgs e)
+        {
+
         }
 
         private void CloseButtonClick(object sender, EventArgs e)

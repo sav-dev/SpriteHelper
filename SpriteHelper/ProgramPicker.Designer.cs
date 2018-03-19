@@ -33,6 +33,8 @@
             this.palettesButton = new System.Windows.Forms.Button();
             this.backgroundButton = new System.Windows.Forms.Button();
             this.closeButton = new System.Windows.Forms.Button();
+            this.enemiesButton = new System.Windows.Forms.Button();
+            this.chrButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // animationButton
@@ -41,13 +43,13 @@
             this.animationButton.Name = "animationButton";
             this.animationButton.Size = new System.Drawing.Size(172, 23);
             this.animationButton.TabIndex = 0;
-            this.animationButton.Text = "Animation";
+            this.animationButton.Text = "Player";
             this.animationButton.UseVisualStyleBackColor = true;
             this.animationButton.Click += new System.EventHandler(this.AnimationButtonClick);
             // 
             // levelEditorButton
             // 
-            this.levelEditorButton.Location = new System.Drawing.Point(35, 123);
+            this.levelEditorButton.Location = new System.Drawing.Point(35, 207);
             this.levelEditorButton.Name = "levelEditorButton";
             this.levelEditorButton.Size = new System.Drawing.Size(172, 23);
             this.levelEditorButton.TabIndex = 1;
@@ -57,7 +59,7 @@
             // 
             // palettesButton
             // 
-            this.palettesButton.Location = new System.Drawing.Point(35, 49);
+            this.palettesButton.Location = new System.Drawing.Point(35, 129);
             this.palettesButton.Name = "palettesButton";
             this.palettesButton.Size = new System.Drawing.Size(172, 23);
             this.palettesButton.TabIndex = 2;
@@ -67,7 +69,7 @@
             // 
             // backgroundButton
             // 
-            this.backgroundButton.Location = new System.Drawing.Point(35, 86);
+            this.backgroundButton.Location = new System.Drawing.Point(35, 168);
             this.backgroundButton.Name = "backgroundButton";
             this.backgroundButton.Size = new System.Drawing.Size(172, 23);
             this.backgroundButton.TabIndex = 3;
@@ -77,7 +79,7 @@
             // 
             // closeButton
             // 
-            this.closeButton.Location = new System.Drawing.Point(35, 187);
+            this.closeButton.Location = new System.Drawing.Point(35, 283);
             this.closeButton.Name = "closeButton";
             this.closeButton.Size = new System.Drawing.Size(172, 23);
             this.closeButton.TabIndex = 4;
@@ -85,11 +87,33 @@
             this.closeButton.UseVisualStyleBackColor = true;
             this.closeButton.Click += new System.EventHandler(this.CloseButtonClick);
             // 
+            // enemiesButton
+            // 
+            this.enemiesButton.Location = new System.Drawing.Point(35, 51);
+            this.enemiesButton.Name = "enemiesButton";
+            this.enemiesButton.Size = new System.Drawing.Size(172, 23);
+            this.enemiesButton.TabIndex = 5;
+            this.enemiesButton.Text = "Enemies";
+            this.enemiesButton.UseVisualStyleBackColor = true;
+            this.enemiesButton.Click += new System.EventHandler(this.EnemiesButtonClick);
+            // 
+            // chrButton
+            // 
+            this.chrButton.Location = new System.Drawing.Point(35, 90);
+            this.chrButton.Name = "chrButton";
+            this.chrButton.Size = new System.Drawing.Size(172, 23);
+            this.chrButton.TabIndex = 6;
+            this.chrButton.Text = "CHR combine";
+            this.chrButton.UseVisualStyleBackColor = true;
+            this.chrButton.Click += new System.EventHandler(this.ChrButtonClick);
+            // 
             // ProgramPicker
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(244, 222);
+            this.ClientSize = new System.Drawing.Size(244, 320);
+            this.Controls.Add(this.chrButton);
+            this.Controls.Add(this.enemiesButton);
             this.Controls.Add(this.closeButton);
             this.Controls.Add(this.backgroundButton);
             this.Controls.Add(this.palettesButton);
@@ -112,5 +136,7 @@
         private System.Windows.Forms.Button palettesButton;
         private System.Windows.Forms.Button backgroundButton;
         private System.Windows.Forms.Button closeButton;
+        private System.Windows.Forms.Button enemiesButton;
+        private System.Windows.Forms.Button chrButton;
     }
 }

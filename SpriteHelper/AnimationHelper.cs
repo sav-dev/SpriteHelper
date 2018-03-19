@@ -260,7 +260,7 @@ namespace SpriteHelper
 
             builder.AppendLineFormat("initialXOff:");
             builder.AppendLineFormat(
-                " .byte {0}",
+                "  .byte {0}",
                 string.Join(", ", sprites.Select(s =>
                 {
                     var xOffset = s.X - this.config.X;
@@ -271,7 +271,7 @@ namespace SpriteHelper
             
             builder.AppendLineFormat("initialYOff:");
             builder.AppendLineFormat(
-                " .byte {0}",
+                "  .byte {0}",
                 string.Join(", ", sprites.Select(s =>
                 {
                     var yOffset = s.Y - this.config.Y - 1; // -1 for scan line
@@ -316,7 +316,7 @@ namespace SpriteHelper
                     }
                 }
 
-                builder.AppendLineFormat(" .byte {0} ; {1}", string.Join(", ", sprites), frame.Name);
+                builder.AppendLineFormat("  .byte {0} ; {1}", string.Join(", ", sprites), frame.Name);
             }
         
             return builder.ToString();

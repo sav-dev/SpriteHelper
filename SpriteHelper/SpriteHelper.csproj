@@ -55,6 +55,12 @@
     <Compile Include="BackgroundTilesetCreator.Designer.cs">
       <DependentUpon>BackgroundTilesetCreator.cs</DependentUpon>
     </Compile>
+    <Compile Include="ChrCombine.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChrCombine.Designer.cs">
+      <DependentUpon>ChrCombine.cs</DependentUpon>
+    </Compile>
     <Compile Include="CodeWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -129,6 +135,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AnimationHelper.resx">
       <DependentUpon>AnimationHelper.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ChrCombine.resx">
+      <DependentUpon>ChrCombine.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CodeWindow.resx">
       <DependentUpon>CodeWindow.cs</DependentUpon>
