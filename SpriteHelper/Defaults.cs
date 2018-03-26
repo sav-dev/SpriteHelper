@@ -14,6 +14,9 @@ namespace SpriteHelper
         public bool ApplyDefaults { get; set; }
 
         [DataMember]
+        public string AnimationDirectory { get; set; }
+
+        [DataMember]
         public string AnimationImage { get; set; }
 
         [DataMember]

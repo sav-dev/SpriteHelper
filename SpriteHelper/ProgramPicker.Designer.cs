@@ -33,7 +33,7 @@
             this.palettesButton = new System.Windows.Forms.Button();
             this.backgroundButton = new System.Windows.Forms.Button();
             this.closeButton = new System.Windows.Forms.Button();
-            this.enemiesButton = new System.Windows.Forms.Button();
+            this.animationsButton = new System.Windows.Forms.Button();
             this.chrButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -87,15 +87,15 @@
             this.closeButton.UseVisualStyleBackColor = true;
             this.closeButton.Click += new System.EventHandler(this.CloseButtonClick);
             // 
-            // enemiesButton
+            // animationsButton
             // 
-            this.enemiesButton.Location = new System.Drawing.Point(35, 51);
-            this.enemiesButton.Name = "enemiesButton";
-            this.enemiesButton.Size = new System.Drawing.Size(172, 23);
-            this.enemiesButton.TabIndex = 5;
-            this.enemiesButton.Text = "Enemies";
-            this.enemiesButton.UseVisualStyleBackColor = true;
-            this.enemiesButton.Click += new System.EventHandler(this.EnemiesButtonClick);
+            this.animationsButton.Location = new System.Drawing.Point(35, 51);
+            this.animationsButton.Name = "animationsButton";
+            this.animationsButton.Size = new System.Drawing.Size(172, 23);
+            this.animationsButton.TabIndex = 5;
+            this.animationsButton.Text = "Animations";
+            this.animationsButton.UseVisualStyleBackColor = true;
+            this.animationsButton.Click += new System.EventHandler(this.AnimationsButtonClick);
             // 
             // chrButton
             // 
@@ -111,9 +111,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(244, 320);
+            this.ClientSize = new System.Drawing.Size(244, 421);
             this.Controls.Add(this.chrButton);
-            this.Controls.Add(this.enemiesButton);
+            this.Controls.Add(this.animationsButton);
             this.Controls.Add(this.closeButton);
             this.Controls.Add(this.backgroundButton);
             this.Controls.Add(this.palettesButton);
@@ -136,7 +136,7 @@
         private System.Windows.Forms.Button palettesButton;
         private System.Windows.Forms.Button backgroundButton;
         private System.Windows.Forms.Button closeButton;
-        private System.Windows.Forms.Button enemiesButton;
+        private System.Windows.Forms.Button animationsButton;
         private System.Windows.Forms.Button chrButton;
     }
 }

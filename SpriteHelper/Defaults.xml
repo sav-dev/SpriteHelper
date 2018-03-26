@@ -5,6 +5,7 @@
   <!--<DefaultApp>Background</DefaultApp>-->
   <!--<DefaultApp>Level</DefaultApp>-->
   <ApplyDefaults>true</ApplyDefaults>
+  <AnimationDirectory>C:\Users\tomas\Desktop\enemies\done\bug</AnimationDirectory>
   <AnimationImage>C:\users\tomas\documents\nes\github\platformer\graphics\sprites\gunner_sprites.png</AnimationImage>
   <AnimationSpec>C:\users\tomas\documents\nes\github\platformer\graphics\sprites\gunner_spec.xml</AnimationSpec>
   <Palette>C:\users\tomas\documents\nes\github\platformer\graphics\palettes\palette.png</Palette>

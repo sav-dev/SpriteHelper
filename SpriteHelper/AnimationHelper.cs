@@ -236,61 +236,91 @@ namespace SpriteHelper
 
         //////////////////////////
 
+        // var x = left ? (2 * config.X - sprite.X + Constants.SpriteWidth) : sprite.X;
+
         private string GetCode()
         {
             var builder = new StringBuilder();
+          
+            // Sprite positions
 
-            /////// STAND RENDER ///////
-
-            var sprites = 
+            var spritesNonCrouch = 
                 this.config.Frames.First(a => a.Name == "Stand").Sprites.OrderBy(s => s.GameSprite).ToList();
 
-            builder.AppendLineFormat("initialTiles:");
-            builder.AppendLineFormat(
-                "  .byte {0}, CLEAR_SPRITE", 
-                string.Join(", ", sprites.Select(s => "$" + s.Id.ToString("X2"))));
-
-            sprites.Add(
+            spritesNonCrouch.Add(
                 this.config.Frames.First(a => a.Name == "Run 2").Sprites.First(s => s.GameSprite == Constants.PlayerSprites - 1));
 
-            builder.AppendLineFormat("initialAtts:");
+            builder.AppendLineFormat("xOffRight:");
             builder.AppendLineFormat(
                 "  .byte {0}",
-                string.Join(", ", sprites.Select(s => "$" + s.ActualSprite.Mapping.ToString("X2"))));
-
-            builder.AppendLineFormat("initialXOff:");
-            builder.AppendLineFormat(
-                "  .byte {0}",
-                string.Join(", ", sprites.Select(s =>
+                string.Join(", ", spritesNonCrouch.Select(s =>
                 {
                     var xOffset = s.X - this.config.X;
                     xOffset = 256 + xOffset;
                     xOffset = xOffset % 256;
                     return "$" + xOffset.ToString("X2");
                 })));
-            
-            builder.AppendLineFormat("initialYOff:");
+
+            builder.AppendLineFormat("xOffLeft:");
             builder.AppendLineFormat(
                 "  .byte {0}",
-                string.Join(", ", sprites.Select(s =>
+                string.Join(", ", spritesNonCrouch.Select(s =>
+                {
+                    var xOffset = config.X - s.X + Constants.SpriteWidth;
+                    xOffset = 256 + xOffset;
+                    xOffset = xOffset % 256;
+                    return "$" + xOffset.ToString("X2");
+                })));
+
+            builder.AppendLineFormat("yOffNonCrouch:");
+            builder.AppendLineFormat(
+                "  .byte {0}",
+                string.Join(", ", spritesNonCrouch.Select(s =>
                 {
                     var yOffset = s.Y - this.config.Y - 1; // -1 for scan line
                     yOffset = 256 + yOffset;
                     yOffset = yOffset % 256;
                     return "$" + yOffset.ToString("X2");
                 })));
-            
-            // ANIMATIONS
 
-            GetAnimation(builder, "Stand");
-            GetAnimation(builder, "Jump");
-            GetAnimation(builder, "Crouch");
-            GetAnimation(builder, "Run");
+            var spritesCrouch = this.config.Frames.First(a => a.Name == "Crouch").Sprites.ToDictionary(s => s.GameSprite, s =>
+            {
+                var yOffset = s.Y - this.config.Y - 1; // -1 for scan line
+                yOffset = 256 + yOffset;
+                yOffset = yOffset % 256;
+                return "$" + yOffset.ToString("X2");
+            });
+
+            for (var i = 0; i < Constants.PlayerSprites; i++)
+            {
+                if (!spritesCrouch.ContainsKey(i))
+                {
+                    spritesCrouch.Add(i, "CLEAR_SPRITE");
+                }                
+            }
+
+            builder.AppendLineFormat("yOffCrouch:");
+            builder.AppendLineFormat("  .byte {0}", string.Join(", ", spritesCrouch.OrderBy(kvp => kvp.Key).Select(kvp => kvp.Value)));
+
+            builder.AppendLineFormat("attsRight:");
+            builder.AppendLineFormat(
+                "  .byte {0}",
+                string.Join(", ", spritesNonCrouch.Select(s => "$" + s.ActualSprite.Mapping.ToString("X2"))));            
+
+            builder.AppendLineFormat("attsLeft:");
+            builder.AppendLineFormat(
+                "  .byte {0}",
+                string.Join(", ", spritesNonCrouch.Select(s => "$" + (s.ActualSprite.Mapping + 64).ToString("X2"))));
+
+            GetTiles(builder, "Stand");
+            GetTiles(builder, "Jump");
+            GetTiles(builder, "Crouch");
+            GetTiles(builder, "Run");
 
             return builder.ToString();
         }
 
-        private string GetAnimation(StringBuilder builder, string name)
+        private string GetTiles(StringBuilder builder, string name)
         {
             var animation = this.config.Animations.First(f => f.Name == name);
 
@@ -303,7 +333,7 @@ namespace SpriteHelper
             {
                 var frame = animation.Frames[i];
                 var sprites = new List<string>();
-                for (var j = 4; j < Constants.PlayerSprites; j++)
+                for (var j = 0; j < Constants.PlayerSprites; j++)
                 {
                     var sprite = frame.Sprites.FirstOrDefault(s => s.GameSprite == j);
                     if (sprite == null)
