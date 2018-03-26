@@ -6,35 +6,35 @@
   <!--<DefaultApp>Level</DefaultApp>-->
   <ApplyDefaults>true</ApplyDefaults>
   <AnimationDirectory>C:\Users\tomas\Desktop\enemies\done\bug</AnimationDirectory>
-  <AnimationImage>C:\users\tomas\documents\nes\github\platformer\graphics\sprites\gunner_sprites.png</AnimationImage>
-  <AnimationSpec>C:\users\tomas\documents\nes\github\platformer\graphics\sprites\gunner_spec.xml</AnimationSpec>
-  <Palette>C:\users\tomas\documents\nes\github\platformer\graphics\palettes\palette.png</Palette>
-  <AnimationOutput>C:\Users\tomas\Documents\NES\GitHub\Platformer\graphics\Chr\player.chr</AnimationOutput>
-  <ConstChrInput>C:\Users\tomas\Documents\NES\GitHub\Platformer\graphics\Chr\const.chr</ConstChrInput>
-  <CombinedChrOutput>C:\Users\tomas\Documents\NES\GitHub\Platformer\graphics\Chr\spr_00.chr</CombinedChrOutput>
-  <PalettesSpec>C:\users\tomas\documents\nes\github\platformer\graphics\palettes\palettes_00.xml</PalettesSpec>
+  <AnimationImage>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\sprites\gunner_sprites.png</AnimationImage>
+  <AnimationSpec>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\sprites\gunner_spec.xml</AnimationSpec>
+  <Palette>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\palettes\palette.png</Palette>
+  <AnimationOutput>C:\Users\tomas\Documents\NES\GitHub\platformer\PlatformerGraphics\Chr\player.chr</AnimationOutput>
+  <ConstChrInput>C:\Users\tomas\Documents\NES\GitHub\platformer\PlatformerGraphics\Chr\const.chr</ConstChrInput>
+  <CombinedChrOutput>C:\Users\tomas\Documents\NES\GitHub\platformer\PlatformerGraphics\Chr\spr_00.chr</CombinedChrOutput>
+  <PalettesSpec>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\palettes\palettes_00.xml</PalettesSpec>
   <NonBlockingBackgrounds>
-    <string>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\00\nonblocking1.png;3</string>
-    <string>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\00\nonblocking2.png;3</string>
-    <string>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\00\nonblocking3.png</string>
+    <string>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\00\nonblocking1.png;3</string>
+    <string>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\00\nonblocking2.png;3</string>
+    <string>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\00\nonblocking3.png</string>
   </NonBlockingBackgrounds>
   <BlockingBackgrounds>
-    <string>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\00\blocking1.png</string>
-    <string>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\00\blocking2.png</string>
-    <string>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\00\blocking3.png</string>
-    <string>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\00\blocking4.png</string>
+    <string>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\00\blocking1.png</string>
+    <string>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\00\blocking2.png</string>
+    <string>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\00\blocking3.png</string>
+    <string>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\00\blocking4.png</string>
   </BlockingBackgrounds>
   <ThreatBackgrounds>
-    <string>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\00\threat1.png</string>
-    <string>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\00\threat2.png</string>
+    <string>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\00\threat1.png</string>
+    <string>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\00\threat2.png</string>
   </ThreatBackgrounds>
-  <BackgroundImage>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\00\_chr.png</BackgroundImage>
-  <BackgroundSpec>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\00\_back.xml</BackgroundSpec>
-  <BackgroundChr>C:\users\tomas\documents\nes\github\platformer\graphics\chr\bg_00.chr</BackgroundChr>
-  <GraphicsDefaultDir>C:\users\tomas\documents\nes\github\platformer\graphics\backgrounds\00\</GraphicsDefaultDir> 
-  <DefaultLevel>C:\Users\tomas\Documents\NES\GitHub\Platformer\graphics\Backgrounds\00\_level.xml</DefaultLevel>
+  <BackgroundImage>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\00\_chr.png</BackgroundImage>
+  <BackgroundSpec>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\00\_back.xml</BackgroundSpec>
+  <BackgroundChr>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\chr\bg_00.chr</BackgroundChr>
+  <GraphicsDefaultDir>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\00\</GraphicsDefaultDir> 
+  <DefaultLevel>C:\Users\tomas\Documents\NES\GitHub\platformer\PlatformerGraphics\Backgrounds\00\_level.xml</DefaultLevel>
   <LevelsDefaultDir>C:\users\tomas\documents\nes\github\platformer\data\levels\</LevelsDefaultDir>
-  <SpritesPalette>C:\users\tomas\documents\nes\github\platformer\graphics\palettes\spr_00.bin</SpritesPalette>
-  <BackgroundPalette>C:\users\tomas\documents\nes\github\platformer\graphics\palettes\bg_00.bin</BackgroundPalette>
+  <SpritesPalette>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\palettes\spr_00.bin</SpritesPalette>
+  <BackgroundPalette>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\palettes\bg_00.bin</BackgroundPalette>
   <BgColor>0</BgColor>
 </Defaults>
