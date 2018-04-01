@@ -12,6 +12,7 @@ namespace SpriteHelper
         public static readonly Color XYColor = Color.Yellow;
         public static readonly Color GunColor = Color.Red;
         public static readonly Color PlatformBoxColor = Color.Blue;
+        public static readonly Color ThreatBoxColor = Color.Orange;
 
         public static readonly Color[] NesGreyscale = new[] { NesPalette.Colors[15], NesPalette.Colors[0], NesPalette.Colors[16], NesPalette.Colors[32] };
 

@@ -1,26 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml.Serialization;
 
 namespace SpriteHelper
 {
-    public partial class AnimationHelper : Form
+    public partial class Player : Form
     {
-        private MyBitmap image;
         private SpriteConfig config;
         private Palettes palettes;
-        private int animationCounter;
-
-        public AnimationHelper()
+        
+        public Player()
         {
             InitializeComponent();
             this.zoomPicker.Maximum = Constants.MaxZoom;
@@ -86,7 +80,6 @@ namespace SpriteHelper
 
         private void PreLoad()
         {
-            this.imageTextBox.Text = Defaults.Instance.AnimationImage;
             this.specTextBox.Text = Defaults.Instance.AnimationSpec;
             this.palettesTextBox.Text = Defaults.Instance.PalettesSpec;
             this.outputTextBox.Text = Defaults.Instance.AnimationOutput;
@@ -95,9 +88,8 @@ namespace SpriteHelper
 
         private void LoadFiles()
         {
-            this.image = MyBitmap.FromFile(imageTextBox.Text);            
             this.palettes = Palettes.Read(palettesTextBox.Text);
-            this.config = SpriteConfig.Read(specTextBox.Text, this.image, this.palettes);
+            this.config = SpriteConfig.Read(specTextBox.Text, this.palettes);
 
             this.framesListBox.Items.Clear();
             this.animationsListBox.Items.Clear();
@@ -113,13 +105,41 @@ namespace SpriteHelper
         {
             var frame = (Frame)this.framesListBox.SelectedItem;
             this.pictureBox.BackColor = this.applyPaletteCheckbox.Checked ? this.palettes.SpritesPalette[0].ActualColors[0] : Color.White;
+
+            //// Everything below is hardcoded
+
+            int gunYOff;
+            if (frame.Name == "Crouch")
+            {
+                gunYOff = -12;
+            }
+            else
+            {
+                gunYOff = -20;
+            }
+
+            var playerOffsets = new Offsets
+            {
+                BoxHeight = -31,
+                BoxWidth = 15,
+                BoxXOff = 0,
+                BoxYOff = 0,
+                GunXOffL = -3,
+                GunXOffR = 18,
+                GunYOff = gunYOff,
+            };
+
+            var threatOffsets = new Offsets();
+
             this.pictureBox.Image = frame.GetBitmap(
-                this.config, 
-                this.pictureBox.BackColor, 
-                this.applyPaletteCheckbox.Checked, 
+                this.config,
+                this.pictureBox.BackColor,
+                this.applyPaletteCheckbox.Checked,
                 this.showBoxesCheckBox.Checked,
                 this.directionCheckBox.Checked,
-                (int)this.zoomPicker.Value);
+                (int)this.zoomPicker.Value,
+                playerOffsets,
+                threatOffsets);
             
         }
 
@@ -161,11 +181,6 @@ namespace SpriteHelper
             var frameCount = framesListBox.Items.Count;
             var selectedFrame = framesListBox.SelectedIndex;
             framesListBox.SelectedIndex = (selectedFrame + 1) % frameCount;
-        }
-
-        private void AnimationPickerValueChanged(object sender, EventArgs e)
-        {
-            this.animationCounter = 0;
         }
 
         private void ExportButtonClick(object sender, EventArgs e)

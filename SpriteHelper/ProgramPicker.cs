@@ -22,9 +22,12 @@ namespace SpriteHelper
         {
             switch (Defaults.Instance.DefaultApp)
             {
-                case "Animation":
-                    new AnimationHelper().ShowDialog();
+                case "Player":
+                    new Player().ShowDialog();
                     break;
+                ////case "Sprites":
+                ////    new AnimationHelperV2().ShowDialog();
+                ////    break;
                 case "Palettes":
                     new PaletteProcessor().ShowDialog();
                     break;
@@ -45,7 +48,7 @@ namespace SpriteHelper
 
         private void AnimationButtonClick(object sender, EventArgs e)
         {
-            new AnimationHelper().ShowDialog();
+            new Player().ShowDialog();
         }
 
         private void PalettesButtonClick(object sender, EventArgs e)

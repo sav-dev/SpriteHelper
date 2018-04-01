@@ -1,6 +1,6 @@
 ﻿namespace SpriteHelper
 {
-    partial class AnimationHelper
+    partial class Player
     {
         /// <summary>
         /// Required designer variable.
@@ -31,9 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.pictureBox = new System.Windows.Forms.PictureBox();
             this.framesListBox = new System.Windows.Forms.ListBox();
-            this.imageTextBox = new System.Windows.Forms.TextBox();
             this.specTextBox = new System.Windows.Forms.TextBox();
-            this.imageLabel = new System.Windows.Forms.Label();
             this.specLabel = new System.Windows.Forms.Label();
             this.loadButton = new System.Windows.Forms.Button();
             this.zoomLabel = new System.Windows.Forms.Label();
@@ -59,7 +57,7 @@
             // 
             this.pictureBox.BackColor = System.Drawing.Color.White;
             this.pictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox.Location = new System.Drawing.Point(15, 174);
+            this.pictureBox.Location = new System.Drawing.Point(15, 150);
             this.pictureBox.Name = "pictureBox";
             this.pictureBox.Size = new System.Drawing.Size(270, 303);
             this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -69,39 +67,23 @@
             // framesListBox
             // 
             this.framesListBox.FormattingEnabled = true;
-            this.framesListBox.Location = new System.Drawing.Point(389, 174);
+            this.framesListBox.Location = new System.Drawing.Point(389, 150);
             this.framesListBox.Name = "framesListBox";
             this.framesListBox.Size = new System.Drawing.Size(92, 303);
             this.framesListBox.TabIndex = 1;
             this.framesListBox.SelectedIndexChanged += new System.EventHandler(this.FramesListBoxSelectedIndexChanged);
             // 
-            // imageTextBox
-            // 
-            this.imageTextBox.Location = new System.Drawing.Point(67, 8);
-            this.imageTextBox.Name = "imageTextBox";
-            this.imageTextBox.Size = new System.Drawing.Size(414, 20);
-            this.imageTextBox.TabIndex = 2;
-            // 
             // specTextBox
             // 
-            this.specTextBox.Location = new System.Drawing.Point(67, 34);
+            this.specTextBox.Location = new System.Drawing.Point(67, 10);
             this.specTextBox.Name = "specTextBox";
             this.specTextBox.Size = new System.Drawing.Size(414, 20);
             this.specTextBox.TabIndex = 3;
             // 
-            // imageLabel
-            // 
-            this.imageLabel.AutoSize = true;
-            this.imageLabel.Location = new System.Drawing.Point(12, 11);
-            this.imageLabel.Name = "imageLabel";
-            this.imageLabel.Size = new System.Drawing.Size(36, 13);
-            this.imageLabel.TabIndex = 4;
-            this.imageLabel.Text = "Image";
-            // 
             // specLabel
             // 
             this.specLabel.AutoSize = true;
-            this.specLabel.Location = new System.Drawing.Point(12, 37);
+            this.specLabel.Location = new System.Drawing.Point(12, 13);
             this.specLabel.Name = "specLabel";
             this.specLabel.Size = new System.Drawing.Size(32, 13);
             this.specLabel.TabIndex = 5;
@@ -109,7 +91,7 @@
             // 
             // loadButton
             // 
-            this.loadButton.Location = new System.Drawing.Point(229, 112);
+            this.loadButton.Location = new System.Drawing.Point(229, 88);
             this.loadButton.Name = "loadButton";
             this.loadButton.Size = new System.Drawing.Size(75, 23);
             this.loadButton.TabIndex = 6;
@@ -120,7 +102,7 @@
             // zoomLabel
             // 
             this.zoomLabel.AutoSize = true;
-            this.zoomLabel.Location = new System.Drawing.Point(14, 117);
+            this.zoomLabel.Location = new System.Drawing.Point(14, 93);
             this.zoomLabel.Name = "zoomLabel";
             this.zoomLabel.Size = new System.Drawing.Size(34, 13);
             this.zoomLabel.TabIndex = 7;
@@ -128,7 +110,7 @@
             // 
             // zoomPicker
             // 
-            this.zoomPicker.Location = new System.Drawing.Point(67, 115);
+            this.zoomPicker.Location = new System.Drawing.Point(67, 91);
             this.zoomPicker.Maximum = new decimal(new int[] {
             10,
             0,
@@ -152,7 +134,7 @@
             // animationsListBox
             // 
             this.animationsListBox.FormattingEnabled = true;
-            this.animationsListBox.Location = new System.Drawing.Point(291, 173);
+            this.animationsListBox.Location = new System.Drawing.Point(291, 149);
             this.animationsListBox.Name = "animationsListBox";
             this.animationsListBox.Size = new System.Drawing.Size(92, 303);
             this.animationsListBox.TabIndex = 10;
@@ -161,7 +143,7 @@
             // stopButton
             // 
             this.stopButton.Enabled = false;
-            this.stopButton.Location = new System.Drawing.Point(389, 138);
+            this.stopButton.Location = new System.Drawing.Point(389, 114);
             this.stopButton.Name = "stopButton";
             this.stopButton.Size = new System.Drawing.Size(75, 23);
             this.stopButton.TabIndex = 11;
@@ -171,7 +153,7 @@
             // 
             // startButton
             // 
-            this.startButton.Location = new System.Drawing.Point(308, 138);
+            this.startButton.Location = new System.Drawing.Point(308, 114);
             this.startButton.Name = "startButton";
             this.startButton.Size = new System.Drawing.Size(75, 23);
             this.startButton.TabIndex = 12;
@@ -189,7 +171,7 @@
             this.applyPaletteCheckbox.AutoSize = true;
             this.applyPaletteCheckbox.Checked = true;
             this.applyPaletteCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.applyPaletteCheckbox.Location = new System.Drawing.Point(15, 144);
+            this.applyPaletteCheckbox.Location = new System.Drawing.Point(15, 120);
             this.applyPaletteCheckbox.Name = "applyPaletteCheckbox";
             this.applyPaletteCheckbox.Size = new System.Drawing.Size(88, 17);
             this.applyPaletteCheckbox.TabIndex = 13;
@@ -200,7 +182,7 @@
             // palettesLabel
             // 
             this.palettesLabel.AutoSize = true;
-            this.palettesLabel.Location = new System.Drawing.Point(12, 63);
+            this.palettesLabel.Location = new System.Drawing.Point(12, 39);
             this.palettesLabel.Name = "palettesLabel";
             this.palettesLabel.Size = new System.Drawing.Size(45, 13);
             this.palettesLabel.TabIndex = 15;
@@ -208,7 +190,7 @@
             // 
             // palettesTextBox
             // 
-            this.palettesTextBox.Location = new System.Drawing.Point(67, 60);
+            this.palettesTextBox.Location = new System.Drawing.Point(67, 36);
             this.palettesTextBox.Name = "palettesTextBox";
             this.palettesTextBox.Size = new System.Drawing.Size(414, 20);
             this.palettesTextBox.TabIndex = 14;
@@ -216,7 +198,7 @@
             // directionCheckBox
             // 
             this.directionCheckBox.AutoSize = true;
-            this.directionCheckBox.Location = new System.Drawing.Point(114, 144);
+            this.directionCheckBox.Location = new System.Drawing.Point(114, 120);
             this.directionCheckBox.Name = "directionCheckBox";
             this.directionCheckBox.Size = new System.Drawing.Size(75, 17);
             this.directionCheckBox.TabIndex = 18;
@@ -227,7 +209,7 @@
             // showBoxesCheckBox
             // 
             this.showBoxesCheckBox.AutoSize = true;
-            this.showBoxesCheckBox.Location = new System.Drawing.Point(200, 144);
+            this.showBoxesCheckBox.Location = new System.Drawing.Point(200, 120);
             this.showBoxesCheckBox.Name = "showBoxesCheckBox";
             this.showBoxesCheckBox.Size = new System.Drawing.Size(85, 17);
             this.showBoxesCheckBox.TabIndex = 19;
@@ -237,7 +219,7 @@
             // 
             // exportButton
             // 
-            this.exportButton.Location = new System.Drawing.Point(308, 112);
+            this.exportButton.Location = new System.Drawing.Point(308, 88);
             this.exportButton.Name = "exportButton";
             this.exportButton.Size = new System.Drawing.Size(75, 23);
             this.exportButton.TabIndex = 20;
@@ -247,7 +229,7 @@
             // 
             // outputTextBox
             // 
-            this.outputTextBox.Location = new System.Drawing.Point(67, 86);
+            this.outputTextBox.Location = new System.Drawing.Point(67, 62);
             this.outputTextBox.Name = "outputTextBox";
             this.outputTextBox.Size = new System.Drawing.Size(414, 20);
             this.outputTextBox.TabIndex = 21;
@@ -255,7 +237,7 @@
             // outputLabel
             // 
             this.outputLabel.AutoSize = true;
-            this.outputLabel.Location = new System.Drawing.Point(12, 89);
+            this.outputLabel.Location = new System.Drawing.Point(12, 65);
             this.outputLabel.Name = "outputLabel";
             this.outputLabel.Size = new System.Drawing.Size(39, 13);
             this.outputLabel.TabIndex = 22;
@@ -263,7 +245,7 @@
             // 
             // codeButton
             // 
-            this.codeButton.Location = new System.Drawing.Point(389, 112);
+            this.codeButton.Location = new System.Drawing.Point(389, 88);
             this.codeButton.Name = "codeButton";
             this.codeButton.Size = new System.Drawing.Size(75, 23);
             this.codeButton.TabIndex = 23;
@@ -275,7 +257,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(489, 481);
+            this.ClientSize = new System.Drawing.Size(489, 459);
             this.Controls.Add(this.codeButton);
             this.Controls.Add(this.outputLabel);
             this.Controls.Add(this.outputTextBox);
@@ -292,9 +274,7 @@
             this.Controls.Add(this.zoomLabel);
             this.Controls.Add(this.loadButton);
             this.Controls.Add(this.specLabel);
-            this.Controls.Add(this.imageLabel);
             this.Controls.Add(this.specTextBox);
-            this.Controls.Add(this.imageTextBox);
             this.Controls.Add(this.framesListBox);
             this.Controls.Add(this.pictureBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
@@ -313,9 +293,7 @@
 
         private System.Windows.Forms.PictureBox pictureBox;
         private System.Windows.Forms.ListBox framesListBox;
-        private System.Windows.Forms.TextBox imageTextBox;
         private System.Windows.Forms.TextBox specTextBox;
-        private System.Windows.Forms.Label imageLabel;
         private System.Windows.Forms.Label specLabel;
         private System.Windows.Forms.Button loadButton;
         private System.Windows.Forms.Label zoomLabel;

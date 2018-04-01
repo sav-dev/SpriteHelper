@@ -119,11 +119,11 @@
     </Compile>
     <Compile Include="SpriteConfig.cs" />
     <Compile Include="Constants.cs" />
-    <Compile Include="AnimationHelper.cs">
+    <Compile Include="Player.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AnimationHelper.Designer.cs">
-      <DependentUpon>AnimationHelper.cs</DependentUpon>
+    <Compile Include="Player.Designer.cs">
+      <DependentUpon>Player.cs</DependentUpon>
     </Compile>
     <Compile Include="MyBitmap.cs" />
     <Compile Include="NesPalette.cs" />
@@ -142,8 +142,8 @@
     <EmbeddedResource Include="BackgroundTilesetCreator.resx">
       <DependentUpon>BackgroundTilesetCreator.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AnimationHelper.resx">
-      <DependentUpon>AnimationHelper.cs</DependentUpon>
+    <EmbeddedResource Include="Player.resx">
+      <DependentUpon>Player.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ChrCombine.resx">
       <DependentUpon>ChrCombine.cs</DependentUpon>

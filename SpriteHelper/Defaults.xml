@@ -1,13 +1,8 @@
 ﻿<Defaults>
-  <!--<DefaultApp>Animation</DefaultApp>-->
-  <!--<DefaultApp>CHR Combine</DefaultApp>-->
-  <!--<DefaultApp>Palettes</DefaultApp>-->
-  <!--<DefaultApp>Background</DefaultApp>-->
-  <!--<DefaultApp>Level</DefaultApp>-->
+  <DefaultApp>Sprites</DefaultApp>
   <ApplyDefaults>true</ApplyDefaults>
   <AnimationDirectory>C:\Users\tomas\Desktop\enemies\done\bug</AnimationDirectory>
-  <AnimationImage>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\sprites\gunner_sprites.png</AnimationImage>
-  <AnimationSpec>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\sprites\gunner_spec.xml</AnimationSpec>
+  <AnimationSpec>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\sprites\player.xml</AnimationSpec>
   <Palette>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\palettes\palette.png</Palette>
   <AnimationOutput>C:\Users\tomas\Documents\NES\GitHub\platformer\PlatformerGraphics\Chr\player.chr</AnimationOutput>
   <ConstChrInput>C:\Users\tomas\Documents\NES\GitHub\platformer\PlatformerGraphics\Chr\const.chr</ConstChrInput>

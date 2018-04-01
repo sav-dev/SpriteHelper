@@ -35,6 +35,7 @@
             this.closeButton = new System.Windows.Forms.Button();
             this.animationsButton = new System.Windows.Forms.Button();
             this.chrButton = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // animationButton
@@ -49,7 +50,7 @@
             // 
             // levelEditorButton
             // 
-            this.levelEditorButton.Location = new System.Drawing.Point(35, 207);
+            this.levelEditorButton.Location = new System.Drawing.Point(35, 210);
             this.levelEditorButton.Name = "levelEditorButton";
             this.levelEditorButton.Size = new System.Drawing.Size(172, 23);
             this.levelEditorButton.TabIndex = 1;
@@ -59,7 +60,7 @@
             // 
             // palettesButton
             // 
-            this.palettesButton.Location = new System.Drawing.Point(35, 129);
+            this.palettesButton.Location = new System.Drawing.Point(35, 144);
             this.palettesButton.Name = "palettesButton";
             this.palettesButton.Size = new System.Drawing.Size(172, 23);
             this.palettesButton.TabIndex = 2;
@@ -69,7 +70,7 @@
             // 
             // backgroundButton
             // 
-            this.backgroundButton.Location = new System.Drawing.Point(35, 168);
+            this.backgroundButton.Location = new System.Drawing.Point(35, 177);
             this.backgroundButton.Name = "backgroundButton";
             this.backgroundButton.Size = new System.Drawing.Size(172, 23);
             this.backgroundButton.TabIndex = 3;
@@ -79,7 +80,7 @@
             // 
             // closeButton
             // 
-            this.closeButton.Location = new System.Drawing.Point(35, 283);
+            this.closeButton.Location = new System.Drawing.Point(35, 271);
             this.closeButton.Name = "closeButton";
             this.closeButton.Size = new System.Drawing.Size(172, 23);
             this.closeButton.TabIndex = 4;
@@ -89,7 +90,7 @@
             // 
             // animationsButton
             // 
-            this.animationsButton.Location = new System.Drawing.Point(35, 51);
+            this.animationsButton.Location = new System.Drawing.Point(35, 111);
             this.animationsButton.Name = "animationsButton";
             this.animationsButton.Size = new System.Drawing.Size(172, 23);
             this.animationsButton.TabIndex = 5;
@@ -99,7 +100,7 @@
             // 
             // chrButton
             // 
-            this.chrButton.Location = new System.Drawing.Point(35, 90);
+            this.chrButton.Location = new System.Drawing.Point(35, 78);
             this.chrButton.Name = "chrButton";
             this.chrButton.Size = new System.Drawing.Size(172, 23);
             this.chrButton.TabIndex = 6;
@@ -107,11 +108,21 @@
             this.chrButton.UseVisualStyleBackColor = true;
             this.chrButton.Click += new System.EventHandler(this.ChrButtonClick);
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(35, 45);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(172, 23);
+            this.button1.TabIndex = 7;
+            this.button1.Text = "Sprites";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
             // ProgramPicker
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(244, 421);
+            this.ClientSize = new System.Drawing.Size(244, 317);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.chrButton);
             this.Controls.Add(this.animationsButton);
             this.Controls.Add(this.closeButton);
@@ -138,5 +149,6 @@
         private System.Windows.Forms.Button closeButton;
         private System.Windows.Forms.Button animationsButton;
         private System.Windows.Forms.Button chrButton;
+        private System.Windows.Forms.Button button1;
     }
 }

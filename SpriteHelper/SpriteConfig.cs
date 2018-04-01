@@ -29,7 +29,7 @@ namespace SpriteHelper
         [DataMember]
         public Animation[] Animations { get; set; }
 
-        public static SpriteConfig Read(string file, MyBitmap source, Palettes palettes)
+        public static SpriteConfig Read(string file, Palettes palettes)
         {
             SpriteConfig config;
             var xml = File.ReadAllText(file);
@@ -44,6 +44,9 @@ namespace SpriteHelper
                     config = (SpriteConfig)xmlSerializer.Deserialize(memoryStream);
                 }
             }
+
+            var sourceImagePath = file.Substring(0, file.Length - 3) + "png";
+            var source = MyBitmap.FromFile(sourceImagePath);
 
             foreach (var sprite in config.Sprites)
             {
@@ -104,6 +107,31 @@ namespace SpriteHelper
 
             return image;
         }
+    }
+
+    [DataContract]
+    public class Offsets
+    {
+        [DataMember]
+        public int BoxXOff { get; set; }
+
+        [DataMember]
+        public int BoxYOff { get; set; }
+
+        [DataMember]
+        public int BoxWidth { get; set; }
+
+        [DataMember]
+        public int BoxHeight { get; set; }
+
+        [DataMember]
+        public int GunXOffL { get; set; }
+
+        [DataMember]
+        public int GunXOffR { get; set; }
+
+        [DataMember]
+        public int GunYOff { get; set; }
     }
 
     [DataContract]
@@ -248,7 +276,16 @@ namespace SpriteHelper
             }            
         }
 
-        public Bitmap GetBitmap(SpriteConfig config, Color backColor, bool applyPalettes, bool showBoxes, bool reversed, int zoom)
+        public Bitmap GetBitmap(
+            SpriteConfig config, 
+            Color backColor, 
+            bool applyPalettes, 
+            bool showBoxes, 
+            bool reversed, 
+            int zoom, 
+            Offsets offsets,
+            Offsets secondOffsets = null // for the threat box for the player
+            )
         {
             var flags = FrameFlags.None;
 
@@ -289,35 +326,18 @@ namespace SpriteHelper
 
             if (showBoxes)
             {            
-                // Platform box: hardcoded
-                image.DrawRectangle(MyBitmap.PlatformBoxColor, config.X, config.Y - 31, config.X + 15, config.Y);
+                image.DrawRectangle(MyBitmap.PlatformBoxColor, config.X, config.Y, config.Y + offsets.BoxHeight, config.X + offsets.BoxWidth);
 
-                // Threat boxes: hardcoded
-                // todo
+                ////image.DrawRectangle(MyBitmap.ThreatBoxColor, config.X, config.Y, config.Y + offsets.BoxHeight, config.X + offsets.BoxWidth);
 
-                // Gun point: hardcoded
-                if (this.Name == "Crouch")
+                if (reversed)
                 {
-                    if (reversed)
-                    {
-                        image.SetPixel(MyBitmap.GunColor, config.X - 3, config.Y - 12);
-                    }
-                    else
-                    {
-                        image.SetPixel(MyBitmap.GunColor, config.X + 18, config.Y - 12); 
-                    }                    
+                    image.SetPixel(MyBitmap.GunColor, config.X + offsets.GunXOffL, config.Y + offsets.GunYOff);
                 }
                 else
                 {
-                    if (reversed)
-                    {
-                        image.SetPixel(MyBitmap.GunColor, config.X - 3, config.Y - 20);
-                    }
-                    else
-                    {
-                        image.SetPixel(MyBitmap.GunColor, config.X + 18, config.Y - 20);
-                    }
-                }
+                    image.SetPixel(MyBitmap.GunColor, config.X + offsets.GunXOffR, config.Y + offsets.GunYOff); 
+                }                    
 
                 image.SetPixel(MyBitmap.XYColor, config.X, config.Y);
             }
@@ -349,6 +369,27 @@ namespace SpriteHelper
 
         [DataMember]
         public Frame[] Frames { get; set; }
+
+        [DataMember]
+        public int PlatformBoxWidth { get; set; }
+
+        [DataMember]
+        public int PlatformBoxHeight { get; set; }
+
+        [DataMember]
+        public int ThreatBoxWidth { get; set; }
+
+        [DataMember]
+        public int ThreatBoxHeight { get; set; }
+
+        [DataMember]
+        public int GunXOffL { get; set; }
+
+        [DataMember]
+        public int GunXOffR { get; set; }
+
+        [DataMember]
+        public int GunYOff { get; set; }
 
         public override string ToString()
         {

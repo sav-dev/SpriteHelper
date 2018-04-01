@@ -26,7 +26,6 @@ namespace SpriteHelper
 
         public static Level Read(string file)
         {
-            Level level;
             var xml = File.ReadAllText(file);
             var xmlSerializer = new XmlSerializer(typeof(Level));
             using (var memoryStream = new MemoryStream())
