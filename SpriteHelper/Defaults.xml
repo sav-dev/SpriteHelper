@@ -2,7 +2,7 @@
   <DefaultApp>Sprites</DefaultApp>
   <ApplyDefaults>true</ApplyDefaults>
   <AnimationDirectory>C:\Users\tomas\Desktop\enemies\done\bug</AnimationDirectory>
-  <AnimationSpec>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\sprites\player.xml</AnimationSpec>
+  <PlayerSpec>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\sprites\player.xml</PlayerSpec>
   <Palette>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\palettes\palette.png</Palette>
   <AnimationOutput>C:\Users\tomas\Documents\NES\GitHub\platformer\PlatformerGraphics\Chr\player.chr</AnimationOutput>
   <ConstChrInput>C:\Users\tomas\Documents\NES\GitHub\platformer\PlatformerGraphics\Chr\const.chr</ConstChrInput>

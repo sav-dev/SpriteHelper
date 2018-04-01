@@ -25,6 +25,9 @@ namespace SpriteHelper
                 case "Player":
                     new Player().ShowDialog();
                     break;
+                case "Explosion":
+                    new Explosion().ShowDialog();
+                    break;
                 ////case "Sprites":
                 ////    new AnimationHelperV2().ShowDialog();
                 ////    break;
@@ -46,9 +49,14 @@ namespace SpriteHelper
             }
         }
 
-        private void AnimationButtonClick(object sender, EventArgs e)
+        private void PlayerButtonClick(object sender, EventArgs e)
         {
             new Player().ShowDialog();
+        }
+
+        private void ExplosionButtonClick(object sender, EventArgs e)
+        {
+            new Explosion().ShowDialog();
         }
 
         private void PalettesButtonClick(object sender, EventArgs e)

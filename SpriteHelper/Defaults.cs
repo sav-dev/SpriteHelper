@@ -20,7 +20,7 @@ namespace SpriteHelper
         public string AnimationImage { get; set; }
 
         [DataMember]
-        public string AnimationSpec { get; set; }
+        public string PlayerSpec { get; set; }
 
         [DataMember]
         public string Palette { get; set; }

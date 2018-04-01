@@ -111,6 +111,12 @@
     <Compile Include="PaletteProcessor.Designer.cs">
       <DependentUpon>PaletteProcessor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Explosion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Explosion.Designer.cs">
+      <DependentUpon>Explosion.cs</DependentUpon>
+    </Compile>
     <Compile Include="ProgramPicker.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -141,6 +147,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="BackgroundTilesetCreator.resx">
       <DependentUpon>BackgroundTilesetCreator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Explosion.resx">
+      <DependentUpon>Explosion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Player.resx">
       <DependentUpon>Player.cs</DependentUpon>

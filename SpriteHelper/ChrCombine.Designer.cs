@@ -28,30 +28,35 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.inputTextBox = new System.Windows.Forms.TextBox();
-            this.inputLabel = new System.Windows.Forms.Label();
+            this.specsTextBox = new System.Windows.Forms.TextBox();
+            this.specsLabel = new System.Windows.Forms.Label();
             this.outputLabel = new System.Windows.Forms.Label();
             this.outputTextBox = new System.Windows.Forms.TextBox();
             this.processButton = new System.Windows.Forms.Button();
+            this.constChrLabel = new System.Windows.Forms.Label();
+            this.constChrTextBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
-            // inputTextBox
+            // specsTextBox
             // 
-            this.inputTextBox.Location = new System.Drawing.Point(12, 31);
-            this.inputTextBox.Multiline = true;
-            this.inputTextBox.Name = "inputTextBox";
-            this.inputTextBox.Size = new System.Drawing.Size(562, 124);
-            this.inputTextBox.TabIndex = 24;
-            this.inputTextBox.WordWrap = false;
+            this.specsTextBox.Location = new System.Drawing.Point(12, 31);
+            this.specsTextBox.Multiline = true;
+            this.specsTextBox.Name = "specsTextBox";
+            this.specsTextBox.Size = new System.Drawing.Size(562, 102);
+            this.specsTextBox.TabIndex = 24;
+            this.specsTextBox.Text = "C:\\Users\\tomas\\Documents\\NES\\GitHub\\Platformer\\PlatformerGraphics\\Sprites\\explosi" +
+    "on.xml\r\nC:\\Users\\tomas\\Documents\\NES\\GitHub\\Platformer\\PlatformerGraphics\\Sprite" +
+    "s\\player.xml";
+            this.specsTextBox.WordWrap = false;
             // 
-            // inputLabel
+            // specsLabel
             // 
-            this.inputLabel.AutoSize = true;
-            this.inputLabel.Location = new System.Drawing.Point(9, 15);
-            this.inputLabel.Name = "inputLabel";
-            this.inputLabel.Size = new System.Drawing.Size(31, 13);
-            this.inputLabel.TabIndex = 23;
-            this.inputLabel.Text = "Input";
+            this.specsLabel.AutoSize = true;
+            this.specsLabel.Location = new System.Drawing.Point(9, 15);
+            this.specsLabel.Name = "specsLabel";
+            this.specsLabel.Size = new System.Drawing.Size(37, 13);
+            this.specsLabel.TabIndex = 23;
+            this.specsLabel.Text = "Specs";
             // 
             // outputLabel
             // 
@@ -68,10 +73,11 @@
             this.outputTextBox.Name = "outputTextBox";
             this.outputTextBox.Size = new System.Drawing.Size(562, 20);
             this.outputTextBox.TabIndex = 25;
+            this.outputTextBox.Text = "C:\\Users\\tomas\\Documents\\NES\\GitHub\\Platformer\\PlatformerGraphics\\Chr\\spr_00.chr";
             // 
             // processButton
             // 
-            this.processButton.Location = new System.Drawing.Point(499, 217);
+            this.processButton.Location = new System.Drawing.Point(499, 232);
             this.processButton.Name = "processButton";
             this.processButton.Size = new System.Drawing.Size(75, 23);
             this.processButton.TabIndex = 27;
@@ -79,16 +85,35 @@
             this.processButton.UseVisualStyleBackColor = true;
             this.processButton.Click += new System.EventHandler(this.ProcessButtonClick);
             // 
+            // constChrLabel
+            // 
+            this.constChrLabel.AutoSize = true;
+            this.constChrLabel.Location = new System.Drawing.Point(12, 136);
+            this.constChrLabel.Name = "constChrLabel";
+            this.constChrLabel.Size = new System.Drawing.Size(75, 13);
+            this.constChrLabel.TabIndex = 29;
+            this.constChrLabel.Text = "Constant CHR";
+            // 
+            // constChrTextBox
+            // 
+            this.constChrTextBox.Location = new System.Drawing.Point(12, 152);
+            this.constChrTextBox.Name = "constChrTextBox";
+            this.constChrTextBox.Size = new System.Drawing.Size(562, 20);
+            this.constChrTextBox.TabIndex = 28;
+            this.constChrTextBox.Text = "C:\\Users\\tomas\\Documents\\NES\\GitHub\\Platformer\\PlatformerGraphics\\Chr\\const.chr";
+            // 
             // ChrCombine
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(586, 257);
+            this.ClientSize = new System.Drawing.Size(586, 263);
+            this.Controls.Add(this.constChrLabel);
+            this.Controls.Add(this.constChrTextBox);
             this.Controls.Add(this.processButton);
             this.Controls.Add(this.outputLabel);
             this.Controls.Add(this.outputTextBox);
-            this.Controls.Add(this.inputTextBox);
-            this.Controls.Add(this.inputLabel);
+            this.Controls.Add(this.specsTextBox);
+            this.Controls.Add(this.specsLabel);
             this.Name = "ChrCombine";
             this.Text = "CHR Combine";
             this.ResumeLayout(false);
@@ -98,10 +123,12 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox inputTextBox;
-        private System.Windows.Forms.Label inputLabel;
+        private System.Windows.Forms.TextBox specsTextBox;
+        private System.Windows.Forms.Label specsLabel;
         private System.Windows.Forms.Label outputLabel;
         private System.Windows.Forms.TextBox outputTextBox;
         private System.Windows.Forms.Button processButton;
+        private System.Windows.Forms.Label constChrLabel;
+        private System.Windows.Forms.TextBox constChrTextBox;
     }
 }

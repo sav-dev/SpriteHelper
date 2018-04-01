@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.animationButton = new System.Windows.Forms.Button();
+            this.playerButton = new System.Windows.Forms.Button();
             this.levelEditorButton = new System.Windows.Forms.Button();
             this.palettesButton = new System.Windows.Forms.Button();
             this.backgroundButton = new System.Windows.Forms.Button();
@@ -36,21 +36,22 @@
             this.animationsButton = new System.Windows.Forms.Button();
             this.chrButton = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.explosionButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // animationButton
+            // playerButton
             // 
-            this.animationButton.Location = new System.Drawing.Point(35, 12);
-            this.animationButton.Name = "animationButton";
-            this.animationButton.Size = new System.Drawing.Size(172, 23);
-            this.animationButton.TabIndex = 0;
-            this.animationButton.Text = "Player";
-            this.animationButton.UseVisualStyleBackColor = true;
-            this.animationButton.Click += new System.EventHandler(this.AnimationButtonClick);
+            this.playerButton.Location = new System.Drawing.Point(35, 12);
+            this.playerButton.Name = "playerButton";
+            this.playerButton.Size = new System.Drawing.Size(172, 23);
+            this.playerButton.TabIndex = 0;
+            this.playerButton.Text = "Player";
+            this.playerButton.UseVisualStyleBackColor = true;
+            this.playerButton.Click += new System.EventHandler(this.PlayerButtonClick);
             // 
             // levelEditorButton
             // 
-            this.levelEditorButton.Location = new System.Drawing.Point(35, 210);
+            this.levelEditorButton.Location = new System.Drawing.Point(35, 236);
             this.levelEditorButton.Name = "levelEditorButton";
             this.levelEditorButton.Size = new System.Drawing.Size(172, 23);
             this.levelEditorButton.TabIndex = 1;
@@ -60,7 +61,7 @@
             // 
             // palettesButton
             // 
-            this.palettesButton.Location = new System.Drawing.Point(35, 144);
+            this.palettesButton.Location = new System.Drawing.Point(35, 172);
             this.palettesButton.Name = "palettesButton";
             this.palettesButton.Size = new System.Drawing.Size(172, 23);
             this.palettesButton.TabIndex = 2;
@@ -70,7 +71,7 @@
             // 
             // backgroundButton
             // 
-            this.backgroundButton.Location = new System.Drawing.Point(35, 177);
+            this.backgroundButton.Location = new System.Drawing.Point(35, 204);
             this.backgroundButton.Name = "backgroundButton";
             this.backgroundButton.Size = new System.Drawing.Size(172, 23);
             this.backgroundButton.TabIndex = 3;
@@ -80,7 +81,7 @@
             // 
             // closeButton
             // 
-            this.closeButton.Location = new System.Drawing.Point(35, 271);
+            this.closeButton.Location = new System.Drawing.Point(35, 303);
             this.closeButton.Name = "closeButton";
             this.closeButton.Size = new System.Drawing.Size(172, 23);
             this.closeButton.TabIndex = 4;
@@ -90,7 +91,7 @@
             // 
             // animationsButton
             // 
-            this.animationsButton.Location = new System.Drawing.Point(35, 111);
+            this.animationsButton.Location = new System.Drawing.Point(35, 140);
             this.animationsButton.Name = "animationsButton";
             this.animationsButton.Size = new System.Drawing.Size(172, 23);
             this.animationsButton.TabIndex = 5;
@@ -100,7 +101,7 @@
             // 
             // chrButton
             // 
-            this.chrButton.Location = new System.Drawing.Point(35, 78);
+            this.chrButton.Location = new System.Drawing.Point(35, 108);
             this.chrButton.Name = "chrButton";
             this.chrButton.Size = new System.Drawing.Size(172, 23);
             this.chrButton.TabIndex = 6;
@@ -110,18 +111,29 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(35, 45);
+            this.button1.Location = new System.Drawing.Point(35, 76);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(172, 23);
             this.button1.TabIndex = 7;
             this.button1.Text = "Sprites";
             this.button1.UseVisualStyleBackColor = true;
             // 
+            // explosionButton
+            // 
+            this.explosionButton.Location = new System.Drawing.Point(35, 44);
+            this.explosionButton.Name = "explosionButton";
+            this.explosionButton.Size = new System.Drawing.Size(172, 23);
+            this.explosionButton.TabIndex = 8;
+            this.explosionButton.Text = "Explosion";
+            this.explosionButton.UseVisualStyleBackColor = true;
+            this.explosionButton.Click += new System.EventHandler(this.ExplosionButtonClick);
+            // 
             // ProgramPicker
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(244, 317);
+            this.ClientSize = new System.Drawing.Size(244, 371);
+            this.Controls.Add(this.explosionButton);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.chrButton);
             this.Controls.Add(this.animationsButton);
@@ -129,7 +141,7 @@
             this.Controls.Add(this.backgroundButton);
             this.Controls.Add(this.palettesButton);
             this.Controls.Add(this.levelEditorButton);
-            this.Controls.Add(this.animationButton);
+            this.Controls.Add(this.playerButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -142,7 +154,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Button animationButton;
+        private System.Windows.Forms.Button playerButton;
         private System.Windows.Forms.Button levelEditorButton;
         private System.Windows.Forms.Button palettesButton;
         private System.Windows.Forms.Button backgroundButton;
@@ -150,5 +162,6 @@
         private System.Windows.Forms.Button animationsButton;
         private System.Windows.Forms.Button chrButton;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button explosionButton;
     }
 }

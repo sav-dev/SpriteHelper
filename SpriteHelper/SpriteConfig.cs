@@ -194,6 +194,9 @@ namespace SpriteHelper
         public int GameSprite { get; set; }
 
         [DataMember]
+        public bool Reversed { get; set; }
+
+        [DataMember]
         public int Mapping { get; set; }
 
         public int ReversedX { get; set; }
@@ -316,7 +319,8 @@ namespace SpriteHelper
 
             foreach (var sprite in this.Sprites)
             {
-                var spriteImage = sprite.GetSprite(applyPalettes, reversed);
+                var shouldBeReversed = sprite.Reversed ^ reversed;
+                var spriteImage = sprite.GetSprite(applyPalettes, shouldBeReversed);
 
                 var x = reversed ? sprite.ReversedX : sprite.X;
                 var y = sprite.Y;
