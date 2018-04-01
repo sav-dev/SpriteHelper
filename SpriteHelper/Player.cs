@@ -270,7 +270,7 @@ namespace SpriteHelper
                 "  .byte {0}",
                 string.Join(", ", spritesNonCrouch.Select(s =>
                 {
-                    var xOffset = s.X - this.config.X;
+                    var xOffset = s.X - this.config.XOffset;
                     xOffset = 256 + xOffset;
                     xOffset = xOffset % 256;
                     return "$" + xOffset.ToString("X2");
@@ -281,7 +281,7 @@ namespace SpriteHelper
                 "  .byte {0}",
                 string.Join(", ", spritesNonCrouch.Select(s =>
                 {
-                    var xOffset = config.X - s.X + Constants.SpriteWidth;
+                    var xOffset = config.XOffset - s.X + Constants.SpriteWidth;
                     xOffset = 256 + xOffset;
                     xOffset = xOffset % 256;
                     return "$" + xOffset.ToString("X2");
@@ -292,7 +292,7 @@ namespace SpriteHelper
                 "  .byte {0}",
                 string.Join(", ", spritesNonCrouch.Select(s =>
                 {
-                    var yOffset = s.Y - this.config.Y - 1; // -1 for scan line
+                    var yOffset = s.Y - this.config.YOffset - 1; // -1 for scan line
                     yOffset = 256 + yOffset;
                     yOffset = yOffset % 256;
                     return "$" + yOffset.ToString("X2");
@@ -300,7 +300,7 @@ namespace SpriteHelper
 
             var spritesCrouch = this.config.Frames.First(a => a.Name == "Crouch").Sprites.ToDictionary(s => s.GameSprite, s =>
             {
-                var yOffset = s.Y - this.config.Y - 1; // -1 for scan line
+                var yOffset = s.Y - this.config.YOffset - 1; // -1 for scan line
                 yOffset = 256 + yOffset;
                 yOffset = yOffset % 256;
                 return "$" + yOffset.ToString("X2");

@@ -12,10 +12,10 @@ namespace SpriteHelper
     public class SpriteConfig
     {
         [DataMember]
-        public int X { get; set; }
+        public int XOffset { get; set; }
 
         [DataMember]
-        public int Y { get; set; }
+        public int YOffset { get; set; }
 
         [DataMember]
         public PaletteMapping[] PaletteMappings { get; set; }
@@ -74,7 +74,7 @@ namespace SpriteHelper
             {
                 foreach (var sprite in frame.Sprites)
                 {
-                    sprite.ReversedX = 2 * config.X - sprite.X + Constants.SpriteWidth;
+                    sprite.ReversedX = 2 * config.XOffset - sprite.X + Constants.SpriteWidth;
                     sprite.ActualSprite = config.Sprites.First(s => s.Id == sprite.Id);
                 }
             }
@@ -326,20 +326,20 @@ namespace SpriteHelper
 
             if (showBoxes)
             {            
-                image.DrawRectangle(MyBitmap.PlatformBoxColor, config.X, config.Y, config.Y + offsets.BoxHeight, config.X + offsets.BoxWidth);
+                image.DrawRectangle(MyBitmap.PlatformBoxColor, config.XOffset, config.YOffset, config.XOffset + offsets.BoxWidth, config.YOffset + offsets.BoxHeight);
 
                 ////image.DrawRectangle(MyBitmap.ThreatBoxColor, config.X, config.Y, config.Y + offsets.BoxHeight, config.X + offsets.BoxWidth);
 
                 if (reversed)
                 {
-                    image.SetPixel(MyBitmap.GunColor, config.X + offsets.GunXOffL, config.Y + offsets.GunYOff);
+                    image.SetPixel(MyBitmap.GunColor, config.XOffset + offsets.GunXOffL, config.YOffset + offsets.GunYOff);
                 }
                 else
                 {
-                    image.SetPixel(MyBitmap.GunColor, config.X + offsets.GunXOffR, config.Y + offsets.GunYOff); 
+                    image.SetPixel(MyBitmap.GunColor, config.XOffset + offsets.GunXOffR, config.YOffset + offsets.GunYOff); 
                 }                    
 
-                image.SetPixel(MyBitmap.XYColor, config.X, config.Y);
+                image.SetPixel(MyBitmap.XYColor, config.XOffset, config.YOffset);
             }
 
             var result = image.Scale(zoom).ToBitmap();

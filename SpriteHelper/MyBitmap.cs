@@ -144,13 +144,19 @@ namespace SpriteHelper
 
         public void DrawRectangle(Color color, int x1, int y1, int x2, int y2)
         {
-            for (var x = x1; x <= x2; x++)
+            var minX = Math.Min(x1, x2);
+            var maxX = Math.Max(x1, x2);
+
+            var minY = Math.Min(y1, y2);
+            var maxY = Math.Max(y1, y2);
+
+            for (var x = minX; x <= maxX; x++)
             {
                 this.SetPixel(color, x, y1);
                 this.SetPixel(color, x, y2);
             }
 
-            for (var y = y1; y <= y2; y++)
+            for (var y = minY; y <= maxY; y++)
             {
                 this.SetPixel(color, x1, y);
                 this.SetPixel(color, x2, y);
