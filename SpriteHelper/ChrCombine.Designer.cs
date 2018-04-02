@@ -35,6 +35,8 @@
             this.processButton = new System.Windows.Forms.Button();
             this.constChrLabel = new System.Windows.Forms.Label();
             this.constChrTextBox = new System.Windows.Forms.TextBox();
+            this.palettesLabel = new System.Windows.Forms.Label();
+            this.palettesTextBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // specsTextBox
@@ -44,9 +46,9 @@
             this.specsTextBox.Name = "specsTextBox";
             this.specsTextBox.Size = new System.Drawing.Size(562, 102);
             this.specsTextBox.TabIndex = 24;
-            this.specsTextBox.Text = "C:\\Users\\tomas\\Documents\\NES\\GitHub\\Platformer\\PlatformerGraphics\\Sprites\\explosi" +
-    "on.xml\r\nC:\\Users\\tomas\\Documents\\NES\\GitHub\\Platformer\\PlatformerGraphics\\Sprite" +
-    "s\\player.xml";
+            this.specsTextBox.Text = "C:\\Users\\tomas\\Documents\\NES\\GitHub\\Platformer\\PlatformerGraphics\\Sprites\\player." +
+    "xml\r\nC:\\Users\\tomas\\Documents\\NES\\GitHub\\Platformer\\PlatformerGraphics\\Sprites\\e" +
+    "xplosion.xml";
             this.specsTextBox.WordWrap = false;
             // 
             // specsLabel
@@ -54,9 +56,9 @@
             this.specsLabel.AutoSize = true;
             this.specsLabel.Location = new System.Drawing.Point(9, 15);
             this.specsLabel.Name = "specsLabel";
-            this.specsLabel.Size = new System.Drawing.Size(37, 13);
+            this.specsLabel.Size = new System.Drawing.Size(259, 13);
             this.specsLabel.TabIndex = 23;
-            this.specsLabel.Text = "Specs";
+            this.specsLabel.Text = "Specs (order matters, player -> explosions -> enemies)";
             // 
             // outputLabel
             // 
@@ -77,7 +79,7 @@
             // 
             // processButton
             // 
-            this.processButton.Location = new System.Drawing.Point(499, 232);
+            this.processButton.Location = new System.Drawing.Point(499, 269);
             this.processButton.Name = "processButton";
             this.processButton.Size = new System.Drawing.Size(75, 23);
             this.processButton.TabIndex = 27;
@@ -102,11 +104,31 @@
             this.constChrTextBox.TabIndex = 28;
             this.constChrTextBox.Text = "C:\\Users\\tomas\\Documents\\NES\\GitHub\\Platformer\\PlatformerGraphics\\Chr\\const.chr";
             // 
+            // palettesLabel
+            // 
+            this.palettesLabel.AutoSize = true;
+            this.palettesLabel.Location = new System.Drawing.Point(12, 215);
+            this.palettesLabel.Name = "palettesLabel";
+            this.palettesLabel.Size = new System.Drawing.Size(45, 13);
+            this.palettesLabel.TabIndex = 31;
+            this.palettesLabel.Text = "Palettes";
+            // 
+            // palettesTextBox
+            // 
+            this.palettesTextBox.Location = new System.Drawing.Point(12, 231);
+            this.palettesTextBox.Name = "palettesTextBox";
+            this.palettesTextBox.Size = new System.Drawing.Size(562, 20);
+            this.palettesTextBox.TabIndex = 30;
+            this.palettesTextBox.Text = "C:\\Users\\tomas\\Documents\\NES\\GitHub\\Platformer\\PlatformerGraphics\\Palettes\\palett" +
+    "es_00.xml";
+            // 
             // ChrCombine
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(586, 263);
+            this.ClientSize = new System.Drawing.Size(586, 352);
+            this.Controls.Add(this.palettesLabel);
+            this.Controls.Add(this.palettesTextBox);
             this.Controls.Add(this.constChrLabel);
             this.Controls.Add(this.constChrTextBox);
             this.Controls.Add(this.processButton);
@@ -130,5 +152,7 @@
         private System.Windows.Forms.Button processButton;
         private System.Windows.Forms.Label constChrLabel;
         private System.Windows.Forms.TextBox constChrTextBox;
+        private System.Windows.Forms.Label palettesLabel;
+        private System.Windows.Forms.TextBox palettesTextBox;
     }
 }
