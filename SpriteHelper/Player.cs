@@ -106,7 +106,7 @@ namespace SpriteHelper
             var frame = (Frame)this.framesListBox.SelectedItem;
             this.pictureBox.BackColor = this.applyPaletteCheckbox.Checked ? this.palettes.SpritesPalette[0].ActualColors[0] : Color.White;
 
-            //// Everything below is hardcoded
+            //// Everything below is hardcoded in the game code
 
             int gunYOff;
             if (frame.Name == "Crouch")
@@ -129,7 +129,13 @@ namespace SpriteHelper
                 GunYOff = gunYOff,
             };
 
-            var threatOffsets = new Offsets();
+            var threatOffsets = new Offsets
+            {
+                BoxXOff = 1,
+                BoxWidth = 13,
+                BoxYOff = -2,
+                BoxHeight = frame.Name == "Crouch" ? -17 : -25,
+            };
 
             this.pictureBox.Image = frame.GetBitmap(
                 this.config,
