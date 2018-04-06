@@ -6,6 +6,9 @@
 
         public const int ExplosionSprites = 4;
 
+        public const int ThreatXOff = 2;
+        public const int ThreatYOff = 2;
+
         public const int SpriteWidth = 8;           // never change
         public const int SpriteHeight = 8;          // never change
 

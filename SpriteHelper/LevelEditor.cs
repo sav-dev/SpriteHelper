@@ -1044,9 +1044,17 @@ namespace SpriteHelper
                     var x1 = rectangle.Item1.X * Constants.BackgroundTileWidth;
                     var y1 = rectangle.Item1.Y * Constants.BackgroundTileHeight;
                     var x2 = rectangle.Item2.X * Constants.BackgroundTileWidth + (Constants.BackgroundTileWidth - 1);
-                    var y2 = rectangle.Item2.Y * Constants.BackgroundTileHeight + (Constants.BackgroundTileHeight - 1);   
+                    var y2 = rectangle.Item2.Y * Constants.BackgroundTileHeight + (Constants.BackgroundTileHeight - 1);
 
-                    // todo - for threats have a smaller rectangle?
+                    // Add offsets to threats so they are less deadly
+                    if (tileType == TileType.Threat)
+                    {
+                        x1 += Constants.ThreatXOff;
+                        x2 -= Constants.ThreatXOff;
+                        y1 += Constants.ThreatYOff;
+                        y2 -= Constants.ThreatYOff;
+                    }
+
                     result.Add((byte)x1);
                     result.Add((byte)y1);
                     result.Add((byte)x2);
