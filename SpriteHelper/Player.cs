@@ -211,7 +211,7 @@ namespace SpriteHelper
             spritesNonCrouch.Add(
                 this.config.Frames.First(a => a.Name == "Run 2").Sprites.First(s => s.GameSprite == Constants.PlayerSprites - 1));
 
-            builder.AppendLineFormat("xOffRight:");
+            builder.AppendLineFormat("playerXOffRight:");
             builder.AppendLineFormat(
                 "  .byte {0}",
                 string.Join(", ", spritesNonCrouch.Select(s =>
@@ -222,7 +222,7 @@ namespace SpriteHelper
                     return "$" + xOffset.ToString("X2");
                 })));
 
-            builder.AppendLineFormat("xOffLeft:");
+            builder.AppendLineFormat("playerXOffLeft:");
             builder.AppendLineFormat(
                 "  .byte {0}",
                 string.Join(", ", spritesNonCrouch.Select(s =>
@@ -233,7 +233,7 @@ namespace SpriteHelper
                     return "$" + xOffset.ToString("X2");
                 })));
 
-            builder.AppendLineFormat("yOffNonCrouch:");
+            builder.AppendLineFormat("playerYOffNonCrouch:");
             builder.AppendLineFormat(
                 "  .byte {0}",
                 string.Join(", ", spritesNonCrouch.Select(s =>
@@ -260,15 +260,15 @@ namespace SpriteHelper
                 }                
             }
 
-            builder.AppendLineFormat("yOffCrouch:");
+            builder.AppendLineFormat("playerYOffCrouch:");
             builder.AppendLineFormat("  .byte {0}", string.Join(", ", spritesCrouch.OrderBy(kvp => kvp.Key).Select(kvp => kvp.Value)));
 
-            builder.AppendLineFormat("attsRight:");
+            builder.AppendLineFormat("playerAttsRight:");
             builder.AppendLineFormat(
                 "  .byte {0}",
                 string.Join(", ", spritesNonCrouch.Select(s => "$" + s.ActualSprite.Mapping.ToString("X2"))));            
 
-            builder.AppendLineFormat("attsLeft:");
+            builder.AppendLineFormat("playerAttsLeft:");
             builder.AppendLineFormat(
                 "  .byte {0}",
                 string.Join(", ", spritesNonCrouch.Select(s => "$" + (s.ActualSprite.Mapping + 64).ToString("X2"))));
@@ -285,7 +285,7 @@ namespace SpriteHelper
         {
             var animation = this.config.Animations.First(f => f.Name == name);
 
-            builder.AppendLineFormat("tiles{0}:", name);
+            builder.AppendLineFormat("playerTiles{0}:", name);
 
             // if there are 4 frames, they are executed in order: 4 -> 3 -> 2 -> 1
             // so start with the last one etc.

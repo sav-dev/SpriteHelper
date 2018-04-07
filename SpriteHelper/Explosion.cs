@@ -137,7 +137,7 @@ namespace SpriteHelper
 
             /////// X OFF 1st
 
-            builder.AppendLineFormat("xOff1st:");
+            builder.AppendLineFormat("explosionXOff1st:");
             var xOff1st = firstFrameSprites.Select(s => s.X).ToList();
             while (xOff1st.Count < Constants.ExplosionSprites)
             {
@@ -150,7 +150,7 @@ namespace SpriteHelper
 
             /////// X OFF REST
 
-            builder.AppendLineFormat("xOffRest:");
+            builder.AppendLineFormat("explosionXOffRest:");
 
             builder.AppendLineFormat(
                 "  .byte {0}",
@@ -158,7 +158,7 @@ namespace SpriteHelper
 
             /////// Y OFF 1st
 
-            builder.AppendLineFormat("yOff1st:");
+            builder.AppendLineFormat("explosionYOff1st:");
             var yOff1st = firstFrameSprites.Select(s => "$" + s.Y.ToString("X2")).ToList();
             while (yOff1st.Count < Constants.ExplosionSprites)
             {
@@ -169,35 +169,36 @@ namespace SpriteHelper
 
             /////// Y OFF REST
 
-            builder.AppendLineFormat("yOffRest:");
+            builder.AppendLineFormat("explosionYOffRest:");
 
             builder.AppendLineFormat(
                 "  .byte {0}",
                 string.Join(", ", otherFrame.Sprites.Select(f => "$" + f.Y.ToString("X2"))));
 
-            /////// ATTS
-
-            builder.AppendLineFormat("atts:");
-
-            builder.AppendLineFormat(
-                "  .byte {0}",
-                string.Join(", ", otherFrame.Sprites.Select(s =>
-                    {
-                        var atts = s.Mapping;
-                        if (s.Reversed)
-                        {
-                            atts += 64;
-                        }
-
-                        return "$" + atts.ToString("X2");
-                    })));
+            ///////// ATTS
+            //
+            //builder.AppendLineFormat("explosionAtts:");
+            //
+            //builder.AppendLineFormat(
+            //    "  .byte {0}",
+            //    string.Join(", ", otherFrame.Sprites.Select(s =>
+            //        {
+            //            var atts = s.Mapping;
+            //            if (s.Reversed)
+            //            {
+            //                atts += 64;
+            //            }
+            //
+            //            return "$" + atts.ToString("X2");
+            //        })));
+            // no need for this. one sprite can be saved for cost of additional processing
 
             /////// TILES
 
             // if there are 4 frames, they are executed in order: 4 -> 3 -> 2 -> 1
             // so start with the last one etc.
 
-            builder.AppendLineFormat("tiles:");
+            builder.AppendLineFormat("explosionTiles:");
             for (var i = this.config.Animations.First().Frames.Length - 1; i >= 0; i--)
             {
                 var frame = this.config.Animations.First().Frames[i];
