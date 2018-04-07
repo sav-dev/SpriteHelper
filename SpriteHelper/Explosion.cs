@@ -138,17 +138,13 @@ namespace SpriteHelper
             /////// X OFF 1st
 
             builder.AppendLineFormat("explosionXOff1st:");
-            var xOff1st = new List<int>();
-            xOff1st.Add(firstFrameSprites[0].X);
-
-            for (var i = 1; i < Constants.ExplosionSprites; i++)
+            var xOff1st = firstFrameSprites.Select(s => "$" + s.X.ToString("X2")).ToList();
+            while (xOff1st.Count < Constants.ExplosionSprites)
             {
-                xOff1st.Add(otherFrame.Sprites[i].X);
-            }            
+                xOff1st.Add("CLEAR_SPRITE");
+            }
 
-            builder.AppendLineFormat(
-                "  .byte {0}",
-                string.Join(", ", xOff1st.Select(x => "$" + x.ToString("X2"))));
+            builder.AppendLineFormat("  .byte {0}", string.Join(", ", xOff1st));
 
             /////// X OFF REST
 
