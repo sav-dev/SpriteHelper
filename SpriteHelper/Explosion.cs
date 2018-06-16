@@ -73,6 +73,7 @@ namespace SpriteHelper
                 this.applyPaletteCheckbox.Checked,
                 false,
                 false,
+                false,
                 (int)this.zoomPicker.Value,
                 null);            
         }

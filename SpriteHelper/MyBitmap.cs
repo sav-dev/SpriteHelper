@@ -241,7 +241,21 @@ namespace SpriteHelper
             return result;
         }
 
-        public MyBitmap Reverse()
+        public MyBitmap ReverseVertically()
+        {
+            var result = new MyBitmap(this.width, this.height);
+            for (var x = 0; x < this.width; x++)
+            {
+                for (var y = 0; y < this.height; y++)
+                {
+                    result.SetPixel(this.GetPixel(x, y), x, this.height - y - 1);
+                }
+            }
+
+            return result;
+        }
+
+        public MyBitmap ReverseHorizontally()
         {
             var result = new MyBitmap(this.width, this.height);
             for (var x = 0; x < this.width; x++)

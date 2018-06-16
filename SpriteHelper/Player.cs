@@ -142,6 +142,7 @@ namespace SpriteHelper
                 this.pictureBox.BackColor,
                 this.applyPaletteCheckbox.Checked,
                 this.showBoxesCheckBox.Checked,
+                false, // no vFlip
                 this.directionCheckBox.Checked,
                 (int)this.zoomPicker.Value,
                 playerOffsets,

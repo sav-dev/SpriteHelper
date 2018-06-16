@@ -29,6 +29,11 @@ namespace SpriteHelper
         [DataMember]
         public Animation[] Animations { get; set; }
 
+        public int MaxFrameWidth { get; set; }
+        public int MaxFrameHeight { get; set; }
+        public int MinXOffset { get; set; }
+        public int MinYOffset { get; set; }
+
         public static SpriteConfig Read(string file, Palettes palettes)
         {
             SpriteConfig config;
@@ -72,12 +77,27 @@ namespace SpriteHelper
 
             foreach (var frame in config.Frames)
             {
+                var maxX = frame.Sprites.Max(s => s.X + config.XOffset);
+                var minX = frame.Sprites.Min(s => s.X + config.XOffset);
+
+                var maxY = frame.Sprites.Max(s => s.Y + config.YOffset);
+                var minY = frame.Sprites.Min(s => s.Y + config.YOffset);
+
+                frame.Width = maxX - minX + Constants.SpriteWidth;
+                frame.Height = maxY - minY + Constants.SpriteHeight;
+                frame.XOffset = minX;
+                frame.YOffset = minY;
+
                 foreach (var sprite in frame.Sprites)
-                {
-                    sprite.ReversedX = 2 * config.XOffset - sprite.X + Constants.SpriteWidth;
+                {                                        
                     sprite.ActualSprite = config.Sprites.First(s => s.Id == sprite.Id);
                 }
             }
+
+            config.MaxFrameWidth = config.Frames.Max(f => f.Width);
+            config.MaxFrameHeight = config.Frames.Max(f => f.Height);
+            config.MinXOffset = config.Frames.Min(f => f.XOffset);
+            config.MinYOffset = config.Frames.Min(f => f.YOffset);
 
             foreach (var animation in config.Animations)
             {
@@ -109,28 +129,14 @@ namespace SpriteHelper
         }
     }
 
-    [DataContract]
     public class Offsets
     {
-        [DataMember]
         public int BoxXOff { get; set; }
-
-        [DataMember]
         public int BoxYOff { get; set; }
-
-        [DataMember]
         public int BoxWidth { get; set; }
-
-        [DataMember]
         public int BoxHeight { get; set; }
-
-        [DataMember]
         public int GunXOffL { get; set; }
-
-        [DataMember]
         public int GunXOffR { get; set; }
-
-        [DataMember]
         public int GunYOff { get; set; }
     }
 
@@ -176,10 +182,7 @@ namespace SpriteHelper
     {
         public Sprite ActualSprite;
 
-        private MyBitmap sprite;
-        private MyBitmap spriteWithPalettesApplied;
-        private MyBitmap spriteReversed;
-        private MyBitmap spriteWithPalettesAppliedReversed;
+        private Dictionary<SpriteFlags, MyBitmap> sprites = new Dictionary<SpriteFlags, MyBitmap>();
 
         [DataMember]
         public int Id { get; set; }
@@ -194,12 +197,13 @@ namespace SpriteHelper
         public int GameSprite { get; set; }
 
         [DataMember]
-        public bool Reversed { get; set; }
+        public bool VFlip { get; set; }
+
+        [DataMember]
+        public bool HFlip { get; set; }
 
         [DataMember]
         public int Mapping { get; set; }
-
-        public int ReversedX { get; set; }
 
         public void PrepareSprite(MyBitmap source)
         {
@@ -208,52 +212,98 @@ namespace SpriteHelper
                 throw new Exception("Not expected");
             }
 
-            this.sprite = source.GetPart(this.X, this.Y, Constants.SpriteWidth, Constants.SpriteHeight);           
+            var sprite = source.GetPart(this.X, this.Y, Constants.SpriteWidth, Constants.SpriteHeight);
+            sprites.Add(SpriteFlags.None, sprite);
         }
 
         public void PreparePalettes(Palettes palettes, PaletteMapping paletteMapping)
         {
-            this.spriteWithPalettesApplied = new MyBitmap(this.sprite.Width, this.sprite.Height);
+            var sprite = this.sprites[SpriteFlags.None];
+            var spriteWithPalettesApplied = new MyBitmap(sprite.Width, sprite.Height);
             var palette = palettes.SpritesPalette[paletteMapping.ToPalette];
 
-            for (var x = 0; x < this.sprite.Width; x++)
+            for (var x = 0; x < sprite.Width; x++)
             {
-                for (var y = 0; y < this.sprite.Height; y++)
+                for (var y = 0; y < sprite.Height; y++)
                 {
-                    var color = this.sprite.GetPixel(x, y);
+                    var color = sprite.GetPixel(x, y);
                     var mappedColorId = paletteMapping.ColorMappings.First(c => c.Color == color).To;
                     var mappedColor = palette.ActualColors[mappedColorId];
-                    this.spriteWithPalettesApplied.SetPixel(mappedColor, x, y);
+                    spriteWithPalettesApplied.SetPixel(mappedColor, x, y);
                 }
-            }    
+            }
+
+            sprites.Add(SpriteFlags.Palettes, spriteWithPalettesApplied);
         }
 
         public void PrepareReversed()
         {
-            this.spriteWithPalettesAppliedReversed = this.spriteWithPalettesApplied.Reverse();
-            this.spriteReversed = this.sprite.Reverse();
+            var sprite = this.sprites[SpriteFlags.None];
+            var spriteWithPalettesApplied = this.sprites[SpriteFlags.Palettes];
+
+            var options = new[]
+                {
+                    SpriteFlags.VFlip,
+                    SpriteFlags.HFlip,
+                    SpriteFlags.VFlip | SpriteFlags.HFlip,
+                    SpriteFlags.VFlip | SpriteFlags.Palettes,
+                    SpriteFlags.HFlip | SpriteFlags.Palettes,
+                    SpriteFlags.VFlip | SpriteFlags.HFlip | SpriteFlags.Palettes,
+                };
+
+            foreach (var option in options)
+            {
+                var source = option.HasFlag(SpriteFlags.Palettes) ? spriteWithPalettesApplied : sprite;
+
+                if (option.HasFlag(SpriteFlags.VFlip))
+                {
+                    source = source.ReverseVertically();
+                }
+
+                if (option.HasFlag(SpriteFlags.HFlip))
+                {
+                    source = source.ReverseHorizontally();
+                }
+
+                this.sprites.Add(option, source);
+            }
         }
 
-        public MyBitmap GetSprite(bool applyPalettes = false, bool reversed = false)
+        public MyBitmap GetSprite(bool applyPalettes = false, bool vFlip = false, bool hFlip = false)
         {
             if (this.ActualSprite != null)
             {
-                return this.ActualSprite.GetSprite(applyPalettes, reversed);
+                return this.ActualSprite.GetSprite(applyPalettes, vFlip, hFlip);
             }
 
-            return applyPalettes ?
-                (reversed ? spriteWithPalettesAppliedReversed : spriteWithPalettesApplied) :
-                (reversed ? spriteReversed : sprite);
+            var flags = SpriteFlags.None;
+            if (applyPalettes)
+            {
+                flags = flags | SpriteFlags.Palettes;
+            }
+
+            if (vFlip)
+            {
+                flags = flags | SpriteFlags.VFlip;
+            }
+
+            if (hFlip)
+            {
+                flags = flags | SpriteFlags.HFlip;
+            }
+
+            return this.sprites[flags];
         }
     }
 
     [Flags]
-    public enum FrameFlags
+    public enum SpriteFlags
     {
         None = 0,
         Palettes = 1,
         Boxes = 2,
-        Reversed = 4
+        VFlip = 4,
+        HFlip = 8
     }
 
     [DataContract]
@@ -268,14 +318,22 @@ namespace SpriteHelper
         [DataMember]
         public string Name { get; set; }
 
-        private IDictionary<FrameFlags, Bitmap>[] cachedBitmaps;
+        private IDictionary<SpriteFlags, Bitmap>[] cachedBitmaps;
         
+        public int Width { get; set; }
+
+        public int Height { get; set; }
+
+        public int XOffset { get; set; }
+
+        public int YOffset { get; set; }
+
         public Frame()
         {
-            this.cachedBitmaps = new IDictionary<FrameFlags, Bitmap>[Constants.MaxZoom - 1];
+            this.cachedBitmaps = new IDictionary<SpriteFlags, Bitmap>[Constants.MaxZoom - 1];
             for (var i = 0; i < Constants.MaxZoom - 1; i++)
             {
-                cachedBitmaps[i] = new Dictionary<FrameFlags, Bitmap>();
+                cachedBitmaps[i] = new Dictionary<SpriteFlags, Bitmap>();
             }            
         }
 
@@ -284,27 +342,33 @@ namespace SpriteHelper
             Color backColor, 
             bool applyPalettes, 
             bool showBoxes, 
-            bool reversed, 
+            bool vFlip,
+            bool hFlip,
             int zoom, 
             Offsets offsets,
             Offsets secondOffsets = null // for the threat box for the player
             )
         {
-            var flags = FrameFlags.None;
+            var flags = SpriteFlags.None;
 
             if (applyPalettes)
             {
-                flags |= FrameFlags.Palettes;
+                flags |= SpriteFlags.Palettes;
             }
 
             if (showBoxes)
             {
-                flags |= FrameFlags.Boxes;
+                flags |= SpriteFlags.Boxes;
             }
 
-            if (reversed)
+            if (vFlip)
             {
-                flags |= FrameFlags.Reversed;
+                flags |= SpriteFlags.VFlip;
+            }
+
+            if (hFlip)
+            {
+                flags |= SpriteFlags.HFlip;
             }
 
             var dictionary = this.cachedBitmaps[zoom - 1];
@@ -313,40 +377,65 @@ namespace SpriteHelper
                 return dictionary[flags];
             }
 
-            var width = config.Frames.Max(f => f.Sprites.Max(s => Math.Max(s.ReversedX, s.X))) + Constants.SpriteWidth;
-            var height = this.Sprites.Max(s => s.Y) + Constants.SpriteHeight;
-            var image = new MyBitmap(width, height, backColor);
+            var image = new MyBitmap(Width, Height, backColor);
 
             foreach (var sprite in this.Sprites)
             {
-                var shouldBeReversed = sprite.Reversed ^ reversed;
-                var spriteImage = sprite.GetSprite(applyPalettes, shouldBeReversed);
+                var shouldBeVFlip = sprite.VFlip ^ vFlip;
+                var shouldBeHFlip = sprite.HFlip ^ hFlip;
 
-                var x = reversed ? sprite.ReversedX : sprite.X;
-                var y = sprite.Y;
+                var spriteImage = sprite.GetSprite(applyPalettes, shouldBeVFlip, shouldBeHFlip);
+
+                var x = sprite.X + config.XOffset - this.XOffset;
+                var y = sprite.Y + config.YOffset - this.YOffset;
                 
+                if (vFlip)
+                {
+                    y = this.Height - y - Constants.SpriteHeight;
+                }
+
+                if (hFlip)
+                {
+                    x = this.Width - x - Constants.SpriteWidth; 
+                }
+
                 image.DrawImage(spriteImage, x, y);
             }
 
             if (showBoxes)
             {            
-                image.DrawRectangle(MyBitmap.PlatformBoxColor, config.XOffset, config.YOffset, config.XOffset + offsets.BoxWidth, config.YOffset + offsets.BoxHeight);
-
-                ////image.DrawRectangle(MyBitmap.ThreatBoxColor, config.X, config.Y, config.Y + offsets.BoxHeight, config.X + offsets.BoxWidth);
-
-                if (reversed)
-                {
-                    image.SetPixel(MyBitmap.GunColor, config.XOffset + offsets.GunXOffL, config.YOffset + offsets.GunYOff);
-                }
-                else
-                {
-                    image.SetPixel(MyBitmap.GunColor, config.XOffset + offsets.GunXOffR, config.YOffset + offsets.GunYOff); 
-                }                    
-
-                image.SetPixel(MyBitmap.XYColor, config.XOffset, config.YOffset);
+                ////image.DrawRectangle(MyBitmap.PlatformBoxColor, config.XOffset, config.YOffset, config.XOffset + offsets.BoxWidth, config.YOffset + offsets.BoxHeight);
+                ////
+                ////////image.DrawRectangle(MyBitmap.ThreatBoxColor, config.X, config.Y, config.Y + offsets.BoxHeight, config.X + offsets.BoxWidth);
+                ////
+                ////if (hFlip)
+                ////{
+                ////    image.SetPixel(MyBitmap.GunColor, config.XOffset + offsets.GunXOffL, config.YOffset + offsets.GunYOff);
+                ////}
+                ////else
+                ////{
+                ////    image.SetPixel(MyBitmap.GunColor, config.XOffset + offsets.GunXOffR, config.YOffset + offsets.GunYOff); 
+                ////}                    
+                ////
+                ////image.SetPixel(MyBitmap.XYColor, config.XOffset, config.YOffset);
             }
 
-            var result = image.Scale(zoom).ToBitmap();
+            var largeImage = new MyBitmap(config.MaxFrameWidth, config.MaxFrameHeight, backColor);
+            int largeImageX = this.XOffset - config.MinXOffset;
+            if (hFlip)
+            {
+                largeImageX = config.MaxFrameWidth - this.Width - largeImageX;
+            }
+
+            var largeImageY = this.YOffset - config.MinYOffset;
+            if (vFlip)
+            {
+                largeImageY = config.MaxFrameHeight - this.Height - largeImageY;
+            }
+
+            largeImage.DrawImage(image, largeImageX, largeImageY);
+            
+            var result = largeImage.Scale(zoom).ToBitmap();
 
             dictionary.Add(flags, result);
 
