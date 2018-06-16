@@ -35,7 +35,7 @@
             this.closeButton = new System.Windows.Forms.Button();
             this.animationsButton = new System.Windows.Forms.Button();
             this.chrButton = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.enemiesButton = new System.Windows.Forms.Button();
             this.explosionButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -109,14 +109,15 @@
             this.chrButton.UseVisualStyleBackColor = true;
             this.chrButton.Click += new System.EventHandler(this.ChrButtonClick);
             // 
-            // button1
+            // enemiesButton
             // 
-            this.button1.Location = new System.Drawing.Point(35, 76);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(172, 23);
-            this.button1.TabIndex = 7;
-            this.button1.Text = "Sprites";
-            this.button1.UseVisualStyleBackColor = true;
+            this.enemiesButton.Location = new System.Drawing.Point(35, 76);
+            this.enemiesButton.Name = "enemiesButton";
+            this.enemiesButton.Size = new System.Drawing.Size(172, 23);
+            this.enemiesButton.TabIndex = 7;
+            this.enemiesButton.Text = "Enemies";
+            this.enemiesButton.UseVisualStyleBackColor = true;
+            this.enemiesButton.Click += new System.EventHandler(this.EnemiesButtonClick);
             // 
             // explosionButton
             // 
@@ -134,7 +135,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(244, 371);
             this.Controls.Add(this.explosionButton);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.enemiesButton);
             this.Controls.Add(this.chrButton);
             this.Controls.Add(this.animationsButton);
             this.Controls.Add(this.closeButton);
@@ -161,7 +162,7 @@
         private System.Windows.Forms.Button closeButton;
         private System.Windows.Forms.Button animationsButton;
         private System.Windows.Forms.Button chrButton;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button enemiesButton;
         private System.Windows.Forms.Button explosionButton;
     }
 }

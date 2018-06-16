@@ -78,6 +78,12 @@
     <Compile Include="DoubleBufferedPanel.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="EnemiesWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EnemiesWindow.Designer.cs">
+      <DependentUpon>EnemiesWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extensions.cs" />
     <Compile Include="Level.cs" />
     <Compile Include="LevelSplitView.cs">
@@ -147,6 +153,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="BackgroundTilesetCreator.resx">
       <DependentUpon>BackgroundTilesetCreator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EnemiesWindow.resx">
+      <DependentUpon>EnemiesWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Explosion.resx">
       <DependentUpon>Explosion.cs</DependentUpon>

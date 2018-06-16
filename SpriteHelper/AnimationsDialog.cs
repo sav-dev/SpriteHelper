@@ -159,7 +159,15 @@ namespace SpriteHelper
 
         private void TimerTick(object sender, EventArgs e)
         {
+            var previousIndex = this.framesListBox.SelectedIndex;
             this.framesListBox.SelectedIndex = (this.framesListBox.SelectedIndex + 1) % this.framesListBox.Items.Count;
+            var newIndex = this.framesListBox.SelectedIndex;
+
+            if (previousIndex == newIndex)
+            {
+                // Only one frame, call UpdateImage manually
+                this.UpdateImage();
+            }
 
             var speed = (int)this.movSpeedPicker.Value * (int)this.zoomPicker.Value;
             var pictureBoxWidth = this.pictureBox.Width;
