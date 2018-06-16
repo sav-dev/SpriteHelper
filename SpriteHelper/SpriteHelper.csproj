@@ -129,7 +129,6 @@
     <Compile Include="ProgramPicker.Designer.cs">
       <DependentUpon>ProgramPicker.cs</DependentUpon>
     </Compile>
-    <Compile Include="SpriteConfig.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Player.cs">
       <SubType>Form</SubType>
@@ -142,6 +141,14 @@
     <Compile Include="Palettes.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SpriteConfig\Animation.cs" />
+    <Compile Include="SpriteConfig\ColorMapping.cs" />
+    <Compile Include="SpriteConfig\Frame.cs" />
+    <Compile Include="SpriteConfig\Offsets.cs" />
+    <Compile Include="SpriteConfig\PaletteMapping.cs" />
+    <Compile Include="SpriteConfig\Sprite.cs" />
+    <Compile Include="SpriteConfig\SpriteConfig.cs" />
+    <Compile Include="SpriteConfig\SpriteFlags.cs" />
     <Compile Include="TransformDialog.cs">
       <SubType>Form</SubType>
     </Compile>

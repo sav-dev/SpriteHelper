@@ -118,6 +118,7 @@ namespace SpriteHelper
                 gunYOff = -20;
             }
 
+            // Hardcoded in the game code.
             var playerOffsets = new Offsets
             {
                 BoxHeight = -31,
@@ -129,6 +130,7 @@ namespace SpriteHelper
                 GunYOff = gunYOff,
             };
 
+            // Hardcoded in the game code.
             var threatOffsets = new Offsets
             {
                 BoxXOff = 1,
