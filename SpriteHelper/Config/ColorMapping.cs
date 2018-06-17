@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Runtime.Serialization;
 
-namespace SpriteHelper
+namespace SpriteHelper.Config
 {
     [DataContract]
     public class ColorMapping

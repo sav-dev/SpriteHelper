@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SpriteHelper
+namespace SpriteHelper.Config
 {
     [Flags]
     public enum SpriteFlags

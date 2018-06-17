@@ -1,8 +1,8 @@
-﻿using System;
+﻿using SpriteHelper.Config;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -106,49 +106,13 @@ namespace SpriteHelper
             var frame = (Frame)this.framesListBox.SelectedItem;
             this.pictureBox.BackColor = this.applyPaletteCheckbox.Checked ? this.palettes.SpritesPalette[0].ActualColors[0] : Color.White;
 
-            //// Everything below is hardcoded in the game code
-
-            int gunYOff;
-            if (frame.Name == "Crouch")
-            {
-                gunYOff = -12;
-            }
-            else
-            {
-                gunYOff = -20;
-            }
-
-            // Hardcoded in the game code.
-            var playerOffsets = new Offsets
-            {
-                BoxHeight = -31,
-                BoxWidth = 15,
-                BoxXOff = 0,
-                BoxYOff = 0,
-                GunXOffL = -3,
-                GunXOffR = 18,
-                GunYOff = gunYOff,
-            };
-
-            // Hardcoded in the game code.
-            var threatOffsets = new Offsets
-            {
-                BoxXOff = 1,
-                BoxWidth = 13,
-                BoxYOff = -2,
-                BoxHeight = frame.Name == "Crouch" ? -17 : -25,
-            };
-
-            this.pictureBox.Image = frame.GetBitmap(
+            this.pictureBox.Image = frame.GetPlayerBitmap(
                 this.config,
                 this.pictureBox.BackColor,
                 this.applyPaletteCheckbox.Checked,
                 this.showBoxesCheckBox.Checked,
-                false, // no vFlip
                 this.directionCheckBox.Checked,
-                (int)this.zoomPicker.Value,
-                playerOffsets,
-                threatOffsets);
+                (int)this.zoomPicker.Value);
             
         }
 
@@ -198,9 +162,15 @@ namespace SpriteHelper
             new CodeWindow(code).ShowDialog();
         }
 
-        //////////////////////////
+        public static int GetYOffset(Sprite sprite)
+        {
+            return sprite.Y - Constants.PlayerYOffset;
+        }
 
-        // var x = left ? (2 * config.X - sprite.X + Constants.SpriteWidth) : sprite.X;
+        public static int GetXOffset(Sprite sprite, bool hFlip)
+        {
+            return hFlip ? Constants.PlayerXOffset - sprite.X + Constants.SpriteWidth : sprite.X - Constants.PlayerXOffset;
+        }
 
         private string GetCode()
         {
@@ -219,7 +189,7 @@ namespace SpriteHelper
                 "  .byte {0}",
                 string.Join(", ", spritesNonCrouch.Select(s =>
                 {
-                    var xOffset = s.X - this.config.XOffset;
+                    var xOffset = GetXOffset(s, false);
                     xOffset = 256 + xOffset;
                     xOffset = xOffset % 256;
                     return "$" + xOffset.ToString("X2");
@@ -230,7 +200,7 @@ namespace SpriteHelper
                 "  .byte {0}",
                 string.Join(", ", spritesNonCrouch.Select(s =>
                 {
-                    var xOffset = config.XOffset - s.X + Constants.SpriteWidth;
+                    var xOffset = GetXOffset(s, true);
                     xOffset = 256 + xOffset;
                     xOffset = xOffset % 256;
                     return "$" + xOffset.ToString("X2");
@@ -241,7 +211,7 @@ namespace SpriteHelper
                 "  .byte {0}",
                 string.Join(", ", spritesNonCrouch.Select(s =>
                 {
-                    var yOffset = s.Y - this.config.YOffset;
+                    var yOffset = GetYOffset(s);
                     yOffset = 256 + yOffset;
                     yOffset = yOffset % 256;
                     return "$" + yOffset.ToString("X2");
@@ -249,7 +219,7 @@ namespace SpriteHelper
 
             var spritesCrouch = this.config.Frames.First(a => a.Name == "Crouch").Sprites.ToDictionary(s => s.GameSprite, s =>
             {
-                var yOffset = s.Y - this.config.YOffset;
+                var yOffset = GetYOffset(s);
                 yOffset = 256 + yOffset;
                 yOffset = yOffset % 256;
                 return "$" + yOffset.ToString("X2");

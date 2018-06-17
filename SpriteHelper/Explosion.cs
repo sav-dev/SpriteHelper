@@ -1,8 +1,8 @@
-﻿using System;
+﻿using SpriteHelper.Config;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -67,15 +67,10 @@ namespace SpriteHelper
             var frame = (Frame)this.framesListBox.SelectedItem;
             this.pictureBox.BackColor = this.applyPaletteCheckbox.Checked ? this.palettes.SpritesPalette[0].ActualColors[0] : Color.White;
 
-            this.pictureBox.Image = frame.GetBitmap(
-                this.config,
+            this.pictureBox.Image = frame.GetExplosionBitmap(
                 this.pictureBox.BackColor,
                 this.applyPaletteCheckbox.Checked,
-                false,
-                false,
-                false,
-                (int)this.zoomPicker.Value,
-                null);            
+                (int)this.zoomPicker.Value);            
         }
 
         private void LoadAnimation()
@@ -190,7 +185,8 @@ namespace SpriteHelper
             //
             //            return "$" + atts.ToString("X2");
             //        })));
-            // no need for this. one sprite can be saved for cost of additional processing
+            // no need for this.
+            // !!! one sprite can be saved for cost of additional processing if needed !!!
 
             /////// TILES
 

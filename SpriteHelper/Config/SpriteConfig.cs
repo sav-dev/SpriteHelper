@@ -4,17 +4,11 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-namespace SpriteHelper
+namespace SpriteHelper.Config
 {
     [DataContract]
     public class SpriteConfig
     {
-        [DataMember]
-        public int XOffset { get; set; }
-
-        [DataMember]
-        public int YOffset { get; set; }
-
         [DataMember]
         public PaletteMapping[] PaletteMappings { get; set; }
 
@@ -34,6 +28,7 @@ namespace SpriteHelper
 
         public static SpriteConfig Read(string file, Palettes palettes)
         {
+            // Read the XML.
             SpriteConfig config;
             var xml = File.ReadAllText(file);
             var xmlSerializer = new XmlSerializer(typeof(SpriteConfig));
@@ -48,18 +43,24 @@ namespace SpriteHelper
                 }
             }
 
+            // Get the image (same name).
             var sourceImagePath = file.Substring(0, file.Length - 3) + "png";
             var source = MyBitmap.FromFile(sourceImagePath);
 
+            // Prepare all sprites.
             foreach (var sprite in config.Sprites)
             {
+                // Prepare sprite - get the image.
                 sprite.PrepareSprite(source);
+
+                // Validate number of unique colors.
                 var uniqueColors = sprite.GetSprite().UniqueColors();
                 if (uniqueColors.Length > 4)
                 {
                     throw new Exception(string.Format("Too many colors in sprite {0}", sprite.Id));
                 }
 
+                // Get and validate the palette mapping.
                 var mapping = config.PaletteMappings.First(m => m.Id == sprite.Mapping);
                 foreach (var color in uniqueColors)
                 {
@@ -69,34 +70,21 @@ namespace SpriteHelper
                     }
                 }
 
+                // Prepare sprite with pallete applied and all reversse combinations.
                 sprite.PreparePalettes(palettes, mapping);
                 sprite.PrepareReversed();
             }
 
+            // Prepare frames.
             foreach (var frame in config.Frames)
             {
-                var maxX = frame.Sprites.Max(s => s.X + config.XOffset);
-                var minX = frame.Sprites.Min(s => s.X + config.XOffset);
-
-                var maxY = frame.Sprites.Max(s => s.Y + config.YOffset);
-                var minY = frame.Sprites.Min(s => s.Y + config.YOffset);
-
-                frame.Width = maxX - minX + Constants.SpriteWidth;
-                frame.Height = maxY - minY + Constants.SpriteHeight;
-                frame.XOffset = minX;
-                frame.YOffset = minY;
-
                 foreach (var sprite in frame.Sprites)
                 {
                     sprite.ActualSprite = config.Sprites.First(s => s.Id == sprite.Id);
                 }
             }
 
-            config.MaxFrameWidth = config.Frames.Max(f => f.Width);
-            config.MaxFrameHeight = config.Frames.Max(f => f.Height);
-            config.MinXOffset = config.Frames.Min(f => f.XOffset);
-            config.MinYOffset = config.Frames.Min(f => f.YOffset);
-
+            // Prepare animations.
             foreach (var animation in config.Animations)
             {
                 for (var i = 0; i < animation.Frames.Length; i++)
@@ -106,24 +94,6 @@ namespace SpriteHelper
             }
 
             return config;
-        }
-
-        public MyBitmap GetAllSprites(MyBitmap source, int rows)
-        {
-            var spritesPerRow = (int)(Math.Ceiling((double)this.Sprites.Length / rows));
-            var width = spritesPerRow * Constants.SpriteWidth;
-            var height = rows * Constants.SpriteHeight;
-            var image = new MyBitmap(width, height);
-
-            for (var i = 0; i < rows; i++)
-            {
-                for (var j = 0; (j < spritesPerRow) && (i * spritesPerRow + j) < this.Sprites.Length; j++)
-                {
-                    image.DrawImage(this.Sprites[i * spritesPerRow + j].GetSprite(), j * Constants.SpriteWidth, i * Constants.SpriteHeight);
-                }
-            }
-
-            return image;
         }
     }
 }

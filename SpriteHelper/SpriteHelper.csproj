@@ -141,14 +141,14 @@
     <Compile Include="Palettes.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SpriteConfig\Animation.cs" />
-    <Compile Include="SpriteConfig\ColorMapping.cs" />
-    <Compile Include="SpriteConfig\Frame.cs" />
-    <Compile Include="SpriteConfig\Offsets.cs" />
-    <Compile Include="SpriteConfig\PaletteMapping.cs" />
-    <Compile Include="SpriteConfig\Sprite.cs" />
-    <Compile Include="SpriteConfig\SpriteConfig.cs" />
-    <Compile Include="SpriteConfig\SpriteFlags.cs" />
+    <Compile Include="Config\Animation.cs" />
+    <Compile Include="Config\ColorMapping.cs" />
+    <Compile Include="Config\Frame.cs" />
+    <Compile Include="Config\Offsets.cs" />
+    <Compile Include="Config\PaletteMapping.cs" />
+    <Compile Include="Config\Sprite.cs" />
+    <Compile Include="Config\SpriteConfig.cs" />
+    <Compile Include="Config\SpriteFlags.cs" />
     <Compile Include="TransformDialog.cs">
       <SubType>Form</SubType>
     </Compile>

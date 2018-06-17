@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace SpriteHelper
 {
+    // todo: remove this class, have other solution for default paths (they are not even used everywhere)
     [DataContract]
     public class Defaults
     {

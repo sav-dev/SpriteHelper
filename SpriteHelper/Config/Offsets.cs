@@ -1,5 +1,6 @@
-﻿namespace SpriteHelper
+﻿namespace SpriteHelper.Config
 {
+    // todo: get rid of this class?
     public class Offsets
     {
         public int BoxXOff { get; set; }

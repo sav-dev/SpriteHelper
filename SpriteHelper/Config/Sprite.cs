@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 
-namespace SpriteHelper
+namespace SpriteHelper.Config
 {
     [DataContract]
     public class Sprite
