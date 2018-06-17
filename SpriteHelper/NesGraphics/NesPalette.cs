@@ -1,7 +1,8 @@
-﻿using System;
+﻿using SpriteHelper.Files;
+using System;
 using System.Drawing;
 
-namespace SpriteHelper
+namespace SpriteHelper.NesGraphics
 {
     public class NesPalette
     {

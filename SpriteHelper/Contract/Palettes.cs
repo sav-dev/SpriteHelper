@@ -1,10 +1,11 @@
-﻿using System.Drawing;
+﻿using SpriteHelper.NesGraphics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-namespace SpriteHelper
+namespace SpriteHelper.Contract
 {
     [DataContract]
     public class Palettes

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
-namespace SpriteHelper
+namespace SpriteHelper.Utility
 {
     public static class Packer
     {

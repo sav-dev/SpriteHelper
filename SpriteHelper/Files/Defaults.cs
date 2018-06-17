@@ -2,7 +2,7 @@
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-namespace SpriteHelper
+namespace SpriteHelper.Files
 {
     // todo: remove this class, have other solution for default paths (they are not even used everywhere)
     [DataContract]
@@ -91,7 +91,7 @@ namespace SpriteHelper
 
         private static Defaults ReadDefaults()
         {
-            var xml = File.ReadAllText("Defaults.xml");
+            var xml = File.ReadAllText("Files\\Defaults.xml");
             var xmlSerializer = new XmlSerializer(typeof(Defaults));
             using (var memoryStream = new MemoryStream())
             {

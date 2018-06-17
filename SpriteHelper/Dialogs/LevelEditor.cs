@@ -1,5 +1,7 @@
 ﻿using SpriteHelper.Contract;
 using SpriteHelper.Controls;
+using SpriteHelper.Files;
+using SpriteHelper.NesGraphics;
 using System;
 using System.Collections.Generic;
 using System.Drawing;

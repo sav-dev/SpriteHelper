@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SpriteHelper.Files;
+using System;
 using System.Windows.Forms;
 
 namespace SpriteHelper.Dialogs

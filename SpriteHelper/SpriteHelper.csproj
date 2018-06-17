@@ -73,7 +73,7 @@
     <Compile Include="Dialogs\CodeWindow.Designer.cs">
       <DependentUpon>CodeWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="Defaults.cs" />
+    <Compile Include="Files\Defaults.cs" />
     <Compile Include="Controls\DoubleBufferedPanel.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -109,7 +109,7 @@
     <Compile Include="Dialogs\LevelEditor.Designer.cs">
       <DependentUpon>LevelEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Packer.cs" />
+    <Compile Include="Utility\Packer.cs" />
     <Compile Include="Dialogs\PaletteProcessor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -135,9 +135,9 @@
     <Compile Include="Dialogs\Player.Designer.cs">
       <DependentUpon>Player.cs</DependentUpon>
     </Compile>
-    <Compile Include="MyBitmap.cs" />
-    <Compile Include="NesPalette.cs" />
-    <Compile Include="Palettes.cs" />
+    <Compile Include="NesGraphics\MyBitmap.cs" />
+    <Compile Include="NesGraphics\NesPalette.cs" />
+    <Compile Include="Contract\Palettes.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Contract\Animation.cs" />
@@ -219,11 +219,12 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Defaults.xml">
+    <Content Include="Files\Defaults.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

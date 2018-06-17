@@ -1,4 +1,5 @@
 ﻿using SpriteHelper.Dialogs;
+using SpriteHelper.NesGraphics;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
