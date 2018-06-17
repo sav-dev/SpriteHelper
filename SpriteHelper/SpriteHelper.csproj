@@ -48,92 +48,91 @@
     <Reference Include="System.Xml.Serialization" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AnimationsDialog.cs">
+    <Compile Include="Dialogs\AnimationsDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AnimationsDialog.Designer.cs">
+    <Compile Include="Dialogs\AnimationsDialog.Designer.cs">
       <DependentUpon>AnimationsDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="BackgroundConfig.cs" />
-    <Compile Include="BackgroundTilesetCreator.cs">
+    <Compile Include="Contract\BackgroundConfig.cs" />
+    <Compile Include="Dialogs\BackgroundTilesetCreator.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="BackgroundTilesetCreator.Designer.cs">
+    <Compile Include="Dialogs\BackgroundTilesetCreator.Designer.cs">
       <DependentUpon>BackgroundTilesetCreator.cs</DependentUpon>
     </Compile>
-    <Compile Include="ChrCombine.cs">
+    <Compile Include="Dialogs\ChrCombine.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ChrCombine.Designer.cs">
+    <Compile Include="Dialogs\ChrCombine.Designer.cs">
       <DependentUpon>ChrCombine.cs</DependentUpon>
     </Compile>
-    <Compile Include="CodeWindow.cs">
+    <Compile Include="Dialogs\CodeWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CodeWindow.Designer.cs">
+    <Compile Include="Dialogs\CodeWindow.Designer.cs">
       <DependentUpon>CodeWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="DateMemberAttribute.cs" />
     <Compile Include="Defaults.cs" />
-    <Compile Include="DoubleBufferedPanel.cs">
+    <Compile Include="Controls\DoubleBufferedPanel.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="EnemiesWindow.cs">
+    <Compile Include="Dialogs\EnemiesWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="EnemiesWindow.Designer.cs">
+    <Compile Include="Dialogs\EnemiesWindow.Designer.cs">
       <DependentUpon>EnemiesWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Extensions.cs" />
-    <Compile Include="Level.cs" />
-    <Compile Include="LevelSplitView.cs">
+    <Compile Include="Contract\Level.cs" />
+    <Compile Include="Dialogs\LevelSplitView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LevelSplitView.Designer.cs">
+    <Compile Include="Dialogs\LevelSplitView.Designer.cs">
       <DependentUpon>LevelSplitView.cs</DependentUpon>
     </Compile>
-    <Compile Include="LoadLevelDialog.cs">
+    <Compile Include="Dialogs\LoadLevelDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LoadLevelDialog.Designer.cs">
+    <Compile Include="Dialogs\LoadLevelDialog.Designer.cs">
       <DependentUpon>LoadLevelDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="EditLevelDialog.cs">
+    <Compile Include="Dialogs\EditLevelDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="EditLevelDialog.Designer.cs">
+    <Compile Include="Dialogs\EditLevelDialog.Designer.cs">
       <DependentUpon>EditLevelDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="LevelEditor.cs">
+    <Compile Include="Dialogs\LevelEditor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LevelEditor.Designer.cs">
+    <Compile Include="Dialogs\LevelEditor.Designer.cs">
       <DependentUpon>LevelEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Packer.cs" />
-    <Compile Include="PaletteProcessor.cs">
+    <Compile Include="Dialogs\PaletteProcessor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PaletteProcessor.Designer.cs">
+    <Compile Include="Dialogs\PaletteProcessor.Designer.cs">
       <DependentUpon>PaletteProcessor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Explosion.cs">
+    <Compile Include="Dialogs\Explosion.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Explosion.Designer.cs">
+    <Compile Include="Dialogs\Explosion.Designer.cs">
       <DependentUpon>Explosion.cs</DependentUpon>
     </Compile>
-    <Compile Include="ProgramPicker.cs">
+    <Compile Include="Dialogs\ProgramPicker.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ProgramPicker.Designer.cs">
+    <Compile Include="Dialogs\ProgramPicker.Designer.cs">
       <DependentUpon>ProgramPicker.cs</DependentUpon>
     </Compile>
     <Compile Include="Constants.cs" />
-    <Compile Include="Player.cs">
+    <Compile Include="Dialogs\Player.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Player.Designer.cs">
+    <Compile Include="Dialogs\Player.Designer.cs">
       <DependentUpon>Player.cs</DependentUpon>
     </Compile>
     <Compile Include="MyBitmap.cs" />
@@ -141,57 +140,57 @@
     <Compile Include="Palettes.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Config\Animation.cs" />
-    <Compile Include="Config\ColorMapping.cs" />
-    <Compile Include="Config\Frame.cs" />
-    <Compile Include="Config\Offsets.cs" />
-    <Compile Include="Config\PaletteMapping.cs" />
-    <Compile Include="Config\Sprite.cs" />
-    <Compile Include="Config\SpriteConfig.cs" />
-    <Compile Include="Config\SpriteFlags.cs" />
-    <Compile Include="TransformDialog.cs">
+    <Compile Include="Contract\Animation.cs" />
+    <Compile Include="Contract\ColorMapping.cs" />
+    <Compile Include="Contract\Frame.cs" />
+    <Compile Include="Contract\Offsets.cs" />
+    <Compile Include="Contract\PaletteMapping.cs" />
+    <Compile Include="Contract\Sprite.cs" />
+    <Compile Include="Contract\SpriteConfig.cs" />
+    <Compile Include="Contract\SpriteFlags.cs" />
+    <Compile Include="Dialogs\TransformDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="TransformDialog.Designer.cs">
+    <Compile Include="Dialogs\TransformDialog.Designer.cs">
       <DependentUpon>TransformDialog.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="AnimationsDialog.resx">
+    <EmbeddedResource Include="Dialogs\AnimationsDialog.resx">
       <DependentUpon>AnimationsDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="BackgroundTilesetCreator.resx">
+    <EmbeddedResource Include="Dialogs\BackgroundTilesetCreator.resx">
       <DependentUpon>BackgroundTilesetCreator.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="EnemiesWindow.resx">
+    <EmbeddedResource Include="Dialogs\EnemiesWindow.resx">
       <DependentUpon>EnemiesWindow.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Explosion.resx">
+    <EmbeddedResource Include="Dialogs\Explosion.resx">
       <DependentUpon>Explosion.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Player.resx">
+    <EmbeddedResource Include="Dialogs\Player.resx">
       <DependentUpon>Player.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ChrCombine.resx">
+    <EmbeddedResource Include="Dialogs\ChrCombine.resx">
       <DependentUpon>ChrCombine.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CodeWindow.resx">
+    <EmbeddedResource Include="Dialogs\CodeWindow.resx">
       <DependentUpon>CodeWindow.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LevelSplitView.resx">
+    <EmbeddedResource Include="Dialogs\LevelSplitView.resx">
       <DependentUpon>LevelSplitView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LoadLevelDialog.resx">
+    <EmbeddedResource Include="Dialogs\LoadLevelDialog.resx">
       <DependentUpon>LoadLevelDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="EditLevelDialog.resx">
+    <EmbeddedResource Include="Dialogs\EditLevelDialog.resx">
       <DependentUpon>EditLevelDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LevelEditor.resx">
+    <EmbeddedResource Include="Dialogs\LevelEditor.resx">
       <DependentUpon>LevelEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PaletteProcessor.resx">
+    <EmbeddedResource Include="Dialogs\PaletteProcessor.resx">
       <DependentUpon>PaletteProcessor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ProgramPicker.resx">
+    <EmbeddedResource Include="Dialogs\ProgramPicker.resx">
       <DependentUpon>ProgramPicker.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -203,7 +202,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="TransformDialog.resx">
+    <EmbeddedResource Include="Dialogs\TransformDialog.resx">
       <DependentUpon>TransformDialog.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
