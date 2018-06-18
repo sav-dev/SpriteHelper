@@ -62,15 +62,30 @@ namespace SpriteHelper.Dialogs
         private void EnemiesListBoxSelectedIndexChanged(object sender, EventArgs e)
         {
             this.LoadAnimation();
-        }    
+        }
+
+        private void TimerTick(object sender, EventArgs e)
+        {
+            this.NextFrame();
+        }
+
+        private void StartButtonClick(object sender, EventArgs e)
+        {
+            this.Start();
+        }
+
+        private void StopButtonClick(object sender, EventArgs e)
+        {
+            this.Stop();
+        }
 
         private void LoadAnimation()
         {
-            ////this.Stop();
+            this.Stop();
 
             var selectedEnemy = (Animation)this.enemiesListBox.SelectedItem;
 
-            ////this.timer.Interval = selectedAnimation.FPS > 0 ? (1000 / selectedAnimation.FPS) : int.MaxValue;
+            this.timer.Interval = selectedEnemy.FPS > 0 ? (1000 / selectedEnemy.FPS) : int.MaxValue;
 
             this.framesListBox.Items.Clear();
             foreach (var frame in selectedEnemy.Frames)
@@ -80,7 +95,7 @@ namespace SpriteHelper.Dialogs
 
             this.framesListBox.SelectedIndex = 0;
 
-            ////this.Start();
+            this.Start();
         }
 
         private void LoadFrame()
@@ -95,7 +110,27 @@ namespace SpriteHelper.Dialogs
                 this.verticalFlipCheckbox.Checked,
                 this.horizontalFlipCheckbox.Checked,
                 (int)this.zoomPicker.Value);
+        }
 
+        private void Start()
+        {
+            this.startButton.Enabled = false;
+            this.stopButton.Enabled = true;
+            this.timer.Start();
+        }
+
+        private void Stop()
+        {
+            this.stopButton.Enabled = false;
+            this.startButton.Enabled = true;
+            this.timer.Stop();
+        }
+
+        private void NextFrame()
+        {
+            var frameCount = framesListBox.Items.Count;
+            var selectedFrame = framesListBox.SelectedIndex;
+            framesListBox.SelectedIndex = (selectedFrame + 1) % frameCount;
         }
     }
 }

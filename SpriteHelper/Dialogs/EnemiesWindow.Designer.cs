@@ -52,6 +52,8 @@
             this.framesListBox = new System.Windows.Forms.ListBox();
             this.centerPanel = new System.Windows.Forms.Panel();
             this.timer = new System.Windows.Forms.Timer(this.components);
+            this.startButton = new System.Windows.Forms.Button();
+            this.stopButton = new System.Windows.Forms.Button();
             this.topPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.zoomPicker)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
@@ -95,6 +97,8 @@
             // 
             // topPanel
             // 
+            this.topPanel.Controls.Add(this.startButton);
+            this.topPanel.Controls.Add(this.stopButton);
             this.topPanel.Controls.Add(this.verticalFlipCheckbox);
             this.topPanel.Controls.Add(this.horizontalFlipCheckbox);
             this.topPanel.Controls.Add(this.showBoxesCheckbox);
@@ -292,6 +296,28 @@
             // timer
             // 
             this.timer.Interval = 1;
+            this.timer.Tick += new System.EventHandler(this.TimerTick);
+            // 
+            // startButton
+            // 
+            this.startButton.Location = new System.Drawing.Point(91, 65);
+            this.startButton.Name = "startButton";
+            this.startButton.Size = new System.Drawing.Size(75, 23);
+            this.startButton.TabIndex = 42;
+            this.startButton.Text = "Start";
+            this.startButton.UseVisualStyleBackColor = true;
+            this.startButton.Click += new System.EventHandler(this.StartButtonClick);
+            // 
+            // stopButton
+            // 
+            this.stopButton.Enabled = false;
+            this.stopButton.Location = new System.Drawing.Point(172, 65);
+            this.stopButton.Name = "stopButton";
+            this.stopButton.Size = new System.Drawing.Size(75, 23);
+            this.stopButton.TabIndex = 41;
+            this.stopButton.Text = "Stop";
+            this.stopButton.UseVisualStyleBackColor = true;
+            this.stopButton.Click += new System.EventHandler(this.StopButtonClick);
             // 
             // EnemiesWindow
             // 
@@ -309,6 +335,7 @@
             this.Controls.Add(this.leftMostPanel);
             this.Controls.Add(this.bottomPanel);
             this.Controls.Add(this.topPanel);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Name = "EnemiesWindow";
             this.Text = "Enemies";
             this.Load += new System.EventHandler(this.EnemiesWindowLoad);
@@ -345,5 +372,7 @@
         private System.Windows.Forms.CheckBox horizontalFlipCheckbox;
         private System.Windows.Forms.CheckBox showBoxesCheckbox;
         private System.Windows.Forms.Timer timer;
+        private System.Windows.Forms.Button startButton;
+        private System.Windows.Forms.Button stopButton;
     }
 }
