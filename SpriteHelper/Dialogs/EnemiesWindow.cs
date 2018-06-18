@@ -49,7 +49,7 @@ namespace SpriteHelper.Dialogs
             this.LoadFrame();
         }
 
-        private void ApplyPaletteCheckboxCheckedChanged(object sender, EventArgs e)
+        private void InputCheckboxCheckedChanged(object sender, EventArgs e)
         {
             this.LoadFrame();
         }
@@ -91,9 +91,9 @@ namespace SpriteHelper.Dialogs
             this.pictureBox.Image = frame.GetGridBitmap(
                 this.pictureBox.BackColor,
                 this.applyPaletteCheckbox.Checked,
-                false,  // show boxes
-                false,  // vFlip
-                false,  // hFlip
+                this.showBoxesCheckbox.Checked,
+                this.verticalFlipCheckbox.Checked,
+                this.horizontalFlipCheckbox.Checked,
                 (int)this.zoomPicker.Value);
 
         }

@@ -28,11 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.palettesLabel = new System.Windows.Forms.Label();
             this.palettesTextBox = new System.Windows.Forms.TextBox();
             this.specLabel = new System.Windows.Forms.Label();
             this.specTextBox = new System.Windows.Forms.TextBox();
             this.topPanel = new System.Windows.Forms.Panel();
+            this.verticalFlipCheckbox = new System.Windows.Forms.CheckBox();
+            this.horizontalFlipCheckbox = new System.Windows.Forms.CheckBox();
+            this.showBoxesCheckbox = new System.Windows.Forms.CheckBox();
             this.applyPaletteCheckbox = new System.Windows.Forms.CheckBox();
             this.zoomPicker = new System.Windows.Forms.NumericUpDown();
             this.zoomLabel = new System.Windows.Forms.Label();
@@ -47,6 +51,7 @@
             this.commentLabel = new System.Windows.Forms.Label();
             this.framesListBox = new System.Windows.Forms.ListBox();
             this.centerPanel = new System.Windows.Forms.Panel();
+            this.timer = new System.Windows.Forms.Timer(this.components);
             this.topPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.zoomPicker)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
@@ -90,6 +95,9 @@
             // 
             // topPanel
             // 
+            this.topPanel.Controls.Add(this.verticalFlipCheckbox);
+            this.topPanel.Controls.Add(this.horizontalFlipCheckbox);
+            this.topPanel.Controls.Add(this.showBoxesCheckbox);
             this.topPanel.Controls.Add(this.applyPaletteCheckbox);
             this.topPanel.Controls.Add(this.zoomPicker);
             this.topPanel.Controls.Add(this.zoomLabel);
@@ -104,6 +112,39 @@
             this.topPanel.Size = new System.Drawing.Size(838, 130);
             this.topPanel.TabIndex = 34;
             // 
+            // verticalFlipCheckbox
+            // 
+            this.verticalFlipCheckbox.AutoSize = true;
+            this.verticalFlipCheckbox.Location = new System.Drawing.Point(401, 100);
+            this.verticalFlipCheckbox.Name = "verticalFlipCheckbox";
+            this.verticalFlipCheckbox.Size = new System.Drawing.Size(80, 17);
+            this.verticalFlipCheckbox.TabIndex = 40;
+            this.verticalFlipCheckbox.Text = "Vertical Flip";
+            this.verticalFlipCheckbox.UseVisualStyleBackColor = true;
+            this.verticalFlipCheckbox.CheckedChanged += new System.EventHandler(this.InputCheckboxCheckedChanged);
+            // 
+            // horizontalFlipCheckbox
+            // 
+            this.horizontalFlipCheckbox.AutoSize = true;
+            this.horizontalFlipCheckbox.Location = new System.Drawing.Point(308, 100);
+            this.horizontalFlipCheckbox.Name = "horizontalFlipCheckbox";
+            this.horizontalFlipCheckbox.Size = new System.Drawing.Size(92, 17);
+            this.horizontalFlipCheckbox.TabIndex = 39;
+            this.horizontalFlipCheckbox.Text = "Horizontal Flip";
+            this.horizontalFlipCheckbox.UseVisualStyleBackColor = true;
+            this.horizontalFlipCheckbox.CheckedChanged += new System.EventHandler(this.InputCheckboxCheckedChanged);
+            // 
+            // showBoxesCheckbox
+            // 
+            this.showBoxesCheckbox.AutoSize = true;
+            this.showBoxesCheckbox.Location = new System.Drawing.Point(215, 100);
+            this.showBoxesCheckbox.Name = "showBoxesCheckbox";
+            this.showBoxesCheckbox.Size = new System.Drawing.Size(85, 17);
+            this.showBoxesCheckbox.TabIndex = 38;
+            this.showBoxesCheckbox.Text = "Show Boxes";
+            this.showBoxesCheckbox.UseVisualStyleBackColor = true;
+            this.showBoxesCheckbox.CheckedChanged += new System.EventHandler(this.InputCheckboxCheckedChanged);
+            // 
             // applyPaletteCheckbox
             // 
             this.applyPaletteCheckbox.AutoSize = true;
@@ -115,7 +156,7 @@
             this.applyPaletteCheckbox.TabIndex = 37;
             this.applyPaletteCheckbox.Text = "Apply Palette";
             this.applyPaletteCheckbox.UseVisualStyleBackColor = true;
-            this.applyPaletteCheckbox.CheckedChanged += new System.EventHandler(this.ApplyPaletteCheckboxCheckedChanged);
+            this.applyPaletteCheckbox.CheckedChanged += new System.EventHandler(this.InputCheckboxCheckedChanged);
             // 
             // zoomPicker
             // 
@@ -248,6 +289,10 @@
             this.centerPanel.Size = new System.Drawing.Size(10, 315);
             this.centerPanel.TabIndex = 42;
             // 
+            // timer
+            // 
+            this.timer.Interval = 1;
+            // 
             // EnemiesWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -296,5 +341,9 @@
         private System.Windows.Forms.NumericUpDown zoomPicker;
         private System.Windows.Forms.Label zoomLabel;
         private System.Windows.Forms.CheckBox applyPaletteCheckbox;
+        private System.Windows.Forms.CheckBox verticalFlipCheckbox;
+        private System.Windows.Forms.CheckBox horizontalFlipCheckbox;
+        private System.Windows.Forms.CheckBox showBoxesCheckbox;
+        private System.Windows.Forms.Timer timer;
     }
 }
