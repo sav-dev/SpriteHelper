@@ -33,6 +33,10 @@
             this.specLabel = new System.Windows.Forms.Label();
             this.specTextBox = new System.Windows.Forms.TextBox();
             this.topPanel = new System.Windows.Forms.Panel();
+            this.applyPaletteCheckbox = new System.Windows.Forms.CheckBox();
+            this.zoomPicker = new System.Windows.Forms.NumericUpDown();
+            this.zoomLabel = new System.Windows.Forms.Label();
+            this.loadButton = new System.Windows.Forms.Button();
             this.bottomPanel = new System.Windows.Forms.Panel();
             this.leftMostPanel = new System.Windows.Forms.Panel();
             this.enemiesListBox = new System.Windows.Forms.ListBox();
@@ -43,13 +47,9 @@
             this.commentLabel = new System.Windows.Forms.Label();
             this.framesListBox = new System.Windows.Forms.ListBox();
             this.centerPanel = new System.Windows.Forms.Panel();
-            this.loadButton = new System.Windows.Forms.Button();
-            this.zoomPicker = new System.Windows.Forms.NumericUpDown();
-            this.zoomLabel = new System.Windows.Forms.Label();
-            this.applyPaletteCheckbox = new System.Windows.Forms.CheckBox();
             this.topPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.zoomPicker)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // palettesLabel
@@ -104,6 +104,61 @@
             this.topPanel.Size = new System.Drawing.Size(838, 130);
             this.topPanel.TabIndex = 34;
             // 
+            // applyPaletteCheckbox
+            // 
+            this.applyPaletteCheckbox.AutoSize = true;
+            this.applyPaletteCheckbox.Checked = true;
+            this.applyPaletteCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.applyPaletteCheckbox.Location = new System.Drawing.Point(122, 100);
+            this.applyPaletteCheckbox.Name = "applyPaletteCheckbox";
+            this.applyPaletteCheckbox.Size = new System.Drawing.Size(88, 17);
+            this.applyPaletteCheckbox.TabIndex = 37;
+            this.applyPaletteCheckbox.Text = "Apply Palette";
+            this.applyPaletteCheckbox.UseVisualStyleBackColor = true;
+            this.applyPaletteCheckbox.CheckedChanged += new System.EventHandler(this.ApplyPaletteCheckboxCheckedChanged);
+            // 
+            // zoomPicker
+            // 
+            this.zoomPicker.Location = new System.Drawing.Point(60, 99);
+            this.zoomPicker.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.zoomPicker.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.zoomPicker.Name = "zoomPicker";
+            this.zoomPicker.Size = new System.Drawing.Size(46, 20);
+            this.zoomPicker.TabIndex = 36;
+            this.zoomPicker.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.zoomPicker.ValueChanged += new System.EventHandler(this.ZoomPickerValueChanged);
+            // 
+            // zoomLabel
+            // 
+            this.zoomLabel.AutoSize = true;
+            this.zoomLabel.Location = new System.Drawing.Point(7, 101);
+            this.zoomLabel.Name = "zoomLabel";
+            this.zoomLabel.Size = new System.Drawing.Size(34, 13);
+            this.zoomLabel.TabIndex = 35;
+            this.zoomLabel.Text = "Zoom";
+            // 
+            // loadButton
+            // 
+            this.loadButton.Location = new System.Drawing.Point(10, 65);
+            this.loadButton.Name = "loadButton";
+            this.loadButton.Size = new System.Drawing.Size(75, 23);
+            this.loadButton.TabIndex = 34;
+            this.loadButton.Text = "Load";
+            this.loadButton.UseVisualStyleBackColor = true;
+            this.loadButton.Click += new System.EventHandler(this.LoadButtonClick);
+            // 
             // bottomPanel
             // 
             this.bottomPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -128,6 +183,7 @@
             this.enemiesListBox.Name = "enemiesListBox";
             this.enemiesListBox.Size = new System.Drawing.Size(112, 315);
             this.enemiesListBox.TabIndex = 11;
+            this.enemiesListBox.SelectedIndexChanged += new System.EventHandler(this.EnemiesListBoxSelectedIndexChanged);
             // 
             // leftPanel
             // 
@@ -182,6 +238,7 @@
             this.framesListBox.Name = "framesListBox";
             this.framesListBox.Size = new System.Drawing.Size(112, 315);
             this.framesListBox.TabIndex = 41;
+            this.framesListBox.SelectedIndexChanged += new System.EventHandler(this.FramesListBoxSelectedIndexChanged);
             // 
             // centerPanel
             // 
@@ -190,58 +247,6 @@
             this.centerPanel.Name = "centerPanel";
             this.centerPanel.Size = new System.Drawing.Size(10, 315);
             this.centerPanel.TabIndex = 42;
-            // 
-            // loadButton
-            // 
-            this.loadButton.Location = new System.Drawing.Point(10, 65);
-            this.loadButton.Name = "loadButton";
-            this.loadButton.Size = new System.Drawing.Size(75, 23);
-            this.loadButton.TabIndex = 34;
-            this.loadButton.Text = "Load";
-            this.loadButton.UseVisualStyleBackColor = true;
-            // 
-            // zoomPicker
-            // 
-            this.zoomPicker.Location = new System.Drawing.Point(60, 99);
-            this.zoomPicker.Maximum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.zoomPicker.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.zoomPicker.Name = "zoomPicker";
-            this.zoomPicker.Size = new System.Drawing.Size(46, 20);
-            this.zoomPicker.TabIndex = 36;
-            this.zoomPicker.Value = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
-            // 
-            // zoomLabel
-            // 
-            this.zoomLabel.AutoSize = true;
-            this.zoomLabel.Location = new System.Drawing.Point(7, 101);
-            this.zoomLabel.Name = "zoomLabel";
-            this.zoomLabel.Size = new System.Drawing.Size(34, 13);
-            this.zoomLabel.TabIndex = 35;
-            this.zoomLabel.Text = "Zoom";
-            // 
-            // applyPaletteCheckbox
-            // 
-            this.applyPaletteCheckbox.AutoSize = true;
-            this.applyPaletteCheckbox.Checked = true;
-            this.applyPaletteCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.applyPaletteCheckbox.Location = new System.Drawing.Point(122, 100);
-            this.applyPaletteCheckbox.Name = "applyPaletteCheckbox";
-            this.applyPaletteCheckbox.Size = new System.Drawing.Size(88, 17);
-            this.applyPaletteCheckbox.TabIndex = 37;
-            this.applyPaletteCheckbox.Text = "Apply Palette";
-            this.applyPaletteCheckbox.UseVisualStyleBackColor = true;
             // 
             // EnemiesWindow
             // 
@@ -261,10 +266,11 @@
             this.Controls.Add(this.topPanel);
             this.Name = "EnemiesWindow";
             this.Text = "Enemies";
+            this.Load += new System.EventHandler(this.EnemiesWindowLoad);
             this.topPanel.ResumeLayout(false);
             this.topPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.zoomPicker)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

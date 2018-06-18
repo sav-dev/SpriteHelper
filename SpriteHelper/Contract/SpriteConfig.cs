@@ -58,6 +58,7 @@ namespace SpriteHelper.Contract
                 var uniqueColors = sprite.GetSprite().UniqueColors();
                 if (uniqueColors.Length > 4)
                 {
+                    sprite.GetSprite().ToBitmap().Save("debug.bmp");
                     throw new Exception(string.Format("Too many colors in sprite {0}", sprite.Id));
                 }
 
@@ -67,6 +68,7 @@ namespace SpriteHelper.Contract
                 {
                     if (!mapping.ColorMappings.Select(c => c.Color).Contains(color))
                     {
+                        sprite.GetSprite().ToBitmap().Save("debug.bmp");
                         throw new Exception(string.Format("Color not mapped in sprite {0}", sprite.Id));
                     }
                 }

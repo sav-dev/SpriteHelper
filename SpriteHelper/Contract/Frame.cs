@@ -206,37 +206,48 @@ namespace SpriteHelper.Contract
             }
 
             // Create bitmap.
-            var width = Constants.ExplosionWidth;
-            var height = Constants.ExplosionHeight;
+            var width = this.Width * Constants.SpriteWidth;
+            var height = this.Height * Constants.SpriteHeight;
             var image = new MyBitmap(width, height, backColor);
 
             // Draw each sprite.
-            foreach (var sprite in this.Sprites)
+            for (var spriteX = 0; spriteX < this.Width; spriteX++)
             {
-                // Figure out flips.
-                var shouldBeVFlip = sprite.VFlip ^ vFlip;
-                var shouldBeHFlip = sprite.HFlip ^ hFlip;
-
-                // Get the correct sprite image.
-                var spriteImage = sprite.GetSprite(applyPalettes, shouldBeVFlip, shouldBeHFlip);
-
-                // Calculate sprite's position.
-                var x = sprite.X;
-                var y = sprite.Y;
-
-                if (vFlip)
+                for (var spriteY = 0; spriteY < this.Height; spriteY++)
                 {
-                    y = height - y - Constants.SpriteHeight;
-                }
+                    // Sprites are aligned like:
+                    //   1 2 3
+                    //   4 5 6
+                    var spriteId = spriteX + (spriteY * this.Width);
+                    var sprite = this.Sprites[spriteId];
 
-                if (hFlip)
-                {
-                    x = width - x - Constants.SpriteWidth;
-                }
+                    // Figure out flips.
+                    var shouldBeVFlip = sprite.VFlip ^ vFlip;
+                    var shouldBeHFlip = sprite.HFlip ^ hFlip;
 
-                // Draw the image.
-                image.DrawImage(spriteImage, x, y);
+                    // Get the correct sprite image.
+                    var spriteImage = sprite.GetSprite(applyPalettes, shouldBeVFlip, shouldBeHFlip);
+
+                    // Calculate sprite's position.
+                    var x = spriteX * Constants.SpriteWidth;
+                    var y = spriteY * Constants.SpriteHeight;
+
+                    if (vFlip)
+                    {
+                        y = height - y - Constants.SpriteHeight;
+                    }
+
+                    if (hFlip)
+                    {
+                        x = width - x - Constants.SpriteWidth;
+                    }
+
+                    // Draw the image.
+                    image.DrawImage(spriteImage, x, y);
+                }
             }
+
+            // todo: boxes
 
             // Scale image.
             var result = image.Scale(zoom).ToBitmap();

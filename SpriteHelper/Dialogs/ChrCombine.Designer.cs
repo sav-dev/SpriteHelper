@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChrCombine));
             this.specsTextBox = new System.Windows.Forms.TextBox();
             this.specsLabel = new System.Windows.Forms.Label();
             this.outputLabel = new System.Windows.Forms.Label();
@@ -46,9 +47,7 @@
             this.specsTextBox.Name = "specsTextBox";
             this.specsTextBox.Size = new System.Drawing.Size(562, 102);
             this.specsTextBox.TabIndex = 24;
-            this.specsTextBox.Text = "C:\\Users\\tomas\\Documents\\NES\\GitHub\\Platformer\\PlatformerGraphics\\Sprites\\player." +
-    "xml\r\nC:\\Users\\tomas\\Documents\\NES\\GitHub\\Platformer\\PlatformerGraphics\\Sprites\\e" +
-    "xplosion.xml";
+            this.specsTextBox.Text = resources.GetString("specsTextBox.Text");
             this.specsTextBox.WordWrap = false;
             // 
             // specsLabel
