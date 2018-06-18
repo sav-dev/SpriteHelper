@@ -56,9 +56,9 @@
             this.specsLabel.AutoSize = true;
             this.specsLabel.Location = new System.Drawing.Point(9, 15);
             this.specsLabel.Name = "specsLabel";
-            this.specsLabel.Size = new System.Drawing.Size(259, 13);
+            this.specsLabel.Size = new System.Drawing.Size(37, 13);
             this.specsLabel.TabIndex = 23;
-            this.specsLabel.Text = "Specs (order matters, player -> explosions -> enemies)";
+            this.specsLabel.Text = "Specs";
             // 
             // outputLabel
             // 
@@ -126,7 +126,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(586, 352);
+            this.ClientSize = new System.Drawing.Size(586, 318);
             this.Controls.Add(this.palettesLabel);
             this.Controls.Add(this.palettesTextBox);
             this.Controls.Add(this.constChrLabel);

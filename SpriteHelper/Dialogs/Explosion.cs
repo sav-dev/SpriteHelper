@@ -1,4 +1,5 @@
 ﻿using SpriteHelper.Contract;
+using SpriteHelper.Files;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -18,6 +19,14 @@ namespace SpriteHelper.Dialogs
         {
             InitializeComponent();
             this.zoomPicker.Maximum = Constants.MaxZoom;
+        }
+
+        private void ExplosionLoad(object sender, EventArgs e)
+        {
+            if (Defaults.Instance.ApplyDefaults)
+            {
+                this.LoadFiles();
+            }
         }
 
         private void LoadButtonClick(object sender, EventArgs e)
@@ -122,9 +131,6 @@ namespace SpriteHelper.Dialogs
 
         private string GetCode()
         {
-            var playerSpritesCount = SpriteConfig.Read(this.playerSpecTextbox.Text, this.palettes).Sprites.Count();
-            var tileOffset = playerSpritesCount;
-
             var builder = new StringBuilder();
 
             var firstFrame = this.config.Frames.First();
@@ -207,7 +213,7 @@ namespace SpriteHelper.Dialogs
                     }
                     else
                     {
-                        var tileId = sprite.Id + tileOffset;
+                        var tileId = sprite.Id;
                         sprites.Add("$" + tileId.ToString("X2"));
                     }
                 }

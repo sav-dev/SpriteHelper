@@ -43,8 +43,6 @@
             this.palettesLabel = new System.Windows.Forms.Label();
             this.palettesTextBox = new System.Windows.Forms.TextBox();
             this.codeButton = new System.Windows.Forms.Button();
-            this.playerSpecLabel = new System.Windows.Forms.Label();
-            this.playerSpecTextbox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.zoomPicker)).BeginInit();
             this.SuspendLayout();
@@ -53,7 +51,7 @@
             // 
             this.pictureBox.BackColor = System.Drawing.Color.White;
             this.pictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox.Location = new System.Drawing.Point(15, 166);
+            this.pictureBox.Location = new System.Drawing.Point(15, 127);
             this.pictureBox.Name = "pictureBox";
             this.pictureBox.Size = new System.Drawing.Size(368, 303);
             this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -63,7 +61,7 @@
             // framesListBox
             // 
             this.framesListBox.FormattingEnabled = true;
-            this.framesListBox.Location = new System.Drawing.Point(389, 166);
+            this.framesListBox.Location = new System.Drawing.Point(389, 127);
             this.framesListBox.Name = "framesListBox";
             this.framesListBox.Size = new System.Drawing.Size(92, 303);
             this.framesListBox.TabIndex = 1;
@@ -89,7 +87,7 @@
             // 
             // loadButton
             // 
-            this.loadButton.Location = new System.Drawing.Point(15, 104);
+            this.loadButton.Location = new System.Drawing.Point(15, 65);
             this.loadButton.Name = "loadButton";
             this.loadButton.Size = new System.Drawing.Size(75, 23);
             this.loadButton.TabIndex = 6;
@@ -100,7 +98,7 @@
             // zoomLabel
             // 
             this.zoomLabel.AutoSize = true;
-            this.zoomLabel.Location = new System.Drawing.Point(125, 137);
+            this.zoomLabel.Location = new System.Drawing.Point(125, 98);
             this.zoomLabel.Name = "zoomLabel";
             this.zoomLabel.Size = new System.Drawing.Size(34, 13);
             this.zoomLabel.TabIndex = 7;
@@ -108,7 +106,7 @@
             // 
             // zoomPicker
             // 
-            this.zoomPicker.Location = new System.Drawing.Point(178, 135);
+            this.zoomPicker.Location = new System.Drawing.Point(178, 96);
             this.zoomPicker.Maximum = new decimal(new int[] {
             10,
             0,
@@ -132,7 +130,7 @@
             // stopButton
             // 
             this.stopButton.Enabled = false;
-            this.stopButton.Location = new System.Drawing.Point(259, 103);
+            this.stopButton.Location = new System.Drawing.Point(259, 64);
             this.stopButton.Name = "stopButton";
             this.stopButton.Size = new System.Drawing.Size(75, 23);
             this.stopButton.TabIndex = 11;
@@ -142,7 +140,7 @@
             // 
             // startButton
             // 
-            this.startButton.Location = new System.Drawing.Point(178, 103);
+            this.startButton.Location = new System.Drawing.Point(178, 64);
             this.startButton.Name = "startButton";
             this.startButton.Size = new System.Drawing.Size(75, 23);
             this.startButton.TabIndex = 12;
@@ -160,7 +158,7 @@
             this.applyPaletteCheckbox.AutoSize = true;
             this.applyPaletteCheckbox.Checked = true;
             this.applyPaletteCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.applyPaletteCheckbox.Location = new System.Drawing.Point(15, 136);
+            this.applyPaletteCheckbox.Location = new System.Drawing.Point(15, 97);
             this.applyPaletteCheckbox.Name = "applyPaletteCheckbox";
             this.applyPaletteCheckbox.Size = new System.Drawing.Size(88, 17);
             this.applyPaletteCheckbox.TabIndex = 13;
@@ -188,7 +186,7 @@
             // 
             // codeButton
             // 
-            this.codeButton.Location = new System.Drawing.Point(96, 103);
+            this.codeButton.Location = new System.Drawing.Point(96, 64);
             this.codeButton.Name = "codeButton";
             this.codeButton.Size = new System.Drawing.Size(75, 23);
             this.codeButton.TabIndex = 23;
@@ -196,31 +194,11 @@
             this.codeButton.UseVisualStyleBackColor = true;
             this.codeButton.Click += new System.EventHandler(this.CodeButtonClick);
             // 
-            // playerSpecLabel
-            // 
-            this.playerSpecLabel.AutoSize = true;
-            this.playerSpecLabel.Location = new System.Drawing.Point(12, 65);
-            this.playerSpecLabel.Name = "playerSpecLabel";
-            this.playerSpecLabel.Size = new System.Drawing.Size(65, 13);
-            this.playerSpecLabel.TabIndex = 25;
-            this.playerSpecLabel.Text = "Player spec.";
-            // 
-            // playerSpecTextbox
-            // 
-            this.playerSpecTextbox.Location = new System.Drawing.Point(80, 62);
-            this.playerSpecTextbox.Name = "playerSpecTextbox";
-            this.playerSpecTextbox.Size = new System.Drawing.Size(401, 20);
-            this.playerSpecTextbox.TabIndex = 24;
-            this.playerSpecTextbox.Text = "C:\\Users\\tomas\\Documents\\NES\\GitHub\\Platformer\\PlatformerGraphics\\Sprites\\player." +
-    "xml";
-            // 
             // Explosion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(489, 480);
-            this.Controls.Add(this.playerSpecLabel);
-            this.Controls.Add(this.playerSpecTextbox);
+            this.ClientSize = new System.Drawing.Size(489, 441);
             this.Controls.Add(this.codeButton);
             this.Controls.Add(this.palettesLabel);
             this.Controls.Add(this.palettesTextBox);
@@ -238,6 +216,7 @@
             this.MaximizeBox = false;
             this.Name = "Explosion";
             this.Text = "Animation Helper";
+            this.Load += new System.EventHandler(this.ExplosionLoad);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.zoomPicker)).EndInit();
             this.ResumeLayout(false);
@@ -261,8 +240,6 @@
         private System.Windows.Forms.Label palettesLabel;
         private System.Windows.Forms.TextBox palettesTextBox;
         private System.Windows.Forms.Button codeButton;
-        private System.Windows.Forms.Label playerSpecLabel;
-        private System.Windows.Forms.TextBox playerSpecTextbox;
     }
 }
 

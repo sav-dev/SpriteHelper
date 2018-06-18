@@ -15,14 +15,14 @@ namespace SpriteHelper.Dialogs
             InitializeComponent();
         }
 
-        private byte[] GetSpritesFromSpecs()
+        private byte[] GetSpritesFromSpec(string spec)
         {
             var bytes = new List<byte>();
-            var specs = this.specsTextBox.Lines;
-            foreach (var spec in specs)
+            var spriteConfig = SpriteConfig.Read(spec, Palettes.Read(this.palettesTextBox.Text));
+            for (var i = 0; i < 256; i++)
             {
-                var spriteConfig = SpriteConfig.Read(spec, Palettes.Read(this.palettesTextBox.Text));
-                foreach (var sprite in spriteConfig.Sprites)
+                var sprite = spriteConfig.Sprites.FirstOrDefault(s => s.Id == i);
+                if (sprite != null)
                 {
                     var lowBits = new List<byte>();
                     var highBits = new List<byte>();
@@ -60,11 +60,10 @@ namespace SpriteHelper.Dialogs
                     bytes.AddRange(lowBits);
                     bytes.AddRange(highBits);
                 }
-            }
-
-            while (bytes.Count < 4096)
-            {
-                bytes.Add(0);
+                else
+                {
+                    bytes.AddRange(Enumerable.Repeat((byte)0, 16));
+                }
             }
 
             return bytes.ToArray();
@@ -72,10 +71,10 @@ namespace SpriteHelper.Dialogs
 
         private void ProcessButtonClick(object sender, EventArgs e)
         {
-            var spritesFromSpecs = SplitChr(GetSpritesFromSpecs());
-            var constSprites = SplitChr(File.ReadAllBytes(this.constChrTextBox.Text));
+            var inputs = new List<byte[][]>();
 
-            var inputs = new List<byte[][]> { spritesFromSpecs, constSprites };
+            inputs.AddRange(this.specsTextBox.Lines.Select(s => SplitChr(GetSpritesFromSpec(s))));
+            inputs.Add(SplitChr(File.ReadAllBytes(this.constChrTextBox.Text)));
 
             var result = new byte[4096];
             var index = 0;

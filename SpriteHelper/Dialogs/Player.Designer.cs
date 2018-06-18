@@ -45,8 +45,6 @@
             this.palettesTextBox = new System.Windows.Forms.TextBox();
             this.directionCheckBox = new System.Windows.Forms.CheckBox();
             this.showBoxesCheckBox = new System.Windows.Forms.CheckBox();
-            this.outputTextBox = new System.Windows.Forms.TextBox();
-            this.outputLabel = new System.Windows.Forms.Label();
             this.codeButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.zoomPicker)).BeginInit();
@@ -56,7 +54,7 @@
             // 
             this.pictureBox.BackColor = System.Drawing.Color.White;
             this.pictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox.Location = new System.Drawing.Point(15, 150);
+            this.pictureBox.Location = new System.Drawing.Point(15, 125);
             this.pictureBox.Name = "pictureBox";
             this.pictureBox.Size = new System.Drawing.Size(270, 303);
             this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -66,7 +64,7 @@
             // framesListBox
             // 
             this.framesListBox.FormattingEnabled = true;
-            this.framesListBox.Location = new System.Drawing.Point(389, 150);
+            this.framesListBox.Location = new System.Drawing.Point(389, 125);
             this.framesListBox.Name = "framesListBox";
             this.framesListBox.Size = new System.Drawing.Size(92, 303);
             this.framesListBox.TabIndex = 1;
@@ -90,7 +88,7 @@
             // 
             // loadButton
             // 
-            this.loadButton.Location = new System.Drawing.Point(308, 88);
+            this.loadButton.Location = new System.Drawing.Point(308, 63);
             this.loadButton.Name = "loadButton";
             this.loadButton.Size = new System.Drawing.Size(75, 23);
             this.loadButton.TabIndex = 6;
@@ -101,7 +99,7 @@
             // zoomLabel
             // 
             this.zoomLabel.AutoSize = true;
-            this.zoomLabel.Location = new System.Drawing.Point(14, 93);
+            this.zoomLabel.Location = new System.Drawing.Point(14, 68);
             this.zoomLabel.Name = "zoomLabel";
             this.zoomLabel.Size = new System.Drawing.Size(34, 13);
             this.zoomLabel.TabIndex = 7;
@@ -109,7 +107,7 @@
             // 
             // zoomPicker
             // 
-            this.zoomPicker.Location = new System.Drawing.Point(67, 91);
+            this.zoomPicker.Location = new System.Drawing.Point(67, 66);
             this.zoomPicker.Maximum = new decimal(new int[] {
             10,
             0,
@@ -133,7 +131,7 @@
             // animationsListBox
             // 
             this.animationsListBox.FormattingEnabled = true;
-            this.animationsListBox.Location = new System.Drawing.Point(291, 149);
+            this.animationsListBox.Location = new System.Drawing.Point(291, 124);
             this.animationsListBox.Name = "animationsListBox";
             this.animationsListBox.Size = new System.Drawing.Size(92, 303);
             this.animationsListBox.TabIndex = 10;
@@ -142,7 +140,7 @@
             // stopButton
             // 
             this.stopButton.Enabled = false;
-            this.stopButton.Location = new System.Drawing.Point(389, 114);
+            this.stopButton.Location = new System.Drawing.Point(389, 89);
             this.stopButton.Name = "stopButton";
             this.stopButton.Size = new System.Drawing.Size(75, 23);
             this.stopButton.TabIndex = 11;
@@ -152,7 +150,7 @@
             // 
             // startButton
             // 
-            this.startButton.Location = new System.Drawing.Point(308, 114);
+            this.startButton.Location = new System.Drawing.Point(308, 89);
             this.startButton.Name = "startButton";
             this.startButton.Size = new System.Drawing.Size(75, 23);
             this.startButton.TabIndex = 12;
@@ -170,7 +168,7 @@
             this.applyPaletteCheckbox.AutoSize = true;
             this.applyPaletteCheckbox.Checked = true;
             this.applyPaletteCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.applyPaletteCheckbox.Location = new System.Drawing.Point(15, 120);
+            this.applyPaletteCheckbox.Location = new System.Drawing.Point(15, 95);
             this.applyPaletteCheckbox.Name = "applyPaletteCheckbox";
             this.applyPaletteCheckbox.Size = new System.Drawing.Size(88, 17);
             this.applyPaletteCheckbox.TabIndex = 13;
@@ -197,7 +195,7 @@
             // directionCheckBox
             // 
             this.directionCheckBox.AutoSize = true;
-            this.directionCheckBox.Location = new System.Drawing.Point(114, 120);
+            this.directionCheckBox.Location = new System.Drawing.Point(114, 95);
             this.directionCheckBox.Name = "directionCheckBox";
             this.directionCheckBox.Size = new System.Drawing.Size(75, 17);
             this.directionCheckBox.TabIndex = 18;
@@ -208,7 +206,7 @@
             // showBoxesCheckBox
             // 
             this.showBoxesCheckBox.AutoSize = true;
-            this.showBoxesCheckBox.Location = new System.Drawing.Point(200, 120);
+            this.showBoxesCheckBox.Location = new System.Drawing.Point(200, 95);
             this.showBoxesCheckBox.Name = "showBoxesCheckBox";
             this.showBoxesCheckBox.Size = new System.Drawing.Size(85, 17);
             this.showBoxesCheckBox.TabIndex = 19;
@@ -216,25 +214,9 @@
             this.showBoxesCheckBox.UseVisualStyleBackColor = true;
             this.showBoxesCheckBox.CheckedChanged += new System.EventHandler(this.ShowBoxesCheckBoxCheckedChanged);
             // 
-            // outputTextBox
-            // 
-            this.outputTextBox.Location = new System.Drawing.Point(67, 62);
-            this.outputTextBox.Name = "outputTextBox";
-            this.outputTextBox.Size = new System.Drawing.Size(414, 20);
-            this.outputTextBox.TabIndex = 21;
-            // 
-            // outputLabel
-            // 
-            this.outputLabel.AutoSize = true;
-            this.outputLabel.Location = new System.Drawing.Point(12, 65);
-            this.outputLabel.Name = "outputLabel";
-            this.outputLabel.Size = new System.Drawing.Size(39, 13);
-            this.outputLabel.TabIndex = 22;
-            this.outputLabel.Text = "Output";
-            // 
             // codeButton
             // 
-            this.codeButton.Location = new System.Drawing.Point(389, 88);
+            this.codeButton.Location = new System.Drawing.Point(389, 63);
             this.codeButton.Name = "codeButton";
             this.codeButton.Size = new System.Drawing.Size(75, 23);
             this.codeButton.TabIndex = 23;
@@ -246,10 +228,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(489, 459);
+            this.ClientSize = new System.Drawing.Size(489, 438);
             this.Controls.Add(this.codeButton);
-            this.Controls.Add(this.outputLabel);
-            this.Controls.Add(this.outputTextBox);
             this.Controls.Add(this.showBoxesCheckBox);
             this.Controls.Add(this.directionCheckBox);
             this.Controls.Add(this.palettesLabel);
@@ -295,8 +275,6 @@
         private System.Windows.Forms.TextBox palettesTextBox;
         private System.Windows.Forms.CheckBox directionCheckBox;
         private System.Windows.Forms.CheckBox showBoxesCheckBox;
-        private System.Windows.Forms.TextBox outputTextBox;
-        private System.Windows.Forms.Label outputLabel;
         private System.Windows.Forms.Button codeButton;
     }
 }

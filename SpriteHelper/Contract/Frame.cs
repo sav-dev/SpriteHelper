@@ -12,6 +12,12 @@ namespace SpriteHelper.Contract
     public class Frame
     {
         [DataMember]
+        public int Width { get; set; }
+
+        [DataMember]
+        public int Height { get; set; }
+
+        [DataMember]
         public int Id { get; set; }
 
         [DataMember]

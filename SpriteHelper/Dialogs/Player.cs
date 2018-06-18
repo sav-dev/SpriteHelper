@@ -83,7 +83,6 @@ namespace SpriteHelper.Dialogs
         {
             this.specTextBox.Text = Defaults.Instance.PlayerSpec;
             this.palettesTextBox.Text = Defaults.Instance.PalettesSpec;
-            this.outputTextBox.Text = Defaults.Instance.AnimationOutput;
             this.LoadFiles();
         }
 
