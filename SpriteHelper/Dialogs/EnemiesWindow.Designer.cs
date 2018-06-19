@@ -34,6 +34,11 @@
             this.specLabel = new System.Windows.Forms.Label();
             this.specTextBox = new System.Windows.Forms.TextBox();
             this.topPanel = new System.Windows.Forms.Panel();
+            this.codeButton = new System.Windows.Forms.Button();
+            this.addressTextBox = new System.Windows.Forms.TextBox();
+            this.addressLabel = new System.Windows.Forms.Label();
+            this.startButton = new System.Windows.Forms.Button();
+            this.stopButton = new System.Windows.Forms.Button();
             this.verticalFlipCheckbox = new System.Windows.Forms.CheckBox();
             this.horizontalFlipCheckbox = new System.Windows.Forms.CheckBox();
             this.showBoxesCheckbox = new System.Windows.Forms.CheckBox();
@@ -52,8 +57,6 @@
             this.framesListBox = new System.Windows.Forms.ListBox();
             this.centerPanel = new System.Windows.Forms.Panel();
             this.timer = new System.Windows.Forms.Timer(this.components);
-            this.startButton = new System.Windows.Forms.Button();
-            this.stopButton = new System.Windows.Forms.Button();
             this.topPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.zoomPicker)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
@@ -97,6 +100,9 @@
             // 
             // topPanel
             // 
+            this.topPanel.Controls.Add(this.codeButton);
+            this.topPanel.Controls.Add(this.addressTextBox);
+            this.topPanel.Controls.Add(this.addressLabel);
             this.topPanel.Controls.Add(this.startButton);
             this.topPanel.Controls.Add(this.stopButton);
             this.topPanel.Controls.Add(this.verticalFlipCheckbox);
@@ -115,6 +121,54 @@
             this.topPanel.Name = "topPanel";
             this.topPanel.Size = new System.Drawing.Size(838, 130);
             this.topPanel.TabIndex = 34;
+            // 
+            // codeButton
+            // 
+            this.codeButton.Location = new System.Drawing.Point(253, 66);
+            this.codeButton.Name = "codeButton";
+            this.codeButton.Size = new System.Drawing.Size(75, 23);
+            this.codeButton.TabIndex = 45;
+            this.codeButton.Text = "Code";
+            this.codeButton.UseVisualStyleBackColor = true;
+            this.codeButton.Click += new System.EventHandler(this.CodeButtonClick);
+            // 
+            // addressTextBox
+            // 
+            this.addressTextBox.Location = new System.Drawing.Point(424, 68);
+            this.addressTextBox.Name = "addressTextBox";
+            this.addressTextBox.Size = new System.Drawing.Size(42, 20);
+            this.addressTextBox.TabIndex = 43;
+            this.addressTextBox.Text = "E000";
+            // 
+            // addressLabel
+            // 
+            this.addressLabel.AutoSize = true;
+            this.addressLabel.Location = new System.Drawing.Point(334, 71);
+            this.addressLabel.Name = "addressLabel";
+            this.addressLabel.Size = new System.Drawing.Size(84, 13);
+            this.addressLabel.TabIndex = 44;
+            this.addressLabel.Text = "Starting Address";
+            // 
+            // startButton
+            // 
+            this.startButton.Location = new System.Drawing.Point(91, 65);
+            this.startButton.Name = "startButton";
+            this.startButton.Size = new System.Drawing.Size(75, 23);
+            this.startButton.TabIndex = 42;
+            this.startButton.Text = "Start";
+            this.startButton.UseVisualStyleBackColor = true;
+            this.startButton.Click += new System.EventHandler(this.StartButtonClick);
+            // 
+            // stopButton
+            // 
+            this.stopButton.Enabled = false;
+            this.stopButton.Location = new System.Drawing.Point(172, 65);
+            this.stopButton.Name = "stopButton";
+            this.stopButton.Size = new System.Drawing.Size(75, 23);
+            this.stopButton.TabIndex = 41;
+            this.stopButton.Text = "Stop";
+            this.stopButton.UseVisualStyleBackColor = true;
+            this.stopButton.Click += new System.EventHandler(this.StopButtonClick);
             // 
             // verticalFlipCheckbox
             // 
@@ -298,27 +352,6 @@
             this.timer.Interval = 1;
             this.timer.Tick += new System.EventHandler(this.TimerTick);
             // 
-            // startButton
-            // 
-            this.startButton.Location = new System.Drawing.Point(91, 65);
-            this.startButton.Name = "startButton";
-            this.startButton.Size = new System.Drawing.Size(75, 23);
-            this.startButton.TabIndex = 42;
-            this.startButton.Text = "Start";
-            this.startButton.UseVisualStyleBackColor = true;
-            this.startButton.Click += new System.EventHandler(this.StartButtonClick);
-            // 
-            // stopButton
-            // 
-            this.stopButton.Enabled = false;
-            this.stopButton.Location = new System.Drawing.Point(172, 65);
-            this.stopButton.Name = "stopButton";
-            this.stopButton.Size = new System.Drawing.Size(75, 23);
-            this.stopButton.TabIndex = 41;
-            this.stopButton.Text = "Stop";
-            this.stopButton.UseVisualStyleBackColor = true;
-            this.stopButton.Click += new System.EventHandler(this.StopButtonClick);
-            // 
             // EnemiesWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -374,5 +407,8 @@
         private System.Windows.Forms.Timer timer;
         private System.Windows.Forms.Button startButton;
         private System.Windows.Forms.Button stopButton;
+        private System.Windows.Forms.Button codeButton;
+        private System.Windows.Forms.TextBox addressTextBox;
+        private System.Windows.Forms.Label addressLabel;
     }
 }

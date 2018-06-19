@@ -150,10 +150,12 @@ namespace SpriteHelper.Dialogs
 
             /////// X OFF REST
 
-            builder.AppendLineFormat("explosionXOffRest:");
+            builder.AppendLineFormat("; Commented out for optimization, use XOff2x2 instead");
+
+            builder.AppendLineFormat(";explosionXOffRest:");
 
             builder.AppendLineFormat(
-                "  .byte {0}",
+                ";  .byte {0}",
                 string.Join(", ", otherFrame.Sprites.Select(f => "$" + f.X.ToString("X2"))));
 
             /////// Y OFF 1st
@@ -169,10 +171,12 @@ namespace SpriteHelper.Dialogs
 
             /////// Y OFF REST
 
-            builder.AppendLineFormat("explosionYOffRest:");
+            builder.AppendLineFormat("; Commented out for optimization, use YOff2x2 instead");
+
+            builder.AppendLineFormat(";explosionYOffRest:");
 
             builder.AppendLineFormat(
-                "  .byte {0}",
+                ";  .byte {0}",
                 string.Join(", ", otherFrame.Sprites.Select(f => "$" + f.Y.ToString("X2"))));
 
             ///////// ATTS

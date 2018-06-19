@@ -18,25 +18,7 @@ namespace SpriteHelper.Contract
         public Frame[] Frames { get; set; }
 
         [DataMember]
-        public int PlatformBoxWidth { get; set; }
-
-        [DataMember]
-        public int PlatformBoxHeight { get; set; }
-
-        [DataMember]
-        public int ThreatBoxWidth { get; set; }
-
-        [DataMember]
-        public int ThreatBoxHeight { get; set; }
-
-        [DataMember]
-        public int GunXOffL { get; set; }
-
-        [DataMember]
-        public int GunXOffR { get; set; }
-
-        [DataMember]
-        public int GunYOff { get; set; }
+        public string Flips { get; set; }
 
         public override string ToString()
         {
