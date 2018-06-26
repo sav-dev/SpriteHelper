@@ -18,7 +18,7 @@ namespace SpriteHelper.Contract
         public Frame[] Frames { get; set; }
 
         [DataMember]
-        public string Flips { get; set; }
+        public Flip Flip { get; set; }
 
         public override string ToString()
         {

@@ -73,6 +73,7 @@
     <Compile Include="Dialogs\CodeWindow.Designer.cs">
       <DependentUpon>CodeWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="Contract\Flip.cs" />
     <Compile Include="Files\Defaults.cs" />
     <Compile Include="Controls\DoubleBufferedPanel.cs">
       <SubType>Component</SubType>

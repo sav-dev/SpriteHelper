@@ -146,27 +146,57 @@ namespace SpriteHelper.Dialogs
         {
             var builder = new StringBuilder();
 
+            builder.AppendLineFormat(GetHeader());
+
+            builder.AppendLineFormat(GetPositionOffsetsComment());
             builder.AppendLineFormat(GetPositionOffsets());
 
+            builder.AppendLineFormat(GetTilesAndAttsComment());
+            builder.AppendLineFormat(GetTilesAndAtts());
+
+
             return builder.ToString();
+        }
+
+        private string GetHeader()
+        {
+            return @";****************************************************************
+; Enemies                                                       ;
+; Holds information about all enemies (auto-generated)          ;
+;****************************************************************
+";
+        }
+
+        private string GetPositionOffsetsComment()
+        {
+            return @";
+;  all offsets for possible grids
+;    XOffNxM = x offsets for NxM grid
+;    XOffNxMH = x offsets for NxM grid (H flip)
+;    YOffNxM = y offsets for NxM grid
+;    YOffNxMV = y offsets for NxM grid (V flip)
+;
+";
         }
 
         private string GetPositionOffsets()
         {
             var builder = new StringBuilder();
 
-            var dictionary = new Dictionary<string, List<string>>();
+            var dictionary = new Dictionary<string, List<Flip>>();
             foreach (var animation in this.config.Animations)
             {
                 var firstFrame = animation.Frames.First();
                 var type = string.Format("{0}x{1}", firstFrame.Width, firstFrame.Height);
                 if (!dictionary.ContainsKey(type))
                 {
-                    dictionary.Add(type, new List<string>());
+                    dictionary.Add(type, new List<Flip>());
                 }
 
-                var flips = animation.Flips.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
-                dictionary[type] = dictionary[type].Union(flips).ToList();
+                if (animation.Flip != Flip.None && !dictionary[type].Contains(animation.Flip))
+                {
+                    dictionary[type].Add(animation.Flip);
+                }                
             }
 
             foreach (var kvp in dictionary)
@@ -191,7 +221,7 @@ namespace SpriteHelper.Dialogs
                 // This order is important as we will render like this:
                 //   0 2 4
                 //   1 3 5
-                for (var x = 0; x < split[0]; x++) 
+                for (var x = 0; x < split[0]; x++)
                 {
                     for (var y = 0; y < split[1]; y++)
                     {
@@ -213,17 +243,125 @@ namespace SpriteHelper.Dialogs
                 builder.AppendLineFormat("{0}:", yOffKey);
                 builder.AppendLineFormat("  .byte {0}", string.Join(", ", offsetDictionary[yOffKey].Select(o => "$" + o.ToString("X2"))));
 
-                if (flips.Contains("H"))
+                if (flips.Contains(Flip.Horizontal))
                 {
                     builder.AppendLineFormat("{0}:", xOffHKey);
                     builder.AppendLineFormat("  .byte {0}", string.Join(", ", offsetDictionary[xOffHKey].Select(o => "$" + o.ToString("X2"))));
                 }
 
-                if (flips.Contains("V"))
+                if (flips.Contains(Flip.Vertical))
                 {
                     builder.AppendLineFormat("{0}:", yOffVKey);
                     builder.AppendLineFormat("  .byte {0}", string.Join(", ", offsetDictionary[yOffVKey].Select(o => "$" + o.ToString("X2"))));
                 }
+            }
+
+            return builder.ToString();
+        }
+
+        private string GetTilesAndAttsComment()
+        {
+            return @";
+;  all information needed to draw an enemy
+;  Format:
+;    1 byte = sprite count (N)
+;    8 bytes = pointers to offsets in order: xOff, yOff, xOffFlip, yOffFlip
+;    1 byte = value to XOR with atts if flip
+;    N bytes = atts
+;    N bytes = frame M - 1
+;    N bytes = frame M - 2
+;    ...
+;    N bytes = frame 1
+;    N bytes = frame 0
+;
+";
+        }
+
+        private string GetTilesAndAtts()
+        {
+            var builder = new StringBuilder();
+
+            foreach (var animation in this.config.Animations)
+            {
+                var firstFrame = animation.Frames.First();
+
+                builder.AppendLineFormat("{0}:", animation.Name);
+                
+                // Sprite count.
+                builder.AppendLineFormat(".spriteCount:");
+                builder.AppendLineFormat("  .byte ${0:X2}", firstFrame.Width * firstFrame.Height);
+
+                // Offsets pointers.
+                builder.AppendLineFormat(".offsets:");
+
+                // Order: xOff, yOff, xOffFlip, yOffFlip.               
+                var type = string.Format("{0}x{1}", firstFrame.Width, firstFrame.Height);
+
+                var xOffKey = "XOff" + type;
+                var xOffPointer = $"LOW({xOffKey}), HIGH({xOffKey})";
+
+                var yOffKey = "YOff" + type;
+                var yOffPointer = $"LOW({yOffKey}), HIGH({yOffKey})";
+
+                var xOffFlipKey = animation.Flip == Flip.Horizontal ? xOffKey + "H" : xOffKey;
+                var xOffFlipPointer = $"LOW({xOffFlipKey}), HIGH({xOffFlipKey})";
+
+                var yOffFlipKey = animation.Flip == Flip.Vertical ? yOffKey + "V" : yOffKey;
+                var yOffFlipPointer = $"LOW({yOffFlipKey}), HIGH({yOffFlipKey})";
+
+                builder.AppendLineFormat("  .byte {0}, {1}, {2}, {3}", xOffPointer, yOffPointer, xOffFlipPointer, yOffFlipPointer);
+
+                // Flip XOR.
+                builder.AppendLineFormat(".flipXor:");
+                switch (animation.Flip)
+                {
+                    case Flip.None:
+                        builder.AppendLineFormat("  .byte %00000000");
+                        break;
+                    case Flip.Horizontal:
+                        builder.AppendLineFormat("  .byte %01000000");
+                        break;
+                    case Flip.Vertical:
+                        builder.AppendLineFormat("  .byte %10000000");
+                        break;
+                }
+
+                // Start with atts. We're assuming all animation frames have the same atts.
+                var attsList = new List<int>();                
+                for (var x = 0; x < firstFrame.Width; x++)
+                {
+                    for (var y = 0; y < firstFrame.Height; y++)
+                    {
+                        var sprite = firstFrame.Sprites[y * firstFrame.Width + x];
+
+                        var atts = sprite.ActualSprite.Mapping;
+                        if (sprite.HFlip)
+                        {
+                            atts += 64;
+                        }
+
+                        if (sprite.VFlip)
+                        {
+                            atts += 128;
+                        }
+
+                        attsList.Add(atts);
+                    }
+                }
+
+                builder.AppendLine(".attributes:");
+                builder.AppendLineFormat("  .byte {0}", string.Join(",", attsList.Select(a => "$" + a.ToString("X2"))));
+
+                // Frames in descending order
+                builder.AppendLine(".tiles:");
+                for (var frameIndex = animation.Frames.Length - 1; frameIndex >= 0; frameIndex--)
+                {
+                    var frame = animation.Frames[frameIndex];
+                    builder.AppendLineFormat(".{0}:", frame.Name.Replace(" ", ""));
+                    builder.AppendLineFormat("  .byte {0}", string.Join(",", frame.Sprites.Select(s => "$" + s.ActualSprite.Id.ToString("X2"))));
+                }
+
+                builder.AppendLine();
             }
 
             return builder.ToString();
