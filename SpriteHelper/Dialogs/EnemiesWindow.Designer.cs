@@ -35,8 +35,6 @@
             this.specTextBox = new System.Windows.Forms.TextBox();
             this.topPanel = new System.Windows.Forms.Panel();
             this.codeButton = new System.Windows.Forms.Button();
-            this.addressTextBox = new System.Windows.Forms.TextBox();
-            this.addressLabel = new System.Windows.Forms.Label();
             this.startButton = new System.Windows.Forms.Button();
             this.stopButton = new System.Windows.Forms.Button();
             this.verticalFlipCheckbox = new System.Windows.Forms.CheckBox();
@@ -101,8 +99,6 @@
             // topPanel
             // 
             this.topPanel.Controls.Add(this.codeButton);
-            this.topPanel.Controls.Add(this.addressTextBox);
-            this.topPanel.Controls.Add(this.addressLabel);
             this.topPanel.Controls.Add(this.startButton);
             this.topPanel.Controls.Add(this.stopButton);
             this.topPanel.Controls.Add(this.verticalFlipCheckbox);
@@ -131,23 +127,6 @@
             this.codeButton.Text = "Code";
             this.codeButton.UseVisualStyleBackColor = true;
             this.codeButton.Click += new System.EventHandler(this.CodeButtonClick);
-            // 
-            // addressTextBox
-            // 
-            this.addressTextBox.Location = new System.Drawing.Point(424, 68);
-            this.addressTextBox.Name = "addressTextBox";
-            this.addressTextBox.Size = new System.Drawing.Size(42, 20);
-            this.addressTextBox.TabIndex = 43;
-            this.addressTextBox.Text = "E000";
-            // 
-            // addressLabel
-            // 
-            this.addressLabel.AutoSize = true;
-            this.addressLabel.Location = new System.Drawing.Point(334, 71);
-            this.addressLabel.Name = "addressLabel";
-            this.addressLabel.Size = new System.Drawing.Size(84, 13);
-            this.addressLabel.TabIndex = 44;
-            this.addressLabel.Text = "Starting Address";
             // 
             // startButton
             // 
@@ -408,7 +387,5 @@
         private System.Windows.Forms.Button startButton;
         private System.Windows.Forms.Button stopButton;
         private System.Windows.Forms.Button codeButton;
-        private System.Windows.Forms.TextBox addressTextBox;
-        private System.Windows.Forms.Label addressLabel;
     }
 }

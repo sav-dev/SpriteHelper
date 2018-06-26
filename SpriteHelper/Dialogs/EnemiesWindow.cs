@@ -334,7 +334,9 @@ namespace SpriteHelper.Dialogs
                     {
                         var sprite = firstFrame.Sprites[y * firstFrame.Width + x];
 
-                        var atts = sprite.ActualSprite.Mapping;
+                        var mapping = sprite.ActualSprite.Mapping;
+                        var atts = this.config.PaletteMappings[mapping].ToPalette;
+
                         if (sprite.HFlip)
                         {
                             atts += 64;
@@ -358,7 +360,18 @@ namespace SpriteHelper.Dialogs
                 {
                     var frame = animation.Frames[frameIndex];
                     builder.AppendLineFormat(".{0}:", frame.Name.Replace(" ", ""));
-                    builder.AppendLineFormat("  .byte {0}", string.Join(",", frame.Sprites.Select(s => "$" + s.ActualSprite.Id.ToString("X2"))));
+
+                    var tileList = new List<int>();
+                    for (var x = 0; x < frame.Width; x++)
+                    {
+                        for (var y = 0; y < frame.Height; y++)
+                        {
+                            var sprite = frame.Sprites[y * frame.Width + x];
+                            tileList.Add(sprite.ActualSprite.Id);
+                        }
+                    }
+
+                    builder.AppendLineFormat("  .byte {0}", string.Join(",", tileList.Select(t => "$" + t.ToString("X2"))));
                 }
 
                 builder.AppendLine();
