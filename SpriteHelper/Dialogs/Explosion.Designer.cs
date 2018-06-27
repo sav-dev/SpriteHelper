@@ -108,7 +108,7 @@
             // 
             this.zoomPicker.Location = new System.Drawing.Point(178, 96);
             this.zoomPicker.Maximum = new decimal(new int[] {
-            10,
+            9,
             0,
             0,
             0});

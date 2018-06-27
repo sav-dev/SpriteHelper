@@ -112,12 +112,15 @@ namespace SpriteHelper.Dialogs
             var frame = (Frame)this.framesListBox.SelectedItem;
             this.pictureBox.BackColor = this.applyPaletteCheckbox.Checked ? this.palettes.SpritesPalette[0].ActualColors[0] : Color.Black;
 
+            var animation = (Animation)this.enemiesListBox.SelectedItem;
+            var flip = this.flipCheckbox.Checked;            
+
             this.pictureBox.Image = frame.GetGridBitmap(
                 this.pictureBox.BackColor,
                 this.applyPaletteCheckbox.Checked,
                 this.showBoxesCheckbox.Checked,
-                this.verticalFlipCheckbox.Checked,
-                this.horizontalFlipCheckbox.Checked,
+                animation.Flip == Flip.Vertical && flip,
+                animation.Flip == Flip.Horizontal && flip,
                 (int)this.zoomPicker.Value);
         }
 

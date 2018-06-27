@@ -37,8 +37,7 @@
             this.codeButton = new System.Windows.Forms.Button();
             this.startButton = new System.Windows.Forms.Button();
             this.stopButton = new System.Windows.Forms.Button();
-            this.verticalFlipCheckbox = new System.Windows.Forms.CheckBox();
-            this.horizontalFlipCheckbox = new System.Windows.Forms.CheckBox();
+            this.flipCheckbox = new System.Windows.Forms.CheckBox();
             this.showBoxesCheckbox = new System.Windows.Forms.CheckBox();
             this.applyPaletteCheckbox = new System.Windows.Forms.CheckBox();
             this.zoomPicker = new System.Windows.Forms.NumericUpDown();
@@ -101,8 +100,7 @@
             this.topPanel.Controls.Add(this.codeButton);
             this.topPanel.Controls.Add(this.startButton);
             this.topPanel.Controls.Add(this.stopButton);
-            this.topPanel.Controls.Add(this.verticalFlipCheckbox);
-            this.topPanel.Controls.Add(this.horizontalFlipCheckbox);
+            this.topPanel.Controls.Add(this.flipCheckbox);
             this.topPanel.Controls.Add(this.showBoxesCheckbox);
             this.topPanel.Controls.Add(this.applyPaletteCheckbox);
             this.topPanel.Controls.Add(this.zoomPicker);
@@ -149,27 +147,16 @@
             this.stopButton.UseVisualStyleBackColor = true;
             this.stopButton.Click += new System.EventHandler(this.StopButtonClick);
             // 
-            // verticalFlipCheckbox
+            // flipCheckbox
             // 
-            this.verticalFlipCheckbox.AutoSize = true;
-            this.verticalFlipCheckbox.Location = new System.Drawing.Point(401, 100);
-            this.verticalFlipCheckbox.Name = "verticalFlipCheckbox";
-            this.verticalFlipCheckbox.Size = new System.Drawing.Size(80, 17);
-            this.verticalFlipCheckbox.TabIndex = 40;
-            this.verticalFlipCheckbox.Text = "Vertical Flip";
-            this.verticalFlipCheckbox.UseVisualStyleBackColor = true;
-            this.verticalFlipCheckbox.CheckedChanged += new System.EventHandler(this.InputCheckboxCheckedChanged);
-            // 
-            // horizontalFlipCheckbox
-            // 
-            this.horizontalFlipCheckbox.AutoSize = true;
-            this.horizontalFlipCheckbox.Location = new System.Drawing.Point(308, 100);
-            this.horizontalFlipCheckbox.Name = "horizontalFlipCheckbox";
-            this.horizontalFlipCheckbox.Size = new System.Drawing.Size(92, 17);
-            this.horizontalFlipCheckbox.TabIndex = 39;
-            this.horizontalFlipCheckbox.Text = "Horizontal Flip";
-            this.horizontalFlipCheckbox.UseVisualStyleBackColor = true;
-            this.horizontalFlipCheckbox.CheckedChanged += new System.EventHandler(this.InputCheckboxCheckedChanged);
+            this.flipCheckbox.AutoSize = true;
+            this.flipCheckbox.Location = new System.Drawing.Point(308, 100);
+            this.flipCheckbox.Name = "flipCheckbox";
+            this.flipCheckbox.Size = new System.Drawing.Size(42, 17);
+            this.flipCheckbox.TabIndex = 39;
+            this.flipCheckbox.Text = "Flip";
+            this.flipCheckbox.UseVisualStyleBackColor = true;
+            this.flipCheckbox.CheckedChanged += new System.EventHandler(this.InputCheckboxCheckedChanged);
             // 
             // showBoxesCheckbox
             // 
@@ -199,7 +186,7 @@
             // 
             this.zoomPicker.Location = new System.Drawing.Point(60, 99);
             this.zoomPicker.Maximum = new decimal(new int[] {
-            10,
+            9,
             0,
             0,
             0});
@@ -380,8 +367,7 @@
         private System.Windows.Forms.NumericUpDown zoomPicker;
         private System.Windows.Forms.Label zoomLabel;
         private System.Windows.Forms.CheckBox applyPaletteCheckbox;
-        private System.Windows.Forms.CheckBox verticalFlipCheckbox;
-        private System.Windows.Forms.CheckBox horizontalFlipCheckbox;
+        private System.Windows.Forms.CheckBox flipCheckbox;
         private System.Windows.Forms.CheckBox showBoxesCheckbox;
         private System.Windows.Forms.Timer timer;
         private System.Windows.Forms.Button startButton;
