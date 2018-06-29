@@ -121,8 +121,9 @@ namespace SpriteHelper.Dialogs
                 this.showBoxesCheckbox.Checked,
                 animation.Flip == Flip.Vertical && flip,
                 animation.Flip == Flip.Horizontal && flip,
-                (int)this.zoomPicker.Value);
-        }
+                (int)this.zoomPicker.Value,
+                animation.Offsets);
+        }        
 
         private void Start()
         {

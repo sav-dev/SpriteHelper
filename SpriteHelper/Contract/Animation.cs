@@ -20,6 +20,12 @@ namespace SpriteHelper.Contract
         [DataMember]
         public Flip Flip { get; set; }
 
+        [DataMember]
+        public Offsets Offsets { get; set; }
+
+        [DataMember]
+        public int MaxHealth { get; set; }
+
         public override string ToString()
         {
             return this.Name;

@@ -1,14 +1,32 @@
-﻿namespace SpriteHelper.Contract
+﻿using System.Runtime.Serialization;
+
+namespace SpriteHelper.Contract
 {
-    // todo: get rid of this class?
+    [DataContract]
     public class Offsets
     {
-        public int BoxXOff { get; set; }
-        public int BoxYOff { get; set; }
-        public int BoxWidth { get; set; }
-        public int BoxHeight { get; set; }
-        public int GunXOffL { get; set; }
-        public int GunXOffR { get; set; }
+        [DataMember]
+        public int XOff { get; set; }
+
+        [DataMember]
+        public int YOff { get; set; }
+
+        [DataMember]
+        public int Width { get; set; }
+
+        [DataMember]
+        public int Height { get; set; }
+
+        [DataMember]
+        public int GunXOff { get; set; }
+
+        [DataMember]
         public int GunYOff { get; set; }
+
+        [DataMember]
+        public int GunXOffFlip { get; set; }
+
+        [DataMember]
+        public int GunYOffFlip { get; set; }
     }
 }

@@ -49,14 +49,14 @@
             this.leftPanel = new System.Windows.Forms.Panel();
             this.rightMostPanel = new System.Windows.Forms.Panel();
             this.pictureBox = new System.Windows.Forms.PictureBox();
-            this.rightPanel = new System.Windows.Forms.Panel();
-            this.commentLabel = new System.Windows.Forms.Label();
             this.framesListBox = new System.Windows.Forms.ListBox();
             this.centerPanel = new System.Windows.Forms.Panel();
             this.timer = new System.Windows.Forms.Timer(this.components);
+            this.pictureBoxPanel = new System.Windows.Forms.Panel();
             this.topPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.zoomPicker)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
+            this.pictureBoxPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // palettesLabel
@@ -72,7 +72,7 @@
             // 
             this.palettesTextBox.Location = new System.Drawing.Point(75, 37);
             this.palettesTextBox.Name = "palettesTextBox";
-            this.palettesTextBox.Size = new System.Drawing.Size(751, 20);
+            this.palettesTextBox.Size = new System.Drawing.Size(478, 20);
             this.palettesTextBox.TabIndex = 28;
             this.palettesTextBox.Text = "C:\\users\\tomas\\documents\\nes\\github\\platformer\\PlatformerGraphics\\palettes\\palett" +
     "es_00.xml";
@@ -90,7 +90,7 @@
             // 
             this.specTextBox.Location = new System.Drawing.Point(75, 11);
             this.specTextBox.Name = "specTextBox";
-            this.specTextBox.Size = new System.Drawing.Size(751, 20);
+            this.specTextBox.Size = new System.Drawing.Size(478, 20);
             this.specTextBox.TabIndex = 26;
             this.specTextBox.Text = "C:\\Users\\tomas\\Documents\\NES\\GitHub\\Platformer\\PlatformerGraphics\\Sprites\\enemies" +
     ".xml";
@@ -113,7 +113,7 @@
             this.topPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.topPanel.Location = new System.Drawing.Point(0, 0);
             this.topPanel.Name = "topPanel";
-            this.topPanel.Size = new System.Drawing.Size(838, 130);
+            this.topPanel.Size = new System.Drawing.Size(562, 130);
             this.topPanel.TabIndex = 34;
             // 
             // codeButton
@@ -227,9 +227,9 @@
             // bottomPanel
             // 
             this.bottomPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.bottomPanel.Location = new System.Drawing.Point(0, 445);
+            this.bottomPanel.Location = new System.Drawing.Point(0, 433);
             this.bottomPanel.Name = "bottomPanel";
-            this.bottomPanel.Size = new System.Drawing.Size(838, 10);
+            this.bottomPanel.Size = new System.Drawing.Size(562, 10);
             this.bottomPanel.TabIndex = 35;
             // 
             // leftMostPanel
@@ -237,7 +237,7 @@
             this.leftMostPanel.Dock = System.Windows.Forms.DockStyle.Left;
             this.leftMostPanel.Location = new System.Drawing.Point(0, 130);
             this.leftMostPanel.Name = "leftMostPanel";
-            this.leftMostPanel.Size = new System.Drawing.Size(10, 315);
+            this.leftMostPanel.Size = new System.Drawing.Size(10, 303);
             this.leftMostPanel.TabIndex = 36;
             // 
             // enemiesListBox
@@ -246,7 +246,7 @@
             this.enemiesListBox.FormattingEnabled = true;
             this.enemiesListBox.Location = new System.Drawing.Point(10, 130);
             this.enemiesListBox.Name = "enemiesListBox";
-            this.enemiesListBox.Size = new System.Drawing.Size(112, 315);
+            this.enemiesListBox.Size = new System.Drawing.Size(112, 303);
             this.enemiesListBox.TabIndex = 11;
             this.enemiesListBox.SelectedIndexChanged += new System.EventHandler(this.EnemiesListBoxSelectedIndexChanged);
             // 
@@ -255,45 +255,28 @@
             this.leftPanel.Dock = System.Windows.Forms.DockStyle.Left;
             this.leftPanel.Location = new System.Drawing.Point(122, 130);
             this.leftPanel.Name = "leftPanel";
-            this.leftPanel.Size = new System.Drawing.Size(10, 315);
+            this.leftPanel.Size = new System.Drawing.Size(10, 303);
             this.leftPanel.TabIndex = 37;
             // 
             // rightMostPanel
             // 
             this.rightMostPanel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.rightMostPanel.Location = new System.Drawing.Point(828, 130);
+            this.rightMostPanel.Location = new System.Drawing.Point(552, 130);
             this.rightMostPanel.Name = "rightMostPanel";
-            this.rightMostPanel.Size = new System.Drawing.Size(10, 315);
+            this.rightMostPanel.Size = new System.Drawing.Size(10, 303);
             this.rightMostPanel.TabIndex = 38;
             // 
             // pictureBox
             // 
             this.pictureBox.BackColor = System.Drawing.Color.White;
             this.pictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pictureBox.Location = new System.Drawing.Point(558, 130);
+            this.pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox.Location = new System.Drawing.Point(0, 0);
             this.pictureBox.Name = "pictureBox";
-            this.pictureBox.Size = new System.Drawing.Size(270, 315);
+            this.pictureBox.Size = new System.Drawing.Size(298, 303);
             this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.pictureBox.TabIndex = 39;
             this.pictureBox.TabStop = false;
-            // 
-            // rightPanel
-            // 
-            this.rightPanel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.rightPanel.Location = new System.Drawing.Point(548, 130);
-            this.rightPanel.Name = "rightPanel";
-            this.rightPanel.Size = new System.Drawing.Size(10, 315);
-            this.rightPanel.TabIndex = 40;
-            // 
-            // commentLabel
-            // 
-            this.commentLabel.AutoSize = true;
-            this.commentLabel.Location = new System.Drawing.Point(274, 201);
-            this.commentLabel.Name = "commentLabel";
-            this.commentLabel.Size = new System.Drawing.Size(123, 13);
-            this.commentLabel.TabIndex = 41;
-            this.commentLabel.Text = "add properties view here";
             // 
             // framesListBox
             // 
@@ -301,7 +284,7 @@
             this.framesListBox.FormattingEnabled = true;
             this.framesListBox.Location = new System.Drawing.Point(132, 130);
             this.framesListBox.Name = "framesListBox";
-            this.framesListBox.Size = new System.Drawing.Size(112, 315);
+            this.framesListBox.Size = new System.Drawing.Size(112, 303);
             this.framesListBox.TabIndex = 41;
             this.framesListBox.SelectedIndexChanged += new System.EventHandler(this.FramesListBoxSelectedIndexChanged);
             // 
@@ -310,7 +293,7 @@
             this.centerPanel.Dock = System.Windows.Forms.DockStyle.Left;
             this.centerPanel.Location = new System.Drawing.Point(244, 130);
             this.centerPanel.Name = "centerPanel";
-            this.centerPanel.Size = new System.Drawing.Size(10, 315);
+            this.centerPanel.Size = new System.Drawing.Size(10, 303);
             this.centerPanel.TabIndex = 42;
             // 
             // timer
@@ -318,16 +301,23 @@
             this.timer.Interval = 1;
             this.timer.Tick += new System.EventHandler(this.TimerTick);
             // 
+            // pictureBoxPanel
+            // 
+            this.pictureBoxPanel.Controls.Add(this.pictureBox);
+            this.pictureBoxPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBoxPanel.Location = new System.Drawing.Point(254, 130);
+            this.pictureBoxPanel.Name = "pictureBoxPanel";
+            this.pictureBoxPanel.Size = new System.Drawing.Size(298, 303);
+            this.pictureBoxPanel.TabIndex = 43;
+            // 
             // EnemiesWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(838, 455);
-            this.Controls.Add(this.commentLabel);
+            this.ClientSize = new System.Drawing.Size(562, 443);
+            this.Controls.Add(this.pictureBoxPanel);
             this.Controls.Add(this.centerPanel);
             this.Controls.Add(this.framesListBox);
-            this.Controls.Add(this.rightPanel);
-            this.Controls.Add(this.pictureBox);
             this.Controls.Add(this.rightMostPanel);
             this.Controls.Add(this.leftPanel);
             this.Controls.Add(this.enemiesListBox);
@@ -342,8 +332,8 @@
             this.topPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.zoomPicker)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
+            this.pictureBoxPanel.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -359,8 +349,6 @@
         private System.Windows.Forms.Panel leftPanel;
         private System.Windows.Forms.Panel rightMostPanel;
         private System.Windows.Forms.PictureBox pictureBox;
-        private System.Windows.Forms.Panel rightPanel;
-        private System.Windows.Forms.Label commentLabel;
         private System.Windows.Forms.ListBox framesListBox;
         private System.Windows.Forms.Panel centerPanel;
         private System.Windows.Forms.Button loadButton;
@@ -373,5 +361,6 @@
         private System.Windows.Forms.Button startButton;
         private System.Windows.Forms.Button stopButton;
         private System.Windows.Forms.Button codeButton;
+        private System.Windows.Forms.Panel pictureBoxPanel;
     }
 }

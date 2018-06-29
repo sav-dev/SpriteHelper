@@ -193,10 +193,12 @@ namespace SpriteHelper.Contract
             bool showBoxes,
             bool vFlip,
             bool hFlip,
-            int zoom)
+            int zoom,
+            Offsets offsets)
         {
             // Get flags for the request.
             var flags = GetFlags(applyPalettes, showBoxes, vFlip, hFlip);
+            var isFlip = (hFlip || vFlip);
 
             // Checked if a cached bitmap is available, return it if it is.
             var dictionary = this.cachedBitmaps[zoom - 1];
@@ -247,7 +249,15 @@ namespace SpriteHelper.Contract
                 }
             }
 
-            // todo: boxes
+            if (showBoxes)
+            {
+                image.DrawRectangle(MyBitmap.ThreatBoxColor, offsets.XOff, offsets.YOff, offsets.XOff + offsets.Width, offsets.YOff + offsets.Height);
+
+                if (offsets.GunXOff >= 0)
+                {
+                    image.SetPixel(MyBitmap.GunColor, isFlip ? offsets.GunXOffFlip : offsets.GunXOff, isFlip ? offsets.GunYOffFlip : offsets.GunYOff);
+                }
+            }
 
             // Scale image.
             var result = image.Scale(zoom).ToBitmap();
