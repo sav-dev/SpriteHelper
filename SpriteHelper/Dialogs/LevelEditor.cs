@@ -61,8 +61,8 @@ namespace SpriteHelper.Dialogs
 
         public LevelEditor()
         {
-            InitializeComponent();
-            UpdateStatus(null);
+            this.InitializeComponent();
+            this.ClearStatus();
 
             this.history = new Stack<string[][]>();
             this.future = new Stack<string[][]>();
@@ -108,9 +108,14 @@ namespace SpriteHelper.Dialogs
                 Defaults.Instance.PalettesSpec);
         }
 
-        private void UpdateStatus(string text)
+        private void ClearStatus()
         {
-            this.toolStripStatusLabel.Text = text;
+            this.toolStripStatusLabel.Text = null;
+        }
+
+        private bool UpdateStatusWithPosition(Point position)
+        {
+            return this.UpdateStatus("{0} / {1}", position.X, position.Y);
         }
 
         private bool UpdateStatus(string format, params object[] args)
@@ -307,6 +312,16 @@ namespace SpriteHelper.Dialogs
         ////
         //// DrawPanel related stuff
         ////
+
+        public Point MouseTilePosition(int x, int y)
+        {
+            return new Point(x / TileWidth, y / TileHeight);
+        }
+
+        public Point MouseGamePosition(int x, int y)
+        {
+            return new Point(x / Zoom, y / Zoom);
+        }
 
         public void UpdateDrawPanel()
         {
@@ -704,24 +719,29 @@ namespace SpriteHelper.Dialogs
             // When key is pressed, update cursor.
             this.DrawPanelSetCursor();
 
-            // And based on the input draw or remove the tile cursor.
+            // Get the mouse position relative to the panel.
+            var mouse = this.drawPanel.PointToClient(Control.MousePosition);
+
+            // And based on the input draw or remove the tile cursor, and update the panel.
             if (this.ControlPressed)
             {
+                var position = MouseGamePosition(mouse.X, mouse.Y);
+                this.UpdateStatusWithPosition(position);
                 this.DrawPanelRemoveTileCursor();
             }
             else
             {
-                var mouse = this.drawPanel.PointToClient(Control.MousePosition);
-                var x = mouse.X / TileWidth;
-                var y = mouse.Y / TileWidth;
-                this.DrawPanelDrawTileCursor(x, y);
+
+                var position = MouseTilePosition(mouse.X, mouse.Y);
+                this.UpdateStatusWithPosition(position);
+                this.DrawPanelDrawTileCursor(position);
             }
         }
 
         private void DrawPanelMouseLeave(object sender, EventArgs e)
         {
             // On mouse leave clear the status.
-            this.UpdateStatus(null);
+            this.ClearStatus();
 
             // And remove the tile cursor.
             this.DrawPanelRemoveTileCursor();
@@ -742,11 +762,10 @@ namespace SpriteHelper.Dialogs
             if (!this.ControlPressed)
             {
                 // If control not pressed, set a tile (if needed) and draw the cursor
-                var x = e.X / TileWidth;
-                var y = e.Y / TileWidth;
-                if (this.SetTile(x, y, e.Button))
+                var position = MouseTilePosition(e.X, e.Y);
+                if (this.SetTile(position, e.Button))
                 {
-                    this.DrawPanelDrawTileCursor(x, y);
+                    this.DrawPanelDrawTileCursor(position);
                 }
             }
         }
@@ -756,23 +775,25 @@ namespace SpriteHelper.Dialogs
             // When mouse moves, set the right cursor.
             this.DrawPanelSetCursor();
 
-            // Then update status (do that always).
-            var x = e.X / TileWidth;
-            var y = e.Y / TileWidth;
-            if (this.UpdateStatus("{0} / {1}", x, y))
-            {                
-                if (!this.ControlPressed)
+            // Then update status (do that always).                        
+            if (!this.ControlPressed)
+            {
+                // If control not pressed update status, set a tile (if needed) and draw the cursor
+                var position = MouseTilePosition(e.X, e.Y);
+                if (this.UpdateStatusWithPosition(position))
                 {
-                    // If control not pressed, set a tile (if needed) and draw the cursor
-                    this.SetTile(x, y, e.Button);
-                    this.DrawPanelDrawTileCursor(x, y);
-                }
-                else
-                {
-                    // Otherwise clear the cursor.
-                    this.DrawPanelRemoveTileCursor();
+                    this.SetTile(position, e.Button);
+                    this.DrawPanelDrawTileCursor(position);
                 }
             }
+            else
+            {
+                // Otherwise update status and clear the cursor.
+                var position = MouseGamePosition(e.X, e.Y);
+                this.UpdateStatusWithPosition(position);
+                this.DrawPanelRemoveTileCursor();
+            }
+               
         }
 
         private void DrawPanelSetCursor()
@@ -780,8 +801,11 @@ namespace SpriteHelper.Dialogs
             this.drawPanel.Cursor = this.ControlPressed ? Cursors.Hand : Cursors.Cross;
         }
 
-        private void DrawPanelDrawTileCursor(int x, int y)
+        private void DrawPanelDrawTileCursor(Point position)
         {
+            var x = position.X;
+            var y = position.Y;
+
             var bitmapClone = new Bitmap(this.bitmap);
             using (var graphics = Graphics.FromImage(bitmapClone))
             {
@@ -798,8 +822,11 @@ namespace SpriteHelper.Dialogs
             this.drawPanel.Refresh();
         }
 
-        public bool SetTile(int x, int y, MouseButtons buttons)
+        public bool SetTile(Point position, MouseButtons buttons)
         {
+            var x = position.X;
+            var y = position.Y;
+
             if (x >= this.level.Length || y >= this.level[0].Length || x < 0 || y < 0)
             {
                 return false;
