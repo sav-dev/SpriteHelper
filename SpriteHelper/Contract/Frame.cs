@@ -187,7 +187,7 @@ namespace SpriteHelper.Contract
         /// <summary>
         /// Method for rendering a grid bitmap.
         /// </summary>
-        public Bitmap GetGridBitmap(
+        public MyBitmap GetGridMyBitmap(
             Color backColor,
             bool applyPalettes,
             bool showBoxes,
@@ -196,21 +196,13 @@ namespace SpriteHelper.Contract
             int zoom,
             Offsets offsets)
         {
-            // Get flags for the request.
-            var flags = GetFlags(applyPalettes, showBoxes, vFlip, hFlip);
-            var isFlip = (hFlip || vFlip);
-
-            // Checked if a cached bitmap is available, return it if it is.
-            var dictionary = this.cachedBitmaps[zoom - 1];
-            if (dictionary.ContainsKey(flags))
-            {
-                return dictionary[flags];
-            }
-
             // Create bitmap.
             var width = this.Width * Constants.SpriteWidth;
             var height = this.Height * Constants.SpriteHeight;
             var image = new MyBitmap(width, height, backColor);
+
+            // Figure out flip.
+            var isFlip = (hFlip || vFlip);
 
             // Draw each sprite.
             for (var spriteX = 0; spriteX < this.Width; spriteX++)
@@ -260,7 +252,34 @@ namespace SpriteHelper.Contract
             }
 
             // Scale image.
-            var result = image.Scale(zoom).ToBitmap();
+            var result = image.Scale(zoom);
+            return result;
+        }
+
+        /// <summary>
+        /// Method for rendering a grid bitmap.
+        /// </summary>
+        public Bitmap GetGridBitmap(
+            Color backColor,
+            bool applyPalettes,
+            bool showBoxes,
+            bool vFlip,
+            bool hFlip,
+            int zoom,
+            Offsets offsets)
+        {
+            // Get flags for the request.
+            var flags = GetFlags(applyPalettes, showBoxes, vFlip, hFlip);
+
+            // Checked if a cached bitmap is available, return it if it is.
+            var dictionary = this.cachedBitmaps[zoom - 1];
+            if (dictionary.ContainsKey(flags))
+            {
+                return dictionary[flags];
+            }
+
+            // Create a new bitmap.
+            var result = GetGridMyBitmap(backColor, applyPalettes, showBoxes, vFlip, hFlip, zoom, offsets).ToBitmap();
 
             // Save result for later and return.
             dictionary.Add(flags, result);

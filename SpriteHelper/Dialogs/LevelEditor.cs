@@ -22,8 +22,11 @@ namespace SpriteHelper.Dialogs
         // Palette tabs.
         private Dictionary<TileType, TabPage> tileTabs;
 
-        // Bitmaps.
-        private Dictionary<TileType, Dictionary<int, MyBitmap>> bitmaps;
+        // Background bitmaps, keys: type -> palette.
+        private Dictionary<TileType, Dictionary<int, MyBitmap>> bgBitmaps;
+
+        // Enemy bitmaps, keys: name -> flip
+        private Dictionary<string, Dictionary<bool, MyBitmap>> enBitmaps;
 
         // Cached tiles. Key is tile ID + palette.
         private Dictionary<string, Bitmap[]> tiles;
@@ -143,7 +146,7 @@ namespace SpriteHelper.Dialogs
             this.palettes = Palettes.Read(palettes);
             this.bgConfig = BackgroundConfig.Read(bgSpec);
 
-            this.bitmaps = new Dictionary<TileType, Dictionary<int, MyBitmap>>();
+            this.bgBitmaps = new Dictionary<TileType, Dictionary<int, MyBitmap>>();
 
             foreach (var kvp in new Dictionary<TileType, MyBitmap>
                                     {
@@ -163,7 +166,7 @@ namespace SpriteHelper.Dialogs
                     dictionary.Add(i, clone);
                 }
 
-                this.bitmaps.Add(type, dictionary);
+                this.bgBitmaps.Add(type, dictionary);
             }
 
             this.tiles = new Dictionary<string, Bitmap[]>();
@@ -172,7 +175,7 @@ namespace SpriteHelper.Dialogs
                 for (var palette = 0; palette < 4; palette++)
                 {
                     var tileBitmaps = new Bitmap[(int)TileVersion.All + 1];
-                    var tileBitmap = bitmaps[tile.Type][palette].GetPart(tile.X * Constants.BackgroundTileWidth, tile.Y * Constants.BackgroundTileHeight, Constants.BackgroundTileWidth, Constants.BackgroundTileHeight).Scale(Zoom);
+                    var tileBitmap = bgBitmaps[tile.Type][palette].GetPart(tile.X * Constants.BackgroundTileWidth, tile.Y * Constants.BackgroundTileHeight, Constants.BackgroundTileWidth, Constants.BackgroundTileHeight).Scale(Zoom);
 
                     // None
                     tileBitmaps[(int)TileVersion.None] = tileBitmap.ToBitmap();
@@ -239,14 +242,36 @@ namespace SpriteHelper.Dialogs
 
             // Load enemies config
             this.enConfig = SpriteConfig.Read(enSpec, this.palettes);
-            
+            this.enBitmaps = new Dictionary<string, Dictionary<bool, MyBitmap>>();
+
             // Prerender each enemy
-            foreach (var frame in this.enConfig.Frames)
+            foreach (var animation in this.enConfig.Animations)
             {
-                frame.GetGridBitmap(Color.Black, true, false, false, false, Zoom, null);
-                frame.GetGridBitmap(Color.Black, true, false, true, false, Zoom, null);
-                frame.GetGridBitmap(Color.Black, true, false, false, true, Zoom, null);
-                frame.GetGridBitmap(Color.Black, true, false, true, true, Zoom, null);
+                var firstFrame = animation.Frames.First();
+                
+                this.enBitmaps.Add(animation.Name, new Dictionary<bool, MyBitmap>());
+
+                this.enBitmaps[animation.Name].Add(
+                    false,
+                    firstFrame.GetGridMyBitmap(
+                        Color.Black,
+                        true,
+                        false,
+                        false,
+                        false,
+                        Zoom,
+                        null));
+
+                this.enBitmaps[animation.Name].Add(
+                    true,
+                    firstFrame.GetGridMyBitmap(
+                        Color.Black,
+                        true,
+                        false,
+                        animation.Flip == Flip.Vertical,
+                        animation.Flip == Flip.Horizontal,
+                        Zoom,
+                        null));
             }
 
             this.PopulateTiles();
@@ -275,7 +300,7 @@ namespace SpriteHelper.Dialogs
 
                 for (var palette = 0; palette < 4; palette++)
                 {
-                    var tileSelector = new TileSelector(this.bitmaps[type][palette], type, palette, id => this.SetSelectedTile(id));
+                    var tileSelector = new TileSelector(this.bgBitmaps[type][palette], type, palette, id => this.SetSelectedTile(id));
 
                     var tableLayoutPanel = new TableLayoutPanel { Dock = DockStyle.Fill, BackColor = this.palettes.BackgroundPalette[0].ActualColors[0] };
                     tableLayoutPanel.ColumnCount = 1;
