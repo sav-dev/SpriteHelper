@@ -152,6 +152,9 @@ namespace SpriteHelper.Dialogs
 
             builder.AppendLineFormat(GetHeader());
 
+            builder.AppendLineFormat(GetConstantPropertiesComment());
+            builder.AppendLineFormat(GetConstantProperties());
+
             builder.AppendLineFormat(GetPositionOffsetsComment());
             builder.AppendLineFormat(GetPositionOffsets());
 
@@ -169,6 +172,49 @@ namespace SpriteHelper.Dialogs
 ; Holds information about all enemies (auto-generated)          ;
 ;****************************************************************
 ";
+        }
+
+
+        private string GetConstantPropertiesComment()
+        {
+            return @";
+;  constant properties for enemies
+;    rendering info : 2 bytes
+;    hitbox x off   : 1 byte
+;    hitbox y off   : 1 byte
+;    hitbox width   : 1 byte (inclusive)
+;    hitbox height  : 1 byte (inclusive)
+;    gun x off      : 1 byte (0 for non shooting)
+;    gun y off      : 1 byte (0 for non shooting)
+;    gun x off flip : 1 byte (0 for non shooting)
+;    gun y off flip : 1 byte (0 for non shooting)
+;
+";
+        }
+
+        private string GetConstantProperties()
+        {
+            var builder = new StringBuilder();
+
+            foreach (var animation in this.config.Animations)
+            {
+                builder.AppendLineFormat("{0}Consts:", animation.Name);
+
+                builder.AppendLine(".renderingInfo:");
+                builder.AppendLineFormat("  .byte LOW({0}Render), HIGH({0}Render)", animation.Name);
+
+                var hitbox = new[] { animation.Offsets.XOff, animation.Offsets.YOff, animation.Offsets.Width, animation.Offsets.Height };
+                builder.AppendLine(".hitboxInfo:");
+                builder.AppendLineFormat("  .byte {0}", string.Join(",", hitbox.Select(v => "$" + v.ToString("X2"))));
+
+                var gun = animation.Offsets.GunXOff >= 0 ?
+                    new[] { animation.Offsets.GunXOff, animation.Offsets.GunYOff, animation.Offsets.GunXOffFlip, animation.Offsets.GunYOffFlip } :
+                    new[] { 0, 0, 0, 0 };
+                builder.AppendLine(".gunInfo:");
+                builder.AppendLineFormat("  .byte {0}", string.Join(",", gun.Select(v => "$" + v.ToString("X2"))));
+            }
+
+            return builder.ToString();
         }
 
         private string GetPositionOffsetsComment()
@@ -289,7 +335,7 @@ namespace SpriteHelper.Dialogs
             {
                 var firstFrame = animation.Frames.First();
 
-                builder.AppendLineFormat("{0}:", animation.Name);
+                builder.AppendLineFormat("{0}Render:", animation.Name);
                 
                 // Sprite count.
                 builder.AppendLineFormat(".spriteCount:");

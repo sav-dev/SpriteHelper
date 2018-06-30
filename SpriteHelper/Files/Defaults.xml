@@ -1,5 +1,5 @@
 ﻿<Defaults>
-  <DefaultApp>Sprites</DefaultApp>
+  <DefaultApp>Level</DefaultApp>
   <ApplyDefaults>true</ApplyDefaults>
   <AnimationDirectory>C:\Users\tomas\Desktop\enemies\done\bug</AnimationDirectory>
   <PlayerSpec>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\sprites\player.xml</PlayerSpec>
