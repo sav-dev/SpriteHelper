@@ -31,7 +31,7 @@ namespace SpriteHelper.Dialogs
 
         private void PreLoad()
         {
-            this.specTextBox.Text = Defaults.Instance.BackgroundSpec;
+            this.bgSpecTextBox.Text = Defaults.Instance.BackgroundSpec;
             this.palettesTextBox.Text = Defaults.Instance.PalettesSpec;
         }
 
@@ -70,11 +70,19 @@ namespace SpriteHelper.Dialogs
             }
         }
 
-        public string Spec
+        public string BgSpec
         {
             get
             {
-                return this.specTextBox.Text;
+                return this.bgSpecTextBox.Text;
+            }
+        }
+
+        public string EnSpec
+        {
+            get
+            {
+                return this.enSpecTextBox.Text;
             }
         }
 
@@ -83,9 +91,14 @@ namespace SpriteHelper.Dialogs
             this.OpenXmlFile(this.levelTextBox);
         }
 
-        private void BrowseSpecButtonClick(object sender, EventArgs e)
+        private void BrowseBgSpecButtonClick(object sender, EventArgs e)
         {
-            this.OpenXmlFile(this.specTextBox);
+            this.OpenXmlFile(this.bgSpecTextBox);
+        }
+
+        private void BrowseEnSpecButtonClick(object sender, EventArgs e)
+        {
+            this.OpenXmlFile(this.enSpecTextBox);
         }
 
         private void BrowsePalettesButtonClick(object sender, EventArgs e)

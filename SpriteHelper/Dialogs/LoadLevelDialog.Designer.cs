@@ -31,19 +31,22 @@
             this.okButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
             this.levelLabel = new System.Windows.Forms.Label();
-            this.specTextBox = new System.Windows.Forms.TextBox();
-            this.specLabel = new System.Windows.Forms.Label();
+            this.bgSpecTextBox = new System.Windows.Forms.TextBox();
+            this.bgSpecLabel = new System.Windows.Forms.Label();
             this.palettesTextBox = new System.Windows.Forms.TextBox();
             this.palettesLabel = new System.Windows.Forms.Label();
             this.levelTextBox = new System.Windows.Forms.TextBox();
             this.browseLevelButton = new System.Windows.Forms.Button();
-            this.browseSpecButton = new System.Windows.Forms.Button();
+            this.browseBgSpecButton = new System.Windows.Forms.Button();
             this.browsePalettesButton = new System.Windows.Forms.Button();
+            this.browseEnSpecButton = new System.Windows.Forms.Button();
+            this.enSpecTextBox = new System.Windows.Forms.TextBox();
+            this.enSpecLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // okButton
             // 
-            this.okButton.Location = new System.Drawing.Point(365, 84);
+            this.okButton.Location = new System.Drawing.Point(365, 115);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(55, 23);
             this.okButton.TabIndex = 40;
@@ -53,7 +56,7 @@
             // 
             // cancelButton
             // 
-            this.cancelButton.Location = new System.Drawing.Point(426, 84);
+            this.cancelButton.Location = new System.Drawing.Point(426, 115);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(55, 23);
             this.cancelButton.TabIndex = 41;
@@ -70,25 +73,25 @@
             this.levelLabel.TabIndex = 47;
             this.levelLabel.Text = "Level";
             // 
-            // specTextBox
+            // bgSpecTextBox
             // 
-            this.specTextBox.Location = new System.Drawing.Point(67, 32);
-            this.specTextBox.Name = "specTextBox";
-            this.specTextBox.Size = new System.Drawing.Size(414, 20);
-            this.specTextBox.TabIndex = 42;
+            this.bgSpecTextBox.Location = new System.Drawing.Point(67, 32);
+            this.bgSpecTextBox.Name = "bgSpecTextBox";
+            this.bgSpecTextBox.Size = new System.Drawing.Size(414, 20);
+            this.bgSpecTextBox.TabIndex = 42;
             // 
-            // specLabel
+            // bgSpecLabel
             // 
-            this.specLabel.AutoSize = true;
-            this.specLabel.Location = new System.Drawing.Point(12, 35);
-            this.specLabel.Name = "specLabel";
-            this.specLabel.Size = new System.Drawing.Size(32, 13);
-            this.specLabel.TabIndex = 43;
-            this.specLabel.Text = "Spec";
+            this.bgSpecLabel.AutoSize = true;
+            this.bgSpecLabel.Location = new System.Drawing.Point(12, 35);
+            this.bgSpecLabel.Name = "bgSpecLabel";
+            this.bgSpecLabel.Size = new System.Drawing.Size(51, 13);
+            this.bgSpecLabel.TabIndex = 43;
+            this.bgSpecLabel.Text = "Bg. Spec";
             // 
             // palettesTextBox
             // 
-            this.palettesTextBox.Location = new System.Drawing.Point(67, 58);
+            this.palettesTextBox.Location = new System.Drawing.Point(67, 84);
             this.palettesTextBox.Name = "palettesTextBox";
             this.palettesTextBox.Size = new System.Drawing.Size(414, 20);
             this.palettesTextBox.TabIndex = 44;
@@ -96,7 +99,7 @@
             // palettesLabel
             // 
             this.palettesLabel.AutoSize = true;
-            this.palettesLabel.Location = new System.Drawing.Point(12, 61);
+            this.palettesLabel.Location = new System.Drawing.Point(12, 87);
             this.palettesLabel.Name = "palettesLabel";
             this.palettesLabel.Size = new System.Drawing.Size(45, 13);
             this.palettesLabel.TabIndex = 45;
@@ -111,7 +114,7 @@
             // 
             // browseLevelButton
             // 
-            this.browseLevelButton.Location = new System.Drawing.Point(487, 6);
+            this.browseLevelButton.Location = new System.Drawing.Point(487, 4);
             this.browseLevelButton.Name = "browseLevelButton";
             this.browseLevelButton.Size = new System.Drawing.Size(75, 23);
             this.browseLevelButton.TabIndex = 48;
@@ -119,19 +122,19 @@
             this.browseLevelButton.UseVisualStyleBackColor = true;
             this.browseLevelButton.Click += new System.EventHandler(this.BrowseLevelButtonClick);
             // 
-            // browseSpecButton
+            // browseBgSpecButton
             // 
-            this.browseSpecButton.Location = new System.Drawing.Point(487, 31);
-            this.browseSpecButton.Name = "browseSpecButton";
-            this.browseSpecButton.Size = new System.Drawing.Size(75, 23);
-            this.browseSpecButton.TabIndex = 49;
-            this.browseSpecButton.Text = "Browse";
-            this.browseSpecButton.UseVisualStyleBackColor = true;
-            this.browseSpecButton.Click += new System.EventHandler(this.BrowseSpecButtonClick);
+            this.browseBgSpecButton.Location = new System.Drawing.Point(487, 30);
+            this.browseBgSpecButton.Name = "browseBgSpecButton";
+            this.browseBgSpecButton.Size = new System.Drawing.Size(75, 23);
+            this.browseBgSpecButton.TabIndex = 49;
+            this.browseBgSpecButton.Text = "Browse";
+            this.browseBgSpecButton.UseVisualStyleBackColor = true;
+            this.browseBgSpecButton.Click += new System.EventHandler(this.BrowseBgSpecButtonClick);
             // 
             // browsePalettesButton
             // 
-            this.browsePalettesButton.Location = new System.Drawing.Point(487, 56);
+            this.browsePalettesButton.Location = new System.Drawing.Point(487, 82);
             this.browsePalettesButton.Name = "browsePalettesButton";
             this.browsePalettesButton.Size = new System.Drawing.Size(75, 23);
             this.browsePalettesButton.TabIndex = 50;
@@ -139,17 +142,45 @@
             this.browsePalettesButton.UseVisualStyleBackColor = true;
             this.browsePalettesButton.Click += new System.EventHandler(this.BrowsePalettesButtonClick);
             // 
+            // browseEnSpecButton
+            // 
+            this.browseEnSpecButton.Location = new System.Drawing.Point(487, 56);
+            this.browseEnSpecButton.Name = "browseEnSpecButton";
+            this.browseEnSpecButton.Size = new System.Drawing.Size(75, 23);
+            this.browseEnSpecButton.TabIndex = 53;
+            this.browseEnSpecButton.Text = "Browse";
+            this.browseEnSpecButton.UseVisualStyleBackColor = true;
+            // 
+            // enSpecTextBox
+            // 
+            this.enSpecTextBox.Location = new System.Drawing.Point(67, 58);
+            this.enSpecTextBox.Name = "enSpecTextBox";
+            this.enSpecTextBox.Size = new System.Drawing.Size(414, 20);
+            this.enSpecTextBox.TabIndex = 51;
+            // 
+            // enSpecLabel
+            // 
+            this.enSpecLabel.AutoSize = true;
+            this.enSpecLabel.Location = new System.Drawing.Point(12, 61);
+            this.enSpecLabel.Name = "enSpecLabel";
+            this.enSpecLabel.Size = new System.Drawing.Size(51, 13);
+            this.enSpecLabel.TabIndex = 52;
+            this.enSpecLabel.Text = "En. Spec";
+            // 
             // LoadLevelDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(580, 115);
+            this.ClientSize = new System.Drawing.Size(580, 160);
+            this.Controls.Add(this.browseEnSpecButton);
+            this.Controls.Add(this.enSpecTextBox);
+            this.Controls.Add(this.enSpecLabel);
             this.Controls.Add(this.browsePalettesButton);
-            this.Controls.Add(this.browseSpecButton);
+            this.Controls.Add(this.browseBgSpecButton);
             this.Controls.Add(this.browseLevelButton);
             this.Controls.Add(this.levelLabel);
-            this.Controls.Add(this.specTextBox);
-            this.Controls.Add(this.specLabel);
+            this.Controls.Add(this.bgSpecTextBox);
+            this.Controls.Add(this.bgSpecLabel);
             this.Controls.Add(this.palettesTextBox);
             this.Controls.Add(this.palettesLabel);
             this.Controls.Add(this.levelTextBox);
@@ -168,13 +199,16 @@
         private System.Windows.Forms.Button okButton;
         private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.Label levelLabel;
-        private System.Windows.Forms.TextBox specTextBox;
-        private System.Windows.Forms.Label specLabel;
+        private System.Windows.Forms.TextBox bgSpecTextBox;
+        private System.Windows.Forms.Label bgSpecLabel;
         private System.Windows.Forms.TextBox palettesTextBox;
         private System.Windows.Forms.Label palettesLabel;
         private System.Windows.Forms.TextBox levelTextBox;
         private System.Windows.Forms.Button browseLevelButton;
-        private System.Windows.Forms.Button browseSpecButton;
+        private System.Windows.Forms.Button browseBgSpecButton;
         private System.Windows.Forms.Button browsePalettesButton;
+        private System.Windows.Forms.Button browseEnSpecButton;
+        private System.Windows.Forms.TextBox enSpecTextBox;
+        private System.Windows.Forms.Label enSpecLabel;
     }
 }

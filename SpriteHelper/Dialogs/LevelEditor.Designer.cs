@@ -36,10 +36,6 @@
             this.uniqueTilesLabel = new System.Windows.Forms.Label();
             this.selectedTilePictureBox = new System.Windows.Forms.PictureBox();
             this.selectedTileLabel = new System.Windows.Forms.Label();
-            this.mainTabControl = new System.Windows.Forms.TabControl();
-            this.blockingTilesTabPage = new System.Windows.Forms.TabPage();
-            this.nonBlockingTilesTabPage = new System.Windows.Forms.TabPage();
-            this.threatTilesTabPage = new System.Windows.Forms.TabPage();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
@@ -64,15 +60,24 @@
             this.viewThreatsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.exportCheckToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.threatTilesTabPage = new System.Windows.Forms.TabPage();
+            this.nonBlockingTilesTabPage = new System.Windows.Forms.TabPage();
+            this.blockingTilesTabPage = new System.Windows.Forms.TabPage();
+            this.bgTabControl = new System.Windows.Forms.TabControl();
+            this.mainTabControl = new System.Windows.Forms.TabControl();
+            this.bgTabPage = new System.Windows.Forms.TabPage();
+            this.enTabPage = new System.Windows.Forms.TabPage();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerVertical)).BeginInit();
             this.splitContainerVertical.Panel1.SuspendLayout();
             this.splitContainerVertical.Panel2.SuspendLayout();
             this.splitContainerVertical.SuspendLayout();
             this.outerOuterDrawPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.selectedTilePictureBox)).BeginInit();
-            this.mainTabControl.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.menuStrip.SuspendLayout();
+            this.bgTabControl.SuspendLayout();
+            this.mainTabControl.SuspendLayout();
+            this.bgTabPage.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainerVertical
@@ -91,13 +96,13 @@
             // 
             // splitContainerVertical.Panel2
             // 
+            this.splitContainerVertical.Panel2.Controls.Add(this.mainTabControl);
             this.splitContainerVertical.Panel2.Controls.Add(this.uniqueTilesCountLabel);
             this.splitContainerVertical.Panel2.Controls.Add(this.uniqueTilesLabel);
             this.splitContainerVertical.Panel2.Controls.Add(this.selectedTilePictureBox);
             this.splitContainerVertical.Panel2.Controls.Add(this.selectedTileLabel);
-            this.splitContainerVertical.Panel2.Controls.Add(this.mainTabControl);
-            this.splitContainerVertical.Size = new System.Drawing.Size(1040, 535);
-            this.splitContainerVertical.SplitterDistance = 700;
+            this.splitContainerVertical.Size = new System.Drawing.Size(943, 535);
+            this.splitContainerVertical.SplitterDistance = 603;
             this.splitContainerVertical.TabIndex = 999;
             // 
             // outerOuterDrawPanel
@@ -106,7 +111,7 @@
             this.outerOuterDrawPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.outerOuterDrawPanel.Location = new System.Drawing.Point(0, 0);
             this.outerOuterDrawPanel.Name = "outerOuterDrawPanel";
-            this.outerOuterDrawPanel.Size = new System.Drawing.Size(698, 516);
+            this.outerOuterDrawPanel.Size = new System.Drawing.Size(601, 516);
             this.outerOuterDrawPanel.TabIndex = 2;
             // 
             // outerDrawPanel
@@ -123,7 +128,7 @@
             this.scrollBar.LargeChange = 1;
             this.scrollBar.Location = new System.Drawing.Point(0, 516);
             this.scrollBar.Name = "scrollBar";
-            this.scrollBar.Size = new System.Drawing.Size(698, 17);
+            this.scrollBar.Size = new System.Drawing.Size(601, 17);
             this.scrollBar.TabIndex = 0;
             this.scrollBar.Scroll += new System.Windows.Forms.ScrollEventHandler(this.ScrollBarScroll);
             // 
@@ -166,56 +171,13 @@
             this.selectedTileLabel.TabIndex = 48;
             this.selectedTileLabel.Text = "Selected Tile:";
             // 
-            // mainTabControl
-            // 
-            this.mainTabControl.Alignment = System.Windows.Forms.TabAlignment.Bottom;
-            this.mainTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.mainTabControl.Controls.Add(this.blockingTilesTabPage);
-            this.mainTabControl.Controls.Add(this.nonBlockingTilesTabPage);
-            this.mainTabControl.Controls.Add(this.threatTilesTabPage);
-            this.mainTabControl.Location = new System.Drawing.Point(14, 53);
-            this.mainTabControl.Multiline = true;
-            this.mainTabControl.Name = "mainTabControl";
-            this.mainTabControl.SelectedIndex = 0;
-            this.mainTabControl.Size = new System.Drawing.Size(309, 463);
-            this.mainTabControl.TabIndex = 47;
-            // 
-            // blockingTilesTabPage
-            // 
-            this.blockingTilesTabPage.Location = new System.Drawing.Point(4, 4);
-            this.blockingTilesTabPage.Name = "blockingTilesTabPage";
-            this.blockingTilesTabPage.Size = new System.Drawing.Size(301, 437);
-            this.blockingTilesTabPage.TabIndex = 2;
-            this.blockingTilesTabPage.Text = "Blocking";
-            this.blockingTilesTabPage.UseVisualStyleBackColor = true;
-            // 
-            // nonBlockingTilesTabPage
-            // 
-            this.nonBlockingTilesTabPage.Location = new System.Drawing.Point(4, 4);
-            this.nonBlockingTilesTabPage.Name = "nonBlockingTilesTabPage";
-            this.nonBlockingTilesTabPage.Size = new System.Drawing.Size(301, 437);
-            this.nonBlockingTilesTabPage.TabIndex = 3;
-            this.nonBlockingTilesTabPage.Text = "Non-blocking";
-            this.nonBlockingTilesTabPage.UseVisualStyleBackColor = true;
-            // 
-            // threatTilesTabPage
-            // 
-            this.threatTilesTabPage.Location = new System.Drawing.Point(4, 4);
-            this.threatTilesTabPage.Name = "threatTilesTabPage";
-            this.threatTilesTabPage.Size = new System.Drawing.Size(301, 437);
-            this.threatTilesTabPage.TabIndex = 4;
-            this.threatTilesTabPage.Text = "Threat";
-            this.threatTilesTabPage.UseVisualStyleBackColor = true;
-            // 
             // statusStrip
             // 
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel});
             this.statusStrip.Location = new System.Drawing.Point(0, 559);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(1040, 22);
+            this.statusStrip.Size = new System.Drawing.Size(943, 22);
             this.statusStrip.TabIndex = 1;
             this.statusStrip.Text = "statusStrip";
             // 
@@ -233,7 +195,7 @@
             this.viewToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(1040, 24);
+            this.menuStrip.Size = new System.Drawing.Size(943, 24);
             this.menuStrip.TabIndex = 2;
             this.menuStrip.Text = "menuStrip";
             // 
@@ -415,11 +377,86 @@
             this.exportCheckToolStripMenuItem.Text = "Export Check";
             this.exportCheckToolStripMenuItem.Click += new System.EventHandler(this.ExportCheckToolStripMenuItemClick);
             // 
+            // threatTilesTabPage
+            // 
+            this.threatTilesTabPage.Location = new System.Drawing.Point(4, 4);
+            this.threatTilesTabPage.Name = "threatTilesTabPage";
+            this.threatTilesTabPage.Size = new System.Drawing.Size(301, 437);
+            this.threatTilesTabPage.TabIndex = 4;
+            this.threatTilesTabPage.Text = "Threat";
+            this.threatTilesTabPage.UseVisualStyleBackColor = true;
+            // 
+            // nonBlockingTilesTabPage
+            // 
+            this.nonBlockingTilesTabPage.Location = new System.Drawing.Point(4, 4);
+            this.nonBlockingTilesTabPage.Name = "nonBlockingTilesTabPage";
+            this.nonBlockingTilesTabPage.Size = new System.Drawing.Size(301, 437);
+            this.nonBlockingTilesTabPage.TabIndex = 3;
+            this.nonBlockingTilesTabPage.Text = "Non-blocking";
+            this.nonBlockingTilesTabPage.UseVisualStyleBackColor = true;
+            // 
+            // blockingTilesTabPage
+            // 
+            this.blockingTilesTabPage.Location = new System.Drawing.Point(4, 4);
+            this.blockingTilesTabPage.Name = "blockingTilesTabPage";
+            this.blockingTilesTabPage.Size = new System.Drawing.Size(287, 406);
+            this.blockingTilesTabPage.TabIndex = 2;
+            this.blockingTilesTabPage.Text = "Blocking";
+            this.blockingTilesTabPage.UseVisualStyleBackColor = true;
+            // 
+            // bgTabControl
+            // 
+            this.bgTabControl.Alignment = System.Windows.Forms.TabAlignment.Bottom;
+            this.bgTabControl.Controls.Add(this.blockingTilesTabPage);
+            this.bgTabControl.Controls.Add(this.nonBlockingTilesTabPage);
+            this.bgTabControl.Controls.Add(this.threatTilesTabPage);
+            this.bgTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.bgTabControl.Location = new System.Drawing.Point(3, 3);
+            this.bgTabControl.Multiline = true;
+            this.bgTabControl.Name = "bgTabControl";
+            this.bgTabControl.SelectedIndex = 0;
+            this.bgTabControl.Size = new System.Drawing.Size(295, 432);
+            this.bgTabControl.TabIndex = 47;
+            // 
+            // mainTabControl
+            // 
+            this.mainTabControl.Alignment = System.Windows.Forms.TabAlignment.Bottom;
+            this.mainTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.mainTabControl.Controls.Add(this.bgTabPage);
+            this.mainTabControl.Controls.Add(this.enTabPage);
+            this.mainTabControl.Location = new System.Drawing.Point(13, 53);
+            this.mainTabControl.Name = "mainTabControl";
+            this.mainTabControl.SelectedIndex = 0;
+            this.mainTabControl.Size = new System.Drawing.Size(309, 464);
+            this.mainTabControl.TabIndex = 0;
+            // 
+            // bgTabPage
+            // 
+            this.bgTabPage.Controls.Add(this.bgTabControl);
+            this.bgTabPage.Location = new System.Drawing.Point(4, 4);
+            this.bgTabPage.Name = "bgTabPage";
+            this.bgTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.bgTabPage.Size = new System.Drawing.Size(301, 438);
+            this.bgTabPage.TabIndex = 0;
+            this.bgTabPage.Text = "Background";
+            this.bgTabPage.UseVisualStyleBackColor = true;
+            // 
+            // enTabPage
+            // 
+            this.enTabPage.Location = new System.Drawing.Point(4, 4);
+            this.enTabPage.Name = "enTabPage";
+            this.enTabPage.Size = new System.Drawing.Size(301, 438);
+            this.enTabPage.TabIndex = 1;
+            this.enTabPage.Text = "Enemies";
+            this.enTabPage.UseVisualStyleBackColor = true;
+            // 
             // LevelEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1040, 581);
+            this.ClientSize = new System.Drawing.Size(943, 581);
             this.Controls.Add(this.splitContainerVertical);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.menuStrip);
@@ -437,11 +474,13 @@
             this.splitContainerVertical.ResumeLayout(false);
             this.outerOuterDrawPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.selectedTilePictureBox)).EndInit();
-            this.mainTabControl.ResumeLayout(false);
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
+            this.bgTabControl.ResumeLayout(false);
+            this.mainTabControl.ResumeLayout(false);
+            this.bgTabPage.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -471,10 +510,6 @@
         private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem transformToolStripMenuItem;
-        private System.Windows.Forms.TabControl mainTabControl;
-        private System.Windows.Forms.TabPage blockingTilesTabPage;
-        private System.Windows.Forms.TabPage nonBlockingTilesTabPage;
-        private System.Windows.Forms.TabPage threatTilesTabPage;
         private System.Windows.Forms.PictureBox selectedTilePictureBox;
         private System.Windows.Forms.Label selectedTileLabel;
         private System.Windows.Forms.Label uniqueTilesLabel;
@@ -485,5 +520,12 @@
         private System.Windows.Forms.ToolStripMenuItem viewThreatsToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;
         private System.Windows.Forms.ToolStripMenuItem exportCheckToolStripMenuItem;
+        private System.Windows.Forms.TabControl bgTabControl;
+        private System.Windows.Forms.TabPage blockingTilesTabPage;
+        private System.Windows.Forms.TabPage nonBlockingTilesTabPage;
+        private System.Windows.Forms.TabPage threatTilesTabPage;
+        private System.Windows.Forms.TabControl mainTabControl;
+        private System.Windows.Forms.TabPage bgTabPage;
+        private System.Windows.Forms.TabPage enTabPage;
     }
 }

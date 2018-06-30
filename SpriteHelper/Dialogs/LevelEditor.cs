@@ -16,7 +16,8 @@ namespace SpriteHelper.Dialogs
     {
         // Configs.
         private Palettes palettes;
-        private BackgroundConfig config;
+        private BackgroundConfig bgConfig;
+        private SpriteConfig enConfig;
 
         // Palette tabs.
         private Dictionary<TileType, TabPage> tileTabs;
@@ -71,14 +72,17 @@ namespace SpriteHelper.Dialogs
             this.drawPanel.Location = new Point(0, 0);
             this.drawPanel.MouseDown += this.DrawPanelMouseDown;
             this.drawPanel.MouseLeave += this.DrawPanelMouseLeave;
+            this.drawPanel.MouseEnter += this.DrawPanelMouseEnter;
             this.drawPanel.MouseMove += this.DrawPanelMouseMove;
+            (this.drawPanel as Control).KeyDown += this.DrawPanelKeyUpDown;
+            (this.drawPanel as Control).KeyUp += this.DrawPanelKeyUpDown;
 
             this.tileTabs = new Dictionary<TileType, TabPage>();
             this.tileTabs.Add(TileType.Blocking, blockingTilesTabPage);
             this.tileTabs.Add(TileType.NonBlocking, nonBlockingTilesTabPage);
             this.tileTabs.Add(TileType.Threat, threatTilesTabPage);
 
-        }
+        }        
 
         private void LevelEditorLoad(object sender, EventArgs e)
         {
@@ -97,7 +101,11 @@ namespace SpriteHelper.Dialogs
 
         private void PreLoad()
         {
-            this.LoadLevel(Defaults.Instance.DefaultLevel, Defaults.Instance.BackgroundSpec, Defaults.Instance.PalettesSpec);
+            this.LoadLevel(
+                Defaults.Instance.DefaultLevel, 
+                Defaults.Instance.BackgroundSpec,
+                @"C:\Users\tomas\Documents\NES\GitHub\Platformer\PlatformerGraphics\Sprites\enemies.xml",
+                Defaults.Instance.PalettesSpec);
         }
 
         private void UpdateStatus(string text)
@@ -125,18 +133,18 @@ namespace SpriteHelper.Dialogs
         //// Level loading & saving
         ////
 
-        private void LoadLevel(string level, string spec, string palettes)
+        private void LoadLevel(string level, string bgSpec, string enSpec, string palettes)
         {
             this.palettes = Palettes.Read(palettes);
-            this.config = BackgroundConfig.Read(spec);
+            this.bgConfig = BackgroundConfig.Read(bgSpec);
 
             this.bitmaps = new Dictionary<TileType, Dictionary<int, MyBitmap>>();
 
             foreach (var kvp in new Dictionary<TileType, MyBitmap>
                                     {
-                                        { TileType.NonBlocking, MyBitmap.FromFile(config.NonBlockingFile) },
-                                        { TileType.Blocking, MyBitmap.FromFile(config.BlockingFile) },
-                                        { TileType.Threat, MyBitmap.FromFile(config.ThreatFile) },
+                                        { TileType.NonBlocking, MyBitmap.FromFile(bgConfig.NonBlockingFile) },
+                                        { TileType.Blocking, MyBitmap.FromFile(bgConfig.BlockingFile) },
+                                        { TileType.Threat, MyBitmap.FromFile(bgConfig.ThreatFile) },
                                     })
             {
                 var type = kvp.Key;
@@ -154,7 +162,7 @@ namespace SpriteHelper.Dialogs
             }
 
             this.tiles = new Dictionary<string, Bitmap[]>();
-            foreach (var tile in this.config.Tiles)
+            foreach (var tile in this.bgConfig.Tiles)
             {
                 for (var palette = 0; palette < 4; palette++)
                 {
@@ -203,7 +211,7 @@ namespace SpriteHelper.Dialogs
             }
 
             // Empty tile should always be the 1st one
-            this.emptyTile = TileIds.PaletteTileId(0, this.config.Tiles[0].Id);
+            this.emptyTile = TileIds.PaletteTileId(0, this.bgConfig.Tiles[0].Id);
 
             string[][] newLevel;
             if (File.Exists(level))
@@ -222,6 +230,18 @@ namespace SpriteHelper.Dialogs
                         newLevel[i][j] = this.emptyTile;
                     }
                 }
+            }
+
+            // Load enemies config
+            this.enConfig = SpriteConfig.Read(enSpec, this.palettes);
+            
+            // Prerender each enemy
+            foreach (var frame in this.enConfig.Frames)
+            {
+                frame.GetGridBitmap(Color.Black, true, false, false, false, Zoom, null);
+                frame.GetGridBitmap(Color.Black, true, false, true, false, Zoom, null);
+                frame.GetGridBitmap(Color.Black, true, false, false, true, Zoom, null);
+                frame.GetGridBitmap(Color.Black, true, false, true, true, Zoom, null);
             }
 
             this.PopulateTiles();
@@ -451,7 +471,7 @@ namespace SpriteHelper.Dialogs
             {
                 if (loadLevelDialog.ClickedOk)
                 {
-                    this.LoadLevel(loadLevelDialog.Level, loadLevelDialog.Spec, loadLevelDialog.Palettes);
+                    this.LoadLevel(loadLevelDialog.Level, loadLevelDialog.BgSpec, loadLevelDialog.EnSpec, loadLevelDialog.Palettes);
                 }
             };
 
@@ -465,7 +485,7 @@ namespace SpriteHelper.Dialogs
             {
                 if (loadLevelDialog.ClickedOk)
                 {
-                    this.LoadLevel(null, loadLevelDialog.Spec, loadLevelDialog.Palettes);
+                    this.LoadLevel(null, loadLevelDialog.BgSpec, loadLevelDialog.EnSpec, loadLevelDialog.Palettes);
                 }
             };
 
@@ -674,39 +694,93 @@ namespace SpriteHelper.Dialogs
         #region MouseEvents
 
         ////
-        //// Draw panel mouse events
+        //// Draw panel events
         ////
 
+        private bool ControlPressed => (Control.ModifierKeys & Keys.Control) != 0;
+
+        private void DrawPanelKeyUpDown(object sender, KeyEventArgs e)
+        {
+            // When key is pressed, update cursor.
+            this.DrawPanelSetCursor();
+
+            // And based on the input draw or remove the tile cursor.
+            if (this.ControlPressed)
+            {
+                this.DrawPanelRemoveTileCursor();
+            }
+            else
+            {
+                var mouse = this.drawPanel.PointToClient(Control.MousePosition);
+                var x = mouse.X / TileWidth;
+                var y = mouse.Y / TileWidth;
+                this.DrawPanelDrawTileCursor(x, y);
+            }
+        }
 
         private void DrawPanelMouseLeave(object sender, EventArgs e)
         {
+            // On mouse leave clear the status.
             this.UpdateStatus(null);
-            this.drawPanel.BackgroundImage = this.bitmap;
-            this.drawPanel.Refresh();
+
+            // And remove the tile cursor.
+            this.DrawPanelRemoveTileCursor();
+        }
+
+        private void DrawPanelMouseEnter(object sender, EventArgs e)
+        {
+            // When mouse enters the panel, focus it so key events will work.
+            this.drawPanel.Focus();
+
+            // And set the right cursor.
+            this.DrawPanelSetCursor();            
         }
 
         private void DrawPanelMouseDown(object sender, MouseEventArgs e)
         {
-            var x = e.X / TileWidth;
-            var y = e.Y / TileWidth;
-            if (this.SetTile(x, y, e.Button))
+            // When mouse is clicked, do the right action.            
+            if (!this.ControlPressed)
             {
-                this.DrawPanelDrawCursor(x, y);
+                // If control not pressed, set a tile (if needed) and draw the cursor
+                var x = e.X / TileWidth;
+                var y = e.Y / TileWidth;
+                if (this.SetTile(x, y, e.Button))
+                {
+                    this.DrawPanelDrawTileCursor(x, y);
+                }
             }
         }
 
         private void DrawPanelMouseMove(object sender, MouseEventArgs e)
         {
+            // When mouse moves, set the right cursor.
+            this.DrawPanelSetCursor();
+
+            // Then update status (do that always).
             var x = e.X / TileWidth;
             var y = e.Y / TileWidth;
             if (this.UpdateStatus("{0} / {1}", x, y))
-            {
-                this.SetTile(x, y, e.Button);
-                this.DrawPanelDrawCursor(x, y);
+            {                
+                if (!this.ControlPressed)
+                {
+                    // If control not pressed, set a tile (if needed) and draw the cursor
+                    this.SetTile(x, y, e.Button);
+                    this.DrawPanelDrawTileCursor(x, y);
+                }
+                else
+                {
+                    // Otherwise clear the cursor.
+                    this.DrawPanelRemoveTileCursor();
+                }
             }
         }
 
-        private void DrawPanelDrawCursor(int x, int y)
+        private void DrawPanelSetCursor()
+        {
+            this.drawPanel.Cursor = this.ControlPressed ? Cursors.Hand : Cursors.Cross;
+        }
+
+        private void DrawPanelDrawTileCursor(int x, int y)
         {
             var bitmapClone = new Bitmap(this.bitmap);
             using (var graphics = Graphics.FromImage(bitmapClone))
@@ -716,6 +790,12 @@ namespace SpriteHelper.Dialogs
 
             drawPanel.BackgroundImage = bitmapClone;
             drawPanel.Refresh();
+        }
+
+        private void DrawPanelRemoveTileCursor()
+        {
+            this.drawPanel.BackgroundImage = this.bitmap;
+            this.drawPanel.Refresh();
         }
 
         public bool SetTile(int x, int y, MouseButtons buttons)
@@ -918,7 +998,7 @@ namespace SpriteHelper.Dialogs
                 localIds.Add(tileId, id++);
 
                 // Find the tile config, get sprites, append to the result (sprites 0 and 1) and to the second list (2 and 3)
-                var tileConfig = this.config.Tiles.First(t => t.Id == TileIds.ParsePaletteId(tileId).Item2);
+                var tileConfig = this.bgConfig.Tiles.First(t => t.Id == TileIds.ParsePaletteId(tileId).Item2);
                 result.Add((byte)tileConfig.Sprites[0]);
                 result.Add((byte)tileConfig.Sprites[1]);
                 spritesInRightColumn.Add((byte)tileConfig.Sprites[2]);
