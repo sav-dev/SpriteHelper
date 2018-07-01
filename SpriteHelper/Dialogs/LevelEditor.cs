@@ -227,9 +227,13 @@ namespace SpriteHelper.Dialogs
             this.emptyTile = TileIds.PaletteTileId(0, this.bgConfig.Tiles[0].Id);
 
             string[][] newLevel;
+            Enemy[] enemies = null;
+
             if (File.Exists(level))
             {
-                newLevel = Level.Read(level).Tiles;
+                var readLevel = Level.Read(level);
+                newLevel = readLevel.Tiles;
+                enemies = readLevel.Enemies;
             }
             else
             {
@@ -279,6 +283,16 @@ namespace SpriteHelper.Dialogs
                         null));
             }
 
+            // Initialize and set enemies.
+            foreach (var enemy in enemies)
+            {
+                enemy.Initialize(this.enConfig.Animations.First(a => a.Name == enemy.Name));
+            }
+
+            this.enemiesListBox.Items.Clear();
+            this.enemiesListBox.Items.AddRange(enemies);
+
+            // Populate tiles, set level.
             this.PopulateTiles();
             this.SetLevel(newLevel);
             this.ClearHistory();
@@ -560,7 +574,7 @@ namespace SpriteHelper.Dialogs
             saveFileDialog.ShowDialog();
             if (!string.IsNullOrEmpty(saveFileDialog.FileName))
             {
-                var level = new Level { Tiles = this.level };
+                var level = new Level { Tiles = this.level, Enemies = this.Enemies };
                 level.Write(saveFileDialog.FileName);
             }
         }
@@ -1374,7 +1388,7 @@ namespace SpriteHelper.Dialogs
 
         #region Enemies
 
-        public List<Enemy> Enemies => this.enemiesListBox.Items.Cast<Enemy>().ToList();
+        public Enemy[] Enemies => this.enemiesListBox.Items.Cast<Enemy>().ToArray();
 
         public Enemy SelectedEnemy => this.enemiesListBox.SelectedItem as Enemy;        
 

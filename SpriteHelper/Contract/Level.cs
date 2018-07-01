@@ -10,6 +10,9 @@ namespace SpriteHelper.Contract
         [DataMember]
         public string[][] Tiles { get; set; }
 
+        [DataMember]
+        public Enemy[] Enemies { get; set; }
+
         public void Write(string file)
         {
             if (File.Exists(file))
