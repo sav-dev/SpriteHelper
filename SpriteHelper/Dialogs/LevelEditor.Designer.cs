@@ -68,12 +68,12 @@
             this.showTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showGridToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.showEnemiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.viewPlatformsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewThreatsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.exportCheckToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.showEnemiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerVertical)).BeginInit();
             this.splitContainerVertical.Panel1.SuspendLayout();
             this.splitContainerVertical.Panel2.SuspendLayout();
@@ -227,6 +227,8 @@
             this.enemiesListBox.Size = new System.Drawing.Size(301, 400);
             this.enemiesListBox.TabIndex = 1;
             this.enemiesListBox.SelectedIndexChanged += new System.EventHandler(this.EnemiesListBoxSelectedIndexChanged);
+            this.enemiesListBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.EnemiesListBoxKeyDown);
+            this.enemiesListBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.EnemiesListBoxMouseDoubleClick);
             // 
             // enTabBottomPanel
             // 
@@ -486,6 +488,18 @@
             this.toolStripSeparator5.Name = "toolStripSeparator5";
             this.toolStripSeparator5.Size = new System.Drawing.Size(223, 6);
             // 
+            // showEnemiesToolStripMenuItem
+            // 
+            this.showEnemiesToolStripMenuItem.Checked = true;
+            this.showEnemiesToolStripMenuItem.CheckOnClick = true;
+            this.showEnemiesToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.showEnemiesToolStripMenuItem.Name = "showEnemiesToolStripMenuItem";
+            this.showEnemiesToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.E)));
+            this.showEnemiesToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.showEnemiesToolStripMenuItem.Text = "Show &Enemies";
+            this.showEnemiesToolStripMenuItem.Click += new System.EventHandler(this.ShowEnemiesToolStripMenuItemClick);
+            // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
@@ -522,18 +536,6 @@
             this.exportCheckToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
             this.exportCheckToolStripMenuItem.Text = "Export Check";
             this.exportCheckToolStripMenuItem.Click += new System.EventHandler(this.ExportCheckToolStripMenuItemClick);
-            // 
-            // showEnemiesToolStripMenuItem
-            // 
-            this.showEnemiesToolStripMenuItem.Checked = true;
-            this.showEnemiesToolStripMenuItem.CheckOnClick = true;
-            this.showEnemiesToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.showEnemiesToolStripMenuItem.Name = "showEnemiesToolStripMenuItem";
-            this.showEnemiesToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.E)));
-            this.showEnemiesToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
-            this.showEnemiesToolStripMenuItem.Text = "Show &Enemies";
-            this.showEnemiesToolStripMenuItem.Click += new System.EventHandler(this.ShowEnemiesToolStripMenuItemClick);
             // 
             // LevelEditor
             // 

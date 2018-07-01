@@ -485,6 +485,11 @@ namespace SpriteHelper.Dialogs
                 {
                     var image = this.enBitmaps[enemy.Name][enemy.InitialFlip];
                     this.graphics.DrawImage(image, new Point(enemy.X * Constants.LevelEditorZoom, enemy.Y * Constants.LevelEditorZoom));
+
+                    if (enemy == this.SelectedEnemy)
+                    {
+                        this.graphics.DrawRectangle(Pens.Red, enemy.X * Constants.LevelEditorZoom, enemy.Y * Constants.LevelEditorZoom, image.Width, image.Height);
+                    }
                 }
             }
 
@@ -1396,8 +1401,21 @@ namespace SpriteHelper.Dialogs
         {
             this.deleteEnemyButton.Enabled = this.SelectedEnemy != null;
             this.editEnemyButton.Enabled = this.SelectedEnemy != null;
+            this.UpdateBitmap();
+        }
 
-            // ...
+        private void EnemiesListBoxMouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            this.AddOrEditEnemy(this.SelectedEnemy);
+        }
+
+        private void EnemiesListBoxKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete)
+            {
+                this.enemiesListBox.Items.Remove(this.SelectedEnemy);
+                this.UpdateBitmap();
+            }
         }
 
         private void DeleteEnemyButtonClick(object sender, EventArgs e)
