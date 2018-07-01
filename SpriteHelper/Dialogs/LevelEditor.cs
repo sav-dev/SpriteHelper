@@ -834,6 +834,11 @@ namespace SpriteHelper.Dialogs
                     this.DrawPanelDrawTileCursor(position);
                 }
             }
+            else
+            {
+                // If control pressed, select an ememy and (on right click) open edit window.
+                // todo enemies implement
+            }
         }
 
         private void DrawPanelMouseMove(object sender, MouseEventArgs e)
@@ -1399,9 +1404,18 @@ namespace SpriteHelper.Dialogs
 
         private void EnemiesListBoxSelectedIndexChanged(object sender, EventArgs e)
         {
+            // Enable/disable buttons.
             this.deleteEnemyButton.Enabled = this.SelectedEnemy != null;
             this.editEnemyButton.Enabled = this.SelectedEnemy != null;
+
+            // Update bitmap (highlight enemy).
             this.UpdateBitmap();
+
+            if (this.SelectedEnemy != null)
+            {
+                // Center the screen on the enemy if not on screen.
+                // todo enemies implement
+            }
         }
 
         private void EnemiesListBoxMouseDoubleClick(object sender, MouseEventArgs e)
@@ -1471,6 +1485,7 @@ namespace SpriteHelper.Dialogs
 
         private void SortEnemiesListBox()
         {
+            // optimize this?
             // Sort by X. Keep the same item selected.
             var selectedItem = this.SelectedEnemy;
             var enemies = this.enemiesListBox.Items.Cast<Enemy>().OrderBy(e => e.X).ToArray();
