@@ -48,6 +48,19 @@
     <Reference Include="System.Xml.Serialization" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contract\Enemy.cs" />
+    <Compile Include="Controls\PositionPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PositionPanel.Designer.cs">
+      <DependentUpon>PositionPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\AddEditEnemyDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\AddEditEnemyDialog.Designer.cs">
+      <DependentUpon>AddEditEnemyDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\AnimationsDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -155,6 +168,12 @@
     <Compile Include="Dialogs\TransformDialog.Designer.cs">
       <DependentUpon>TransformDialog.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Controls\PositionPanel.resx">
+      <DependentUpon>PositionPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\AddEditEnemyDialog.resx">
+      <DependentUpon>AddEditEnemyDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\AnimationsDialog.resx">
       <DependentUpon>AnimationsDialog.cs</DependentUpon>
     </EmbeddedResource>

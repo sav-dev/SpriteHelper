@@ -44,6 +44,9 @@
         // Max zoom for sprite viweres.
         public const int MaxZoom = 10;
 
+        // Editor zoom
+        public const int LevelEditorZoom = 2;
+
         // Picker width for background tiles.
         public const int PickerWidthInTiles = 6;
         public const int PickerWidth = PickerWidthInTiles * BackgroundTileWidth;

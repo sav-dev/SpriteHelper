@@ -28,8 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
-            ""}, -1, System.Drawing.Color.Empty, System.Drawing.SystemColors.HotTrack, null);
             this.splitContainerVertical = new System.Windows.Forms.SplitContainer();
             this.outerOuterDrawPanel = new System.Windows.Forms.Panel();
             this.outerDrawPanel = new System.Windows.Forms.Panel();
@@ -41,6 +39,11 @@
             this.nonBlockingTilesTabPage = new System.Windows.Forms.TabPage();
             this.threatTilesTabPage = new System.Windows.Forms.TabPage();
             this.enTabPage = new System.Windows.Forms.TabPage();
+            this.enemiesListBox = new System.Windows.Forms.ListBox();
+            this.enTabBottomPanel = new System.Windows.Forms.Panel();
+            this.editEnemyButton = new System.Windows.Forms.Button();
+            this.deleteEnemyButton = new System.Windows.Forms.Button();
+            this.addEnemyButton = new System.Windows.Forms.Button();
             this.uniqueTilesCountLabel = new System.Windows.Forms.Label();
             this.uniqueTilesLabel = new System.Windows.Forms.Label();
             this.selectedTilePictureBox = new System.Windows.Forms.PictureBox();
@@ -58,18 +61,19 @@
             this.propertiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.transformToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showGridToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.viewPlatformsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewThreatsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.exportCheckToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.listView1 = new System.Windows.Forms.ListView();
+            this.showEnemiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerVertical)).BeginInit();
             this.splitContainerVertical.Panel1.SuspendLayout();
             this.splitContainerVertical.Panel2.SuspendLayout();
@@ -79,6 +83,7 @@
             this.bgTabPage.SuspendLayout();
             this.bgTabControl.SuspendLayout();
             this.enTabPage.SuspendLayout();
+            this.enTabBottomPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.selectedTilePictureBox)).BeginInit();
             this.statusStrip.SuspendLayout();
             this.menuStrip.SuspendLayout();
@@ -205,12 +210,66 @@
             // enTabPage
             // 
             this.enTabPage.BackColor = System.Drawing.SystemColors.Control;
-            this.enTabPage.Controls.Add(this.listView1);
+            this.enTabPage.Controls.Add(this.enemiesListBox);
+            this.enTabPage.Controls.Add(this.enTabBottomPanel);
             this.enTabPage.Location = new System.Drawing.Point(4, 4);
             this.enTabPage.Name = "enTabPage";
             this.enTabPage.Size = new System.Drawing.Size(301, 438);
             this.enTabPage.TabIndex = 1;
             this.enTabPage.Text = "Enemies";
+            // 
+            // enemiesListBox
+            // 
+            this.enemiesListBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.enemiesListBox.FormattingEnabled = true;
+            this.enemiesListBox.Location = new System.Drawing.Point(0, 0);
+            this.enemiesListBox.Name = "enemiesListBox";
+            this.enemiesListBox.Size = new System.Drawing.Size(301, 400);
+            this.enemiesListBox.TabIndex = 1;
+            this.enemiesListBox.SelectedIndexChanged += new System.EventHandler(this.EnemiesListBoxSelectedIndexChanged);
+            // 
+            // enTabBottomPanel
+            // 
+            this.enTabBottomPanel.Controls.Add(this.editEnemyButton);
+            this.enTabBottomPanel.Controls.Add(this.deleteEnemyButton);
+            this.enTabBottomPanel.Controls.Add(this.addEnemyButton);
+            this.enTabBottomPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.enTabBottomPanel.Location = new System.Drawing.Point(0, 400);
+            this.enTabBottomPanel.Name = "enTabBottomPanel";
+            this.enTabBottomPanel.Size = new System.Drawing.Size(301, 38);
+            this.enTabBottomPanel.TabIndex = 0;
+            // 
+            // editEnemyButton
+            // 
+            this.editEnemyButton.Enabled = false;
+            this.editEnemyButton.Location = new System.Drawing.Point(220, 7);
+            this.editEnemyButton.Name = "editEnemyButton";
+            this.editEnemyButton.Size = new System.Drawing.Size(75, 23);
+            this.editEnemyButton.TabIndex = 2;
+            this.editEnemyButton.Text = "Edit";
+            this.editEnemyButton.UseVisualStyleBackColor = true;
+            this.editEnemyButton.Click += new System.EventHandler(this.EditEnemyButtonClick);
+            // 
+            // deleteEnemyButton
+            // 
+            this.deleteEnemyButton.Enabled = false;
+            this.deleteEnemyButton.Location = new System.Drawing.Point(114, 7);
+            this.deleteEnemyButton.Name = "deleteEnemyButton";
+            this.deleteEnemyButton.Size = new System.Drawing.Size(75, 23);
+            this.deleteEnemyButton.TabIndex = 1;
+            this.deleteEnemyButton.Text = "Delete";
+            this.deleteEnemyButton.UseVisualStyleBackColor = true;
+            this.deleteEnemyButton.Click += new System.EventHandler(this.DeleteEnemyButtonClick);
+            // 
+            // addEnemyButton
+            // 
+            this.addEnemyButton.Location = new System.Drawing.Point(8, 7);
+            this.addEnemyButton.Name = "addEnemyButton";
+            this.addEnemyButton.Size = new System.Drawing.Size(75, 23);
+            this.addEnemyButton.TabIndex = 0;
+            this.addEnemyButton.Text = "Add";
+            this.addEnemyButton.UseVisualStyleBackColor = true;
+            this.addEnemyButton.Click += new System.EventHandler(this.AddEnemyButtonClick);
             // 
             // uniqueTilesCountLabel
             // 
@@ -337,7 +396,7 @@
             this.propertiesToolStripMenuItem,
             this.toolStripSeparator1,
             this.transformToolStripMenuItem,
-            this.toolStripMenuItem1,
+            this.toolStripSeparator4,
             this.undoToolStripMenuItem,
             this.redoToolStripMenuItem});
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
@@ -365,10 +424,10 @@
             this.transformToolStripMenuItem.Text = "Transform";
             this.transformToolStripMenuItem.Click += new System.EventHandler(this.TransformToolStripMenuItemClick);
             // 
-            // toolStripMenuItem1
+            // toolStripSeparator4
             // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(166, 6);
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(166, 6);
             // 
             // undoToolStripMenuItem
             // 
@@ -391,10 +450,12 @@
             this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.showTypeToolStripMenuItem,
             this.showGridToolStripMenuItem,
-            this.toolStripMenuItem2,
+            this.toolStripSeparator5,
+            this.showEnemiesToolStripMenuItem,
+            this.toolStripSeparator2,
             this.viewPlatformsToolStripMenuItem,
             this.viewThreatsToolStripMenuItem,
-            this.toolStripMenuItem3,
+            this.toolStripSeparator3,
             this.exportCheckToolStripMenuItem});
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
             this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
@@ -420,10 +481,15 @@
             this.showGridToolStripMenuItem.Text = "Show &Grid";
             this.showGridToolStripMenuItem.Click += new System.EventHandler(this.ShowGridToolStripMenuItemClick);
             // 
-            // toolStripMenuItem2
+            // toolStripSeparator5
             // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(223, 6);
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(223, 6);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(223, 6);
             // 
             // viewPlatformsToolStripMenuItem
             // 
@@ -443,10 +509,10 @@
             this.viewThreatsToolStripMenuItem.Text = "View Threats";
             this.viewThreatsToolStripMenuItem.Click += new System.EventHandler(this.ViewThreatsToolStripMenuItemClick);
             // 
-            // toolStripMenuItem3
+            // toolStripSeparator3
             // 
-            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(223, 6);
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(223, 6);
             // 
             // exportCheckToolStripMenuItem
             // 
@@ -457,15 +523,17 @@
             this.exportCheckToolStripMenuItem.Text = "Export Check";
             this.exportCheckToolStripMenuItem.Click += new System.EventHandler(this.ExportCheckToolStripMenuItemClick);
             // 
-            // listView1
+            // showEnemiesToolStripMenuItem
             // 
-            this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1});
-            this.listView1.Location = new System.Drawing.Point(42, 290);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(121, 97);
-            this.listView1.TabIndex = 0;
-            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.showEnemiesToolStripMenuItem.Checked = true;
+            this.showEnemiesToolStripMenuItem.CheckOnClick = true;
+            this.showEnemiesToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.showEnemiesToolStripMenuItem.Name = "showEnemiesToolStripMenuItem";
+            this.showEnemiesToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.E)));
+            this.showEnemiesToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.showEnemiesToolStripMenuItem.Text = "Show &Enemies";
+            this.showEnemiesToolStripMenuItem.Click += new System.EventHandler(this.ShowEnemiesToolStripMenuItemClick);
             // 
             // LevelEditor
             // 
@@ -492,6 +560,7 @@
             this.bgTabPage.ResumeLayout(false);
             this.bgTabControl.ResumeLayout(false);
             this.enTabPage.ResumeLayout(false);
+            this.enTabBottomPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.selectedTilePictureBox)).EndInit();
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
@@ -522,7 +591,7 @@
         private System.Windows.Forms.ToolStripMenuItem propertiesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem undoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem redoToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem transformToolStripMenuItem;
@@ -531,10 +600,10 @@
         private System.Windows.Forms.Label uniqueTilesLabel;
         private System.Windows.Forms.Label uniqueTilesCountLabel;
         private System.Windows.Forms.ToolStripMenuItem exportImageToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem viewPlatformsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewThreatsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem exportCheckToolStripMenuItem;
         private System.Windows.Forms.TabControl bgTabControl;
         private System.Windows.Forms.TabPage blockingTilesTabPage;
@@ -543,6 +612,12 @@
         private System.Windows.Forms.TabControl mainTabControl;
         private System.Windows.Forms.TabPage bgTabPage;
         private System.Windows.Forms.TabPage enTabPage;
-        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.Panel enTabBottomPanel;
+        private System.Windows.Forms.Button editEnemyButton;
+        private System.Windows.Forms.Button deleteEnemyButton;
+        private System.Windows.Forms.Button addEnemyButton;
+        private System.Windows.Forms.ListBox enemiesListBox;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem showEnemiesToolStripMenuItem;
     }
 }

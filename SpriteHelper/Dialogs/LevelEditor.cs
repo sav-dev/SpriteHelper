@@ -21,12 +21,14 @@ namespace SpriteHelper.Dialogs
 
         // Palette tabs.
         private Dictionary<TileType, TabPage> tileTabs;
+        private Color TransparentColor => this.palettes.SpritesPalette.First().ActualColors.First();
 
         // Background bitmaps, keys: type -> palette.
         private Dictionary<TileType, Dictionary<int, MyBitmap>> bgBitmaps;
 
         // Enemy bitmaps, keys: name -> flip
-        private Dictionary<string, Dictionary<bool, MyBitmap>> enBitmaps;
+        private Dictionary<string, Dictionary<bool, Bitmap>> enBitmaps;
+        private Dictionary<string, Bitmap> enBitmapsSimple => this.enBitmaps.Keys.ToDictionary(k => k, k => this.enBitmaps[k][false]);
 
         // Cached tiles. Key is tile ID + palette.
         private Dictionary<string, Bitmap[]> tiles;
@@ -37,9 +39,8 @@ namespace SpriteHelper.Dialogs
         private const int HeightInTiles = 15;
 
         // Zoom and tile width
-        private const int Zoom = 2;
-        private const int TileWidth = Constants.BackgroundTileWidth * Zoom;
-        private const int TileHeight = Constants.BackgroundTileHeight * Zoom;
+        public const int TileWidth = Constants.BackgroundTileWidth * Constants.LevelEditorZoom;
+        public const int TileHeight = Constants.BackgroundTileHeight * Constants.LevelEditorZoom;
 
         // Empty tile for the level.
         private string emptyTile;
@@ -175,7 +176,11 @@ namespace SpriteHelper.Dialogs
                 for (var palette = 0; palette < 4; palette++)
                 {
                     var tileBitmaps = new Bitmap[(int)TileVersion.All + 1];
-                    var tileBitmap = bgBitmaps[tile.Type][palette].GetPart(tile.X * Constants.BackgroundTileWidth, tile.Y * Constants.BackgroundTileHeight, Constants.BackgroundTileWidth, Constants.BackgroundTileHeight).Scale(Zoom);
+                    var tileBitmap = bgBitmaps[tile.Type][palette].GetPart(
+                        tile.X * Constants.BackgroundTileWidth, 
+                        tile.Y * Constants.BackgroundTileHeight, 
+                        Constants.BackgroundTileWidth, 
+                        Constants.BackgroundTileHeight).Scale(Constants.LevelEditorZoom);
 
                     // None
                     tileBitmaps[(int)TileVersion.None] = tileBitmap.ToBitmap();
@@ -242,35 +247,35 @@ namespace SpriteHelper.Dialogs
 
             // Load enemies config
             this.enConfig = SpriteConfig.Read(enSpec, this.palettes);
-            this.enBitmaps = new Dictionary<string, Dictionary<bool, MyBitmap>>();
+            this.enBitmaps = new Dictionary<string, Dictionary<bool, Bitmap>>();
 
             // Prerender each enemy
             foreach (var animation in this.enConfig.Animations)
             {
                 var firstFrame = animation.Frames.First();
                 
-                this.enBitmaps.Add(animation.Name, new Dictionary<bool, MyBitmap>());
+                this.enBitmaps.Add(animation.Name, new Dictionary<bool, Bitmap>());
 
                 this.enBitmaps[animation.Name].Add(
                     false,
-                    firstFrame.GetGridMyBitmap(
+                    firstFrame.GetGridBitmap(
                         Color.Black,
                         true,
                         false,
                         false,
                         false,
-                        Zoom,
+                        Constants.LevelEditorZoom,
                         null));
 
                 this.enBitmaps[animation.Name].Add(
                     true,
-                    firstFrame.GetGridMyBitmap(
+                    firstFrame.GetGridBitmap(
                         Color.Black,
                         true,
                         false,
                         animation.Flip == Flip.Vertical,
                         animation.Flip == Flip.Horizontal,
-                        Zoom,
+                        Constants.LevelEditorZoom,
                         null));
             }
 
@@ -302,7 +307,7 @@ namespace SpriteHelper.Dialogs
                 {
                     var tileSelector = new TileSelector(this.bgBitmaps[type][palette], type, palette, id => this.SetSelectedTile(id));
 
-                    var tableLayoutPanel = new TableLayoutPanel { Dock = DockStyle.Fill, BackColor = this.palettes.BackgroundPalette[0].ActualColors[0] };
+                    var tableLayoutPanel = new TableLayoutPanel { Dock = DockStyle.Fill, BackColor = this.TransparentColor };
                     tableLayoutPanel.ColumnCount = 1;
                     tableLayoutPanel.RowCount = 1;
                     tableLayoutPanel.Controls.Add(tileSelector, 0, 0);
@@ -345,7 +350,7 @@ namespace SpriteHelper.Dialogs
 
         public Point MouseGamePosition(int x, int y)
         {
-            return new Point(x / Zoom, y / Zoom);
+            return new Point(x / Constants.LevelEditorZoom, y / Constants.LevelEditorZoom);
         }
 
         public void UpdateDrawPanel()
@@ -444,9 +449,11 @@ namespace SpriteHelper.Dialogs
 
         private void UpdateBitmap()
         {
+            // Create bitmap.
             this.bitmap = new Bitmap(this.level.Length * TileWidth, this.level[0].Length * TileHeight);
             this.graphics = Graphics.FromImage(this.bitmap);
 
+            // Draw background.
             for (var x = 0; x < this.level.Length; x++)
             {
                 for (var y = 0; y < this.level[x].Length; y++)
@@ -454,6 +461,16 @@ namespace SpriteHelper.Dialogs
                     var key = this.level[x][y];
                     var image = this.tiles[key][(int)this.Settings];
                     this.graphics.DrawImage(image, new Point(x * TileWidth, y * TileHeight));
+                }
+            }
+
+            // Draw enemies.
+            if (this.showEnemiesToolStripMenuItem.Checked)
+            {
+                foreach (var enemy in Enemies)
+                {
+                    var image = this.enBitmaps[enemy.Name][enemy.InitialFlip];
+                    this.graphics.DrawImage(image, new Point(enemy.X * Constants.LevelEditorZoom, enemy.Y * Constants.LevelEditorZoom));
                 }
             }
 
@@ -494,6 +511,11 @@ namespace SpriteHelper.Dialogs
         }
 
         private void ShowGridToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            this.UpdateBitmap();
+        }
+
+        private void ShowEnemiesToolStripMenuItemClick(object sender, EventArgs e)
         {
             this.UpdateBitmap();
         }
@@ -1350,6 +1372,137 @@ namespace SpriteHelper.Dialogs
 
         #endregion
 
+        #region Enemies
+
+        public List<Enemy> Enemies => this.enemiesListBox.Items.Cast<Enemy>().ToList();
+
+        public Enemy SelectedEnemy => this.enemiesListBox.SelectedItem as Enemy;        
+
+        private void EnemiesListBoxSelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.deleteEnemyButton.Enabled = this.SelectedEnemy != null;
+            this.editEnemyButton.Enabled = this.SelectedEnemy != null;
+
+            // ...
+        }
+
+        private void DeleteEnemyButtonClick(object sender, EventArgs e)
+        {
+            this.enemiesListBox.Items.Remove(this.SelectedEnemy);
+            this.UpdateBitmap();
+        }
+
+        private void AddEnemyButtonClick(object sender, EventArgs e)
+        {
+            this.AddOrEditEnemy(null);
+        }
+
+        private void EditEnemyButtonClick(object sender, EventArgs e)
+        {
+            this.AddOrEditEnemy(this.SelectedEnemy);
+        }
+
+        private void AddOrEditEnemy(Enemy selectedEnemy)
+        {
+            // Show the dialog.
+            var dialog = new AddEditEnemyDialog(selectedEnemy, this.enBitmapsSimple, this.TransparentColor, this.ValidateEnemy);
+            dialog.ShowDialog();
+            if (!dialog.Succeeded)
+            {
+                return;
+            }
+
+            // Get the new enemy.
+            Enemy newEnemy;
+            if (!dialog.TryGetEnemy(this.enConfig, out newEnemy))
+            {
+                MessageBox.Show("Something went wrong.");
+                return;
+            }
+
+            // Remove old enemy from the list if given.
+            if (selectedEnemy != null)
+            {
+                this.enemiesListBox.Items.Remove(selectedEnemy);
+            }
+
+            // Add the new enemy to the list and select it.
+            this.enemiesListBox.Items.Add(newEnemy);
+            this.enemiesListBox.SelectedItem = newEnemy;
+
+            // Sort the list.
+            this.SortEnemiesListBox();
+
+            // Update bitmap.
+            this.UpdateBitmap();
+        }
+
+        private void SortEnemiesListBox()
+        {
+            // Sort by X. Keep the same item selected.
+            var selectedItem = this.SelectedEnemy;
+            var enemies = this.enemiesListBox.Items.Cast<Enemy>().OrderBy(e => e.X).ToArray();
+            this.enemiesListBox.Items.Clear();
+            this.enemiesListBox.Items.AddRange(enemies);
+            if (selectedItem != null)
+            {
+                this.enemiesListBox.SelectedItem = selectedItem;
+            }
+        }
+
+        private bool ValidateEnemy(AddEditEnemyDialog dialog)
+        {
+            // Validate position.
+            int x;
+            if (!dialog.TryGetX(out x))
+            {
+                MessageBox.Show("X is not a valid number");
+                return false;
+            }
+
+            if (x > this.level.Length * TileWidth)
+            {
+                MessageBox.Show("X is too high");
+                return false;
+            }
+
+            if (x < 0)
+            {
+                MessageBox.Show("X cannot be negative");
+                return false;
+            }
+
+            int y;
+            if (!dialog.TryGetY(out y))
+            {
+                MessageBox.Show("Y is not a valid number");
+                return false;
+            }
+
+            if (y > this.level[0].Length * TileHeight)
+            {
+                MessageBox.Show("Y is too high");
+                return false;
+            }
+
+            if (y < 0)
+            {
+                MessageBox.Show("Y cannot be negative");
+                return false;
+            }
+
+            Enemy enemy;
+            if (!dialog.TryGetEnemy(this.enConfig, out enemy))
+            {
+                MessageBox.Show("Something went wrong.");
+                return false;
+            }
+
+            return true;
+        }
+
+        #endregion
+
         #region HelperTypes
 
         ////
@@ -1375,7 +1528,7 @@ namespace SpriteHelper.Dialogs
             public TileSelector(MyBitmap image, TileType tileType, int palette, Action<string> onClick)
             {
                 this.Anchor = AnchorStyles.None;
-                this.bitmap = image.Scale(Zoom).ToBitmap();
+                this.bitmap = image.Scale(Constants.LevelEditorZoom).ToBitmap();
                 this.Image = this.bitmap;
                 this.Size = this.bitmap.Size;
                 this.Cursor = Cursors.Cross;
@@ -1416,6 +1569,6 @@ namespace SpriteHelper.Dialogs
             }
         }
 
-        #endregion        
+        #endregion
     }
 }
