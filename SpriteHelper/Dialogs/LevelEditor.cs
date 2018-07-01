@@ -483,6 +483,8 @@ namespace SpriteHelper.Dialogs
             {
                 foreach (var enemy in Enemies)
                 {
+                    // todo: make sure one color is transparent
+
                     var image = this.enBitmaps[enemy.Name][enemy.InitialFlip];
                     this.graphics.DrawImage(image, new Point(enemy.X * Constants.LevelEditorZoom, enemy.Y * Constants.LevelEditorZoom));
 
@@ -837,7 +839,28 @@ namespace SpriteHelper.Dialogs
             else
             {
                 // If control pressed, select an ememy and (on right click) open edit window.
-                // todo enemies implement
+                var position = MouseGamePosition(e.X, e.Y);
+                var clickedEnemy = this.Enemies.FirstOrDefault(en => en.Select(position));
+                if (clickedEnemy != null)
+                {
+                    var left = e.Button.HasFlag(MouseButtons.Left);
+                    var right = e.Button.HasFlag(MouseButtons.Right);
+                    if (left || right)
+                    {
+                        this.mainTabControl.SelectedTab = enTabPage;
+                        this.enemiesListBox.Focus();
+                        this.enemiesListBox.SelectedItem = clickedEnemy;                        
+
+                        if (right)
+                        {
+                            this.AddOrEditEnemy(this.SelectedEnemy);
+                        }
+                    }                    
+                }
+                else
+                {
+                    this.enemiesListBox.SelectedItem = null;
+                }              
             }
         }
 
@@ -1053,7 +1076,7 @@ namespace SpriteHelper.Dialogs
             result.AddRange(GetPlatformAndThreatData(logger));
             logger.WriteLineIfNotNull();
 
-            // todo: add information about starting position, enemies etc
+            // todo: add information about starting position, level end, enemies etc
 
             return result.ToArray();
         }
@@ -1414,7 +1437,7 @@ namespace SpriteHelper.Dialogs
             if (this.SelectedEnemy != null)
             {
                 // Center the screen on the enemy if not on screen.
-                // todo enemies implement
+                // todo: implement
             }
         }
 
