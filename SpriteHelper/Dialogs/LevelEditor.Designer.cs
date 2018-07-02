@@ -74,6 +74,7 @@
             this.viewThreatsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.exportCheckToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.findEnemyButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerVertical)).BeginInit();
             this.splitContainerVertical.Panel1.SuspendLayout();
             this.splitContainerVertical.Panel2.SuspendLayout();
@@ -229,10 +230,12 @@
             this.enemiesListBox.SelectedIndexChanged += new System.EventHandler(this.EnemiesListBoxSelectedIndexChanged);
             this.enemiesListBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.EnemiesListBoxKeyDown);
             this.enemiesListBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.EnemiesListBoxMouseDoubleClick);
+            this.enemiesListBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.EnemiesListBoxMouseDown);
             // 
             // enTabBottomPanel
             // 
             this.enTabBottomPanel.Controls.Add(this.editEnemyButton);
+            this.enTabBottomPanel.Controls.Add(this.findEnemyButton);
             this.enTabBottomPanel.Controls.Add(this.deleteEnemyButton);
             this.enTabBottomPanel.Controls.Add(this.addEnemyButton);
             this.enTabBottomPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -244,9 +247,9 @@
             // editEnemyButton
             // 
             this.editEnemyButton.Enabled = false;
-            this.editEnemyButton.Location = new System.Drawing.Point(220, 7);
+            this.editEnemyButton.Location = new System.Drawing.Point(152, 7);
             this.editEnemyButton.Name = "editEnemyButton";
-            this.editEnemyButton.Size = new System.Drawing.Size(75, 23);
+            this.editEnemyButton.Size = new System.Drawing.Size(66, 23);
             this.editEnemyButton.TabIndex = 2;
             this.editEnemyButton.Text = "Edit";
             this.editEnemyButton.UseVisualStyleBackColor = true;
@@ -255,9 +258,9 @@
             // deleteEnemyButton
             // 
             this.deleteEnemyButton.Enabled = false;
-            this.deleteEnemyButton.Location = new System.Drawing.Point(114, 7);
+            this.deleteEnemyButton.Location = new System.Drawing.Point(80, 7);
             this.deleteEnemyButton.Name = "deleteEnemyButton";
-            this.deleteEnemyButton.Size = new System.Drawing.Size(75, 23);
+            this.deleteEnemyButton.Size = new System.Drawing.Size(66, 23);
             this.deleteEnemyButton.TabIndex = 1;
             this.deleteEnemyButton.Text = "Delete";
             this.deleteEnemyButton.UseVisualStyleBackColor = true;
@@ -267,7 +270,7 @@
             // 
             this.addEnemyButton.Location = new System.Drawing.Point(8, 7);
             this.addEnemyButton.Name = "addEnemyButton";
-            this.addEnemyButton.Size = new System.Drawing.Size(75, 23);
+            this.addEnemyButton.Size = new System.Drawing.Size(66, 23);
             this.addEnemyButton.TabIndex = 0;
             this.addEnemyButton.Text = "Add";
             this.addEnemyButton.UseVisualStyleBackColor = true;
@@ -537,6 +540,17 @@
             this.exportCheckToolStripMenuItem.Text = "Export Check";
             this.exportCheckToolStripMenuItem.Click += new System.EventHandler(this.ExportCheckToolStripMenuItemClick);
             // 
+            // findEnemyButton
+            // 
+            this.findEnemyButton.Enabled = false;
+            this.findEnemyButton.Location = new System.Drawing.Point(224, 7);
+            this.findEnemyButton.Name = "findEnemyButton";
+            this.findEnemyButton.Size = new System.Drawing.Size(66, 23);
+            this.findEnemyButton.TabIndex = 2;
+            this.findEnemyButton.Text = "Find";
+            this.findEnemyButton.UseVisualStyleBackColor = true;
+            this.findEnemyButton.Click += new System.EventHandler(this.FindEnemyButtonClick);
+            // 
             // LevelEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -621,5 +635,6 @@
         private System.Windows.Forms.ListBox enemiesListBox;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem showEnemiesToolStripMenuItem;
+        private System.Windows.Forms.Button findEnemyButton;
     }
 }

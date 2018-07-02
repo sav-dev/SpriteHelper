@@ -836,9 +836,9 @@ namespace SpriteHelper.Dialogs
                     this.DrawPanelDrawTileCursor(position);
                 }
             }
-            else
+            else if (this.showEnemiesToolStripMenuItem.Checked)
             {
-                // If control pressed, select an ememy and (on right click) open edit window.
+                // If control pressed, if enemies are shown, select an ememy and (on right click) open edit window.
                 var position = MouseGamePosition(e.X, e.Y);
                 var clickedEnemy = this.Enemies.FirstOrDefault(en => en.Select(position));
                 if (clickedEnemy != null)
@@ -853,7 +853,7 @@ namespace SpriteHelper.Dialogs
 
                         if (right)
                         {
-                            this.AddOrEditEnemy(this.SelectedEnemy);
+                            this.EditEnemy();
                         }
                     }                    
                 }
@@ -981,6 +981,8 @@ namespace SpriteHelper.Dialogs
         ////
         //// History stuff
         ////
+
+        // todo: history for enemies? Easy to add, have both tiles and enemies
 
         public void ClearHistory()
         {
@@ -1430,20 +1432,39 @@ namespace SpriteHelper.Dialogs
             // Enable/disable buttons.
             this.deleteEnemyButton.Enabled = this.SelectedEnemy != null;
             this.editEnemyButton.Enabled = this.SelectedEnemy != null;
+            this.findEnemyButton.Enabled = this.SelectedEnemy != null;
 
             // Update bitmap (highlight enemy).
             this.UpdateBitmap();
+        }
 
-            if (this.SelectedEnemy != null)
+        private void EnemiesListBoxMouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button.HasFlag(MouseButtons.Right))
             {
-                // Center the screen on the enemy if not on screen.
-                // todo: implement
+                var index = this.enemiesListBox.IndexFromPoint(e.Location);
+                if (index != ListBox.NoMatches)
+                {
+                    var item = this.enemiesListBox.Items[index];
+                    this.enemiesListBox.SelectedItem = item;
+
+                    // On right click edit the enemy.
+                    this.EditEnemy();
+                }
             }
         }
 
         private void EnemiesListBoxMouseDoubleClick(object sender, MouseEventArgs e)
         {
-            this.AddOrEditEnemy(this.SelectedEnemy);
+            var index = this.enemiesListBox.IndexFromPoint(e.Location);
+            if (index != ListBox.NoMatches)
+            {
+                var item = this.enemiesListBox.Items[index];
+                if (item == this.SelectedEnemy)
+                {
+                    this.FindEnemy();
+                }
+            }            
         }
 
         private void EnemiesListBoxKeyDown(object sender, KeyEventArgs e)
@@ -1455,18 +1476,38 @@ namespace SpriteHelper.Dialogs
             }
         }
 
+        private void AddEnemyButtonClick(object sender, EventArgs e)
+        {
+            this.AddEnemy();
+        }
+
         private void DeleteEnemyButtonClick(object sender, EventArgs e)
         {
             this.enemiesListBox.Items.Remove(this.SelectedEnemy);
             this.UpdateBitmap();
         }
 
-        private void AddEnemyButtonClick(object sender, EventArgs e)
+        private void EditEnemyButtonClick(object sender, EventArgs e)
+        {
+            this.EditEnemy();
+        }
+
+        private void FindEnemyButtonClick(object sender, EventArgs e)
+        {
+            this.FindEnemy();
+        }
+
+        private void FindEnemy()
+        {
+            // todo: find the enemy
+        }
+
+        private void AddEnemy()
         {
             this.AddOrEditEnemy(null);
         }
 
-        private void EditEnemyButtonClick(object sender, EventArgs e)
+        private void EditEnemy()
         {
             this.AddOrEditEnemy(this.SelectedEnemy);
         }
