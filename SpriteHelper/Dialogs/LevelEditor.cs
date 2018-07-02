@@ -1504,7 +1504,35 @@ namespace SpriteHelper.Dialogs
 
         private void FindEnemy()
         {
-            // todo: find the enemy
+            if (this.SelectedEnemy == null)
+            {
+                // No enemy selected.
+                return;
+            }
+
+            if (!this.scrollBar.Enabled)
+            {
+                // Level too small, no scroll.
+                return;
+            }
+
+            // Get enemy's center in metatiles.
+            var enemyRectangle = this.SelectedEnemy.GetGameRectangleInMetaTiles();
+            var x1 = enemyRectangle.X;
+            var x2 = enemyRectangle.X + enemyRectangle.Width;
+            var center = (x1 + x2) / 2;
+
+            // Outer panel width in metatiles.
+            var outerOuterPanelWidth = this.outerOuterDrawPanel.Width;
+            var outerOuterPanelWidthInMetaTiles = outerOuterPanelWidth / TileWidth;
+
+            // TARGET SCROLL + OUTER PANEL WIDTH / 2 = ENEMY CENTER
+            // TARGET SCROLL = ENEMY CENTER - OUTER PANEL WIDTH / 2
+
+            // Calculate target scroll.
+            var targetScroll = Math.Max(0, center - outerOuterPanelWidthInMetaTiles / 2);
+            this.scrollBar.Value = targetScroll;
+            this.UpdateScroll();
         }
 
         private void AddEnemy()
