@@ -28,7 +28,10 @@ namespace SpriteHelper.Dialogs
 
         // Enemy bitmaps, keys: name -> flip
         private Dictionary<string, Dictionary<bool, Bitmap>> enBitmaps;
-        private Dictionary<string, Bitmap> enBitmapsSimple => this.enBitmaps.Keys.ToDictionary(k => k, k => this.enBitmaps[k][false]);
+
+        // Add/edit enemy dictionaries.
+        private Dictionary<string, Bitmap> enBitmapsSimple;
+        private Dictionary<string, MovementType[]> enMovements;
 
         // Cached tiles. Key is tile ID + palette.
         private Dictionary<string, Bitmap[]> tiles;
@@ -291,6 +294,25 @@ namespace SpriteHelper.Dialogs
 
             this.enemiesListBox.Items.Clear();
             this.enemiesListBox.Items.AddRange(enemies);
+
+            // Add/edit enemy dictionaries.
+            this.enBitmapsSimple = this.enBitmaps.Keys.ToDictionary(k => k, k => this.enBitmaps[k][false]);
+            this.enMovements = this.enConfig.Animations.ToDictionary(
+                a => a.Name,
+                a =>
+                {
+                    var movements = new List<MovementType> { MovementType.None, MovementType.Horizontal, MovementType.Vertical };
+                    if (a.Flip == Flip.Horizontal)
+                    {
+                        movements.Remove(MovementType.Vertical);
+                    }
+                    else if (a.Flip == Flip.Vertical)
+                    {
+                        movements.Remove(MovementType.Horizontal);
+                    }
+
+                    return movements.ToArray();
+                });
 
             // Populate tiles, set level.
             this.PopulateTiles();
@@ -1550,7 +1572,7 @@ namespace SpriteHelper.Dialogs
             // todo: save history in this method
 
             // Show the dialog.
-            var dialog = new AddEditEnemyDialog(selectedEnemy, this.enBitmapsSimple, this.TransparentColor, this.ValidateEnemy);
+            var dialog = new AddEditEnemyDialog(selectedEnemy, this.enBitmapsSimple, this.enMovements, this.TransparentColor, this.ValidateEnemy);
             dialog.ShowDialog();
             if (!dialog.Succeeded)
             {
@@ -1606,23 +1628,11 @@ namespace SpriteHelper.Dialogs
 
         private bool ValidateEnemy(AddEditEnemyDialog dialog)
         {
-            // Validate position.
+            // Get all values.
             int x;
             if (!dialog.TryGetX(out x))
             {
                 MessageBox.Show("X is not a valid number");
-                return false;
-            }
-
-            if (x > this.level.Length * TileWidth)
-            {
-                MessageBox.Show("X is too high");
-                return false;
-            }
-
-            if (x < 0)
-            {
-                MessageBox.Show("X cannot be negative");
                 return false;
             }
 
@@ -1633,18 +1643,28 @@ namespace SpriteHelper.Dialogs
                 return false;
             }
 
-            if (y > this.level[0].Length * TileHeight)
+            int speed;
+            if (!dialog.TryGetSpeed(out speed))
             {
-                MessageBox.Show("Y is too high");
+                MessageBox.Show("Speed is not a valid number");
                 return false;
             }
 
-            if (y < 0)
+            int min;
+            if (!dialog.TryGetMin(out min))
             {
-                MessageBox.Show("Y cannot be negative");
+                MessageBox.Show("Min. position is not a valid number");
                 return false;
             }
 
+            int max;
+            if (!dialog.TryGetMin(out max))
+            {
+                MessageBox.Show("Max. position is not a valid number");
+                return false;
+            }
+
+            // Try creating an enemy. This should never fail.
             Enemy enemy;
             if (!dialog.TryGetEnemy(this.enConfig, out enemy))
             {
@@ -1652,6 +1672,81 @@ namespace SpriteHelper.Dialogs
                 return false;
             }
 
+            // Validate the enemy.
+            return this.ValidateEnemy(enemy);
+        }
+
+        private bool ValidateEnemy(Enemy enemy)
+        {
+            if (!ValidateEnemyPosition(enemy))
+            {
+                return false;
+            }
+
+            if (!ValidateEnemyMovement(enemy))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool ValidateEnemyPosition(Enemy enemy)
+        {
+            if (enemy.X > this.level.Length * TileWidth)
+            {
+                MessageBox.Show("X is too high");
+                return false;
+            }
+
+            if (enemy.X < 0)
+            {
+                MessageBox.Show("X cannot be negative");
+                return false;
+            }
+
+            if (enemy.Y > this.level[0].Length * TileHeight)
+            {
+                MessageBox.Show("Y is too high");
+                return false;
+            }
+
+            if (enemy.Y < 0)
+            {
+                MessageBox.Show("Y cannot be negative");
+                return false;
+            }
+
+            // todo: validate limit of enemies per screen (or do it elsewhere?)
+
+            return true;
+        }
+
+        private bool ValidateEnemyMovement(Enemy enemy)
+        {
+            if (enemy.Speed < 0)
+            {
+                MessageBox.Show("Speed cannot be negative");
+                return false;
+            }
+
+            if (enemy.Speed > 255)
+            {
+                MessageBox.Show("Speed is too high");
+                return false;
+            }
+
+            if (enemy.MinPosition > enemy.MaxPosition)
+            {
+                MessageBox.Show("Min. position must be less than max. position");
+                return false;
+            }
+
+            // todo: validate min <= position
+            // todo: validate max >= position
+            // todo: validate min and max are reachable
+            // todo: validate there's enough of a gap for at least one movement cycle
+            // todo: validate enemy doesn't go out of bounds
             return true;
         }
 

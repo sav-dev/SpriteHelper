@@ -32,15 +32,18 @@
             this.okButton = new System.Windows.Forms.Button();
             this.enemyComboBox = new System.Windows.Forms.ComboBox();
             this.enemyPictureBox = new System.Windows.Forms.PictureBox();
-            this.initialFlipCheckBox = new System.Windows.Forms.CheckBox();
-            this.initialFlipLabel = new System.Windows.Forms.Label();
             this.positionGroupBox = new System.Windows.Forms.GroupBox();
+            this.positionPanel = new SpriteHelper.Controls.PositionPanel();
+            this.movementGroupBox = new System.Windows.Forms.GroupBox();
+            this.movementPanel = new SpriteHelper.Controls.MovementPanel();
             ((System.ComponentModel.ISupportInitialize)(this.enemyPictureBox)).BeginInit();
+            this.positionGroupBox.SuspendLayout();
+            this.movementGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // cancelButton
             // 
-            this.cancelButton.Location = new System.Drawing.Point(510, 209);
+            this.cancelButton.Location = new System.Drawing.Point(548, 161);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(55, 23);
             this.cancelButton.TabIndex = 43;
@@ -50,7 +53,7 @@
             // 
             // okButton
             // 
-            this.okButton.Location = new System.Drawing.Point(449, 209);
+            this.okButton.Location = new System.Drawing.Point(487, 161);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(55, 23);
             this.okButton.TabIndex = 42;
@@ -62,7 +65,7 @@
             // 
             this.enemyComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.enemyComboBox.FormattingEnabled = true;
-            this.enemyComboBox.Location = new System.Drawing.Point(421, 12);
+            this.enemyComboBox.Location = new System.Drawing.Point(459, 12);
             this.enemyComboBox.Name = "enemyComboBox";
             this.enemyComboBox.Size = new System.Drawing.Size(144, 21);
             this.enemyComboBox.TabIndex = 44;
@@ -72,50 +75,57 @@
             // 
             this.enemyPictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.enemyPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.enemyPictureBox.Location = new System.Drawing.Point(421, 39);
+            this.enemyPictureBox.Location = new System.Drawing.Point(459, 39);
             this.enemyPictureBox.Name = "enemyPictureBox";
             this.enemyPictureBox.Size = new System.Drawing.Size(144, 116);
             this.enemyPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.enemyPictureBox.TabIndex = 45;
             this.enemyPictureBox.TabStop = false;
             // 
-            // initialFlipCheckBox
-            // 
-            this.initialFlipCheckBox.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.initialFlipCheckBox.AutoSize = true;
-            this.initialFlipCheckBox.Location = new System.Drawing.Point(136, 212);
-            this.initialFlipCheckBox.Name = "initialFlipCheckBox";
-            this.initialFlipCheckBox.Size = new System.Drawing.Size(15, 14);
-            this.initialFlipCheckBox.TabIndex = 5;
-            this.initialFlipCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // initialFlipLabel
-            // 
-            this.initialFlipLabel.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.initialFlipLabel.AutoSize = true;
-            this.initialFlipLabel.Location = new System.Drawing.Point(59, 213);
-            this.initialFlipLabel.Name = "initialFlipLabel";
-            this.initialFlipLabel.Size = new System.Drawing.Size(47, 13);
-            this.initialFlipLabel.TabIndex = 6;
-            this.initialFlipLabel.Text = "Initial flip";
-            // 
             // positionGroupBox
             // 
+            this.positionGroupBox.Controls.Add(this.positionPanel);
             this.positionGroupBox.Location = new System.Drawing.Point(12, 12);
             this.positionGroupBox.Name = "positionGroupBox";
-            this.positionGroupBox.Size = new System.Drawing.Size(403, 100);
+            this.positionGroupBox.Size = new System.Drawing.Size(441, 102);
             this.positionGroupBox.TabIndex = 46;
             this.positionGroupBox.TabStop = false;
             this.positionGroupBox.Text = "Position";
+            // 
+            // positionPanel
+            // 
+            this.positionPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.positionPanel.Location = new System.Drawing.Point(3, 16);
+            this.positionPanel.Name = "positionPanel";
+            this.positionPanel.Size = new System.Drawing.Size(435, 83);
+            this.positionPanel.TabIndex = 0;
+            // 
+            // movementGroupBox
+            // 
+            this.movementGroupBox.Controls.Add(this.movementPanel);
+            this.movementGroupBox.Location = new System.Drawing.Point(12, 117);
+            this.movementGroupBox.Name = "movementGroupBox";
+            this.movementGroupBox.Size = new System.Drawing.Size(441, 170);
+            this.movementGroupBox.TabIndex = 47;
+            this.movementGroupBox.TabStop = false;
+            this.movementGroupBox.Text = "Movement";
+            // 
+            // movementPanel
+            // 
+            this.movementPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.movementPanel.InitialFlip = false;
+            this.movementPanel.Location = new System.Drawing.Point(3, 16);
+            this.movementPanel.Name = "movementPanel";
+            this.movementPanel.Size = new System.Drawing.Size(435, 151);
+            this.movementPanel.TabIndex = 0;
             // 
             // AddEditEnemyDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(577, 241);
+            this.ClientSize = new System.Drawing.Size(618, 303);
+            this.Controls.Add(this.movementGroupBox);
             this.Controls.Add(this.positionGroupBox);
-            this.Controls.Add(this.initialFlipLabel);
-            this.Controls.Add(this.initialFlipCheckBox);
             this.Controls.Add(this.enemyPictureBox);
             this.Controls.Add(this.enemyComboBox);
             this.Controls.Add(this.cancelButton);
@@ -124,8 +134,9 @@
             this.Name = "AddEditEnemyDialog";
             this.Text = "placeholder";
             ((System.ComponentModel.ISupportInitialize)(this.enemyPictureBox)).EndInit();
+            this.positionGroupBox.ResumeLayout(false);
+            this.movementGroupBox.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -135,8 +146,9 @@
         private System.Windows.Forms.Button okButton;
         private System.Windows.Forms.ComboBox enemyComboBox;
         private System.Windows.Forms.PictureBox enemyPictureBox;
-        private System.Windows.Forms.CheckBox initialFlipCheckBox;
-        private System.Windows.Forms.Label initialFlipLabel;
         private System.Windows.Forms.GroupBox positionGroupBox;
+        private System.Windows.Forms.GroupBox movementGroupBox;
+        private Controls.PositionPanel positionPanel;
+        private Controls.MovementPanel movementPanel;
     }
 }

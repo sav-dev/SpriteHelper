@@ -10,30 +10,27 @@ namespace SpriteHelper.Dialogs
 {
     public partial class AddEditEnemyDialog : Form
     {
+        // todo: tab order
+        // todo: close on esc
+
         //
         // Class.
         //
 
-        // Controls.
-        PositionPanel positionPanel;
-
         // Private fields
-        Dictionary<string, Bitmap> enemies;
+        Dictionary<string, Bitmap> bitmaps;
+        Dictionary<string, MovementType[]> movements;
         Func<AddEditEnemyDialog, bool> validationFunction;
 
         // Constructor.
         public AddEditEnemyDialog(
             Enemy existingEnemy,
-            Dictionary<string, Bitmap> enemies,
+            Dictionary<string, Bitmap> bitmaps,
+            Dictionary<string, MovementType[]> movements,
             Color backColor,
             Func<AddEditEnemyDialog, bool> validationFunction)
         {            
             this.InitializeComponent();
-
-            // Create controls.
-            this.positionPanel = new PositionPanel();
-            this.positionPanel.Dock = DockStyle.Fill;
-            this.positionGroupBox.Controls.Add(this.positionPanel);
 
             // Set header.
             var add = existingEnemy == null;
@@ -41,21 +38,26 @@ namespace SpriteHelper.Dialogs
 
             // Set right back color, store the dictionary of enemies.
             this.enemyPictureBox.BackColor = backColor;
-            this.enemies = enemies;
+            this.bitmaps = bitmaps;
+            this.movements = movements;
 
-            // Populate the combo box, select the right element.
-            this.enemyComboBox.Items.AddRange(enemies.Keys.ToArray());
+            // Populate the combo box, select the right element (or first one if adding).
+            this.enemyComboBox.Items.AddRange(bitmaps.Keys.ToArray());
             this.enemyComboBox.SelectedIndex = add ? 0 : this.enemyComboBox.Items.IndexOf(existingEnemy.Name);
 
             // Store the validation function.
             this.validationFunction = validationFunction;
 
-            // If editing, populate values.
+            // If editing, populate values, otherwise set defaults.
             if (!add)
             {
                 this.positionPanel.SetX(existingEnemy.X);
                 this.positionPanel.SetY(existingEnemy.Y);
-                this.initialFlipCheckBox.Checked = existingEnemy.InitialFlip;
+
+                this.movementPanel.MovementType = existingEnemy.MovementType;
+                this.movementPanel.InitialFlip = existingEnemy.InitialFlip;
+                this.movementPanel.SetMin(existingEnemy.MinPosition);
+                this.movementPanel.SetMax(existingEnemy.MaxPosition);
             }
         }
 
@@ -66,6 +68,10 @@ namespace SpriteHelper.Dialogs
         // Value getters.
         //
             
+        //
+        // Position
+        //
+
         public bool TryGetX(out int x)
         {
             return this.positionPanel.TryGetX(out x);
@@ -76,7 +82,32 @@ namespace SpriteHelper.Dialogs
             return this.positionPanel.TryGetY(out y);
         }
 
-        public bool InitialFlip => this.initialFlipCheckBox.Checked;
+        //
+        // Movement
+        //
+
+        public MovementType MovementType => this.movementPanel.MovementType;
+
+        public bool InitialFlip => this.movementPanel.InitialFlip;
+
+        public bool TryGetSpeed(out int speed)
+        {
+            return this.movementPanel.TryGetSpeed(out speed);
+        }
+
+        public bool TryGetMin(out int min)
+        {
+            return this.movementPanel.TryGetMin(out min);
+        }
+
+        public bool TryGetMax(out int max)
+        {
+            return this.movementPanel.TryGetMax(out max);
+        }
+
+        //
+        // Enemy
+        //
 
         public bool TryGetEnemy(SpriteConfig enConfig, out Enemy enemy)
         {
@@ -89,11 +120,16 @@ namespace SpriteHelper.Dialogs
             var newEnemy = Enemy.CreateInitialized(animation);
 
             // Set values that cannot fail.
-            newEnemy.InitialFlip = this.InitialFlip;
+            newEnemy.MovementType = this.MovementType;
+            newEnemy.InitialFlip = this.InitialFlip;            
 
             // Get values that can fail.
-            int x, y;
-            if (!this.TryGetX(out x) || !this.TryGetY(out y))
+            int x, y, speed, min, max;
+            if (!this.TryGetX(out x) || 
+                !this.TryGetY(out y) || 
+                !this.TryGetSpeed(out speed) || 
+                !this.TryGetMin(out min) || 
+                !this.TryGetMax(out max))
             {
                 return false;
             }
@@ -101,6 +137,9 @@ namespace SpriteHelper.Dialogs
             // Set values that can fail.
             newEnemy.X = x;
             newEnemy.Y = y;
+            newEnemy.Speed = speed;
+            newEnemy.MinPosition = min;
+            newEnemy.MaxPosition = max;
            
             // Set output value.
             enemy = newEnemy;
@@ -111,9 +150,11 @@ namespace SpriteHelper.Dialogs
         // Handlers.
         //
 
-        private void EnemyComboBoxSelectedIndexChanged(object sender, System.EventArgs e)
+        private void EnemyComboBoxSelectedIndexChanged(object sender, EventArgs e)
         {
-            this.enemyPictureBox.Image = enemies[(string)this.enemyComboBox.SelectedItem];
+            this.enemyPictureBox.Image = bitmaps[(string)this.enemyComboBox.SelectedItem];
+            this.movementPanel.SetTypes(this.movements[(string)this.enemyComboBox.SelectedItem]);
+            this.SetDefaultValues();
         }
 
         private void OkButtonClick(object sender, EventArgs e)
@@ -128,6 +169,16 @@ namespace SpriteHelper.Dialogs
         private void CancelButtonClick(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        //
+        // Other.
+        //
+
+        private void SetDefaultValues()
+        {
+            this.positionPanel.SetDefaultValues();
+            this.movementPanel.SetDefaultValues();
         }
     }
 }

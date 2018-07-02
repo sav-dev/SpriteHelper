@@ -49,6 +49,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contract\Enemy.cs" />
+    <Compile Include="Contract\MovementType.cs" />
+    <Compile Include="Controls\MovementPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\MovementPanel.Designer.cs">
+      <DependentUpon>MovementPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\PositionPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -168,6 +175,9 @@
     <Compile Include="Dialogs\TransformDialog.Designer.cs">
       <DependentUpon>TransformDialog.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Controls\MovementPanel.resx">
+      <DependentUpon>MovementPanel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\PositionPanel.resx">
       <DependentUpon>PositionPanel.cs</DependentUpon>
     </EmbeddedResource>

@@ -11,10 +11,6 @@ namespace SpriteHelper.Contract
         [DataMember]
         public string Name { get; set; }
 
-        // Whether initially the enemy is flipped
-        [DataMember]
-        public bool InitialFlip { get; set; }
-
         // Position.
         [DataMember]
         public int X { get; set; }
@@ -22,6 +18,26 @@ namespace SpriteHelper.Contract
         // Position.
         [DataMember]
         public int Y { get; set; }
+
+        // Movement type.
+        [DataMember]
+        public MovementType MovementType { get; set; }
+
+        // Speed
+        [DataMember]
+        public int Speed { get; set; }
+
+        // Movement range.
+        [DataMember]
+        public int MinPosition { get; set; }
+
+        // Movement range.
+        [DataMember]
+        public int MaxPosition { get; set; }
+
+        // Whether initially the enemy is flipped
+        [DataMember]
+        public bool InitialFlip { get; set; }
 
         private int width;
         private int height;

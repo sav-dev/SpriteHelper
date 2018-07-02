@@ -54,5 +54,11 @@ namespace SpriteHelper.Controls
             this.yTilesTextBox.Text = $"{y / Constants.BackgroundTileHeight}";
             this.yOffsetTextBox.Text = $"{y % Constants.BackgroundTileHeight}";
         }
+
+        public void SetDefaultValues()
+        {
+            this.SetX(0);
+            this.SetY(0);
+        }
     }
 }
