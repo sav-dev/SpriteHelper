@@ -484,6 +484,7 @@ namespace SpriteHelper.Dialogs
                 foreach (var enemy in Enemies)
                 {
                     // todo: make sure one color is transparent
+                    // todo: handle this.showEnemyMovementToolStripMenuItem.Checked
 
                     var image = this.enBitmaps[enemy.Name][enemy.InitialFlip];
                     this.graphics.DrawImage(image, new Point(enemy.X * Constants.LevelEditorZoom, enemy.Y * Constants.LevelEditorZoom));
@@ -537,6 +538,12 @@ namespace SpriteHelper.Dialogs
         }
 
         private void ShowEnemiesToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            this.showEnemyMovementToolStripMenuItem.Enabled = this.showEnemiesToolStripMenuItem.Checked;
+            this.UpdateBitmap();
+        }
+
+        private void ShowEnemyMovementToolStripMenuItemClick(object sender, EventArgs e)
         {
             this.UpdateBitmap();
         }
@@ -1469,10 +1476,9 @@ namespace SpriteHelper.Dialogs
 
         private void EnemiesListBoxKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Delete)
+            if (e.KeyCode == Keys.Delete && this.SelectedEnemy != null)
             {
-                this.enemiesListBox.Items.Remove(this.SelectedEnemy);
-                this.UpdateBitmap();
+                this.DeleteEnemy();
             }
         }
 
@@ -1483,8 +1489,7 @@ namespace SpriteHelper.Dialogs
 
         private void DeleteEnemyButtonClick(object sender, EventArgs e)
         {
-            this.enemiesListBox.Items.Remove(this.SelectedEnemy);
-            this.UpdateBitmap();
+            this.DeleteEnemy();
         }
 
         private void EditEnemyButtonClick(object sender, EventArgs e)
@@ -1514,6 +1519,8 @@ namespace SpriteHelper.Dialogs
 
         private void AddOrEditEnemy(Enemy selectedEnemy)
         {
+            // todo: save history in this method
+
             // Show the dialog.
             var dialog = new AddEditEnemyDialog(selectedEnemy, this.enBitmapsSimple, this.TransparentColor, this.ValidateEnemy);
             dialog.ShowDialog();
@@ -1544,6 +1551,14 @@ namespace SpriteHelper.Dialogs
             this.SortEnemiesListBox();
 
             // Update bitmap.
+            this.UpdateBitmap();
+        }
+
+        private void DeleteEnemy()
+        {
+            // todo: save history in this method
+
+            this.enemiesListBox.Items.Remove(this.SelectedEnemy);
             this.UpdateBitmap();
         }
 

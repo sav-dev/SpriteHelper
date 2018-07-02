@@ -42,6 +42,7 @@
             this.enemiesListBox = new System.Windows.Forms.ListBox();
             this.enTabBottomPanel = new System.Windows.Forms.Panel();
             this.editEnemyButton = new System.Windows.Forms.Button();
+            this.findEnemyButton = new System.Windows.Forms.Button();
             this.deleteEnemyButton = new System.Windows.Forms.Button();
             this.addEnemyButton = new System.Windows.Forms.Button();
             this.uniqueTilesCountLabel = new System.Windows.Forms.Label();
@@ -69,12 +70,12 @@
             this.showGridToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.showEnemiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showEnemyMovementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.viewPlatformsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewThreatsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.exportCheckToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.findEnemyButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerVertical)).BeginInit();
             this.splitContainerVertical.Panel1.SuspendLayout();
             this.splitContainerVertical.Panel2.SuspendLayout();
@@ -254,6 +255,17 @@
             this.editEnemyButton.Text = "Edit";
             this.editEnemyButton.UseVisualStyleBackColor = true;
             this.editEnemyButton.Click += new System.EventHandler(this.EditEnemyButtonClick);
+            // 
+            // findEnemyButton
+            // 
+            this.findEnemyButton.Enabled = false;
+            this.findEnemyButton.Location = new System.Drawing.Point(224, 7);
+            this.findEnemyButton.Name = "findEnemyButton";
+            this.findEnemyButton.Size = new System.Drawing.Size(66, 23);
+            this.findEnemyButton.TabIndex = 2;
+            this.findEnemyButton.Text = "Find";
+            this.findEnemyButton.UseVisualStyleBackColor = true;
+            this.findEnemyButton.Click += new System.EventHandler(this.FindEnemyButtonClick);
             // 
             // deleteEnemyButton
             // 
@@ -457,6 +469,7 @@
             this.showGridToolStripMenuItem,
             this.toolStripSeparator5,
             this.showEnemiesToolStripMenuItem,
+            this.showEnemyMovementToolStripMenuItem,
             this.toolStripSeparator2,
             this.viewPlatformsToolStripMenuItem,
             this.viewThreatsToolStripMenuItem,
@@ -472,7 +485,7 @@
             this.showTypeToolStripMenuItem.Name = "showTypeToolStripMenuItem";
             this.showTypeToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.T)));
-            this.showTypeToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.showTypeToolStripMenuItem.Size = new System.Drawing.Size(276, 22);
             this.showTypeToolStripMenuItem.Text = "Show &Type";
             this.showTypeToolStripMenuItem.Click += new System.EventHandler(this.ShowTypeToolStripMenuItemClick);
             // 
@@ -482,14 +495,14 @@
             this.showGridToolStripMenuItem.Name = "showGridToolStripMenuItem";
             this.showGridToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.G)));
-            this.showGridToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.showGridToolStripMenuItem.Size = new System.Drawing.Size(276, 22);
             this.showGridToolStripMenuItem.Text = "Show &Grid";
             this.showGridToolStripMenuItem.Click += new System.EventHandler(this.ShowGridToolStripMenuItemClick);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(223, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(273, 6);
             // 
             // showEnemiesToolStripMenuItem
             // 
@@ -499,21 +512,33 @@
             this.showEnemiesToolStripMenuItem.Name = "showEnemiesToolStripMenuItem";
             this.showEnemiesToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.E)));
-            this.showEnemiesToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.showEnemiesToolStripMenuItem.Size = new System.Drawing.Size(276, 22);
             this.showEnemiesToolStripMenuItem.Text = "Show &Enemies";
             this.showEnemiesToolStripMenuItem.Click += new System.EventHandler(this.ShowEnemiesToolStripMenuItemClick);
+            // 
+            // showEnemyMovementToolStripMenuItem
+            // 
+            this.showEnemyMovementToolStripMenuItem.Checked = true;
+            this.showEnemyMovementToolStripMenuItem.CheckOnClick = true;
+            this.showEnemyMovementToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.showEnemyMovementToolStripMenuItem.Name = "showEnemyMovementToolStripMenuItem";
+            this.showEnemyMovementToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.R)));
+            this.showEnemyMovementToolStripMenuItem.Size = new System.Drawing.Size(276, 22);
+            this.showEnemyMovementToolStripMenuItem.Text = "Show Enemy &Movement";
+            this.showEnemyMovementToolStripMenuItem.Click += new System.EventHandler(this.ShowEnemyMovementToolStripMenuItemClick);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(223, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(273, 6);
             // 
             // viewPlatformsToolStripMenuItem
             // 
             this.viewPlatformsToolStripMenuItem.Name = "viewPlatformsToolStripMenuItem";
             this.viewPlatformsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.V)));
-            this.viewPlatformsToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.viewPlatformsToolStripMenuItem.Size = new System.Drawing.Size(276, 22);
             this.viewPlatformsToolStripMenuItem.Text = "View Platforms";
             this.viewPlatformsToolStripMenuItem.Click += new System.EventHandler(this.ViewPlatformsToolStripMenuItemClick);
             // 
@@ -522,34 +547,23 @@
             this.viewThreatsToolStripMenuItem.Name = "viewThreatsToolStripMenuItem";
             this.viewThreatsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.I)));
-            this.viewThreatsToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.viewThreatsToolStripMenuItem.Size = new System.Drawing.Size(276, 22);
             this.viewThreatsToolStripMenuItem.Text = "View Threats";
             this.viewThreatsToolStripMenuItem.Click += new System.EventHandler(this.ViewThreatsToolStripMenuItemClick);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(223, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(273, 6);
             // 
             // exportCheckToolStripMenuItem
             // 
             this.exportCheckToolStripMenuItem.Name = "exportCheckToolStripMenuItem";
             this.exportCheckToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.X)));
-            this.exportCheckToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.exportCheckToolStripMenuItem.Size = new System.Drawing.Size(276, 22);
             this.exportCheckToolStripMenuItem.Text = "Export Check";
             this.exportCheckToolStripMenuItem.Click += new System.EventHandler(this.ExportCheckToolStripMenuItemClick);
-            // 
-            // findEnemyButton
-            // 
-            this.findEnemyButton.Enabled = false;
-            this.findEnemyButton.Location = new System.Drawing.Point(224, 7);
-            this.findEnemyButton.Name = "findEnemyButton";
-            this.findEnemyButton.Size = new System.Drawing.Size(66, 23);
-            this.findEnemyButton.TabIndex = 2;
-            this.findEnemyButton.Text = "Find";
-            this.findEnemyButton.UseVisualStyleBackColor = true;
-            this.findEnemyButton.Click += new System.EventHandler(this.FindEnemyButtonClick);
             // 
             // LevelEditor
             // 
@@ -634,7 +648,8 @@
         private System.Windows.Forms.Button addEnemyButton;
         private System.Windows.Forms.ListBox enemiesListBox;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripMenuItem showEnemiesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem showEnemyMovementToolStripMenuItem;
         private System.Windows.Forms.Button findEnemyButton;
+        private System.Windows.Forms.ToolStripMenuItem showEnemiesToolStripMenuItem;
     }
 }
