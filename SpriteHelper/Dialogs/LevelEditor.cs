@@ -28,6 +28,7 @@ namespace SpriteHelper.Dialogs
 
         // Enemy bitmaps, keys: name -> flip
         private Dictionary<string, Dictionary<bool, Bitmap>> enBitmaps;
+        private Dictionary<string, Dictionary<bool, Bitmap>> enBitmapsTransparent;
 
         // Add/edit enemy dictionaries.
         private Dictionary<string, Bitmap> enBitmapsSimple;
@@ -255,6 +256,7 @@ namespace SpriteHelper.Dialogs
             // Load enemies config
             this.enConfig = SpriteConfig.Read(enSpec, this.palettes);
             this.enBitmaps = new Dictionary<string, Dictionary<bool, Bitmap>>();
+            this.enBitmapsTransparent = new Dictionary<string, Dictionary<bool, Bitmap>>();
 
             // Prerender each enemy
             foreach (var animation in this.enConfig.Animations)
@@ -262,28 +264,33 @@ namespace SpriteHelper.Dialogs
                 var firstFrame = animation.Frames.First();
                 
                 this.enBitmaps.Add(animation.Name, new Dictionary<bool, Bitmap>());
+                this.enBitmapsTransparent.Add(animation.Name, new Dictionary<bool, Bitmap>());
 
-                this.enBitmaps[animation.Name].Add(
-                    false,
-                    firstFrame.GetGridBitmap(
+                var imgFalse =
+                    firstFrame.GetGridMyBitmap(
                         Color.Black,
                         true,
                         false,
                         false,
                         false,
                         Constants.LevelEditorZoom,
-                        null));
+                        null);
 
-                this.enBitmaps[animation.Name].Add(
-                    true,
-                    firstFrame.GetGridBitmap(
+                var imgTrue =
+                    firstFrame.GetGridMyBitmap(
                         Color.Black,
                         true,
                         false,
                         animation.Flip == Flip.Vertical,
                         animation.Flip == Flip.Horizontal,
                         Constants.LevelEditorZoom,
-                        null));
+                        null);
+
+                this.enBitmaps[animation.Name].Add(false, imgFalse.ToBitmap());
+                this.enBitmaps[animation.Name].Add(true, imgTrue.ToBitmap());
+
+                this.enBitmapsTransparent[animation.Name].Add(false, imgFalse.ToBitmap(50));
+                this.enBitmapsTransparent[animation.Name].Add(true, imgTrue.ToBitmap(50));
             }
 
             // Initialize and set enemies.
@@ -514,8 +521,7 @@ namespace SpriteHelper.Dialogs
             {
                 foreach (var enemy in Enemies)
                 {
-                    // todo: make sure one color is transparent
-                    // todo: handle this.showEnemyMovementToolStripMenuItem.Checked
+                    // todo: make sure one color is transparent                    
 
                     var image = this.enBitmaps[enemy.Name][enemy.InitialFlip];
                     this.graphics.DrawImage(image, new Point(enemy.X * Constants.LevelEditorZoom, enemy.Y * Constants.LevelEditorZoom));
@@ -523,6 +529,33 @@ namespace SpriteHelper.Dialogs
                     if (enemy == this.SelectedEnemy)
                     {
                         this.graphics.DrawRectangle(Pens.Red, enemy.X * Constants.LevelEditorZoom, enemy.Y * Constants.LevelEditorZoom, image.Width, image.Height);
+                    }
+
+                    if (this.showEnemyMovementToolStripMenuItem.Checked)
+                    {
+                        if (enemy.MovementType == MovementType.None)
+                        {
+                            continue;
+                        }
+
+                        var imageTransparent = this.enBitmapsTransparent[enemy.Name][enemy.InitialFlip];
+
+                        var minX = enemy.MovementType == MovementType.Horizontal ? enemy.MinPosition : enemy.X;
+                        var minY = enemy.MovementType == MovementType.Vertical ? enemy.MinPosition : enemy.Y;
+                        var maxX = enemy.MovementType == MovementType.Horizontal ? enemy.MaxPosition : enemy.X;
+                        var maxY = enemy.MovementType == MovementType.Vertical ? enemy.MaxPosition : enemy.Y;
+
+                        if (minX != enemy.X || minY != enemy.Y)
+                        {
+                            // todo: alpha
+                            this.graphics.DrawImage(imageTransparent, new Point(minX * Constants.LevelEditorZoom, minY * Constants.LevelEditorZoom));
+                        }
+
+                        if (maxX != enemy.X || maxY != enemy.Y)
+                        {
+                            // todo: alpha
+                            this.graphics.DrawImage(imageTransparent, new Point(maxX * Constants.LevelEditorZoom, maxY * Constants.LevelEditorZoom));
+                        }
                     }
                 }
             }
