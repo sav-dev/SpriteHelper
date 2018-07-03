@@ -500,6 +500,15 @@ namespace SpriteHelper.Dialogs
                 }
             }
 
+            // Draw screen boundaries if needed.
+            if (this.showScreensToolStripMenuItem.Checked)
+            {
+                for (var x = Constants.ScreenWidthInTiles * TileWidth; x < this.level.Length * TileWidth; x += Constants.ScreenWidthInTiles * TileWidth)
+                {
+                    this.graphics.DrawLine(new Pen(Color.Yellow, 3), x, 0, x, this.bitmap.Height);
+                }
+            }
+
             // Draw enemies.
             if (this.showEnemiesToolStripMenuItem.Checked)
             {
@@ -555,6 +564,12 @@ namespace SpriteHelper.Dialogs
         }
 
         private void ShowGridToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            this.UpdateBitmap();
+        }
+
+
+        private void ShowScreensToolStripMenuItemClick(object sender, EventArgs e)
         {
             this.UpdateBitmap();
         }

@@ -68,6 +68,7 @@
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showGridToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showScreensToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.showEnemiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showEnemyMovementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -467,6 +468,7 @@
             this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.showTypeToolStripMenuItem,
             this.showGridToolStripMenuItem,
+            this.showScreensToolStripMenuItem,
             this.toolStripSeparator5,
             this.showEnemiesToolStripMenuItem,
             this.showEnemyMovementToolStripMenuItem,
@@ -498,6 +500,16 @@
             this.showGridToolStripMenuItem.Size = new System.Drawing.Size(276, 22);
             this.showGridToolStripMenuItem.Text = "Show &Grid";
             this.showGridToolStripMenuItem.Click += new System.EventHandler(this.ShowGridToolStripMenuItemClick);
+            // 
+            // showScreensToolStripMenuItem
+            // 
+            this.showScreensToolStripMenuItem.CheckOnClick = true;
+            this.showScreensToolStripMenuItem.Name = "showScreensToolStripMenuItem";
+            this.showScreensToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.S)));
+            this.showScreensToolStripMenuItem.Size = new System.Drawing.Size(276, 22);
+            this.showScreensToolStripMenuItem.Text = "Show &Screens";
+            this.showScreensToolStripMenuItem.Click += new System.EventHandler(this.ShowScreensToolStripMenuItemClick);
             // 
             // toolStripSeparator5
             // 
@@ -651,5 +663,6 @@
         private System.Windows.Forms.ToolStripMenuItem showEnemyMovementToolStripMenuItem;
         private System.Windows.Forms.Button findEnemyButton;
         private System.Windows.Forms.ToolStripMenuItem showEnemiesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem showScreensToolStripMenuItem;
     }
 }
