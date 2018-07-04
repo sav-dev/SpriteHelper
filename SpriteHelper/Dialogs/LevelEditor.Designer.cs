@@ -503,7 +503,9 @@
             // 
             // showScreensToolStripMenuItem
             // 
+            this.showScreensToolStripMenuItem.Checked = true;
             this.showScreensToolStripMenuItem.CheckOnClick = true;
+            this.showScreensToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.showScreensToolStripMenuItem.Name = "showScreensToolStripMenuItem";
             this.showScreensToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.S)));

@@ -704,7 +704,10 @@ namespace SpriteHelper.Dialogs
 
         private void SaveToolStripMenuItemClick(object sender, EventArgs e)
         {
-            // todo: validate all enemies
+            if (!this.ValidateAllEnemies())
+            {
+                return;
+            }
 
             var saveFileDialog = new SaveFileDialog { InitialDirectory = Defaults.Instance.GraphicsDefaultDir, Filter = "xml files (*.xml)|*.xml" };
             saveFileDialog.ShowDialog();
@@ -717,7 +720,10 @@ namespace SpriteHelper.Dialogs
 
         private void ExportLevelToolStripMenuItemClick(object sender, EventArgs e)
         {
-            // todo: validate all enemies
+            if (!this.ValidateAllEnemies())
+            {
+                return;
+            }
 
             var saveFileDialog = new SaveFileDialog { InitialDirectory = Defaults.Instance.LevelsDefaultDir, Filter = "binary files (*.bin)|*.bin" };
             saveFileDialog.ShowDialog();
@@ -1738,126 +1744,151 @@ namespace SpriteHelper.Dialogs
                 this.enemiesListBox.SelectedItem = selectedItem;
             }
         }
-        
-        private bool ValidateEnemy(AddEditEnemyDialog dialog)
+
+        private bool ValidateAllEnemies()
+        {
+            var stringBuilder = new StringBuilder();
+            stringBuilder.AppendLine("Enemy errors:");
+
+            var errors = false;
+            foreach (var enemy in this.Enemies)
+            {                
+                var validation = this.ValidateEnemy(enemy, enemy);
+                if (validation != null)
+                {
+                    errors = true;
+                    stringBuilder.AppendLineFormat("{0}: {1}", enemy, validation);
+                }
+            }
+
+            if (errors)
+            {
+                MessageBox.Show(stringBuilder.ToString());
+            }
+
+            return !errors;
+        }
+
+        private string ValidateEnemy(AddEditEnemyDialog dialog)
         {
             // Get all values.
             int x;
             if (!dialog.TryGetX(out x))
             {
-                MessageBox.Show("X is not a valid number");
-                return false;
+                return "X is not a valid number";
             }
 
             int y;
             if (!dialog.TryGetY(out y))
             {
-                MessageBox.Show("Y is not a valid number");
-                return false;
+                return "Y is not a valid number";
             }
 
             int speed;
             if (!dialog.TryGetSpeed(out speed))
             {
-                MessageBox.Show("Speed is not a valid number");
-                return false;
+                return "Speed is not a valid number";
             }
 
             int min;
             if (!dialog.TryGetMin(out min))
             {
-                MessageBox.Show("Min. position is not a valid number");
-                return false;
+                return "Min. position is not a valid number";
             }
 
             int max;
             if (!dialog.TryGetMin(out max))
             {
-                MessageBox.Show("Max. position is not a valid number");
-                return false;
+                return "Max. position is not a valid number";
             }
 
             // Try creating an enemy. This should never fail.
             Enemy enemy;
             if (!dialog.TryGetEnemy(this.enConfig, out enemy))
             {
-                MessageBox.Show("Something went wrong.");
-                return false;
+                return "Something went wrong.";
             }
 
             // Validate the enemy.
             return this.ValidateEnemy(enemy, dialog.ExistingEnemy);
         }
 
-        private bool ValidateEnemy(Enemy enemy, Enemy existingEnemy)
+        private string ValidateEnemy(Enemy enemy, Enemy existingEnemy)
         {
-            if (!ValidateEnemyPosition(enemy, existingEnemy))
+            var position = this.ValidateEnemyPosition(enemy, existingEnemy);
+            if (position != null)
             {
-                return false;
+                return position;
             }
 
-            if (!ValidateEnemyMovement(enemy))
+            var movement = this.ValidateEnemyMovement(enemy);
+            if (movement != null)
             {
-                return false;
+                return movement;
             }
 
-            return true;
+            return null;
         }
 
-        private bool ValidateEnemyPosition(Enemy enemy, Enemy existingEnemy)
+        private string ValidateEnemyPosition(Enemy enemy, Enemy existingEnemy)
         {
             if (enemy.X > this.level.Length * Constants.BackgroundTileWidth)
             {
-                MessageBox.Show("X is too high");
-                return false;
+                return "X is too high";
             }
 
             if (enemy.X < 0)
             {
-                MessageBox.Show("X cannot be negative");
-                return false;
+                return "X cannot be negative";
             }
 
             if (enemy.Y > Constants.ScreenHeight)
             {
-                MessageBox.Show("Y is too high");
-                return false;
+                return "Y is too high";
             }
 
             if (enemy.Y < 0)
             {
-                MessageBox.Show("Y cannot be negative");
-                return false;
+                return "Y cannot be negative";
             }
 
-            // todo: validate enemy limit per screen
+            var previousScreenCount = this.Enemies.Count(e => e != existingEnemy && e.Screen == enemy.Screen - 1);
+            var currentScreenCount = this.Enemies.Count(e => e != existingEnemy && e.Screen == enemy.Screen) + 1;
+            var nextScreenCount = this.Enemies.Count(e => e != existingEnemy && e.Screen == enemy.Screen + 1);
 
-            return true;
+            if (previousScreenCount + currentScreenCount > Constants.EnemiesLimitPerTwoScreens)
+            {
+                return "Too many enemies on this an the previous screen";
+            }
+
+            if (currentScreenCount + nextScreenCount > Constants.EnemiesLimitPerTwoScreens)
+            {
+                return "Too many enemies on this an the next screen";
+            }
+
+            return null;
         }
 
-        private bool ValidateEnemyMovement(Enemy enemy)
+        private string ValidateEnemyMovement(Enemy enemy)
         {
             if (enemy.MovementType == MovementType.None)
             {
-                return true;
+                return null;
             }
 
             if (enemy.Speed <= 0)
             {
-                MessageBox.Show("Speed must be greater than 0");
-                return false;
+                return "Speed must be greater than 0";
             }
 
             if (enemy.Speed > 255)
             {
-                MessageBox.Show("Speed is too high");
-                return false;
+                return "Speed is too high";
             }
 
             if (enemy.MinPosition > enemy.MaxPosition)
             {
-                MessageBox.Show("Min. position must be less than max. position");
-                return false;
+                return "Min. position must be less than max. position";
             }
 
             int enemyPosition;
@@ -1869,15 +1900,13 @@ namespace SpriteHelper.Dialogs
 
                 if (enemy.MinPosition < enemy.Screen * Constants.ScreenWidth)
                 {
-                    MessageBox.Show("Enemy walking off-screen to the left");
-                    return false;
+                    return "Enemy walking off-screen to the left";
                 }
 
                 if (enemy.MaxPosition >= Math.Min((enemy.Screen + 1) * Constants.ScreenWidth, this.level.Length * Constants.BackgroundTileWidth))
                 {
 
-                    MessageBox.Show("Enemy walking off-screen to the right");
-                    return false;
+                    return "Enemy walking off-screen to the right";
                 }
             }
             else if (enemy.MovementType == MovementType.Vertical)
@@ -1887,53 +1916,45 @@ namespace SpriteHelper.Dialogs
 
                 if (enemy.MinPosition < 0)
                 {
-                    MessageBox.Show("Min. position cannot be negative");
-                    return false;
+                    return "Min. position cannot be negative";
                 }
 
                 if (enemy.MaxPosition > Constants.ScreenHeight)
                 {
-                    MessageBox.Show("Max. position is too high");
-                    return false;
+                    return "Max. position is too high";
                 }
             }
             else
             {
-                MessageBox.Show("Unknown movement type");
-                return false;
+                return "Unknown movement type";
             }
 
             if (enemy.MinPosition > enemyPosition)
             {
-                MessageBox.Show($"Min. position must be <= {enemyPositionString}");
-                return false;
+                return $"Min. position must be <= {enemyPositionString}";
             }
 
             if (enemy.MaxPosition < enemyPosition)
             {
-                MessageBox.Show($"Max. position must be >= {enemyPositionString}");
-                return false;
+                return $"Max. position must be >= {enemyPositionString}";
             }
 
             if ((enemyPosition - enemy.MinPosition) % enemy.Speed != 0)
             {
-                MessageBox.Show("Min. position is not reachable with given speed");
-                return false;
+                return "Min. position is not reachable with given speed";
             }
 
             if ((enemy.MaxPosition - enemyPosition) % enemy.Speed != 0)
             {
-                MessageBox.Show("Max. position is not reachable with given speed");
-                return false;
+                return "Max. position is not reachable with given speed";
             }
 
             if (enemy.MinPosition == enemy.MaxPosition)
             {
-                MessageBox.Show("Min. position and max. position must be different if movement type is not 'none'");
-                return false;
+                return "Min. position and max. position must be different if movement type is not 'none'";
             }
 
-            return true;
+            return null;
         }
 
         #endregion

@@ -58,6 +58,6 @@
         public const int CompressedMaxLength = 256 / MaxUniqueTiles; // = 8
 
         // Max enemies per consecutive screens.
-        public const int EnemiesLimitPerTwoScreens = 12;
+        public const int EnemiesLimitPerTwoScreens = 10;
     }
 }

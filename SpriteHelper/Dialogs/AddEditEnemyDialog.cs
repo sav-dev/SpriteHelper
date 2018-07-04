@@ -20,7 +20,7 @@ namespace SpriteHelper.Dialogs
         // Private fields        
         Dictionary<string, Bitmap> bitmaps;
         Dictionary<string, MovementType[]> movements;
-        Func<AddEditEnemyDialog, bool> validationFunction;
+        Func<AddEditEnemyDialog, string> validationFunction;
 
         // Constructor.
         public AddEditEnemyDialog(
@@ -28,7 +28,7 @@ namespace SpriteHelper.Dialogs
             Dictionary<string, Bitmap> bitmaps,
             Dictionary<string, MovementType[]> movements,
             Color backColor,
-            Func<AddEditEnemyDialog, bool> validationFunction)
+            Func<AddEditEnemyDialog, string> validationFunction)
         {            
             this.InitializeComponent();
 
@@ -55,6 +55,7 @@ namespace SpriteHelper.Dialogs
                 this.positionPanel.SetY(existingEnemy.Y);
 
                 this.movementPanel.MovementType = existingEnemy.MovementType;
+                this.movementPanel.SetSpeed(existingEnemy.Speed);
                 this.movementPanel.InitialFlip = existingEnemy.InitialFlip;
                 this.movementPanel.SetMin(existingEnemy.MinPosition);
                 this.movementPanel.SetMax(existingEnemy.MaxPosition);
@@ -164,7 +165,12 @@ namespace SpriteHelper.Dialogs
 
         private void OkButtonClick(object sender, EventArgs e)
         {
-            if (this.validationFunction(this))
+            var validation = this.validationFunction(this);
+            if (validation != null)
+            {
+                MessageBox.Show(validation);
+            }
+            else
             {
                 this.Succeeded = true;
                 this.Close();
