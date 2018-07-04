@@ -17,7 +17,7 @@ namespace SpriteHelper.Dialogs
         // Class.
         //
 
-        // Private fields
+        // Private fields        
         Dictionary<string, Bitmap> bitmaps;
         Dictionary<string, MovementType[]> movements;
         Func<AddEditEnemyDialog, bool> validationFunction;
@@ -59,10 +59,15 @@ namespace SpriteHelper.Dialogs
                 this.movementPanel.SetMin(existingEnemy.MinPosition);
                 this.movementPanel.SetMax(existingEnemy.MaxPosition);
             }
+
+            this.ExistingEnemy = existingEnemy;
         }
 
         // Set to true if OK is clicked.
         public bool Succeeded { get; private set; }
+
+        // Set to true if enemy is being added.
+        public Enemy ExistingEnemy { get; private set; }
 
         //
         // Value getters.

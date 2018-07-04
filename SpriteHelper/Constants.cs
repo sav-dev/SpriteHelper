@@ -40,6 +40,8 @@
         public const int ScreenHeightInAtts = 8;
         public const int ChrFileSpritesPerRow = 16;
         public const int ChrFileRows = 16;
+        public const int ScreenWidth = Constants.ScreenWidthInTiles * Constants.BackgroundTileWidth;
+        public const int ScreenHeight = Constants.ScreenHeightInTiles * Constants.BackgroundTileHeight;
 
         // Max zoom for sprite viweres.
         public const int MaxZoom = 10;
@@ -54,5 +56,8 @@
         // Max unique tiles limit.
         public const int MaxUniqueTiles = 256;
         public const int CompressedMaxLength = 256 / MaxUniqueTiles; // = 8
+
+        // Max enemies per consecutive screens.
+        public const int EnemiesLimitPerTwoScreens = 12;
     }
 }

@@ -39,6 +39,9 @@ namespace SpriteHelper.Contract
         [DataMember]
         public bool InitialFlip { get; set; }
 
+        // Screen the enemy is on
+        public int Screen => this.X / (Constants.ScreenWidthInTiles * Constants.BackgroundTileWidth);
+
         private int width;
         private int height;
 

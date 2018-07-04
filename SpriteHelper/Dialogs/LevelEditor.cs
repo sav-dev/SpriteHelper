@@ -541,14 +541,8 @@ namespace SpriteHelper.Dialogs
                     // Get image.
                     var image = this.enBitmaps[enemy.Name][enemy.InitialFlip];
 
-                    if (this.showEnemyMovementToolStripMenuItem.Checked)
+                    if (this.showEnemyMovementToolStripMenuItem.Checked && enemy.MovementType != MovementType.None)
                     {
-                        if (enemy.MovementType == MovementType.None)
-                        {
-                            // No movement.
-                            continue;
-                        }
-
                         // Get transparent image.
                         var imageTransparent = this.enBitmapsTransparent[enemy.Name][enemy.InitialFlip];
 
@@ -710,6 +704,8 @@ namespace SpriteHelper.Dialogs
 
         private void SaveToolStripMenuItemClick(object sender, EventArgs e)
         {
+            // todo: validate all enemies
+
             var saveFileDialog = new SaveFileDialog { InitialDirectory = Defaults.Instance.GraphicsDefaultDir, Filter = "xml files (*.xml)|*.xml" };
             saveFileDialog.ShowDialog();
             if (!string.IsNullOrEmpty(saveFileDialog.FileName))
@@ -721,6 +717,8 @@ namespace SpriteHelper.Dialogs
 
         private void ExportLevelToolStripMenuItemClick(object sender, EventArgs e)
         {
+            // todo: validate all enemies
+
             var saveFileDialog = new SaveFileDialog { InitialDirectory = Defaults.Instance.LevelsDefaultDir, Filter = "binary files (*.bin)|*.bin" };
             saveFileDialog.ShowDialog();
             if (!string.IsNullOrEmpty(saveFileDialog.FileName))
@@ -1086,12 +1084,17 @@ namespace SpriteHelper.Dialogs
             this.level[x][y] = tile;
             var image = this.tiles[tile][(int)this.Settings];
 
-            // todo: figure out a way to only draw what has changed.
-            //this.graphics.DrawImage(image, new Point(x * TileWidth, y * TileHeight));
-
-            // Redraw everything.
-            this.UpdateBitmap();
-
+            if (this.showEnemiesToolStripMenuItem.Checked || this.showScreensToolStripMenuItem.Checked)
+            {
+                // If any of these are checked, we have to redraw the whole bitmap.
+                this.UpdateBitmap();
+            }
+            else
+            {
+                // Otherwise, just draw one tile.
+                this.graphics.DrawImage(image, new Point(x * TileWidth, y * TileHeight));
+            }
+            
             // Update tile count.
             this.UpdateTileCount();        
 
@@ -1122,8 +1125,6 @@ namespace SpriteHelper.Dialogs
         ////
         //// History stuff
         ////
-
-        // todo: history for enemies? Easy to add, have both tiles and enemies
 
         public void ClearHistory()
         {
@@ -1664,7 +1665,7 @@ namespace SpriteHelper.Dialogs
             // TARGET SCROLL = ENEMY CENTER - OUTER PANEL WIDTH / 2
 
             // Calculate target scroll.
-            var targetScroll = Math.Max(0, center - outerOuterPanelWidthInMetaTiles / 2);
+            var targetScroll = Math.Max(this.scrollBar.Minimum, Math.Min(this.scrollBar.Maximum, center - outerOuterPanelWidthInMetaTiles / 2));
             this.scrollBar.Value = targetScroll;
             this.UpdateScroll();
         }
@@ -1737,7 +1738,7 @@ namespace SpriteHelper.Dialogs
                 this.enemiesListBox.SelectedItem = selectedItem;
             }
         }
-
+        
         private bool ValidateEnemy(AddEditEnemyDialog dialog)
         {
             // Get all values.
@@ -1785,12 +1786,12 @@ namespace SpriteHelper.Dialogs
             }
 
             // Validate the enemy.
-            return this.ValidateEnemy(enemy);
+            return this.ValidateEnemy(enemy, dialog.ExistingEnemy);
         }
 
-        private bool ValidateEnemy(Enemy enemy)
+        private bool ValidateEnemy(Enemy enemy, Enemy existingEnemy)
         {
-            if (!ValidateEnemyPosition(enemy))
+            if (!ValidateEnemyPosition(enemy, existingEnemy))
             {
                 return false;
             }
@@ -1803,9 +1804,9 @@ namespace SpriteHelper.Dialogs
             return true;
         }
 
-        private bool ValidateEnemyPosition(Enemy enemy)
+        private bool ValidateEnemyPosition(Enemy enemy, Enemy existingEnemy)
         {
-            if (enemy.X > this.level.Length * TileWidth)
+            if (enemy.X > this.level.Length * Constants.BackgroundTileWidth)
             {
                 MessageBox.Show("X is too high");
                 return false;
@@ -1817,7 +1818,7 @@ namespace SpriteHelper.Dialogs
                 return false;
             }
 
-            if (enemy.Y > this.level[0].Length * TileHeight)
+            if (enemy.Y > Constants.ScreenHeight)
             {
                 MessageBox.Show("Y is too high");
                 return false;
@@ -1829,16 +1830,21 @@ namespace SpriteHelper.Dialogs
                 return false;
             }
 
-            // todo: validate limit of enemies per screen (or do it elsewhere?)
+            // todo: validate enemy limit per screen
 
             return true;
         }
 
         private bool ValidateEnemyMovement(Enemy enemy)
         {
-            if (enemy.Speed < 0)
+            if (enemy.MovementType == MovementType.None)
             {
-                MessageBox.Show("Speed cannot be negative");
+                return true;
+            }
+
+            if (enemy.Speed <= 0)
+            {
+                MessageBox.Show("Speed must be greater than 0");
                 return false;
             }
 
@@ -1854,11 +1860,79 @@ namespace SpriteHelper.Dialogs
                 return false;
             }
 
-            // todo: validate min <= position
-            // todo: validate max >= position
-            // todo: validate min and max are reachable
-            // todo: validate there's enough of a gap for at least one movement cycle
-            // todo: validate enemy doesn't go out of bounds
+            int enemyPosition;
+            string enemyPositionString;
+            if (enemy.MovementType == MovementType.Horizontal)
+            {
+                enemyPosition = enemy.X;
+                enemyPositionString = "X";
+
+                if (enemy.MinPosition < enemy.Screen * Constants.ScreenWidth)
+                {
+                    MessageBox.Show("Enemy walking off-screen to the left");
+                    return false;
+                }
+
+                if (enemy.MaxPosition >= Math.Min((enemy.Screen + 1) * Constants.ScreenWidth, this.level.Length * Constants.BackgroundTileWidth))
+                {
+
+                    MessageBox.Show("Enemy walking off-screen to the right");
+                    return false;
+                }
+            }
+            else if (enemy.MovementType == MovementType.Vertical)
+            {
+                enemyPosition = enemy.Y;
+                enemyPositionString = "Y";
+
+                if (enemy.MinPosition < 0)
+                {
+                    MessageBox.Show("Min. position cannot be negative");
+                    return false;
+                }
+
+                if (enemy.MaxPosition > Constants.ScreenHeight)
+                {
+                    MessageBox.Show("Max. position is too high");
+                    return false;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Unknown movement type");
+                return false;
+            }
+
+            if (enemy.MinPosition > enemyPosition)
+            {
+                MessageBox.Show($"Min. position must be <= {enemyPositionString}");
+                return false;
+            }
+
+            if (enemy.MaxPosition < enemyPosition)
+            {
+                MessageBox.Show($"Max. position must be >= {enemyPositionString}");
+                return false;
+            }
+
+            if ((enemyPosition - enemy.MinPosition) % enemy.Speed != 0)
+            {
+                MessageBox.Show("Min. position is not reachable with given speed");
+                return false;
+            }
+
+            if ((enemy.MaxPosition - enemyPosition) % enemy.Speed != 0)
+            {
+                MessageBox.Show("Max. position is not reachable with given speed");
+                return false;
+            }
+
+            if (enemy.MinPosition == enemy.MaxPosition)
+            {
+                MessageBox.Show("Min. position and max. position must be different if movement type is not 'none'");
+                return false;
+            }
+
             return true;
         }
 
