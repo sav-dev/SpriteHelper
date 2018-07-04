@@ -97,14 +97,16 @@ namespace SpriteHelper.NesGraphics
             }
         }
 
-        public Bitmap ToBitmap(int alpha = 255)
+        public Bitmap ToBitmap(int alpha = 255, Color? backgroundColor = null)
         {
             var result = new Bitmap(this.width, this.height);
             for (var i = 0; i < this.Width; i++)
             {
                 for (var j = 0; j < this.Height; j++)
                 {
-                    result.SetPixel(i, j, Color.FromArgb(alpha, this.GetPixel(i, j)));
+                    var color = this.GetPixel(i, j);
+                    var a = backgroundColor.HasValue ? (color == backgroundColor ? 0 : alpha) : alpha;
+                    result.SetPixel(i, j, Color.FromArgb(a, color));
                 }
             }
 

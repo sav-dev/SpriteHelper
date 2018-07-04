@@ -268,7 +268,7 @@ namespace SpriteHelper.Dialogs
 
                 var imgFalse =
                     firstFrame.GetGridMyBitmap(
-                        Color.Black,
+                        this.TransparentColor, // is this right?
                         true,
                         false,
                         false,
@@ -278,7 +278,7 @@ namespace SpriteHelper.Dialogs
 
                 var imgTrue =
                     firstFrame.GetGridMyBitmap(
-                        Color.Black,
+                        this.TransparentColor, // is this right?
                         true,
                         false,
                         animation.Flip == Flip.Vertical,
@@ -286,11 +286,11 @@ namespace SpriteHelper.Dialogs
                         Constants.LevelEditorZoom,
                         null);
 
-                this.enBitmaps[animation.Name].Add(false, imgFalse.ToBitmap());
-                this.enBitmaps[animation.Name].Add(true, imgTrue.ToBitmap());
+                this.enBitmaps[animation.Name].Add(false, imgFalse.ToBitmap(backgroundColor: this.TransparentColor)); // is this right?
+                this.enBitmaps[animation.Name].Add(true, imgTrue.ToBitmap(backgroundColor: this.TransparentColor)); // is this right?
 
-                this.enBitmapsTransparent[animation.Name].Add(false, imgFalse.ToBitmap(50));
-                this.enBitmapsTransparent[animation.Name].Add(true, imgTrue.ToBitmap(50));
+                this.enBitmapsTransparent[animation.Name].Add(false, imgFalse.ToBitmap(50, this.TransparentColor)); // is this right?
+                this.enBitmapsTransparent[animation.Name].Add(true, imgTrue.ToBitmap(50, this.TransparentColor)); // is this right?
             }
 
             // Initialize and set enemies.
@@ -497,6 +497,19 @@ namespace SpriteHelper.Dialogs
             this.graphics = Graphics.FromImage(this.bitmap);
 
             // Draw background.
+            this.DrawBackground();
+
+            // Draw screen boundaries if needed.
+            this.DrawScreenBoundaries();
+
+            // Draw enemies.
+            this.DrawEnemies();
+
+            this.UpdateDrawPanel();
+        }
+
+        private void DrawBackground()
+        {
             for (var x = 0; x < this.level.Length; x++)
             {
                 for (var y = 0; y < this.level[x].Length; y++)
@@ -506,8 +519,10 @@ namespace SpriteHelper.Dialogs
                     this.graphics.DrawImage(image, new Point(x * TileWidth, y * TileHeight));
                 }
             }
+        }
 
-            // Draw screen boundaries if needed.
+        private void DrawScreenBoundaries()
+        {
             if (this.showScreensToolStripMenuItem.Checked)
             {
                 for (var x = Constants.ScreenWidthInTiles * TileWidth; x < this.level.Length * TileWidth; x += Constants.ScreenWidthInTiles * TileWidth)
@@ -515,52 +530,93 @@ namespace SpriteHelper.Dialogs
                     this.graphics.DrawLine(new Pen(Color.Yellow, 3), x, 0, x, this.bitmap.Height);
                 }
             }
+        }
 
-            // Draw enemies.
+        private void DrawEnemies()
+        {
             if (this.showEnemiesToolStripMenuItem.Checked)
             {
                 foreach (var enemy in Enemies)
                 {
-                    // todo: make sure one color is transparent                    
-
+                    // Get image.
                     var image = this.enBitmaps[enemy.Name][enemy.InitialFlip];
-                    this.graphics.DrawImage(image, new Point(enemy.X * Constants.LevelEditorZoom, enemy.Y * Constants.LevelEditorZoom));
-
-                    if (enemy == this.SelectedEnemy)
-                    {
-                        this.graphics.DrawRectangle(Pens.Red, enemy.X * Constants.LevelEditorZoom, enemy.Y * Constants.LevelEditorZoom, image.Width, image.Height);
-                    }
 
                     if (this.showEnemyMovementToolStripMenuItem.Checked)
                     {
                         if (enemy.MovementType == MovementType.None)
                         {
+                            // No movement.
                             continue;
                         }
 
+                        // Get transparent image.
                         var imageTransparent = this.enBitmapsTransparent[enemy.Name][enemy.InitialFlip];
 
+                        // Calculate coordinates.
                         var minX = enemy.MovementType == MovementType.Horizontal ? enemy.MinPosition : enemy.X;
                         var minY = enemy.MovementType == MovementType.Vertical ? enemy.MinPosition : enemy.Y;
                         var maxX = enemy.MovementType == MovementType.Horizontal ? enemy.MaxPosition : enemy.X;
                         var maxY = enemy.MovementType == MovementType.Vertical ? enemy.MaxPosition : enemy.Y;
 
+                        // Draw line.
+                        var width = image.Width;
+                        var height = image.Height;
+                        var p1 = new Point(minX * Constants.LevelEditorZoom + width / 2, minY * Constants.LevelEditorZoom + height / 2);
+                        var p2 = new Point(maxX * Constants.LevelEditorZoom + width / 2, maxY * Constants.LevelEditorZoom + height / 2);
+                        var orangePen = new Pen(Color.DarkOrange, 3);
+                        this.graphics.DrawLine(orangePen, p1, p2);
+
+                        // Draw arrow.
+                        if (enemy.MovementType == MovementType.Horizontal)
+                        {
+                            if (enemy.InitialFlip)
+                            {
+                                // Left, p1
+                                this.graphics.DrawPolygon(orangePen, new[] { p1, new Point(p1.X + 3, p1.Y + 3), new Point(p1.X + 3, p1.Y - 3) });
+                            }
+                            else
+                            {
+                                // Right, p2
+                                this.graphics.DrawPolygon(orangePen, new[] { p2, new Point(p2.X - 3, p2.Y + 3), new Point(p2.X - 3, p2.Y - 3) });
+                            }
+                        }
+                        else if (enemy.MovementType == MovementType.Vertical)
+                        {
+                            if (enemy.InitialFlip)
+                            {
+                                // Up, p1
+                                this.graphics.DrawPolygon(orangePen, new[] { p1, new Point(p1.X - 3, p1.Y + 3), new Point(p1.X + 3, p1.Y + 3) });
+                            }
+                            else
+                            {
+                                // Down, p2
+                                this.graphics.DrawPolygon(orangePen, new[] { p2, new Point(p2.X - 3, p2.Y - 3), new Point(p2.X + 3, p2.Y - 3) });
+                            }
+                        }
+
                         if (minX != enemy.X || minY != enemy.Y)
                         {
-                            // todo: alpha
+                            // Draw min. transparent image.
                             this.graphics.DrawImage(imageTransparent, new Point(minX * Constants.LevelEditorZoom, minY * Constants.LevelEditorZoom));
                         }
 
                         if (maxX != enemy.X || maxY != enemy.Y)
                         {
-                            // todo: alpha
+                            // Draw max. transparent image.
                             this.graphics.DrawImage(imageTransparent, new Point(maxX * Constants.LevelEditorZoom, maxY * Constants.LevelEditorZoom));
                         }
                     }
+
+                    // Draw regular image.                   
+                    this.graphics.DrawImage(image, new Point(enemy.X * Constants.LevelEditorZoom, enemy.Y * Constants.LevelEditorZoom));
+
+                    if (enemy == this.SelectedEnemy)
+                    {
+                        // Draw red box around selected enemy.
+                        this.graphics.DrawRectangle(Pens.Red, enemy.X * Constants.LevelEditorZoom, enemy.Y * Constants.LevelEditorZoom, image.Width, image.Height);
+                    }
                 }
             }
-
-            this.UpdateDrawPanel();
         }
 
         private void ScrollBarScroll(object sender, ScrollEventArgs e)
@@ -1029,8 +1085,16 @@ namespace SpriteHelper.Dialogs
             this.AddHistory();
             this.level[x][y] = tile;
             var image = this.tiles[tile][(int)this.Settings];
-            this.graphics.DrawImage(image, new Point(x * TileWidth, y * TileHeight));
-            this.UpdateTileCount();
+
+            // todo: figure out a way to only draw what has changed.
+            //this.graphics.DrawImage(image, new Point(x * TileWidth, y * TileHeight));
+
+            // Redraw everything.
+            this.UpdateBitmap();
+
+            // Update tile count.
+            this.UpdateTileCount();        
+
             return true;
         }
 
