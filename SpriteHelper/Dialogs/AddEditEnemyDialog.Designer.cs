@@ -36,9 +36,12 @@
             this.positionPanel = new SpriteHelper.Controls.PositionPanel();
             this.movementGroupBox = new System.Windows.Forms.GroupBox();
             this.movementPanel = new SpriteHelper.Controls.MovementPanel();
-            ((System.ComponentModel.ISupportInitialize)(this.enemyPictureBox)).BeginInit();
+            this.shootingGroupBox = new System.Windows.Forms.GroupBox();
+            this.shootingPanel = new SpriteHelper.Controls.ShootingPanel();
+             ((System.ComponentModel.ISupportInitialize)(this.enemyPictureBox)).BeginInit();
             this.positionGroupBox.SuspendLayout();
             this.movementGroupBox.SuspendLayout();
+            this.shootingGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // cancelButton
@@ -119,11 +122,30 @@
             this.movementPanel.Size = new System.Drawing.Size(435, 151);
             this.movementPanel.TabIndex = 0;
             // 
+            // shootingGroupBox
+            // 
+            this.shootingGroupBox.Controls.Add(this.shootingPanel);
+            this.shootingGroupBox.Location = new System.Drawing.Point(15, 293);
+            this.shootingGroupBox.Name = "shootingGroupBox";
+            this.shootingGroupBox.Size = new System.Drawing.Size(441, 73);
+            this.shootingGroupBox.TabIndex = 47;
+            this.shootingGroupBox.TabStop = false;
+            this.shootingGroupBox.Text = "Shooting";
+            // 
+            // shootingPanel
+            // 
+            this.shootingPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.shootingPanel.Location = new System.Drawing.Point(3, 16);
+            this.shootingPanel.Name = "shootingPanel";
+            this.shootingPanel.Size = new System.Drawing.Size(435, 54);
+            this.shootingPanel.TabIndex = 0;
+            // 
             // AddEditEnemyDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(618, 303);
+            this.ClientSize = new System.Drawing.Size(618, 385);
+            this.Controls.Add(this.shootingGroupBox);
             this.Controls.Add(this.movementGroupBox);
             this.Controls.Add(this.positionGroupBox);
             this.Controls.Add(this.enemyPictureBox);
@@ -136,6 +158,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.enemyPictureBox)).EndInit();
             this.positionGroupBox.ResumeLayout(false);
             this.movementGroupBox.ResumeLayout(false);
+            this.shootingGroupBox.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -150,5 +173,7 @@
         private System.Windows.Forms.GroupBox movementGroupBox;
         private Controls.PositionPanel positionPanel;
         private Controls.MovementPanel movementPanel;
+        private System.Windows.Forms.GroupBox shootingGroupBox;
+        private Controls.ShootingPanel shootingPanel;
     }
 }

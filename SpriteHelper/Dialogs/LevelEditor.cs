@@ -33,6 +33,7 @@ namespace SpriteHelper.Dialogs
         // Add/edit enemy dictionaries.
         private Dictionary<string, Bitmap> enBitmapsSimple;
         private Dictionary<string, MovementType[]> enMovements;
+        private Dictionary<string, bool> enShooting;
 
         // Cached tiles. Key is tile ID + palette.
         private Dictionary<string, Bitmap[]> tiles;
@@ -304,6 +305,7 @@ namespace SpriteHelper.Dialogs
 
             // Add/edit enemy dictionaries.
             this.enBitmapsSimple = this.enBitmaps.Keys.ToDictionary(k => k, k => this.enBitmaps[k][false]);
+
             this.enMovements = this.enConfig.Animations.ToDictionary(
                 a => a.Name,
                 a =>
@@ -320,6 +322,8 @@ namespace SpriteHelper.Dialogs
 
                     return movements.ToArray();
                 });
+
+            this.enShooting = this.enConfig.Animations.ToDictionary(a => a.Name, a => a.Offsets.GunXOff >= 0);
 
             // Populate tiles, set level.
             this.PopulateTiles();
@@ -1691,7 +1695,7 @@ namespace SpriteHelper.Dialogs
             // todo: save history in this method
 
             // Show the dialog.
-            var dialog = new AddEditEnemyDialog(selectedEnemy, this.enBitmapsSimple, this.enMovements, this.TransparentColor, this.ValidateEnemy);
+            var dialog = new AddEditEnemyDialog(selectedEnemy, this.enBitmapsSimple, this.enMovements, this.enShooting, this.TransparentColor, this.ValidateEnemy);
             dialog.ShowDialog();
             if (!dialog.Succeeded)
             {
@@ -1802,12 +1806,26 @@ namespace SpriteHelper.Dialogs
                 return "Max. position is not a valid number";
             }
 
+            int shootingFreq;
+            if (!dialog.TryGetShootingFreq(out shootingFreq))
+            {
+                return "Shooting freq. is not a valid number";
+            }
+
+            int shootingFreqOffset;
+            if (!dialog.TryGetShootingInitialFreq(out shootingFreqOffset))
+            {
+                return "Shooting initial freq. is not a valid number";
+            }
+
+            // todo: complete the validation
+
             // Try creating an enemy. This should never fail.
             Enemy enemy;
             if (!dialog.TryGetEnemy(this.enConfig, out enemy))
             {
                 return "Something went wrong.";
-            }
+            }            
 
             // Validate the enemy.
             return this.ValidateEnemy(enemy, dialog.ExistingEnemy);
@@ -1825,6 +1843,12 @@ namespace SpriteHelper.Dialogs
             if (movement != null)
             {
                 return movement;
+            }
+
+            var shooting = this.ValidateEnemyShooting(enemy);
+            if (shooting != null)
+            {
+                return shooting;
             }
 
             return null;
@@ -1957,13 +1981,39 @@ namespace SpriteHelper.Dialogs
             return null;
         }
 
+        private string ValidateEnemyShooting(Enemy enemy)
+        {
+            if (enemy.ShootingFrequency < 0)
+            {
+                return "Shooting frequency must be greater or equal to 0";
+            }
+
+            if (enemy.ShootingFrequency > 255)
+            {
+                return "Shooting frequency is too high";
+            }
+
+            if (enemy.ShootingInitialFrequency < 0)
+            {
+                return "Shooting initial frequency must be greater or equal to 0";
+            }
+
+            if (enemy.ShootingInitialFrequency > 255)
+            {
+                return "Shooting initial frequency is too high";
+            }
+
+            return null;
+        }
+
+
         #endregion
 
-        #region HelperTypes
+            #region HelperTypes
 
-        ////
-        //// Helper types
-        ////
+            ////
+            //// Helper types
+            ////
 
         [Flags]
         public enum TileVersion

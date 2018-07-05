@@ -62,6 +62,12 @@
     <Compile Include="Controls\PositionPanel.Designer.cs">
       <DependentUpon>PositionPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ShootingPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ShootingPanel.Designer.cs">
+      <DependentUpon>ShootingPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\AddEditEnemyDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -180,6 +186,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\PositionPanel.resx">
       <DependentUpon>PositionPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ShootingPanel.resx">
+      <DependentUpon>ShootingPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\AddEditEnemyDialog.resx">
       <DependentUpon>AddEditEnemyDialog.cs</DependentUpon>

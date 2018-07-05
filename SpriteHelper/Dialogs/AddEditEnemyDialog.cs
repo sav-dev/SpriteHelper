@@ -20,6 +20,7 @@ namespace SpriteHelper.Dialogs
         // Private fields        
         Dictionary<string, Bitmap> bitmaps;
         Dictionary<string, MovementType[]> movements;
+        Dictionary<string, bool> shooting;
         Func<AddEditEnemyDialog, string> validationFunction;
 
         // Constructor.
@@ -27,6 +28,7 @@ namespace SpriteHelper.Dialogs
             Enemy existingEnemy,
             Dictionary<string, Bitmap> bitmaps,
             Dictionary<string, MovementType[]> movements,
+            Dictionary<string, bool> shooting,
             Color backColor,
             Func<AddEditEnemyDialog, string> validationFunction)
         {            
@@ -40,6 +42,7 @@ namespace SpriteHelper.Dialogs
             this.enemyPictureBox.BackColor = backColor;
             this.bitmaps = bitmaps;
             this.movements = movements;
+            this.shooting = shooting;
 
             // Populate the combo box, select the right element (or first one if adding).
             this.enemyComboBox.Items.AddRange(bitmaps.Keys.ToArray());
@@ -59,6 +62,9 @@ namespace SpriteHelper.Dialogs
                 this.movementPanel.InitialFlip = existingEnemy.InitialFlip;
                 this.movementPanel.SetMin(existingEnemy.MinPosition);
                 this.movementPanel.SetMax(existingEnemy.MaxPosition);
+
+                this.shootingPanel.SetFreq(existingEnemy.ShootingFrequency);
+                this.shootingPanel.SetInitialFreq(existingEnemy.ShootingInitialFrequency);
             }
 
             this.ExistingEnemy = existingEnemy;
@@ -112,6 +118,20 @@ namespace SpriteHelper.Dialogs
         }
 
         //
+        // Shooting
+        //
+
+        public bool TryGetShootingFreq(out int freq)
+        {
+            return this.shootingPanel.TryGetFreq(out freq);            
+        }
+
+        public bool TryGetShootingInitialFreq(out int initialFreq)
+        {
+            return this.shootingPanel.TryGetInitialFreq(out initialFreq);            
+        }
+
+        //
         // Enemy
         //
 
@@ -130,12 +150,14 @@ namespace SpriteHelper.Dialogs
             newEnemy.InitialFlip = this.InitialFlip;            
 
             // Get values that can fail.
-            int x, y, speed, min, max;
+            int x, y, speed, min, max, shootingFreq, shootingInitialFreq;
             if (!this.TryGetX(out x) || 
                 !this.TryGetY(out y) || 
                 !this.TryGetSpeed(out speed) || 
                 !this.TryGetMin(out min) || 
-                !this.TryGetMax(out max))
+                !this.TryGetMax(out max) ||
+                !this.TryGetShootingFreq(out shootingFreq) ||
+                !this.TryGetShootingInitialFreq(out shootingInitialFreq))
             {
                 return false;
             }
@@ -146,7 +168,9 @@ namespace SpriteHelper.Dialogs
             newEnemy.Speed = speed;
             newEnemy.MinPosition = min;
             newEnemy.MaxPosition = max;
-           
+            newEnemy.ShootingFrequency = shootingFreq;
+            newEnemy.ShootingInitialFrequency = shootingInitialFreq;
+
             // Set output value.
             enemy = newEnemy;
             return true;
@@ -158,8 +182,11 @@ namespace SpriteHelper.Dialogs
 
         private void EnemyComboBoxSelectedIndexChanged(object sender, EventArgs e)
         {
-            this.enemyPictureBox.Image = bitmaps[(string)this.enemyComboBox.SelectedItem];
-            this.movementPanel.SetTypes(this.movements[(string)this.enemyComboBox.SelectedItem]);
+            var selectedEnemy = (string)this.enemyComboBox.SelectedItem;
+
+            this.enemyPictureBox.Image = bitmaps[selectedEnemy];
+            this.movementPanel.SetTypes(this.movements[selectedEnemy]);
+            this.shootingPanel.Enabled = this.shooting[selectedEnemy];
             this.SetDefaultValues();
         }
 
@@ -190,6 +217,7 @@ namespace SpriteHelper.Dialogs
         {
             this.positionPanel.SetDefaultValues();
             this.movementPanel.SetDefaultValues();
+            this.shootingPanel.SetDefaultValues();
         }
     }
 }

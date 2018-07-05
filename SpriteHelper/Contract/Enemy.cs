@@ -35,9 +35,17 @@ namespace SpriteHelper.Contract
         [DataMember]
         public int MaxPosition { get; set; }
 
-        // Whether initially the enemy is flipped
+        // Whether initially the enemy is flipped.
         [DataMember]
         public bool InitialFlip { get; set; }
+
+        // Shooting frequency.
+        [DataMember]
+        public int ShootingFrequency { get; set; }
+
+        // Shooting frequency offset.
+        [DataMember]
+        public int ShootingInitialFrequency { get; set; }
 
         // Screen the enemy is on
         public int Screen => this.X / (Constants.ScreenWidthInTiles * Constants.BackgroundTileWidth);
