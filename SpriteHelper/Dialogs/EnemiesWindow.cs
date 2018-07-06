@@ -181,15 +181,18 @@ namespace SpriteHelper.Dialogs
         {
             return @";
 ;  constant properties for enemies
-;    rendering info : 2 bytes
-;    hitbox x off   : 1 byte
-;    hitbox y off   : 1 byte
-;    hitbox width   : 1 byte (inclusive)
-;    hitbox height  : 1 byte (inclusive)
-;    gun x off      : 1 byte (0 for non shooting)
-;    gun y off      : 1 byte (0 for non shooting)
-;    gun x off flip : 1 byte (0 for non shooting)
-;    gun y off flip : 1 byte (0 for non shooting)
+;    hitbox x off    : 1 byte
+;    hitbox y off    : 1 byte
+;    hitbox width    : 1 byte (inclusive)
+;    hitbox height   : 1 byte (inclusive)
+;    gun x off       : 1 byte (0 for non shooting)
+;    gun y off       : 1 byte (0 for non shooting)
+;    gun x off flip  : 1 byte (0 for non shooting)
+;    gun y off flip  : 1 byte (0 for non shooting)
+;    animation speed : 1 byte (0 for non animated)
+;    # of frames     : 1 bytes
+;    rendering info  : 2 bytes
+;    expl. offsets   : 2 bytes (x/y)
 ;
 ";
         }
@@ -202,9 +205,6 @@ namespace SpriteHelper.Dialogs
             {
                 builder.AppendLineFormat("{0}Consts:", animation.Name);
 
-                builder.AppendLine(".renderingInfo:");
-                builder.AppendLineFormat("  .byte LOW({0}Render), HIGH({0}Render)", animation.Name);
-
                 var hitbox = new[] { animation.Offsets.XOff, animation.Offsets.YOff, animation.Offsets.Width, animation.Offsets.Height };
                 builder.AppendLine(".hitboxInfo:");
                 builder.AppendLineFormat("  .byte {0}", string.Join(",", hitbox.Select(v => "$" + v.ToString("X2"))));
@@ -214,6 +214,22 @@ namespace SpriteHelper.Dialogs
                     new[] { 0, 0, 0, 0 };
                 builder.AppendLine(".gunInfo:");
                 builder.AppendLineFormat("  .byte {0}", string.Join(",", gun.Select(v => "$" + v.ToString("X2"))));
+
+                builder.AppendLine(".animationSpeed:");
+                builder.AppendLineFormat("  .byte ${0:X2}", animation.FPS);
+
+                builder.AppendLine(".numberOfFrames:");
+                builder.AppendLineFormat("  .byte ${0:X2}", animation.Frames.Count());
+
+                builder.AppendLine(".renderingInfo:");
+                builder.AppendLineFormat("  .byte LOW({0}Render), HIGH({0}Render)", animation.Name);
+
+                var firstFrame = animation.Frames.First();
+                var widthInPixes = firstFrame.Width * Constants.SpriteWidth;
+                var heightInPixels = firstFrame.Height * Constants.SpriteHeight;
+                builder.AppendLine(".explosionOffset:");
+                builder.AppendLineFormat("  .byte ${0:X2}, ${0:X2}", (widthInPixes / 2) - 8, (heightInPixels / 2) - 8);
+                builder.AppendLine();
             }
 
             return builder.ToString();
