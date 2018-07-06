@@ -35,7 +35,7 @@ namespace SpriteHelper.Controls
             }
         }
 
-        public MovementType MovementType
+        public MovementType? MovementType
         {
             get
             {
@@ -44,7 +44,7 @@ namespace SpriteHelper.Controls
             }
             set
             {
-                this.movementComboBox.SelectedItem = value.ToString();
+                this.movementComboBox.SelectedItem = value?.ToString();
             }
         }
 
@@ -100,7 +100,7 @@ namespace SpriteHelper.Controls
 
         public void SetDefaultValues()
         {
-            this.MovementType = MovementType.None;
+            this.MovementType = Contract.MovementType.None;
             this.InitialFlip = false;
             this.SetSpeed(0);
             this.SetMin(0);
@@ -109,7 +109,7 @@ namespace SpriteHelper.Controls
 
         private void MovementComboBoxSelectedIndexChanged(object sender, EventArgs e)
         {
-            var setToNone = this.MovementType == MovementType.None;
+            var setToNone = this.MovementType == Contract.MovementType.None;
 
             this.speedTextBox.Enabled = !setToNone;
             this.minTilesTextBox.Enabled = !setToNone;

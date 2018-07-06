@@ -1230,7 +1230,11 @@ namespace SpriteHelper.Dialogs
             result.AddRange(GetPlatformAndThreatData(logger));
             logger.WriteLineIfNotNull();
 
-            // todo: add information about starting position, level end, enemies etc
+            // Enemies.
+            result.AddRange(GetEnemiesData(logger));
+            logger.WriteLineIfNotNull();
+
+            // todo: add information about starting position and level end
 
             return result.ToArray();
         }
@@ -1571,9 +1575,81 @@ namespace SpriteHelper.Dialogs
             return result.ToArray();
         }
 
-        #endregion
+        private byte[] GetEnemiesData(TextWriter logger = null)
+        {
+            //
+            // - platforms enemies in the following format:
+            //   - pointer to next screen (from here): (n x 14) + 3 (1 byte)
+            //   - number of enemies (1 byte)
+            //   - n times the enemy data (14 bytes)
+            //        - slot to put enemy in (1 byte)
+            //        - pointer to const. data (2 bytes)
+            //        - movement speed (1 byte)
+            //        - max movement distance (1 byte)
+            //        - movement type (1 byte)
+            //        - initial movement distance (1 byte)
+            //        - initial flip (1 byte)
+            //        - x position (1 byte)
+            //        - y position (1 byte)
+            //        - id (1 byte)
+            //        - initial life (1 byte)
+            //        - shooting frequency (1 byte)
+            //        - shooting frequency offset (1 byte)
+            //   - pointer to the previous screen (from here): (n x 14) + 2 (1 byte)
+            //
 
-        #region Enemies
+            const int bytesPerEnemy = 14;
+
+            var result = new List<byte>();
+
+            var width = this.level.Length;
+            var numberOfScreens = (width / Constants.ScreenWidthInTiles) + 1;
+
+            var dataPerScreen = new Dictionary<int, byte[]>();
+
+            for (var screen = 0; screen < numberOfScreens; screen++)
+            {
+                var enemies = this.Enemies.Where(e => e.Screen == screen).ToArray();
+                var n = (byte)enemies.Length;
+
+                // Pointer to the next screen
+                result.Add((byte)(n * bytesPerEnemy + 3));
+
+                // Number of enemies
+                result.Add(n);
+
+                // Enemies data.
+                foreach (var enemy in enemies)
+                {
+                    // todo: slot to put the enemy in
+                    // result.Add(...)
+
+                    
+                    //        - pointer to const. data (2 bytes)
+                    //        - movement speed (1 byte)
+                    //        - max movement distance (1 byte)
+                    //        - movement type (1 byte)
+                    //        - initial movement distance (1 byte)
+                    //        - initial flip (1 byte)
+                    //        - x position (1 byte)
+                    //        - y position (1 byte)
+                    //        - id (1 byte)
+                    //        - initial life (1 byte)
+                    //        - shooting frequency (1 byte)
+                    //        - shooting frequency offset (1 byte)
+                }
+
+                // Pointer to the previous screen
+                result.Add((byte)(n * 4 + 2));
+            }
+
+            logger.WriteLineIfNotNull("Total bytes for enemies data: {1}", result.Count);
+            return result.ToArray();
+        }
+
+            #endregion
+
+            #region Enemies
 
         public Enemy[] Enemies => this.enemiesListBox.Items.Cast<Enemy>().ToArray();
 

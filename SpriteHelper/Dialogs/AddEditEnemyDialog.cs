@@ -98,7 +98,7 @@ namespace SpriteHelper.Dialogs
         // Movement
         //
 
-        public MovementType MovementType => this.movementPanel.MovementType;
+        public MovementType MovementType => this.movementPanel.MovementType ?? MovementType.None;
 
         public bool InitialFlip => this.movementPanel.InitialFlip;
 

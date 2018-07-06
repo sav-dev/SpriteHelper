@@ -38,7 +38,7 @@
             this.movementPanel = new SpriteHelper.Controls.MovementPanel();
             this.shootingGroupBox = new System.Windows.Forms.GroupBox();
             this.shootingPanel = new SpriteHelper.Controls.ShootingPanel();
-             ((System.ComponentModel.ISupportInitialize)(this.enemyPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.enemyPictureBox)).BeginInit();
             this.positionGroupBox.SuspendLayout();
             this.movementGroupBox.SuspendLayout();
             this.shootingGroupBox.SuspendLayout();
