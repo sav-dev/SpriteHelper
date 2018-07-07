@@ -47,8 +47,34 @@ namespace SpriteHelper.Contract
         [DataMember]
         public int ShootingInitialFrequency { get; set; }
 
-        // Screen the enemy is on
+        // Screen the enemy is on.
         public int Screen => this.X / (Constants.ScreenWidthInTiles * Constants.BackgroundTileWidth);
+
+        // Movement range.
+        public int MovementRange => this.MaxPosition - this.MinPosition;
+
+        // Initial movement distance.
+        public int InitialDistance
+        {
+            get
+            {
+                int position;
+                switch (this.MovementType)
+                {                    
+                    case MovementType.Horizontal:
+                        position = this.X;
+                        break;
+                    case MovementType.Vertical:
+                        position = this.Y;
+                        break;
+                    case MovementType.None:
+                    default:
+                        return 0;
+                }
+
+                return this.InitialFlip ? position - this.MinPosition : this.MaxPosition - position;
+            }
+        }
 
         private int width;
         private int height;

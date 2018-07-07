@@ -194,6 +194,8 @@ namespace SpriteHelper.Dialogs
 ;    rendering info  : 2 bytes
 ;    expl. offsets   : 2 bytes (x/y)
 ;
+;  ordered by animation id
+;
 ";
         }
 
@@ -201,7 +203,9 @@ namespace SpriteHelper.Dialogs
         {
             var builder = new StringBuilder();
 
-            foreach (var animation in this.config.Animations)
+            builder.AppendLine("EnemyConsts:");
+            builder.AppendLine();
+            foreach (var animation in this.config.Animations.OrderBy(a => a.Id))
             {
                 builder.AppendLineFormat("{0}Consts:", animation.Name);
 

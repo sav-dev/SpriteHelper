@@ -1582,23 +1582,22 @@ namespace SpriteHelper.Dialogs
             //   - pointer to next screen (from here): (n x 14) + 3 (1 byte)
             //   - number of enemies (1 byte)
             //   - n times the enemy data (14 bytes)
+            //        - id (1 byte)
             //        - slot to put enemy in (1 byte)
-            //        - pointer to const. data (2 bytes)
+            //        - pointer to const. data (1 byte)
+            //        - screen the enemy is on (1 byte)
             //        - movement speed (1 byte)
             //        - max movement distance (1 byte)
             //        - movement type (1 byte)
             //        - initial movement distance (1 byte)
             //        - initial flip (1 byte)
             //        - x position (1 byte)
-            //        - y position (1 byte)
-            //        - id (1 byte)
+            //        - y position (1 byte)            
             //        - initial life (1 byte)
             //        - shooting frequency (1 byte)
-            //        - shooting frequency offset (1 byte)
+            //        - shooting frequency initial (1 byte)
             //   - pointer to the previous screen (from here): (n x 14) + 2 (1 byte)
             //
-
-            const int bytesPerEnemy = 14;
 
             var result = new List<byte>();
 
@@ -1607,13 +1606,32 @@ namespace SpriteHelper.Dialogs
 
             var dataPerScreen = new Dictionary<int, byte[]>();
 
-            for (var screen = 0; screen < numberOfScreens; screen++)
+            // Available slots. -1 means empty, n (>0) means taken for enemy from the nth screen.
+            var slots = new int[Constants.EnemiesLimitPerTwoScreens];
+            for (var i = 0; i < Constants.EnemiesLimitPerTwoScreens; i++)
             {
+                slots[i] = -1;
+            }
+
+            var enemyId = 0;
+
+            // screen <= numberOfScreens because we want to add empty data for an additional screen at the end.
+            for (var screen = 0; screen <= numberOfScreens; screen++)
+            {
+                // Clear the slots for two screens ago.
+                for (var slot = 0; slot < Constants.EnemiesLimitPerTwoScreens; slot++)
+                {
+                    if (slots[slot] == screen - 2)
+                    {
+                        slots[slot] = -1;
+                    }
+                }
+
                 var enemies = this.Enemies.Where(e => e.Screen == screen).ToArray();
                 var n = (byte)enemies.Length;
 
                 // Pointer to the next screen
-                result.Add((byte)(n * bytesPerEnemy + 3));
+                result.Add((byte)(n * Constants.EnemyInLevelDataSize + 3));
 
                 // Number of enemies
                 result.Add(n);
@@ -1621,29 +1639,77 @@ namespace SpriteHelper.Dialogs
                 // Enemies data.
                 foreach (var enemy in enemies)
                 {
-                    // todo: slot to put the enemy in
-                    // result.Add(...)
+                    int slot;
+                    for (slot = 0; slot < Constants.EnemiesLimitPerTwoScreens; slot++)
+                    {
+                        if (slots[slot] == -1)
+                        {
+                            slots[slot] = screen;
+                            break;
+                        }
+                    }
 
-                    
-                    //        - pointer to const. data (2 bytes)
-                    //        - movement speed (1 byte)
-                    //        - max movement distance (1 byte)
-                    //        - movement type (1 byte)
-                    //        - initial movement distance (1 byte)
-                    //        - initial flip (1 byte)
-                    //        - x position (1 byte)
-                    //        - y position (1 byte)
-                    //        - id (1 byte)
-                    //        - initial life (1 byte)
-                    //        - shooting frequency (1 byte)
-                    //        - shooting frequency offset (1 byte)
+                    if (slot == Constants.EnemiesLimitPerTwoScreens)
+                    {
+                        // Sanity check.
+                        throw new Exception();
+                    }
+
+                    var animation = this.enConfig.Animations.First(a => a.Name == enemy.Name);
+
+                    //
+                    // Set the data.
+                    //
+
+                    // id
+                    // todo: make this two bytes
+                    result.Add((byte)enemyId++);
+
+                    // slot to put enemy in (1 byte)
+                    result.Add((byte)(slot * Constants.EnemyInMemorySize));
+
+                    // pointer to const. data
+                    result.Add((byte)(animation.Id * Constants.EnemyInMemorySize));
+
+                    // screen
+                    result.Add((byte)screen);
+
+                    // movement speed
+                    result.Add((byte)enemy.Speed);
+
+                    // max movement distance
+                    result.Add((byte)(enemy.MovementRange));
+
+                    // movement type
+                    result.Add((byte)enemy.MovementType);
+
+                    // initial movement distance
+                    result.Add((byte)(enemy.InitialDistance));
+
+                    // initial flip
+                    result.Add((byte)(enemy.InitialFlip ? 1 : 0));
+
+                    // x position
+                    result.Add((byte)enemy.X);
+
+                    // y position
+                    result.Add((byte)enemy.Y);
+
+                    // initial life
+                    result.Add((byte)animation.MaxHealth);
+
+                    // shooting frequency
+                    result.Add((byte)enemy.ShootingFrequency);
+
+                    // shooting frequency initial
+                    result.Add((byte)enemy.ShootingInitialFrequency);
                 }
 
                 // Pointer to the previous screen
-                result.Add((byte)(n * 4 + 2));
+                result.Add((byte)(n * Constants.EnemyInLevelDataSize + 2));
             }
 
-            logger.WriteLineIfNotNull("Total bytes for enemies data: {1}", result.Count);
+            logger.WriteLineIfNotNull("Total bytes for enemies data: {0}", result.Count);
             return result.ToArray();
         }
 
@@ -2034,9 +2100,9 @@ namespace SpriteHelper.Dialogs
                 return $"Min. position must be <= {enemyPositionString}";
             }
 
-            if (enemy.MaxPosition < enemyPosition)
+            if (enemy.MaxPosition <= enemyPosition)
             {
-                return $"Max. position must be >= {enemyPositionString}";
+                return $"Max. position must be > {enemyPositionString}";
             }
 
             if ((enemyPosition - enemy.MinPosition) % enemy.Speed != 0)
@@ -2047,11 +2113,6 @@ namespace SpriteHelper.Dialogs
             if ((enemy.MaxPosition - enemyPosition) % enemy.Speed != 0)
             {
                 return "Max. position is not reachable with given speed";
-            }
-
-            if (enemy.MinPosition == enemy.MaxPosition)
-            {
-                return "Min. position and max. position must be different if movement type is not 'none'";
             }
 
             return null;
