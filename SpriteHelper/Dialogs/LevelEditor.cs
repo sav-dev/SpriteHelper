@@ -1578,7 +1578,7 @@ namespace SpriteHelper.Dialogs
         private byte[] GetEnemiesData(TextWriter logger = null)
         {
             //
-            // - platforms enemies in the following format:
+            // - enemies in the following format:
             //   - pointer to next screen (from here): (n x 14) + 3 (1 byte)
             //   - number of enemies (1 byte)
             //   - n times the enemy data (14 bytes)
