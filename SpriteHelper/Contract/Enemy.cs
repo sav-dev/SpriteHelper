@@ -53,8 +53,8 @@ namespace SpriteHelper.Contract
         // Movement range.
         public int MovementRange => this.MaxPosition - this.MinPosition;
 
-        // Initial movement distance.
-        public int InitialDistance
+        // Initial movement distance left.
+        public int InitialDistanceLeft
         {
             get
             {

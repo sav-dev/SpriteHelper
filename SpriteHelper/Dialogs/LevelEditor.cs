@@ -1227,11 +1227,11 @@ namespace SpriteHelper.Dialogs
             logger.WriteLineIfNotNull();
 
             // Platform & threat data.
-            result.AddRange(GetPlatformAndThreatData(logger));
+            result.AddRange(GetExportPlatformAndThreatData(logger));
             logger.WriteLineIfNotNull();
 
             // Enemies.
-            result.AddRange(GetEnemiesData(logger));
+            result.AddRange(GetExportEnemiesData(logger));
             logger.WriteLineIfNotNull();
 
             // todo: add information about starting position and level end
@@ -1366,15 +1366,15 @@ namespace SpriteHelper.Dialogs
             return result.ToArray();
         }
 
-        private byte[] GetPlatformAndThreatData(TextWriter logger = null)
+        private byte[] GetExportPlatformAndThreatData(TextWriter logger = null)
         {
             var result = new List<byte>();
-            result.AddRange(GetPlatformOrThreatData(TileType.Blocking, logger));
-            result.AddRange(GetPlatformOrThreatData(TileType.Threat, logger));
+            result.AddRange(GetExportPlatformOrThreatData(TileType.Blocking, logger));
+            result.AddRange(GetExportPlatformOrThreatData(TileType.Threat, logger));
             return result.ToArray();
         }
 
-        private byte[] GetPlatformOrThreatData(TileType tileType, TextWriter logger = null)
+        private byte[] GetExportPlatformOrThreatData(TileType tileType, TextWriter logger = null)
         {
             //
             // - platforms in the following format:
@@ -1575,7 +1575,7 @@ namespace SpriteHelper.Dialogs
             return result.ToArray();
         }
 
-        private byte[] GetEnemiesData(TextWriter logger = null)
+        private byte[] GetExportEnemiesData(TextWriter logger = null)
         {
             //
             // - enemies in the following format:
@@ -1585,12 +1585,12 @@ namespace SpriteHelper.Dialogs
             //        - id (1 byte)
             //        - slot to put enemy in (1 byte)
             //        - pointer to const. data (1 byte)
-            //        - screen the enemy is on (1 byte)
+            //        - screen the enemy is on (1 byte)            
             //        - movement speed (1 byte)
-            //        - max movement distance (1 byte)
-            //        - movement type (1 byte)
-            //        - initial movement distance (1 byte)
+            //        - max movement distance (1 byte)            
+            //        - initial movement left (1 byte)            
             //        - initial flip (1 byte)
+            //        - movement type (1 byte)
             //        - x position (1 byte)
             //        - y position (1 byte)            
             //        - initial life (1 byte)
@@ -1669,7 +1669,7 @@ namespace SpriteHelper.Dialogs
                     result.Add((byte)(slot * Constants.EnemyInMemorySize));
 
                     // pointer to const. data
-                    result.Add((byte)(animation.Id * Constants.EnemyInMemorySize));
+                    result.Add((byte)(animation.Id * Constants.EnemyDefinitionSize));
 
                     // screen
                     result.Add((byte)screen);
@@ -1680,14 +1680,14 @@ namespace SpriteHelper.Dialogs
                     // max movement distance
                     result.Add((byte)(enemy.MovementRange));
 
-                    // movement type
-                    result.Add((byte)enemy.MovementType);
-
-                    // initial movement distance
-                    result.Add((byte)(enemy.InitialDistance));
-
                     // initial flip
                     result.Add((byte)(enemy.InitialFlip ? 1 : 0));
+
+                    // initial movement distance
+                    result.Add((byte)(enemy.InitialDistanceLeft));
+
+                    // movement type
+                    result.Add((byte)enemy.MovementType);
 
                     // x position
                     result.Add((byte)enemy.X);
@@ -2039,6 +2039,16 @@ namespace SpriteHelper.Dialogs
         {
             if (enemy.MovementType == MovementType.None)
             {
+                if (enemy.Speed != 0)
+                {
+                    return "Speed must be 0 for non-moving enemies";
+                }
+
+                if (enemy.InitialDistanceLeft != 0)
+                {
+                    return "Distance left must be 0 for non-moving enemies";
+                }
+
                 return null;
             }
 
@@ -2100,9 +2110,14 @@ namespace SpriteHelper.Dialogs
                 return $"Min. position must be <= {enemyPositionString}";
             }
 
-            if (enemy.MaxPosition <= enemyPosition)
+            if (enemy.MaxPosition < enemyPosition)
             {
-                return $"Max. position must be > {enemyPositionString}";
+                return $"Max. position must be >= {enemyPositionString}";
+            }
+
+            if (enemy.InitialDistanceLeft == 0)
+            {
+                return "Enemy must have some initial movement in the direction it's facing";
             }
 
             if ((enemyPosition - enemy.MinPosition) % enemy.Speed != 0)

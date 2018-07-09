@@ -181,6 +181,7 @@ namespace SpriteHelper.Dialogs
         {
             return @";
 ;  constant properties for enemies
+;    width           : 1 byte
 ;    hitbox x off    : 1 byte
 ;    hitbox y off    : 1 byte
 ;    hitbox width    : 1 byte (inclusive)
@@ -209,6 +210,13 @@ namespace SpriteHelper.Dialogs
             {
                 builder.AppendLineFormat("{0}Consts:", animation.Name);
 
+                var firstFrame = animation.Frames.First();
+                var widthInPixes = firstFrame.Width * Constants.SpriteWidth;
+                var heightInPixels = firstFrame.Height * Constants.SpriteHeight;
+
+                builder.AppendLine(".width:");
+                builder.AppendLineFormat("  .byte ${0:X2}:", widthInPixes);
+
                 var hitbox = new[] { animation.Offsets.XOff, animation.Offsets.YOff, animation.Offsets.Width, animation.Offsets.Height };
                 builder.AppendLine(".hitboxInfo:");
                 builder.AppendLineFormat("  .byte {0}", string.Join(",", hitbox.Select(v => "$" + v.ToString("X2"))));
@@ -228,9 +236,6 @@ namespace SpriteHelper.Dialogs
                 builder.AppendLine(".renderingInfo:");
                 builder.AppendLineFormat("  .byte LOW({0}Render), HIGH({0}Render)", animation.Name);
 
-                var firstFrame = animation.Frames.First();
-                var widthInPixes = firstFrame.Width * Constants.SpriteWidth;
-                var heightInPixels = firstFrame.Height * Constants.SpriteHeight;
                 builder.AppendLine(".explosionOffset:");
                 builder.AppendLineFormat("  .byte ${0:X2}, ${0:X2}", (widthInPixes / 2) - 8, (heightInPixels / 2) - 8);
                 builder.AppendLine();

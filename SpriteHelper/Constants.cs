@@ -61,7 +61,7 @@
         public const int EnemiesLimitPerTwoScreens = 10;
 
         // Memory sizes.
-        public const int EnemyDefinitionSize = 14;
+        public const int EnemyDefinitionSize = 15;
         public const int EnemyInMemorySize = 16;
         public const int EnemyInLevelDataSize = 14;
     }
