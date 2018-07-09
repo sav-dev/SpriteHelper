@@ -215,7 +215,7 @@ namespace SpriteHelper.Dialogs
                 var heightInPixels = firstFrame.Height * Constants.SpriteHeight;
 
                 builder.AppendLine(".width:");
-                builder.AppendLineFormat("  .byte ${0:X2}:", widthInPixes);
+                builder.AppendLineFormat("  .byte ${0:X2}", widthInPixes);
 
                 var hitbox = new[] { animation.Offsets.XOff, animation.Offsets.YOff, animation.Offsets.Width, animation.Offsets.Height };
                 builder.AppendLine(".hitboxInfo:");
