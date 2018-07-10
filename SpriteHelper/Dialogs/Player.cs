@@ -122,7 +122,7 @@ namespace SpriteHelper.Dialogs
 
             var selectedAnimation = (Animation)this.animationsListBox.SelectedItem;
 
-            this.timer.Interval = selectedAnimation.FPS > 0 ? (1000 / selectedAnimation.FPS) : int.MaxValue;
+            this.timer.Interval = selectedAnimation.AnimationSpeed > 0 ? (1000 / (Constants.Framerate / selectedAnimation.AnimationSpeed)) : int.MaxValue;
 
             this.framesListBox.Items.Clear();
             foreach (var frame in selectedAnimation.Frames)

@@ -87,7 +87,7 @@ namespace SpriteHelper.Dialogs
             this.Stop();
 
             var animation = this.config.Animations.First();
-            this.timer.Interval = animation.FPS > 0 ? (1000 / animation.FPS) : int.MaxValue;
+            this.timer.Interval = animation.AnimationSpeed > 0 ? (1000 / (Constants.Framerate / animation.AnimationSpeed)) : int.MaxValue;
             
             this.framesListBox.Items.Clear();
             foreach (var frame in animation.Frames)

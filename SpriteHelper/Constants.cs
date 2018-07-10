@@ -42,6 +42,7 @@
         public const int ChrFileRows = 16;
         public const int ScreenWidth = Constants.ScreenWidthInTiles * Constants.BackgroundTileWidth;
         public const int ScreenHeight = Constants.ScreenHeightInTiles * Constants.BackgroundTileHeight;
+        public const int Framerate = 60;
 
         // Max zoom for sprite viweres.
         public const int MaxZoom = 10;

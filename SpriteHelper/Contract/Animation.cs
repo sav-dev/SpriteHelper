@@ -12,7 +12,7 @@ namespace SpriteHelper.Contract
         public string Name { get; set; }
 
         [DataMember]
-        public int FPS { get; set; }
+        public int AnimationSpeed { get; set; }
 
         [DataMember]
         public Frame[] Frames { get; set; }

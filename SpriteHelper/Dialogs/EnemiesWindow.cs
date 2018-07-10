@@ -94,7 +94,7 @@ namespace SpriteHelper.Dialogs
 
             var selectedEnemy = (Animation)this.enemiesListBox.SelectedItem;
 
-            this.timer.Interval = selectedEnemy.FPS > 0 ? (1000 / selectedEnemy.FPS) : int.MaxValue;
+            this.timer.Interval = selectedEnemy.AnimationSpeed > 0 ? (1000 / (Constants.Framerate / selectedEnemy.AnimationSpeed)) : int.MaxValue;
 
             this.framesListBox.Items.Clear();
             foreach (var frame in selectedEnemy.Frames)
@@ -228,7 +228,7 @@ namespace SpriteHelper.Dialogs
                 builder.AppendLineFormat("  .byte {0}", string.Join(",", gun.Select(v => "$" + v.ToString("X2"))));
 
                 builder.AppendLine(".animationSpeed:");
-                builder.AppendLineFormat("  .byte ${0:X2}", animation.FPS);
+                builder.AppendLineFormat("  .byte ${0:X2}", animation.AnimationSpeed);
 
                 builder.AppendLine(".numberOfFrames:");
                 builder.AppendLineFormat("  .byte ${0:X2}", animation.Frames.Count());
