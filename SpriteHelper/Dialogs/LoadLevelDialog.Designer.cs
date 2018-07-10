@@ -150,6 +150,7 @@
             this.browseEnSpecButton.TabIndex = 53;
             this.browseEnSpecButton.Text = "Browse";
             this.browseEnSpecButton.UseVisualStyleBackColor = true;
+            this.browseEnSpecButton.Click += new System.EventHandler(this.BrowseEnSpecButtonClick);
             // 
             // enSpecTextBox
             // 

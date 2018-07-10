@@ -33,6 +33,8 @@ namespace SpriteHelper.Dialogs
         {
             this.bgSpecTextBox.Text = Defaults.Instance.BackgroundSpec;
             this.palettesTextBox.Text = Defaults.Instance.PalettesSpec;
+            this.levelTextBox.Text = Defaults.Instance.DefaultLevel;
+            this.enSpecTextBox.Text = "C:\\Users\\tomas\\Documents\\NES\\GitHub\\Platformer\\PlatformerGraphics\\Sprites\\enemies.xml";
         }
 
         private void OkButtonClick(object sender, EventArgs e)

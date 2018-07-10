@@ -183,8 +183,8 @@ namespace SpriteHelper.Dialogs
 ;  constant properties for enemies
 ;    width           : 1 byte
 ;    hitbox x off    : 1 byte
-;    hitbox y off    : 1 byte
 ;    hitbox width    : 1 byte (inclusive)
+;    hitbox y off    : 1 byte
 ;    hitbox height   : 1 byte (inclusive)
 ;    gun x off       : 1 byte (0 for non shooting)
 ;    gun y off       : 1 byte (0 for non shooting)
@@ -217,7 +217,7 @@ namespace SpriteHelper.Dialogs
                 builder.AppendLine(".width:");
                 builder.AppendLineFormat("  .byte ${0:X2}", widthInPixes);
 
-                var hitbox = new[] { animation.Offsets.XOff, animation.Offsets.YOff, animation.Offsets.Width, animation.Offsets.Height };
+                var hitbox = new[] { animation.Offsets.XOff, animation.Offsets.Width, animation.Offsets.YOff, animation.Offsets.Height };
                 builder.AppendLine(".hitboxInfo:");
                 builder.AppendLineFormat("  .byte {0}", string.Join(",", hitbox.Select(v => "$" + v.ToString("X2"))));
 
