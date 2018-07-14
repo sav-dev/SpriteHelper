@@ -81,24 +81,24 @@
             this.shootingFreqTextBox.TabIndex = 0;
             this.shootingFreqTextBox.Text = "0";
             // 
-            // freqOffsetTextBox
+            // initialFreqTextBox
             // 
             this.initialFreqTextBox.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.initialFreqTextBox.Location = new System.Drawing.Point(349, 9);
-            this.initialFreqTextBox.Name = "freqOffsetTextBox";
+            this.initialFreqTextBox.Name = "initialFreqTextBox";
             this.initialFreqTextBox.Size = new System.Drawing.Size(100, 20);
             this.initialFreqTextBox.TabIndex = 1;
             this.initialFreqTextBox.Text = "0";
             // 
-            // freqOffsetLabel
+            // inifialFreqLabel
             // 
             this.inifialFreqLabel.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.inifialFreqLabel.AutoSize = true;
-            this.inifialFreqLabel.Location = new System.Drawing.Point(266, 13);
-            this.inifialFreqLabel.Name = "freqOffsetLabel";
-            this.inifialFreqLabel.Size = new System.Drawing.Size(60, 13);
+            this.inifialFreqLabel.Location = new System.Drawing.Point(271, 13);
+            this.inifialFreqLabel.Name = "inifialFreqLabel";
+            this.inifialFreqLabel.Size = new System.Drawing.Size(55, 13);
             this.inifialFreqLabel.TabIndex = 8;
-            this.inifialFreqLabel.Text = "Freq. offset";
+            this.inifialFreqLabel.Text = "Initial freq.";
             // 
             // ShootingPanel
             // 

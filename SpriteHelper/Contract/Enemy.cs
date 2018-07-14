@@ -53,6 +53,44 @@ namespace SpriteHelper.Contract
         // Movement range.
         public int MovementRange => this.MaxPosition - this.MinPosition;
 
+        // Movement orientation.
+        // A bit of a hack to store the movement and shooting direction in one byte.
+        public int MovementOrientation
+        {
+            get
+            {
+                // all values are hardcoded in the game
+                //   0 = 00000000 - none
+                //   1 = 00000001 - static horizontal
+                //   2 = 00000010 - static vertical
+                //   5 = 00000101 - moving horizontal
+                //   6 = 00000110 - moving vertical
+                switch (this.MovementType)
+                {
+                    case MovementType.None:
+                        switch (this.animation.Flip)
+                        {
+                            case Flip.None:
+                                return 0;
+                            case Flip.Horizontal:
+                                return 1;
+                            case Flip.Vertical:
+                                return 2;
+                        }
+                        break;
+                    case MovementType.Horizontal:
+                        return 5;
+                    case MovementType.Vertical:
+                        return 6;
+                }
+                throw new System.Exception("We should never get here");
+            }
+        }
+
+        // Animation.
+        public Animation Animation => this.animation;
+        private Animation animation;
+
         // Initial movement distance left.
         public int InitialDistanceLeft
         {
@@ -96,6 +134,7 @@ namespace SpriteHelper.Contract
         public void Initialize(Animation animation)
         {
             this.Name = animation.Name;
+            this.animation = animation;
             var firstFrame = animation.Frames.First();
             this.width = firstFrame.Width * Constants.SpriteWidth;
             this.height = firstFrame.Height * Constants.SpriteHeight;

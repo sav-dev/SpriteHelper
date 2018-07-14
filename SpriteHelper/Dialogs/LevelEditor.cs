@@ -1594,8 +1594,8 @@ namespace SpriteHelper.Dialogs
             //        - x position (1 byte)
             //        - y position (1 byte)            
             //        - initial life (1 byte)
-            //        - shooting frequency (1 byte)
             //        - shooting frequency initial (1 byte)
+            //        - shooting frequency (1 byte)
             //   - pointer to the previous screen (from here): (n x 14) + 2 (1 byte)
             //
 
@@ -1655,7 +1655,7 @@ namespace SpriteHelper.Dialogs
                         throw new Exception();
                     }
 
-                    var animation = this.enConfig.Animations.First(a => a.Name == enemy.Name);
+                    var animation = enemy.Animation;
 
                     //
                     // Set the data.
@@ -1687,7 +1687,7 @@ namespace SpriteHelper.Dialogs
                     result.Add((byte)(enemy.InitialDistanceLeft));
 
                     // movement type
-                    result.Add((byte)enemy.MovementType);
+                    result.Add((byte)enemy.MovementOrientation);
 
                     // x position
                     result.Add((byte)enemy.X);
@@ -1698,11 +1698,11 @@ namespace SpriteHelper.Dialogs
                     // initial life
                     result.Add((byte)animation.MaxHealth);
 
+                                        // shooting frequency initial
+                    result.Add((byte)enemy.ShootingInitialFrequency);
+
                     // shooting frequency
                     result.Add((byte)enemy.ShootingFrequency);
-
-                    // shooting frequency initial
-                    result.Add((byte)enemy.ShootingInitialFrequency);
                 }
 
                 // Pointer to the previous screen
@@ -2144,6 +2144,19 @@ namespace SpriteHelper.Dialogs
             {
                 return "Shooting frequency is too high";
             }
+
+            if (enemy.ShootingFrequency != 0)
+            {
+                if (enemy.ShootingInitialFrequency == 0)
+                {
+                    return "If enemy is shooting, initial frequency cannot be 0";
+                }
+
+                if (enemy.MovementOrientation == 0)
+                {
+                    return "This enemy cannot shoot";
+                }
+            }            
 
             if (enemy.ShootingInitialFrequency < 0)
             {
