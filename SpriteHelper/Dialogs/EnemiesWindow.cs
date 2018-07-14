@@ -237,7 +237,7 @@ namespace SpriteHelper.Dialogs
                 builder.AppendLineFormat("  .byte LOW({0}Render), HIGH({0}Render)", animation.Name);
 
                 builder.AppendLine(".explosionOffset:");
-                builder.AppendLineFormat("  .byte ${0:X2}, ${0:X2}", (widthInPixes / 2) - 8, (heightInPixels / 2) - 8);
+                builder.AppendLineFormat("  .byte ${0:X2}, ${1:X2}", (widthInPixes / 2) - 8, (heightInPixels / 2) - 8);
                 builder.AppendLine();
             }
 
