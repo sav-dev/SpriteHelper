@@ -221,9 +221,39 @@ namespace SpriteHelper.Dialogs
                 builder.AppendLine(".hitboxInfo:");
                 builder.AppendLineFormat("  .byte {0}", string.Join(",", hitbox.Select(v => "$" + v.ToString("X2"))));
 
-                var gun = animation.Offsets.GunXOff >= 0 ?
-                    new[] { animation.Offsets.GunXOff, animation.Offsets.GunYOff, animation.Offsets.GunXOffFlip, animation.Offsets.GunYOffFlip } :
-                    new[] { 0, 0, 0, 0 };
+                int[] gun;
+
+                if (animation.Offsets.GunXOff >= 0)
+                {
+                    switch (animation.Flip)
+                    {
+                        case Flip.Horizontal:
+                            gun = new[]
+                                {
+                                    animation.Offsets.GunXOff,
+                                    animation.Offsets.GunYOff - Constants.BulletHOff,
+                                    animation.Offsets.GunXOffFlip,
+                                    animation.Offsets.GunYOffFlip - Constants.BulletHOff
+                                };
+                            break;
+                        case Flip.Vertical:
+                            gun = new[]
+                                {
+                                    animation.Offsets.GunXOff - Constants.BulletVOff,
+                                    animation.Offsets.GunYOff,
+                                    animation.Offsets.GunXOffFlip - Constants.BulletVOff,
+                                    animation.Offsets.GunYOffFlip
+                                };
+                            break;
+                        default:
+                            throw new Exception("Shooting enemy must have a flip set");
+                    }
+                }
+                else
+                {
+                    gun = new[] { 0, 0, 0, 0 };
+                }
+
                 builder.AppendLine(".gunInfo:");
                 builder.AppendLineFormat("  .byte {0}", string.Join(",", gun.Select(v => "$" + v.ToString("X2"))));
 

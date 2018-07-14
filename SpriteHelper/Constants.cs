@@ -18,7 +18,11 @@
         public const int PlayerThreatBoxYOff = -2;
         public const int PlayerThreatBoxHeight = -25;
         public const int PlayerThreatBoxHeightCrouch = -17;
-        public const int PlayerThreatBoxWidth = 13;        
+        public const int PlayerThreatBoxWidth = 13;
+
+        // Bullet constants.
+        public const int BulletHOff = 2;
+        public const int BulletVOff = 2;
 
         // Number of sprites for an explosion.
         public const int ExplosionSprites = 4;
