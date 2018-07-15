@@ -150,8 +150,6 @@ namespace SpriteHelper.Dialogs
         {
             var builder = new StringBuilder();
 
-            // todo: explosion offsets
-
             builder.AppendLineFormat(GetHeader());
 
             builder.AppendLineFormat(GetConstantPropertiesComment());
