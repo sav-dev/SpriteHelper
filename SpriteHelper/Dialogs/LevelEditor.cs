@@ -232,7 +232,7 @@ namespace SpriteHelper.Dialogs
             this.emptyTile = TileIds.PaletteTileId(0, this.bgConfig.Tiles[0].Id);
 
             string[][] newLevel;
-            Enemy[] enemies = null;
+            Enemy[] enemies;
 
             if (File.Exists(level))
             {
@@ -252,6 +252,8 @@ namespace SpriteHelper.Dialogs
                         newLevel[i][j] = this.emptyTile;
                     }
                 }
+
+                enemies = new Enemy[0];
             }
 
             // Load enemies config

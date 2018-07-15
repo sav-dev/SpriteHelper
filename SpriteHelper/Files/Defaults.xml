@@ -27,7 +27,7 @@
   <BackgroundSpec>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\00\_back.xml</BackgroundSpec>
   <BackgroundChr>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\chr\bg_00.chr</BackgroundChr>
   <GraphicsDefaultDir>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\00\</GraphicsDefaultDir> 
-  <DefaultLevel>C:\Users\tomas\Documents\NES\GitHub\platformer\PlatformerGraphics\Backgrounds\00\_level.xml</DefaultLevel>
+  <DefaultLevel>C:\users\tomas\documents\nes\github\platformer\data\levels\00.xml</DefaultLevel>
   <LevelsDefaultDir>C:\users\tomas\documents\nes\github\platformer\data\levels\</LevelsDefaultDir>
   <SpritesPalette>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\palettes\spr_00.bin</SpritesPalette>
   <BackgroundPalette>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\palettes\bg_00.bin</BackgroundPalette>
