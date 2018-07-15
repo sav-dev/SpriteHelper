@@ -186,10 +186,10 @@ namespace SpriteHelper.Dialogs
 ;    hitbox width    : 1 byte (inclusive)
 ;    hitbox y off    : 1 byte
 ;    hitbox height   : 1 byte (inclusive)
-;    gun x off       : 1 byte (0 for non shooting)
-;    gun y off       : 1 byte (0 for non shooting)
-;    gun x off flip  : 1 byte (0 for non shooting)
-;    gun y off flip  : 1 byte (0 for non shooting)
+;    gun x off       : 1 byte (signed, 0 for non shooting)
+;    gun y off       : 1 byte (signed, 0 for non shooting)
+;    gun x off flip  : 1 byte (signed, 0 for non shooting)
+;    gun y off flip  : 1 byte (signed, 0 for non shooting)
 ;    animation speed : 1 byte (0 for non animated)
 ;    # of frames     : 1 bytes
 ;    rendering info  : 2 bytes
@@ -230,19 +230,19 @@ namespace SpriteHelper.Dialogs
                         case Flip.Horizontal:
                             gun = new[]
                                 {
-                                    animation.Offsets.GunXOff,
-                                    animation.Offsets.GunYOff - Constants.BulletHOff,
-                                    animation.Offsets.GunXOffFlip,
-                                    animation.Offsets.GunYOffFlip - Constants.BulletHOff
+                                    256 + animation.Offsets.GunXOff,
+                                    256 + animation.Offsets.GunYOff - Constants.BulletHOff,
+                                    256 + animation.Offsets.GunXOffFlip - Constants.SpriteWidth,
+                                    256 + animation.Offsets.GunYOffFlip - Constants.BulletHOff
                                 };
                             break;
                         case Flip.Vertical:
                             gun = new[]
                                 {
-                                    animation.Offsets.GunXOff - Constants.BulletVOff,
-                                    animation.Offsets.GunYOff,
-                                    animation.Offsets.GunXOffFlip - Constants.BulletVOff,
-                                    animation.Offsets.GunYOffFlip
+                                    256 + animation.Offsets.GunXOff - Constants.BulletVOff,
+                                    256 + animation.Offsets.GunYOff,
+                                    256 + animation.Offsets.GunXOffFlip - Constants.BulletVOff,
+                                    256 + animation.Offsets.GunYOffFlip - Constants.SpriteHeight
                                 };
                             break;
                         default:
@@ -255,7 +255,7 @@ namespace SpriteHelper.Dialogs
                 }
 
                 builder.AppendLine(".gunInfo:");
-                builder.AppendLineFormat("  .byte {0}", string.Join(",", gun.Select(v => "$" + v.ToString("X2"))));
+                builder.AppendLineFormat("  .byte {0}", string.Join(",", gun.Select(v => "$" + (v % 256).ToString("X2"))));
 
                 builder.AppendLine(".animationSpeed:");
                 builder.AppendLineFormat("  .byte ${0:X2}", animation.AnimationSpeed);
