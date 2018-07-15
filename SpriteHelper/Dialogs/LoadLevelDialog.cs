@@ -35,6 +35,7 @@ namespace SpriteHelper.Dialogs
             this.palettesTextBox.Text = Defaults.Instance.PalettesSpec;
             this.levelTextBox.Text = Defaults.Instance.DefaultLevel;
             this.enSpecTextBox.Text = "C:\\Users\\tomas\\Documents\\NES\\GitHub\\Platformer\\PlatformerGraphics\\Sprites\\enemies.xml";
+            this.playerTextBox.Text = Defaults.Instance.PlayerSpec;
         }
 
         private void OkButtonClick(object sender, EventArgs e)
@@ -88,6 +89,14 @@ namespace SpriteHelper.Dialogs
             }
         }
 
+        public string Player
+        {
+            get
+            {
+                return this.playerTextBox.Text;
+            }
+        }
+
         private void BrowseLevelButtonClick(object sender, EventArgs e)
         {
             this.OpenXmlFile(this.levelTextBox);
@@ -106,6 +115,11 @@ namespace SpriteHelper.Dialogs
         private void BrowsePalettesButtonClick(object sender, EventArgs e)
         {
             this.OpenXmlFile(this.palettesTextBox);
+        }
+
+        private void BrowsePlayerButtonClick(object sender, EventArgs e)
+        {
+            this.OpenXmlFile(this.playerTextBox);
         }
 
         private void OpenXmlFile(TextBox target)

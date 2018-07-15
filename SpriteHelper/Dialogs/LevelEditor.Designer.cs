@@ -66,12 +66,17 @@
             this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.showTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showGridToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.showScreensToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.hideNonBgToolStringMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.showScreensToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.showEnemiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showEnemyMovementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.showPlayerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showMovingPlatformsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.viewPlatformsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewThreatsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -405,7 +410,7 @@
             this.exportImageToolStripMenuItem.Name = "exportImageToolStripMenuItem";
             this.exportImageToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I)));
             this.exportImageToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.exportImageToolStripMenuItem.Text = "Export Image";
+            this.exportImageToolStripMenuItem.Text = "Export image";
             this.exportImageToolStripMenuItem.Click += new System.EventHandler(this.ExportImageToolStripMenuItemClick);
             // 
             // editToolStripMenuItem
@@ -466,12 +471,17 @@
             // viewToolStripMenuItem
             // 
             this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.showTypeToolStripMenuItem,
             this.showGridToolStripMenuItem,
-            this.showScreensToolStripMenuItem,
+            this.showTypeToolStripMenuItem,
+            this.hideNonBgToolStringMenuItem,
             this.toolStripSeparator5,
+            this.showScreensToolStripMenuItem,
+            this.toolStripSeparator7,
             this.showEnemiesToolStripMenuItem,
             this.showEnemyMovementToolStripMenuItem,
+            this.toolStripSeparator6,
+            this.showPlayerToolStripMenuItem,
+            this.showMovingPlatformsToolStripMenuItem,
             this.toolStripSeparator2,
             this.viewPlatformsToolStripMenuItem,
             this.viewThreatsToolStripMenuItem,
@@ -481,16 +491,6 @@
             this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.viewToolStripMenuItem.Text = "&View";
             // 
-            // showTypeToolStripMenuItem
-            // 
-            this.showTypeToolStripMenuItem.CheckOnClick = true;
-            this.showTypeToolStripMenuItem.Name = "showTypeToolStripMenuItem";
-            this.showTypeToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.T)));
-            this.showTypeToolStripMenuItem.Size = new System.Drawing.Size(276, 22);
-            this.showTypeToolStripMenuItem.Text = "Show &Type";
-            this.showTypeToolStripMenuItem.Click += new System.EventHandler(this.ShowTypeToolStripMenuItemClick);
-            // 
             // showGridToolStripMenuItem
             // 
             this.showGridToolStripMenuItem.CheckOnClick = true;
@@ -498,8 +498,34 @@
             this.showGridToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.G)));
             this.showGridToolStripMenuItem.Size = new System.Drawing.Size(276, 22);
-            this.showGridToolStripMenuItem.Text = "Show &Grid";
+            this.showGridToolStripMenuItem.Text = "Show &grid";
             this.showGridToolStripMenuItem.Click += new System.EventHandler(this.ShowGridToolStripMenuItemClick);
+            // 
+            // showTypeToolStripMenuItem
+            // 
+            this.showTypeToolStripMenuItem.CheckOnClick = true;
+            this.showTypeToolStripMenuItem.Name = "showTypeToolStripMenuItem";
+            this.showTypeToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.T)));
+            this.showTypeToolStripMenuItem.Size = new System.Drawing.Size(276, 22);
+            this.showTypeToolStripMenuItem.Text = "Show &type";
+            this.showTypeToolStripMenuItem.Click += new System.EventHandler(this.ShowTypeToolStripMenuItemClick);
+            // 
+            // hideNonBgToolStringMenuItem
+            // 
+            this.hideNonBgToolStringMenuItem.CheckOnClick = true;
+            this.hideNonBgToolStringMenuItem.Name = "hideNonBgToolStringMenuItem";
+            this.hideNonBgToolStringMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.Q)));
+            this.hideNonBgToolStringMenuItem.Size = new System.Drawing.Size(276, 22);
+            this.hideNonBgToolStringMenuItem.Text = "&Hide non-background";
+            this.hideNonBgToolStringMenuItem.CheckedChanged += new System.EventHandler(this.HideNonBgToolStringMenuItemCheckedChanged);
+            this.hideNonBgToolStringMenuItem.Click += new System.EventHandler(this.HideNonBgToolStringMenuItemClick);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(273, 6);
             // 
             // showScreensToolStripMenuItem
             // 
@@ -510,13 +536,13 @@
             this.showScreensToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.S)));
             this.showScreensToolStripMenuItem.Size = new System.Drawing.Size(276, 22);
-            this.showScreensToolStripMenuItem.Text = "Show &Screens";
+            this.showScreensToolStripMenuItem.Text = "Show &screens";
             this.showScreensToolStripMenuItem.Click += new System.EventHandler(this.ShowScreensToolStripMenuItemClick);
             // 
-            // toolStripSeparator5
+            // toolStripSeparator7
             // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(273, 6);
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(273, 6);
             // 
             // showEnemiesToolStripMenuItem
             // 
@@ -527,7 +553,7 @@
             this.showEnemiesToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.E)));
             this.showEnemiesToolStripMenuItem.Size = new System.Drawing.Size(276, 22);
-            this.showEnemiesToolStripMenuItem.Text = "Show &Enemies";
+            this.showEnemiesToolStripMenuItem.Text = "Show &enemies";
             this.showEnemiesToolStripMenuItem.Click += new System.EventHandler(this.ShowEnemiesToolStripMenuItemClick);
             // 
             // showEnemyMovementToolStripMenuItem
@@ -539,8 +565,37 @@
             this.showEnemyMovementToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.R)));
             this.showEnemyMovementToolStripMenuItem.Size = new System.Drawing.Size(276, 22);
-            this.showEnemyMovementToolStripMenuItem.Text = "Show Enemy &Movement";
+            this.showEnemyMovementToolStripMenuItem.Text = "Show enemy &movement";
             this.showEnemyMovementToolStripMenuItem.Click += new System.EventHandler(this.ShowEnemyMovementToolStripMenuItemClick);
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(273, 6);
+            // 
+            // showPlayerToolStripMenuItem
+            // 
+            this.showPlayerToolStripMenuItem.Checked = true;
+            this.showPlayerToolStripMenuItem.CheckOnClick = true;
+            this.showPlayerToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.showPlayerToolStripMenuItem.Name = "showPlayerToolStripMenuItem";
+            this.showPlayerToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.P)));
+            this.showPlayerToolStripMenuItem.Size = new System.Drawing.Size(276, 22);
+            this.showPlayerToolStripMenuItem.Text = "Show &player and exit";
+            this.showPlayerToolStripMenuItem.Click += new System.EventHandler(this.ShowPlayerToolStripMenuItemClick);
+            // 
+            // showMovingPlatformsToolStripMenuItem
+            // 
+            this.showMovingPlatformsToolStripMenuItem.Checked = true;
+            this.showMovingPlatformsToolStripMenuItem.CheckOnClick = true;
+            this.showMovingPlatformsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.showMovingPlatformsToolStripMenuItem.Name = "showMovingPlatformsToolStripMenuItem";
+            this.showMovingPlatformsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.O)));
+            this.showMovingPlatformsToolStripMenuItem.Size = new System.Drawing.Size(276, 22);
+            this.showMovingPlatformsToolStripMenuItem.Text = "Show m&oving platforms";
+            this.showMovingPlatformsToolStripMenuItem.Click += new System.EventHandler(this.ShowMovingPlatformsToolStripMenuItemClick);
             // 
             // toolStripSeparator2
             // 
@@ -553,7 +608,7 @@
             this.viewPlatformsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.V)));
             this.viewPlatformsToolStripMenuItem.Size = new System.Drawing.Size(276, 22);
-            this.viewPlatformsToolStripMenuItem.Text = "View Platforms";
+            this.viewPlatformsToolStripMenuItem.Text = "View platforms";
             this.viewPlatformsToolStripMenuItem.Click += new System.EventHandler(this.ViewPlatformsToolStripMenuItemClick);
             // 
             // viewThreatsToolStripMenuItem
@@ -562,7 +617,7 @@
             this.viewThreatsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.I)));
             this.viewThreatsToolStripMenuItem.Size = new System.Drawing.Size(276, 22);
-            this.viewThreatsToolStripMenuItem.Text = "View Threats";
+            this.viewThreatsToolStripMenuItem.Text = "View threats";
             this.viewThreatsToolStripMenuItem.Click += new System.EventHandler(this.ViewThreatsToolStripMenuItemClick);
             // 
             // toolStripSeparator3
@@ -576,7 +631,7 @@
             this.exportCheckToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.X)));
             this.exportCheckToolStripMenuItem.Size = new System.Drawing.Size(276, 22);
-            this.exportCheckToolStripMenuItem.Text = "Export Check";
+            this.exportCheckToolStripMenuItem.Text = "Export check";
             this.exportCheckToolStripMenuItem.Click += new System.EventHandler(this.ExportCheckToolStripMenuItemClick);
             // 
             // LevelEditor
@@ -666,5 +721,10 @@
         private System.Windows.Forms.Button findEnemyButton;
         private System.Windows.Forms.ToolStripMenuItem showEnemiesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem showScreensToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.Windows.Forms.ToolStripMenuItem showPlayerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem showMovingPlatformsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem hideNonBgToolStringMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
     }
 }

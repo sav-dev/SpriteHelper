@@ -1,6 +1,5 @@
 ﻿using SpriteHelper.Dialogs;
 using SpriteHelper.NesGraphics;
-using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -26,43 +25,55 @@ namespace SpriteHelper.Contract
         [DataMember]
         public string Name { get; set; }
 
-        private IDictionary<SpriteFlags, Bitmap>[] cachedBitmaps;
+        private IDictionary<ImageFlags, Bitmap>[] cachedBitmaps;
 
         public Frame()
         {
-            this.cachedBitmaps = new IDictionary<SpriteFlags, Bitmap>[Constants.MaxZoom - 1];
+            this.cachedBitmaps = new IDictionary<ImageFlags, Bitmap>[Constants.MaxZoom - 1];
             for (var i = 0; i < Constants.MaxZoom - 1; i++)
             {
-                cachedBitmaps[i] = new Dictionary<SpriteFlags, Bitmap>();
+                cachedBitmaps[i] = new Dictionary<ImageFlags, Bitmap>();
             }
         }
 
-        private SpriteFlags GetFlags(
+        private ImageFlags GetFlags(
             bool applyPalettes,
             bool showBoxes,
             bool vFlip,
-            bool hFlip)
+            bool hFlip,
+            bool transparent = false,
+            bool transparentBg = false)
         {
-            var flags = SpriteFlags.None;
+            var flags = ImageFlags.None;
 
             if (applyPalettes)
             {
-                flags |= SpriteFlags.Palettes;
+                flags |= ImageFlags.Palettes;
             }
 
             if (showBoxes)
             {
-                flags |= SpriteFlags.Boxes;
+                flags |= ImageFlags.Boxes;
             }
 
             if (vFlip)
             {
-                flags |= SpriteFlags.VFlip;
+                flags |= ImageFlags.VFlip;
             }
 
             if (hFlip)
             {
-                flags |= SpriteFlags.HFlip;
+                flags |= ImageFlags.HFlip;
+            }
+
+            if (transparent)
+            {
+                flags |= ImageFlags.Transparent;
+            }
+
+            if (transparentBg)
+            {
+                flags |= ImageFlags.TransparentBg;
             }
 
             return flags;
@@ -77,10 +88,11 @@ namespace SpriteHelper.Contract
             bool applyPalettes,
             bool showBoxes,
             bool hFlip,
-            int zoom)
+            int zoom,
+            bool transparentBg = false)
         {
             // Get flags for the request.
-            var flags = GetFlags(applyPalettes, showBoxes, false, hFlip);
+            var flags = GetFlags(applyPalettes, showBoxes, false, hFlip, false, transparentBg);
 
             // Checked if a cached bitmap is available, return it if it is.
             var dictionary = this.cachedBitmaps[zoom - 1];
@@ -136,7 +148,7 @@ namespace SpriteHelper.Contract
             }
 
             // Scale image.
-            var result = image.Scale(zoom).ToBitmap();
+            var result = image.Scale(zoom).ToBitmap(backgroundColor: transparentBg ? backColor : (Color?)null);
 
             // Save result for later and return.
             dictionary.Add(flags, result);
@@ -187,15 +199,27 @@ namespace SpriteHelper.Contract
         /// <summary>
         /// Method for rendering a grid bitmap.
         /// </summary>
-        public MyBitmap GetGridMyBitmap(
+        public Bitmap GetGridBitmap(
             Color backColor,
             bool applyPalettes,
             bool showBoxes,
             bool vFlip,
             bool hFlip,
             int zoom,
-            Offsets offsets)
+            Offsets offsets,
+            bool transparent = false,
+            bool transparentBg = false)
         {
+            // Get flags for the request.
+            var flags = GetFlags(applyPalettes, showBoxes, vFlip, hFlip, transparent, transparentBg);
+
+            // Checked if a cached bitmap is available, return it if it is.
+            var dictionary = this.cachedBitmaps[zoom - 1];
+            if (dictionary.ContainsKey(flags))
+            {
+                return dictionary[flags];
+            }
+
             // Create bitmap.
             var width = this.Width * Constants.SpriteWidth;
             var height = this.Height * Constants.SpriteHeight;
@@ -252,34 +276,7 @@ namespace SpriteHelper.Contract
             }
 
             // Scale image.
-            var result = image.Scale(zoom);
-            return result;
-        }
-
-        /// <summary>
-        /// Method for rendering a grid bitmap.
-        /// </summary>
-        public Bitmap GetGridBitmap(
-            Color backColor,
-            bool applyPalettes,
-            bool showBoxes,
-            bool vFlip,
-            bool hFlip,
-            int zoom,
-            Offsets offsets)
-        {
-            // Get flags for the request.
-            var flags = GetFlags(applyPalettes, showBoxes, vFlip, hFlip);
-
-            // Checked if a cached bitmap is available, return it if it is.
-            var dictionary = this.cachedBitmaps[zoom - 1];
-            if (dictionary.ContainsKey(flags))
-            {
-                return dictionary[flags];
-            }
-
-            // Create a new bitmap.
-            var result = GetGridMyBitmap(backColor, applyPalettes, showBoxes, vFlip, hFlip, zoom, offsets).ToBitmap();
+            var result = image.Scale(zoom).ToBitmap(transparent ? Constants.TransparentAlpha : 255, transparentBg ?  backColor : (Color?)null);
 
             // Save result for later and return.
             dictionary.Add(flags, result);

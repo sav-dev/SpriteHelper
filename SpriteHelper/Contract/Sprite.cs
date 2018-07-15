@@ -11,7 +11,7 @@ namespace SpriteHelper.Contract
     {
         public Sprite ActualSprite;
 
-        private Dictionary<SpriteFlags, MyBitmap> sprites = new Dictionary<SpriteFlags, MyBitmap>();
+        private Dictionary<ImageFlags, MyBitmap> sprites = new Dictionary<ImageFlags, MyBitmap>();
 
         [DataMember]
         public int Id { get; set; }
@@ -42,12 +42,12 @@ namespace SpriteHelper.Contract
             }
 
             var sprite = source.GetPart(this.X, this.Y, Constants.SpriteWidth, Constants.SpriteHeight);
-            sprites.Add(SpriteFlags.None, sprite);
+            sprites.Add(ImageFlags.None, sprite);
         }
 
         public void PreparePalettes(Palettes palettes, PaletteMapping paletteMapping)
         {
-            var sprite = this.sprites[SpriteFlags.None];
+            var sprite = this.sprites[ImageFlags.None];
             var spriteWithPalettesApplied = new MyBitmap(sprite.Width, sprite.Height);
             var palette = palettes.SpritesPalette[paletteMapping.ToPalette];
 
@@ -62,34 +62,34 @@ namespace SpriteHelper.Contract
                 }
             }
 
-            sprites.Add(SpriteFlags.Palettes, spriteWithPalettesApplied);
+            sprites.Add(ImageFlags.Palettes, spriteWithPalettesApplied);
         }
 
         public void PrepareReversed()
         {
-            var sprite = this.sprites[SpriteFlags.None];
-            var spriteWithPalettesApplied = this.sprites[SpriteFlags.Palettes];
+            var sprite = this.sprites[ImageFlags.None];
+            var spriteWithPalettesApplied = this.sprites[ImageFlags.Palettes];
 
             var options = new[]
                 {
-                    SpriteFlags.VFlip,
-                    SpriteFlags.HFlip,
-                    SpriteFlags.VFlip | SpriteFlags.HFlip,
-                    SpriteFlags.VFlip | SpriteFlags.Palettes,
-                    SpriteFlags.HFlip | SpriteFlags.Palettes,
-                    SpriteFlags.VFlip | SpriteFlags.HFlip | SpriteFlags.Palettes,
+                    ImageFlags.VFlip,
+                    ImageFlags.HFlip,
+                    ImageFlags.VFlip | ImageFlags.HFlip,
+                    ImageFlags.VFlip | ImageFlags.Palettes,
+                    ImageFlags.HFlip | ImageFlags.Palettes,
+                    ImageFlags.VFlip | ImageFlags.HFlip | ImageFlags.Palettes,
                 };
 
             foreach (var option in options)
             {
-                var source = option.HasFlag(SpriteFlags.Palettes) ? spriteWithPalettesApplied : sprite;
+                var source = option.HasFlag(ImageFlags.Palettes) ? spriteWithPalettesApplied : sprite;
 
-                if (option.HasFlag(SpriteFlags.VFlip))
+                if (option.HasFlag(ImageFlags.VFlip))
                 {
                     source = source.ReverseVertically();
                 }
 
-                if (option.HasFlag(SpriteFlags.HFlip))
+                if (option.HasFlag(ImageFlags.HFlip))
                 {
                     source = source.ReverseHorizontally();
                 }
@@ -105,20 +105,20 @@ namespace SpriteHelper.Contract
                 return this.ActualSprite.GetSprite(applyPalettes, vFlip, hFlip);
             }
 
-            var flags = SpriteFlags.None;
+            var flags = ImageFlags.None;
             if (applyPalettes)
             {
-                flags = flags | SpriteFlags.Palettes;
+                flags = flags | ImageFlags.Palettes;
             }
 
             if (vFlip)
             {
-                flags = flags | SpriteFlags.VFlip;
+                flags = flags | ImageFlags.VFlip;
             }
 
             if (hFlip)
             {
-                flags = flags | SpriteFlags.HFlip;
+                flags = flags | ImageFlags.HFlip;
             }
 
             return this.sprites[flags];

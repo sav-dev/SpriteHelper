@@ -174,7 +174,7 @@
     <Compile Include="Contract\PaletteMapping.cs" />
     <Compile Include="Contract\Sprite.cs" />
     <Compile Include="Contract\SpriteConfig.cs" />
-    <Compile Include="Contract\SpriteFlags.cs" />
+    <Compile Include="Contract\ImageFlags.cs" />
     <Compile Include="Dialogs\TransformDialog.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -42,11 +42,14 @@
             this.browseEnSpecButton = new System.Windows.Forms.Button();
             this.enSpecTextBox = new System.Windows.Forms.TextBox();
             this.enSpecLabel = new System.Windows.Forms.Label();
+            this.browsePlayerButton = new System.Windows.Forms.Button();
+            this.playerTextBox = new System.Windows.Forms.TextBox();
+            this.playerLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // okButton
             // 
-            this.okButton.Location = new System.Drawing.Point(365, 115);
+            this.okButton.Location = new System.Drawing.Point(365, 142);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(55, 23);
             this.okButton.TabIndex = 40;
@@ -56,7 +59,7 @@
             // 
             // cancelButton
             // 
-            this.cancelButton.Location = new System.Drawing.Point(426, 115);
+            this.cancelButton.Location = new System.Drawing.Point(426, 142);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(55, 23);
             this.cancelButton.TabIndex = 41;
@@ -168,11 +171,40 @@
             this.enSpecLabel.TabIndex = 52;
             this.enSpecLabel.Text = "En. Spec";
             // 
+            // browsePlayerButton
+            // 
+            this.browsePlayerButton.Location = new System.Drawing.Point(487, 108);
+            this.browsePlayerButton.Name = "browsePlayerButton";
+            this.browsePlayerButton.Size = new System.Drawing.Size(75, 23);
+            this.browsePlayerButton.TabIndex = 56;
+            this.browsePlayerButton.Text = "Browse";
+            this.browsePlayerButton.UseVisualStyleBackColor = true;
+            this.browsePlayerButton.Click += new System.EventHandler(this.BrowsePlayerButtonClick);
+            // 
+            // playerTextBox
+            // 
+            this.playerTextBox.Location = new System.Drawing.Point(67, 110);
+            this.playerTextBox.Name = "playerTextBox";
+            this.playerTextBox.Size = new System.Drawing.Size(414, 20);
+            this.playerTextBox.TabIndex = 54;
+            // 
+            // playerLabel
+            // 
+            this.playerLabel.AutoSize = true;
+            this.playerLabel.Location = new System.Drawing.Point(12, 113);
+            this.playerLabel.Name = "playerLabel";
+            this.playerLabel.Size = new System.Drawing.Size(36, 13);
+            this.playerLabel.TabIndex = 55;
+            this.playerLabel.Text = "Player";
+            // 
             // LoadLevelDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(580, 160);
+            this.ClientSize = new System.Drawing.Size(580, 216);
+            this.Controls.Add(this.browsePlayerButton);
+            this.Controls.Add(this.playerTextBox);
+            this.Controls.Add(this.playerLabel);
             this.Controls.Add(this.browseEnSpecButton);
             this.Controls.Add(this.enSpecTextBox);
             this.Controls.Add(this.enSpecLabel);
@@ -211,5 +243,8 @@
         private System.Windows.Forms.Button browseEnSpecButton;
         private System.Windows.Forms.TextBox enSpecTextBox;
         private System.Windows.Forms.Label enSpecLabel;
+        private System.Windows.Forms.Button browsePlayerButton;
+        private System.Windows.Forms.TextBox playerTextBox;
+        private System.Windows.Forms.Label playerLabel;
     }
 }

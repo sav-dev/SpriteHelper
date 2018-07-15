@@ -69,5 +69,8 @@
         public const int EnemyDefinitionSize = 15;
         public const int EnemyInMemorySize = 16;
         public const int EnemyInLevelDataSize = 14;
+
+        // Transparency.
+        public const int TransparentAlpha = 50;
     }
 }

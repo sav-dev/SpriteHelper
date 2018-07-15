@@ -30,6 +30,9 @@ namespace SpriteHelper.Dialogs
         private Dictionary<string, Dictionary<bool, Bitmap>> enBitmaps;
         private Dictionary<string, Dictionary<bool, Bitmap>> enBitmapsTransparent;
 
+        // Player bitmap
+        private Bitmap playerBitmap;
+
         // Add/edit enemy dictionaries.
         private Dictionary<string, Bitmap> enBitmapsSimple;
         private Dictionary<string, MovementType[]> enMovements;
@@ -114,7 +117,8 @@ namespace SpriteHelper.Dialogs
                 Defaults.Instance.DefaultLevel, 
                 Defaults.Instance.BackgroundSpec,
                 @"C:\Users\tomas\Documents\NES\GitHub\Platformer\PlatformerGraphics\Sprites\enemies.xml",
-                Defaults.Instance.PalettesSpec);
+                Defaults.Instance.PalettesSpec,
+                Defaults.Instance.PlayerSpec);
         }
 
         private void ClearStatus()
@@ -147,7 +151,7 @@ namespace SpriteHelper.Dialogs
         //// Level loading & saving
         ////
 
-        private void LoadLevel(string level, string bgSpec, string enSpec, string palettes)
+        private void LoadLevel(string level, string bgSpec, string enSpec, string palettes, string player)
         {
             this.palettes = Palettes.Read(palettes);
             this.bgConfig = BackgroundConfig.Read(bgSpec);
@@ -269,31 +273,58 @@ namespace SpriteHelper.Dialogs
                 this.enBitmaps.Add(animation.Name, new Dictionary<bool, Bitmap>());
                 this.enBitmapsTransparent.Add(animation.Name, new Dictionary<bool, Bitmap>());
 
-                var imgFalse =
-                    firstFrame.GetGridMyBitmap(
-                        this.TransparentColor, // is this right?
+                var imgNoFlip =
+                    firstFrame.GetGridBitmap(
+                        this.TransparentColor,
                         true,
                         false,
                         false,
                         false,
                         Constants.LevelEditorZoom,
-                        null);
+                        null,
+                        false,
+                        true);
 
-                var imgTrue =
-                    firstFrame.GetGridMyBitmap(
-                        this.TransparentColor, // is this right?
+                var imgFlip =
+                    firstFrame.GetGridBitmap(
+                        this.TransparentColor,
                         true,
                         false,
                         animation.Flip == Flip.Vertical,
                         animation.Flip == Flip.Horizontal,
                         Constants.LevelEditorZoom,
-                        null);
+                        null,
+                        false,
+                        true);
 
-                this.enBitmaps[animation.Name].Add(false, imgFalse.ToBitmap(backgroundColor: this.TransparentColor)); // is this right?
-                this.enBitmaps[animation.Name].Add(true, imgTrue.ToBitmap(backgroundColor: this.TransparentColor)); // is this right?
+                var imgNoFlipTransparent =
+                    firstFrame.GetGridBitmap(
+                        this.TransparentColor,
+                        true,
+                        false,
+                        false,
+                        false,
+                        Constants.LevelEditorZoom,
+                        null,
+                        true,
+                        true);
 
-                this.enBitmapsTransparent[animation.Name].Add(false, imgFalse.ToBitmap(50, this.TransparentColor)); // is this right?
-                this.enBitmapsTransparent[animation.Name].Add(true, imgTrue.ToBitmap(50, this.TransparentColor)); // is this right?
+                var imgFlipTransparent =
+                    firstFrame.GetGridBitmap(
+                        this.TransparentColor,
+                        true,
+                        false,
+                        animation.Flip == Flip.Vertical,
+                        animation.Flip == Flip.Horizontal,
+                        Constants.LevelEditorZoom,
+                        null,
+                        true,
+                        true);
+
+                this.enBitmaps[animation.Name].Add(false, imgNoFlip);
+                this.enBitmaps[animation.Name].Add(true, imgFlip);
+                this.enBitmapsTransparent[animation.Name].Add(false, imgNoFlipTransparent);
+                this.enBitmapsTransparent[animation.Name].Add(true, imgFlipTransparent);
             }
 
             // Initialize and set enemies.
@@ -326,6 +357,10 @@ namespace SpriteHelper.Dialogs
                 });
 
             this.enShooting = this.enConfig.Animations.ToDictionary(a => a.Name, a => a.Offsets.GunXOff >= 0);
+
+            // Player config.
+            var playerConfig = SpriteConfig.Read(player, this.palettes);
+            this.playerBitmap = playerConfig.Frames.First().GetPlayerBitmap(playerConfig, this.TransparentColor, true, false, false, Constants.LevelEditorZoom, true);
 
             // Populate tiles, set level.
             this.PopulateTiles();
@@ -657,21 +692,45 @@ namespace SpriteHelper.Dialogs
             this.UpdateBitmap();
         }
 
-
         private void ShowScreensToolStripMenuItemClick(object sender, EventArgs e)
         {
             this.UpdateBitmap();
+            this.hideNonBgToolStringMenuItem.Checked = this.OnlyBackgroundShown;
         }
 
         private void ShowEnemiesToolStripMenuItemClick(object sender, EventArgs e)
         {
             this.showEnemyMovementToolStripMenuItem.Enabled = this.showEnemiesToolStripMenuItem.Checked;
             this.UpdateBitmap();
+            this.hideNonBgToolStringMenuItem.Checked = this.OnlyBackgroundShown;
         }
 
         private void ShowEnemyMovementToolStripMenuItemClick(object sender, EventArgs e)
         {
             this.UpdateBitmap();
+            this.hideNonBgToolStringMenuItem.Checked = this.OnlyBackgroundShown;
+        }
+
+        private void ShowPlayerToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            this.UpdateBitmap();
+            this.hideNonBgToolStringMenuItem.Checked = this.OnlyBackgroundShown;
+        }
+
+        private void ShowMovingPlatformsToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            this.UpdateBitmap();
+            this.hideNonBgToolStringMenuItem.Checked = this.OnlyBackgroundShown;
+        }
+
+        private void HideNonBgToolStringMenuItemClick(object sender, EventArgs e)
+        {
+            this.OnlyBackgroundShown = this.hideNonBgToolStringMenuItem.Checked;
+        }
+
+        private void HideNonBgToolStringMenuItemCheckedChanged(object sender, EventArgs e)
+        {
+            this.hideNonBgToolStringMenuItem.Enabled = !this.hideNonBgToolStringMenuItem.Checked;
         }
 
         private void ApplyPaletteToolStripMenuItemClick(object sender, EventArgs e)
@@ -687,7 +746,7 @@ namespace SpriteHelper.Dialogs
             {
                 if (loadLevelDialog.ClickedOk)
                 {
-                    this.LoadLevel(loadLevelDialog.Level, loadLevelDialog.BgSpec, loadLevelDialog.EnSpec, loadLevelDialog.Palettes);
+                    this.LoadLevel(loadLevelDialog.Level, loadLevelDialog.BgSpec, loadLevelDialog.EnSpec, loadLevelDialog.Palettes, loadLevelDialog.Player);
                 }
             };
 
@@ -701,7 +760,7 @@ namespace SpriteHelper.Dialogs
             {
                 if (loadLevelDialog.ClickedOk)
                 {
-                    this.LoadLevel(null, loadLevelDialog.BgSpec, loadLevelDialog.EnSpec, loadLevelDialog.Palettes);
+                    this.LoadLevel(null, loadLevelDialog.BgSpec, loadLevelDialog.EnSpec, loadLevelDialog.Palettes, loadLevelDialog.Player);
                 }
             };
 
@@ -866,9 +925,33 @@ namespace SpriteHelper.Dialogs
             var builder = new StringBuilder();
             var writer = new StringWriter(builder);
             var bytes = GetExportPayload(writer);            
-            ///writer.WriteLineIfNotNull();
             writer.WriteLineIfNotNull("Total size: {0} bytes", bytes.Length);
             MessageBox.Show(builder.ToString(), "Export data", MessageBoxButtons.OK);
+        }
+
+        private bool OnlyBackgroundShown
+        {
+            get
+            {
+                return !(this.showScreensToolStripMenuItem.Checked ||
+                         this.showEnemiesToolStripMenuItem.Checked ||
+                         this.showEnemyMovementToolStripMenuItem.Checked ||
+                         this.showPlayerToolStripMenuItem.Checked ||
+                         this.showMovingPlatformsToolStripMenuItem.Checked);
+            }
+
+            set
+            { 
+                if (value)
+                {
+                    this.showScreensToolStripMenuItem.Checked = false;
+                    this.showEnemiesToolStripMenuItem.Checked = false;
+                    this.showEnemyMovementToolStripMenuItem.Checked = false;
+                    this.showPlayerToolStripMenuItem.Checked = false;
+                    this.showMovingPlatformsToolStripMenuItem.Checked = false;
+                    this.UpdateBitmap();
+                }
+            }
         }
 
         #endregion
@@ -1096,15 +1179,15 @@ namespace SpriteHelper.Dialogs
             this.level[x][y] = tile;
             var image = this.tiles[tile][(int)this.Settings];
 
-            if (this.showEnemiesToolStripMenuItem.Checked || this.showScreensToolStripMenuItem.Checked)
+            if (this.OnlyBackgroundShown)
             {
-                // If any of these are checked, we have to redraw the whole bitmap.
-                this.UpdateBitmap();
+                // Just draw one tile if only background is shown.
+                this.graphics.DrawImage(image, new Point(x * TileWidth, y * TileHeight));                
             }
             else
             {
-                // Otherwise, just draw one tile.
-                this.graphics.DrawImage(image, new Point(x * TileWidth, y * TileHeight));
+                // Otherwise, we have to redraw the whole bitmap.
+                this.UpdateBitmap();
             }
             
             // Update tile count.
@@ -1717,7 +1800,7 @@ namespace SpriteHelper.Dialogs
 
             #endregion
 
-            #region Enemies
+        #region Enemies
 
         public Enemy[] Enemies => this.enemiesListBox.Items.Cast<Enemy>().ToArray();
 
@@ -2176,11 +2259,11 @@ namespace SpriteHelper.Dialogs
 
         #endregion
 
-            #region HelperTypes
+        #region HelperTypes
 
-            ////
-            //// Helper types
-            ////
+        ////
+        //// Helper types
+        ////
 
         [Flags]
         public enum TileVersion
