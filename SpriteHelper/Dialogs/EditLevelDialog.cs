@@ -1,84 +1,73 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace SpriteHelper.Dialogs
 {
     public partial class EditLevelDialog : Form
     {
-        private EditLevelDialogResult result;
+        private Func<EditLevelDialog, bool> validationFunc;
 
-        public EditLevelDialog(int width)
+        public EditLevelDialog(int width, Point playerStartingPosition, Point exitPosition, Func<EditLevelDialog, bool> validationFunc)
         {
             InitializeComponent();
             this.widthTextBox.Text = width.ToString();
-            this.RadioCheckedChanged();
-            this.result = EditLevelDialogResult.None;
+            this.playerXTextBox.Text = playerStartingPosition.X.ToString();
+            this.playerYTextBox.Text = playerStartingPosition.Y.ToString();
+            this.exitXTextBox.Text = exitPosition.X.ToString();
+            this.exitYTextBox.Text = exitPosition.Y.ToString();
+            this.validationFunc = validationFunc;
         }
+
+        public bool Succeeded { get; set; }
 
         private void OkButtonClick(object sender, EventArgs e)
         {
-            this.result = this.Operation;
-            this.Close();
+            if (this.validationFunc(this))
+            {
+                this.Succeeded = true;
+                this.Close();
+            }
         }
 
         private void CancelButtonClick(object sender, EventArgs e)
         {
             this.Close();
         }
-        
-        private void RadioCheckedChanged(object sender, EventArgs e)
+
+        public bool TryGetWidth(out int width)
         {
-            this.RadioCheckedChanged();
+            return int.TryParse(this.widthTextBox.Text, out width);
         }
 
-        private void RadioCheckedChanged()
+        public bool TryGetPlayerStartingPosition(out Point position)
         {
-            foreach (var panel in new Panel[] { this.widthPanel })
+            int x, y;
+            if (int.TryParse(this.playerXTextBox.Text, out x) && int.TryParse(this.playerYTextBox.Text, out y))
             {
-                panel.Enabled = false;
+                position = new Point(x, y);
+                return true;
             }
-
-            switch (this.Operation)
+            else
             {
-                case EditLevelDialogResult.WidthChange:
-                    this.widthPanel.Enabled = true;
-                    break;
-            }
-        }
-
-        private EditLevelDialogResult Operation
-        {
-            get
-            {
-                if (this.editWidthRadio.Checked)
-                {
-                    return EditLevelDialogResult.WidthChange;
-                }
-
-                return EditLevelDialogResult.None;
+                position = default(Point);
+                return false;
             }
         }
 
-        public int LevelWidth
+        public bool TryGetExitPosition(out Point position)
         {
-            get
+            int x, y;
+            if (int.TryParse(this.exitXTextBox.Text, out x) && int.TryParse(this.exitYTextBox.Text, out y))
             {
-                return int.Parse(this.widthTextBox.Text);
+                position = new Point(x, y);
+                return true;
+            }
+            else
+            {
+                position = default(Point);
+                return false;
             }
         }
-
-        public EditLevelDialogResult Result
-        {
-            get
-            {
-                return this.result;
-            }
-        }
-    }
-
-    public enum EditLevelDialogResult
-    {
-        None,
-        WidthChange
     }
 }

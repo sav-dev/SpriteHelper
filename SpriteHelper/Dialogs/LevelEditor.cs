@@ -56,6 +56,10 @@ namespace SpriteHelper.Dialogs
         // Current level.
         private string[][] level;
 
+        // Properties.
+        private Point playerStartingPosition;
+        private Point exitPosition;
+
         // History/future (for undo-redo).
         private Stack<string[][]> history;
         private Stack<string[][]> future;
@@ -243,6 +247,8 @@ namespace SpriteHelper.Dialogs
                 var readLevel = Level.Read(level);
                 newLevel = readLevel.Tiles;
                 enemies = readLevel.Enemies;
+                this.playerStartingPosition = readLevel.PlayerStartingPosition;
+                this.exitPosition = readLevel.ExitPosition;
             }
             else
             {
@@ -258,6 +264,8 @@ namespace SpriteHelper.Dialogs
                 }
 
                 enemies = new Enemy[0];
+                this.playerStartingPosition = default(Point);
+                this.exitPosition = default(Point);
             }
 
             // Load enemies config
@@ -490,23 +498,23 @@ namespace SpriteHelper.Dialogs
             this.UpdateScroll();
         }
 
-        private void ChangeWidth(int width)
+        private bool ChangeWidth(int width)
         {
             if (width == this.level.Length)
             {
-                return;
+                return false;
             }
             
             if (width < 16 | width > 252)
             {
                 MessageBox.Show("Wrongh width: min is 16, max is 252", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                return false;
             }
 
             if (!(width % 4 == 0))
             {
                 MessageBox.Show("Width must be a multiple of 4", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                return false;
             }
 
             this.AddHistory();
@@ -522,6 +530,7 @@ namespace SpriteHelper.Dialogs
             }
 
             this.SetLevel(newLevel);
+            return true;
         }
 
         private void SetLevel(string[][] newLevel)
@@ -545,6 +554,9 @@ namespace SpriteHelper.Dialogs
 
             // Draw enemies.
             this.DrawEnemies();
+
+            // Draw player and exit.
+            this.DrawPlayerAndExit();
 
             this.UpdateDrawPanel();
         }
@@ -654,6 +666,18 @@ namespace SpriteHelper.Dialogs
             }
         }
 
+        private void DrawPlayerAndExit()
+        {
+            if (this.showPlayerToolStripMenuItem.Checked)
+            {
+                this.graphics.DrawImage(
+                    this.playerBitmap, 
+                    new Point(
+                        (this.playerStartingPosition.X - Constants.PlayerXOffset) * Constants.LevelEditorZoom, 
+                        (this.playerStartingPosition.Y - Constants.PlayerYOffset) * Constants.LevelEditorZoom));
+            }
+        }
+
         private void ScrollBarScroll(object sender, ScrollEventArgs e)
         {
             this.UpdateScroll();
@@ -700,9 +724,13 @@ namespace SpriteHelper.Dialogs
 
         private void ShowEnemiesToolStripMenuItemClick(object sender, EventArgs e)
         {
-            this.showEnemyMovementToolStripMenuItem.Enabled = this.showEnemiesToolStripMenuItem.Checked;
             this.UpdateBitmap();
             this.hideNonBgToolStringMenuItem.Checked = this.OnlyBackgroundShown;
+        }
+
+        private void ShowEnemiesToolStripMenuItemCheckedChanged(object sender, EventArgs e)
+        {
+            this.showEnemyMovementToolStripMenuItem.Enabled = this.showEnemiesToolStripMenuItem.Checked;
         }
 
         private void ShowEnemyMovementToolStripMenuItemClick(object sender, EventArgs e)
@@ -774,11 +802,11 @@ namespace SpriteHelper.Dialogs
                 return;
             }
 
-            var saveFileDialog = new SaveFileDialog { InitialDirectory = Defaults.Instance.GraphicsDefaultDir, Filter = "xml files (*.xml)|*.xml" };
+            var saveFileDialog = new SaveFileDialog { InitialDirectory = Defaults.Instance.LevelsDefaultDir, Filter = "xml files (*.xml)|*.xml" };
             saveFileDialog.ShowDialog();
             if (!string.IsNullOrEmpty(saveFileDialog.FileName))
             {
-                var level = new Level { Tiles = this.level, Enemies = this.Enemies };
+                var level = new Level { Tiles = this.level, Enemies = this.Enemies, PlayerStartingPosition = this.playerStartingPosition, ExitPosition = this.exitPosition };
                 level.Write(saveFileDialog.FileName);
             }
         }
@@ -884,18 +912,139 @@ namespace SpriteHelper.Dialogs
 
         private void PropertiesToolStripMenuItemClick(object sender, EventArgs e)
         {
-            var editLevelDialog = new EditLevelDialog(this.level.Length);
-            editLevelDialog.FormClosed += (notUsed1, notUsed2) =>
-            {
-                switch (editLevelDialog.Result)
+            Func<EditLevelDialog, Tuple<int, Point, Point>> getResultFunc =
+                dialog =>
                 {
-                    case EditLevelDialogResult.WidthChange:
-                        this.ChangeWidth(editLevelDialog.LevelWidth);
-                        break;
-                }
-            };
+                    int levelWidth;
+                    Point playerStartingPosition, exitPosition;
+
+                    if (!dialog.TryGetWidth(out levelWidth))
+                    {
+                        MessageBox.Show("Level width is invalid");
+                        return null;
+                    }
+
+                    if (!dialog.TryGetPlayerStartingPosition(out playerStartingPosition))
+                    {
+                        MessageBox.Show("Player starting position is invalid");
+                        return null;
+                    }
+
+                    if (!dialog.TryGetExitPosition(out exitPosition))
+                    {
+                        MessageBox.Show("Exit position is invalid");
+                        return null;
+                    }
+
+                    if (levelWidth < 16 | levelWidth > 252)
+                    {
+                        MessageBox.Show("Wrongh width: min is 16, max is 252");
+                        return null;
+                    }
+
+                    if (!(levelWidth % 4 == 0))
+                    {
+                        MessageBox.Show("Width must be a multiple of 4");
+                        return null;
+                    }
+
+                    if (playerStartingPosition.X < 0)
+                    { 
+                        MessageBox.Show("Player position X must be >= 0");
+                        return null;
+                    }
+
+                    if (playerStartingPosition.X > Constants.ScreenWidth / 2 - Constants.SpriteWidth * 3)
+                    { 
+                        MessageBox.Show($"Player position X must be <= {Constants.ScreenWidth / 2 - Constants.SpriteWidth * 3}");
+                        return null;
+                    }
+
+                    if (playerStartingPosition.Y < 0)
+                    {
+                        MessageBox.Show("Player position Y must be >= 0");
+                        return null;
+                    }
+
+                    if (playerStartingPosition.Y > Constants.ScreenHeight)
+                    {
+                        MessageBox.Show($"Player position Y must be <= {Constants.ScreenHeight}");
+                        return null;
+                    }
+
+                    if (exitPosition.X < 0)
+                    {
+                        MessageBox.Show("Exit position X must be >= 0");
+                        return null;
+                    }
+
+                    if (exitPosition.X > levelWidth * Constants.BackgroundTileWidth)
+                    {
+                        MessageBox.Show($"Exit position X must be <= {levelWidth * Constants.BackgroundTileWidth}");
+                        return null;
+                    }
+
+                    if (exitPosition.Y < 0)
+                    {
+                        MessageBox.Show("Exit position Y must be >= 0");
+                        return null;
+                    }
+
+                    if (exitPosition.Y > Constants.ScreenHeight)
+                    {
+                        MessageBox.Show($"Exit position Y must be <= {Constants.ScreenHeight}");
+                        return null;
+                    }
+
+                    var clippedEnemies = this.Enemies.Where(en => en.X > levelWidth * Constants.BackgroundTileWidth).Select(en => en.ToString()).ToArray();
+                    if (clippedEnemies.Any())
+                    {
+                        MessageBox.Show($"Enemies\r\n{string.Join("\r\n", clippedEnemies)}\r\n would be removed from the screen");
+                        return null;
+                    }
+
+                    return Tuple.Create(levelWidth, playerStartingPosition, exitPosition);
+                };
+
+            var editLevelDialog = new EditLevelDialog(
+                this.level.Length, 
+                this.playerStartingPosition, 
+                this.exitPosition, 
+                dialog => getResultFunc(dialog) != null);
 
             editLevelDialog.ShowDialog();
+            if (!editLevelDialog.Succeeded)
+            {
+                return;
+            }
+
+            var result = getResultFunc(editLevelDialog);
+
+            var playerStartingPositionDifferent = false;
+            var exitPositionDifferent = false;
+            var widthChanged = false;
+
+            if (this.playerStartingPosition != result.Item2)
+            {
+                this.playerStartingPosition = result.Item2;
+                playerStartingPositionDifferent = true;
+            }
+
+            if (this.exitPosition != result.Item3)
+            {
+                this.exitPosition = result.Item3;
+                exitPositionDifferent = true;
+            }
+            
+            widthChanged = this.ChangeWidth(result.Item1);
+
+            // Only update bitmap if either position has changed, and width hasn't changed - ChangeWidth updates the bitmap if that's the case.
+            if ((playerStartingPositionDifferent || exitPositionDifferent) && !widthChanged)
+            {
+                this.UpdateBitmap();
+            }
+
+            // todo: store player and exit position in history
         }
 
         private void UndoToolStripMenuItemClick(object sender, EventArgs e)
@@ -1319,7 +1468,9 @@ namespace SpriteHelper.Dialogs
             result.AddRange(GetExportEnemiesData(logger));
             logger.WriteLineIfNotNull();
 
-            // todo: add information about starting position and level end
+            // Starting position and level end.
+            result.AddRange(GetStartingPositionAndEndData(logger));
+            logger.WriteLineIfNotNull();
 
             return result.ToArray();
         }
@@ -1794,11 +1945,31 @@ namespace SpriteHelper.Dialogs
                 result.Add((byte)(n * Constants.EnemyInLevelDataSize + 2));
             }
 
-            logger.WriteLineIfNotNull("Total bytes for enemies data: {0}", result.Count);
+            logger.WriteLineIfNotNull("Total bytes for Enemies data: {0}", result.Count);
             return result.ToArray();
         }
 
-            #endregion
+        private byte[] GetStartingPositionAndEndData(TextWriter logger = null)
+        {
+            //
+            // - data in the following format:
+            //   - 2 bytes: player position (x/y, always on screen 0)
+            //   - 3 bytes: exit position (screen/x/y)
+            //
+
+            var result = new List<byte>();
+
+            result.Add((byte)this.playerStartingPosition.X);
+            result.Add((byte)this.playerStartingPosition.Y);
+            result.Add((byte)(this.exitPosition.X / 256));
+            result.Add((byte)(this.exitPosition.X % 256));
+            result.Add((byte)this.exitPosition.Y);
+
+            logger.WriteLineIfNotNull("Total bytes for Player and Exit data: {0}", result.Count);
+            return result.ToArray();
+        }
+
+        #endregion
 
         #region Enemies
 
@@ -2044,8 +2215,6 @@ namespace SpriteHelper.Dialogs
             {
                 return "Shooting initial freq. is not a valid number";
             }
-
-            // todo: complete the validation
 
             // Try creating an enemy. This should never fail.
             Enemy enemy;

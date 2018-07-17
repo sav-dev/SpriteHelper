@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Drawing;
+using System.IO;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
@@ -12,6 +13,12 @@ namespace SpriteHelper.Contract
 
         [DataMember]
         public Enemy[] Enemies { get; set; }
+
+        [DataMember]
+        public Point PlayerStartingPosition { get; set; }
+
+        [DataMember]
+        public Point ExitPosition { get; set; }
 
         public void Write(string file)
         {

@@ -554,6 +554,7 @@
             | System.Windows.Forms.Keys.E)));
             this.showEnemiesToolStripMenuItem.Size = new System.Drawing.Size(276, 22);
             this.showEnemiesToolStripMenuItem.Text = "Show &enemies";
+            this.showEnemiesToolStripMenuItem.CheckedChanged += new System.EventHandler(this.ShowEnemiesToolStripMenuItemCheckedChanged);
             this.showEnemiesToolStripMenuItem.Click += new System.EventHandler(this.ShowEnemiesToolStripMenuItemClick);
             // 
             // showEnemyMovementToolStripMenuItem
