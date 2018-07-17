@@ -1854,9 +1854,8 @@ namespace SpriteHelper.Dialogs
             }
 
             var enemyId = 0;
-
-            // screen <= numberOfScreens because we want to add empty data for an additional screen at the end.
-            for (var screen = 0; screen <= numberOfScreens; screen++)
+            
+            for (var screen = 0; screen < numberOfScreens; screen++)
             {
                 // Clear the slots for two screens ago.
                 for (var slot = 0; slot < Constants.EnemiesLimitPerTwoScreens; slot++)
