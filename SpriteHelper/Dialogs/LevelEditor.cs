@@ -1837,6 +1837,10 @@ namespace SpriteHelper.Dialogs
 
             var result = new List<byte>();
 
+            // if width % screen_width_in_tiles == 0, the last screen will contain no data
+            // e.g. if width == 40, we have 3 screens, numberOfScreens == 3
+            //      if width == 32, we have 2 screens, but numberOfScreens still == 3
+            // same applies to all other data types (platforms etc).
             var width = this.level.Length;
             var numberOfScreens = (width / Constants.ScreenWidthInTiles) + 1;
 
