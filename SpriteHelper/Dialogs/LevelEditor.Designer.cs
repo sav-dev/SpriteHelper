@@ -76,7 +76,7 @@
             this.showEnemyMovementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.showPlayerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.showMovingPlatformsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showElevatorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.viewPlatformsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewThreatsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -481,7 +481,7 @@
             this.showEnemyMovementToolStripMenuItem,
             this.toolStripSeparator6,
             this.showPlayerToolStripMenuItem,
-            this.showMovingPlatformsToolStripMenuItem,
+            this.showElevatorsToolStripMenuItem,
             this.toolStripSeparator2,
             this.viewPlatformsToolStripMenuItem,
             this.viewThreatsToolStripMenuItem,
@@ -586,17 +586,17 @@
             this.showPlayerToolStripMenuItem.Text = "Show &player and exit";
             this.showPlayerToolStripMenuItem.Click += new System.EventHandler(this.ShowPlayerToolStripMenuItemClick);
             // 
-            // showMovingPlatformsToolStripMenuItem
+            // showElevatorsToolStripMenuItem
             // 
-            this.showMovingPlatformsToolStripMenuItem.Checked = true;
-            this.showMovingPlatformsToolStripMenuItem.CheckOnClick = true;
-            this.showMovingPlatformsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.showMovingPlatformsToolStripMenuItem.Name = "showMovingPlatformsToolStripMenuItem";
-            this.showMovingPlatformsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            this.showElevatorsToolStripMenuItem.Checked = true;
+            this.showElevatorsToolStripMenuItem.CheckOnClick = true;
+            this.showElevatorsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.showElevatorsToolStripMenuItem.Name = "showElevatorsToolStripMenuItem";
+            this.showElevatorsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.O)));
-            this.showMovingPlatformsToolStripMenuItem.Size = new System.Drawing.Size(276, 22);
-            this.showMovingPlatformsToolStripMenuItem.Text = "Show m&oving platforms";
-            this.showMovingPlatformsToolStripMenuItem.Click += new System.EventHandler(this.ShowMovingPlatformsToolStripMenuItemClick);
+            this.showElevatorsToolStripMenuItem.Size = new System.Drawing.Size(276, 22);
+            this.showElevatorsToolStripMenuItem.Text = "Show e&levators";
+            this.showElevatorsToolStripMenuItem.Click += new System.EventHandler(this.ShowElevatorsToolStripMenuItemClick);
             // 
             // toolStripSeparator2
             // 
@@ -724,7 +724,7 @@
         private System.Windows.Forms.ToolStripMenuItem showScreensToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripMenuItem showPlayerToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem showMovingPlatformsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem showElevatorsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem hideNonBgToolStringMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
     }

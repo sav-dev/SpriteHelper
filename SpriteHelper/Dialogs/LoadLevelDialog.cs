@@ -34,8 +34,9 @@ namespace SpriteHelper.Dialogs
             this.bgSpecTextBox.Text = Defaults.Instance.BackgroundSpec;
             this.palettesTextBox.Text = Defaults.Instance.PalettesSpec;
             this.levelTextBox.Text = Defaults.Instance.DefaultLevel;
-            this.enSpecTextBox.Text = "C:\\Users\\tomas\\Documents\\NES\\GitHub\\Platformer\\PlatformerGraphics\\Sprites\\enemies.xml";
+            this.enSpecTextBox.Text = @"C:\Users\tomas\Documents\NES\GitHub\Platformer\PlatformerGraphics\Sprites\enemies.xml";
             this.playerTextBox.Text = Defaults.Instance.PlayerSpec;
+            this.spriteChrTextBox.Text = @"C:\Users\tomas\Documents\NES\GitHub\Platformer\PlatformerGraphics\Chr\spr_00.chr";
         }
 
         private void OkButtonClick(object sender, EventArgs e)
@@ -97,32 +98,45 @@ namespace SpriteHelper.Dialogs
             }
         }
 
+        public string SpriteChr
+        {
+            get
+            {
+                return this.spriteChrTextBox.Text;
+            }
+        }
+
         private void BrowseLevelButtonClick(object sender, EventArgs e)
         {
-            this.OpenXmlFile(this.levelTextBox);
+            this.OpenFile(this.levelTextBox);
         }
 
         private void BrowseBgSpecButtonClick(object sender, EventArgs e)
         {
-            this.OpenXmlFile(this.bgSpecTextBox);
+            this.OpenFile(this.bgSpecTextBox);
         }
 
         private void BrowseEnSpecButtonClick(object sender, EventArgs e)
         {
-            this.OpenXmlFile(this.enSpecTextBox);
+            this.OpenFile(this.enSpecTextBox);
         }
 
         private void BrowsePalettesButtonClick(object sender, EventArgs e)
         {
-            this.OpenXmlFile(this.palettesTextBox);
+            this.OpenFile(this.palettesTextBox);
         }
 
         private void BrowsePlayerButtonClick(object sender, EventArgs e)
         {
-            this.OpenXmlFile(this.playerTextBox);
+            this.OpenFile(this.playerTextBox);
         }
 
-        private void OpenXmlFile(TextBox target)
+        private void BrowseSpriteChrButtonClick(object sender, EventArgs e)
+        {
+            this.OpenFile(this.spriteChrTextBox);
+        }
+
+        private void OpenFile(TextBox target)
         {
             var openFileDialog = new OpenFileDialog { InitialDirectory = Defaults.Instance.GraphicsDefaultDir };
             openFileDialog.ShowDialog();

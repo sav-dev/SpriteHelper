@@ -5,6 +5,11 @@
         // Number of sprites for the player.
         public const int PlayerSprites = 9;
 
+        // Elevators, hardcoded in game code.
+        public const int ElevatorSprite = 249;
+        public const int ElevatorEndRSprite = 250;
+        public const int ElevatorPalette = 2;
+
         // Player constants, hardcoded in the game code.
         public const int PlayerXOffset = 8;
         public const int PlayerYOffset = 31;

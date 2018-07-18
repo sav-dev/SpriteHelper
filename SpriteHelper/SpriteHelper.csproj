@@ -48,6 +48,7 @@
     <Reference Include="System.Xml.Serialization" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NesGraphics\ChrLoader.cs" />
     <Compile Include="Contract\Enemy.cs" />
     <Compile Include="Contract\MovementType.cs" />
     <Compile Include="Controls\MovementPanel.cs">

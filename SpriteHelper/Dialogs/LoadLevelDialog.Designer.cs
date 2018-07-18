@@ -45,11 +45,14 @@
             this.browsePlayerButton = new System.Windows.Forms.Button();
             this.playerTextBox = new System.Windows.Forms.TextBox();
             this.playerLabel = new System.Windows.Forms.Label();
+            this.browseSpriteChrButton = new System.Windows.Forms.Button();
+            this.spriteChrTextBox = new System.Windows.Forms.TextBox();
+            this.spriteChrLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // okButton
             // 
-            this.okButton.Location = new System.Drawing.Point(365, 142);
+            this.okButton.Location = new System.Drawing.Point(365, 172);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(55, 23);
             this.okButton.TabIndex = 40;
@@ -59,7 +62,7 @@
             // 
             // cancelButton
             // 
-            this.cancelButton.Location = new System.Drawing.Point(426, 142);
+            this.cancelButton.Location = new System.Drawing.Point(426, 172);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(55, 23);
             this.cancelButton.TabIndex = 41;
@@ -78,9 +81,9 @@
             // 
             // bgSpecTextBox
             // 
-            this.bgSpecTextBox.Location = new System.Drawing.Point(67, 32);
+            this.bgSpecTextBox.Location = new System.Drawing.Point(80, 32);
             this.bgSpecTextBox.Name = "bgSpecTextBox";
-            this.bgSpecTextBox.Size = new System.Drawing.Size(414, 20);
+            this.bgSpecTextBox.Size = new System.Drawing.Size(401, 20);
             this.bgSpecTextBox.TabIndex = 42;
             // 
             // bgSpecLabel
@@ -94,9 +97,9 @@
             // 
             // palettesTextBox
             // 
-            this.palettesTextBox.Location = new System.Drawing.Point(67, 84);
+            this.palettesTextBox.Location = new System.Drawing.Point(80, 84);
             this.palettesTextBox.Name = "palettesTextBox";
-            this.palettesTextBox.Size = new System.Drawing.Size(414, 20);
+            this.palettesTextBox.Size = new System.Drawing.Size(401, 20);
             this.palettesTextBox.TabIndex = 44;
             // 
             // palettesLabel
@@ -110,9 +113,9 @@
             // 
             // levelTextBox
             // 
-            this.levelTextBox.Location = new System.Drawing.Point(67, 6);
+            this.levelTextBox.Location = new System.Drawing.Point(80, 6);
             this.levelTextBox.Name = "levelTextBox";
-            this.levelTextBox.Size = new System.Drawing.Size(414, 20);
+            this.levelTextBox.Size = new System.Drawing.Size(401, 20);
             this.levelTextBox.TabIndex = 46;
             // 
             // browseLevelButton
@@ -157,9 +160,9 @@
             // 
             // enSpecTextBox
             // 
-            this.enSpecTextBox.Location = new System.Drawing.Point(67, 58);
+            this.enSpecTextBox.Location = new System.Drawing.Point(80, 58);
             this.enSpecTextBox.Name = "enSpecTextBox";
-            this.enSpecTextBox.Size = new System.Drawing.Size(414, 20);
+            this.enSpecTextBox.Size = new System.Drawing.Size(401, 20);
             this.enSpecTextBox.TabIndex = 51;
             // 
             // enSpecLabel
@@ -183,9 +186,9 @@
             // 
             // playerTextBox
             // 
-            this.playerTextBox.Location = new System.Drawing.Point(67, 110);
+            this.playerTextBox.Location = new System.Drawing.Point(80, 110);
             this.playerTextBox.Name = "playerTextBox";
-            this.playerTextBox.Size = new System.Drawing.Size(414, 20);
+            this.playerTextBox.Size = new System.Drawing.Size(401, 20);
             this.playerTextBox.TabIndex = 54;
             // 
             // playerLabel
@@ -197,11 +200,40 @@
             this.playerLabel.TabIndex = 55;
             this.playerLabel.Text = "Player";
             // 
+            // browseSpriteChrButton
+            // 
+            this.browseSpriteChrButton.Location = new System.Drawing.Point(487, 134);
+            this.browseSpriteChrButton.Name = "browseSpriteChrButton";
+            this.browseSpriteChrButton.Size = new System.Drawing.Size(75, 23);
+            this.browseSpriteChrButton.TabIndex = 59;
+            this.browseSpriteChrButton.Text = "Browse";
+            this.browseSpriteChrButton.UseVisualStyleBackColor = true;
+            this.browseSpriteChrButton.Click += new System.EventHandler(this.BrowseSpriteChrButtonClick);
+            // 
+            // spriteChrTextBox
+            // 
+            this.spriteChrTextBox.Location = new System.Drawing.Point(80, 136);
+            this.spriteChrTextBox.Name = "spriteChrTextBox";
+            this.spriteChrTextBox.Size = new System.Drawing.Size(401, 20);
+            this.spriteChrTextBox.TabIndex = 57;
+            // 
+            // spriteChrLabel
+            // 
+            this.spriteChrLabel.AutoSize = true;
+            this.spriteChrLabel.Location = new System.Drawing.Point(12, 139);
+            this.spriteChrLabel.Name = "spriteChrLabel";
+            this.spriteChrLabel.Size = new System.Drawing.Size(60, 13);
+            this.spriteChrLabel.TabIndex = 58;
+            this.spriteChrLabel.Text = "Sprite CHR";
+            // 
             // LoadLevelDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(580, 216);
+            this.Controls.Add(this.browseSpriteChrButton);
+            this.Controls.Add(this.spriteChrTextBox);
+            this.Controls.Add(this.spriteChrLabel);
             this.Controls.Add(this.browsePlayerButton);
             this.Controls.Add(this.playerTextBox);
             this.Controls.Add(this.playerLabel);
@@ -246,5 +278,8 @@
         private System.Windows.Forms.Button browsePlayerButton;
         private System.Windows.Forms.TextBox playerTextBox;
         private System.Windows.Forms.Label playerLabel;
+        private System.Windows.Forms.Button browseSpriteChrButton;
+        private System.Windows.Forms.TextBox spriteChrTextBox;
+        private System.Windows.Forms.Label spriteChrLabel;
     }
 }

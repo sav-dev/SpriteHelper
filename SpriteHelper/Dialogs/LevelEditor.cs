@@ -21,17 +21,25 @@ namespace SpriteHelper.Dialogs
 
         // Palette tabs.
         private Dictionary<TileType, TabPage> tileTabs;
-        private Color TransparentColor => this.palettes.SpritesPalette.First().ActualColors.First();
+        private Color transparentColor => this.palettes.SpritesPalette.First().ActualColors.First();
 
         // Background bitmaps, keys: type -> palette.
         private Dictionary<TileType, Dictionary<int, MyBitmap>> bgBitmaps;
 
-        // Enemy bitmaps, keys: name -> flip
+        // Enemy bitmaps, keys: name -> flip.
         private Dictionary<string, Dictionary<bool, Bitmap>> enBitmaps;
         private Dictionary<string, Dictionary<bool, Bitmap>> enBitmapsTransparent;
 
-        // Player bitmap
+        // Player bitmap.
         private Bitmap playerBitmap;
+
+        // Sprites.
+        private ChrLoader spriteChr;
+
+        // Elevators.
+        public Bitmap elevatorBmp;
+        public Bitmap elevatorEndLBmp;
+        public Bitmap elevatorEndRBmp;
 
         // Add/edit enemy dictionaries.
         private Dictionary<string, Bitmap> enBitmapsSimple;
@@ -122,7 +130,8 @@ namespace SpriteHelper.Dialogs
                 Defaults.Instance.BackgroundSpec,
                 @"C:\Users\tomas\Documents\NES\GitHub\Platformer\PlatformerGraphics\Sprites\enemies.xml",
                 Defaults.Instance.PalettesSpec,
-                Defaults.Instance.PlayerSpec);
+                Defaults.Instance.PlayerSpec,
+                @"C:\Users\tomas\Documents\NES\GitHub\Platformer\PlatformerGraphics\Chr\spr_00.chr");
         }
 
         private void ClearStatus()
@@ -155,7 +164,7 @@ namespace SpriteHelper.Dialogs
         //// Level loading & saving
         ////
 
-        private void LoadLevel(string level, string bgSpec, string enSpec, string palettes, string player)
+        private void LoadLevel(string level, string bgSpec, string enSpec, string palettes, string player, string spriteChr)
         {
             this.palettes = Palettes.Read(palettes);
             this.bgConfig = BackgroundConfig.Read(bgSpec);
@@ -283,7 +292,7 @@ namespace SpriteHelper.Dialogs
 
                 var imgNoFlip =
                     firstFrame.GetGridBitmap(
-                        this.TransparentColor,
+                        this.transparentColor,
                         true,
                         false,
                         false,
@@ -295,7 +304,7 @@ namespace SpriteHelper.Dialogs
 
                 var imgFlip =
                     firstFrame.GetGridBitmap(
-                        this.TransparentColor,
+                        this.transparentColor,
                         true,
                         false,
                         animation.Flip == Flip.Vertical,
@@ -307,7 +316,7 @@ namespace SpriteHelper.Dialogs
 
                 var imgNoFlipTransparent =
                     firstFrame.GetGridBitmap(
-                        this.TransparentColor,
+                        this.transparentColor,
                         true,
                         false,
                         false,
@@ -319,7 +328,7 @@ namespace SpriteHelper.Dialogs
 
                 var imgFlipTransparent =
                     firstFrame.GetGridBitmap(
-                        this.TransparentColor,
+                        this.transparentColor,
                         true,
                         false,
                         animation.Flip == Flip.Vertical,
@@ -368,7 +377,15 @@ namespace SpriteHelper.Dialogs
 
             // Player config.
             var playerConfig = SpriteConfig.Read(player, this.palettes);
-            this.playerBitmap = playerConfig.Frames.First().GetPlayerBitmap(playerConfig, this.TransparentColor, true, false, false, Constants.LevelEditorZoom, true);
+            this.playerBitmap = playerConfig.Frames.First().GetPlayerBitmap(playerConfig, this.transparentColor, true, false, false, Constants.LevelEditorZoom, true);
+
+            // Elevators
+            this.spriteChr = new ChrLoader(spriteChr, this.palettes.SpritesPalette);
+            var elevator = this.spriteChr.GetSprite(Constants.ElevatorSprite, Constants.ElevatorPalette).Scale(Constants.LevelEditorZoom);
+            var elevatorEndR = this.spriteChr.GetSprite(Constants.ElevatorEndRSprite, Constants.ElevatorPalette).Scale(Constants.LevelEditorZoom);
+            this.elevatorBmp = elevator.ToBitmap(backgroundColor: this.transparentColor);
+            this.elevatorEndRBmp = elevatorEndR.ToBitmap(backgroundColor: this.transparentColor);
+            this.elevatorEndLBmp = elevatorEndR.ReverseHorizontally().ToBitmap(backgroundColor: this.transparentColor);
 
             // Populate tiles, set level.
             this.PopulateTiles();
@@ -399,7 +416,7 @@ namespace SpriteHelper.Dialogs
                 {
                     var tileSelector = new TileSelector(this.bgBitmaps[type][palette], type, palette, id => this.SetSelectedTile(id));
 
-                    var tableLayoutPanel = new TableLayoutPanel { Dock = DockStyle.Fill, BackColor = this.TransparentColor };
+                    var tableLayoutPanel = new TableLayoutPanel { Dock = DockStyle.Fill, BackColor = this.transparentColor };
                     tableLayoutPanel.ColumnCount = 1;
                     tableLayoutPanel.RowCount = 1;
                     tableLayoutPanel.Controls.Add(tileSelector, 0, 0);
@@ -557,6 +574,11 @@ namespace SpriteHelper.Dialogs
 
             // Draw player and exit.
             this.DrawPlayerAndExit();
+
+            this.graphics.DrawImage(this.elevatorEndLBmp, 10, 10);
+            this.graphics.DrawImage(this.elevatorBmp, 26, 10);
+            this.graphics.DrawImage(this.elevatorBmp, 42, 10);
+            this.graphics.DrawImage(this.elevatorEndRBmp, 58, 10);
 
             this.UpdateDrawPanel();
         }
@@ -745,7 +767,7 @@ namespace SpriteHelper.Dialogs
             this.hideNonBgToolStringMenuItem.Checked = this.OnlyBackgroundShown;
         }
 
-        private void ShowMovingPlatformsToolStripMenuItemClick(object sender, EventArgs e)
+        private void ShowElevatorsToolStripMenuItemClick(object sender, EventArgs e)
         {
             this.UpdateBitmap();
             this.hideNonBgToolStringMenuItem.Checked = this.OnlyBackgroundShown;
@@ -774,7 +796,7 @@ namespace SpriteHelper.Dialogs
             {
                 if (loadLevelDialog.ClickedOk)
                 {
-                    this.LoadLevel(loadLevelDialog.Level, loadLevelDialog.BgSpec, loadLevelDialog.EnSpec, loadLevelDialog.Palettes, loadLevelDialog.Player);
+                    this.LoadLevel(loadLevelDialog.Level, loadLevelDialog.BgSpec, loadLevelDialog.EnSpec, loadLevelDialog.Palettes, loadLevelDialog.Player, loadLevelDialog.SpriteChr);
                 }
             };
 
@@ -788,7 +810,7 @@ namespace SpriteHelper.Dialogs
             {
                 if (loadLevelDialog.ClickedOk)
                 {
-                    this.LoadLevel(null, loadLevelDialog.BgSpec, loadLevelDialog.EnSpec, loadLevelDialog.Palettes, loadLevelDialog.Player);
+                    this.LoadLevel(null, loadLevelDialog.BgSpec, loadLevelDialog.EnSpec, loadLevelDialog.Palettes, loadLevelDialog.Player, loadLevelDialog.SpriteChr);
                 }
             };
 
@@ -1086,7 +1108,7 @@ namespace SpriteHelper.Dialogs
                          this.showEnemiesToolStripMenuItem.Checked ||
                          this.showEnemyMovementToolStripMenuItem.Checked ||
                          this.showPlayerToolStripMenuItem.Checked ||
-                         this.showMovingPlatformsToolStripMenuItem.Checked);
+                         this.showElevatorsToolStripMenuItem.Checked);
             }
 
             set
@@ -1097,7 +1119,7 @@ namespace SpriteHelper.Dialogs
                     this.showEnemiesToolStripMenuItem.Checked = false;
                     this.showEnemyMovementToolStripMenuItem.Checked = false;
                     this.showPlayerToolStripMenuItem.Checked = false;
-                    this.showMovingPlatformsToolStripMenuItem.Checked = false;
+                    this.showElevatorsToolStripMenuItem.Checked = false;
                     this.UpdateBitmap();
                 }
             }
@@ -2096,7 +2118,7 @@ namespace SpriteHelper.Dialogs
             // todo: save history in this method
 
             // Show the dialog.
-            var dialog = new AddEditEnemyDialog(selectedEnemy, this.enBitmapsSimple, this.enMovements, this.enShooting, this.TransparentColor, this.ValidateEnemy);
+            var dialog = new AddEditEnemyDialog(selectedEnemy, this.enBitmapsSimple, this.enMovements, this.enShooting, this.transparentColor, this.ValidateEnemy);
             dialog.ShowDialog();
             if (!dialog.Succeeded)
             {
