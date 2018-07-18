@@ -48,6 +48,13 @@
     <Reference Include="System.Xml.Serialization" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contract\Elevator.cs" />
+    <Compile Include="Dialogs\AddEditElevatorDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\AddEditElevatorDialog.Designer.cs">
+      <DependentUpon>AddEditElevatorDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="NesGraphics\ChrLoader.cs" />
     <Compile Include="Contract\Enemy.cs" />
     <Compile Include="Contract\MovementType.cs" />
@@ -190,6 +197,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ShootingPanel.resx">
       <DependentUpon>ShootingPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\AddEditElevatorDialog.resx">
+      <DependentUpon>AddEditElevatorDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\AddEditEnemyDialog.resx">
       <DependentUpon>AddEditEnemyDialog.cs</DependentUpon>

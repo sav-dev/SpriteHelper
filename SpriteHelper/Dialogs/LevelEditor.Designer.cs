@@ -82,6 +82,13 @@
             this.viewThreatsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.exportCheckToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.elTabPage = new System.Windows.Forms.TabPage();
+            this.elevatorsListBox = new System.Windows.Forms.ListBox();
+            this.elTabBottomPanel = new System.Windows.Forms.Panel();
+            this.editElevatorButton = new System.Windows.Forms.Button();
+            this.findElevatorButton = new System.Windows.Forms.Button();
+            this.deleteElevatorButton = new System.Windows.Forms.Button();
+            this.addElevatorButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerVertical)).BeginInit();
             this.splitContainerVertical.Panel1.SuspendLayout();
             this.splitContainerVertical.Panel2.SuspendLayout();
@@ -95,6 +102,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.selectedTilePictureBox)).BeginInit();
             this.statusStrip.SuspendLayout();
             this.menuStrip.SuspendLayout();
+            this.elTabPage.SuspendLayout();
+            this.elTabBottomPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainerVertical
@@ -157,6 +166,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.mainTabControl.Controls.Add(this.bgTabPage);
             this.mainTabControl.Controls.Add(this.enTabPage);
+            this.mainTabControl.Controls.Add(this.elTabPage);
             this.mainTabControl.Location = new System.Drawing.Point(13, 53);
             this.mainTabControl.Name = "mainTabControl";
             this.mainTabControl.SelectedIndex = 0;
@@ -635,6 +645,78 @@
             this.exportCheckToolStripMenuItem.Text = "Export check";
             this.exportCheckToolStripMenuItem.Click += new System.EventHandler(this.ExportCheckToolStripMenuItemClick);
             // 
+            // elTabPage
+            // 
+            this.elTabPage.Controls.Add(this.elevatorsListBox);
+            this.elTabPage.Controls.Add(this.elTabBottomPanel);
+            this.elTabPage.Location = new System.Drawing.Point(4, 4);
+            this.elTabPage.Name = "elTabPage";
+            this.elTabPage.Size = new System.Drawing.Size(301, 438);
+            this.elTabPage.TabIndex = 2;
+            this.elTabPage.Text = "Elevators";
+            this.elTabPage.UseVisualStyleBackColor = true;
+            // 
+            // elevatorsListBox
+            // 
+            this.elevatorsListBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.elevatorsListBox.FormattingEnabled = true;
+            this.elevatorsListBox.Location = new System.Drawing.Point(0, 0);
+            this.elevatorsListBox.Name = "elevatorsListBox";
+            this.elevatorsListBox.Size = new System.Drawing.Size(301, 400);
+            this.elevatorsListBox.TabIndex = 3;
+            // 
+            // elTabBottomPanel
+            // 
+            this.elTabBottomPanel.BackColor = System.Drawing.SystemColors.Control;
+            this.elTabBottomPanel.Controls.Add(this.editElevatorButton);
+            this.elTabBottomPanel.Controls.Add(this.findElevatorButton);
+            this.elTabBottomPanel.Controls.Add(this.deleteElevatorButton);
+            this.elTabBottomPanel.Controls.Add(this.addElevatorButton);
+            this.elTabBottomPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.elTabBottomPanel.Location = new System.Drawing.Point(0, 400);
+            this.elTabBottomPanel.Name = "elTabBottomPanel";
+            this.elTabBottomPanel.Size = new System.Drawing.Size(301, 38);
+            this.elTabBottomPanel.TabIndex = 2;
+            // 
+            // editElevatorButton
+            // 
+            this.editElevatorButton.Enabled = false;
+            this.editElevatorButton.Location = new System.Drawing.Point(152, 7);
+            this.editElevatorButton.Name = "editElevatorButton";
+            this.editElevatorButton.Size = new System.Drawing.Size(66, 23);
+            this.editElevatorButton.TabIndex = 2;
+            this.editElevatorButton.Text = "Edit";
+            this.editElevatorButton.UseVisualStyleBackColor = true;
+            // 
+            // findElevatorButton
+            // 
+            this.findElevatorButton.Enabled = false;
+            this.findElevatorButton.Location = new System.Drawing.Point(224, 7);
+            this.findElevatorButton.Name = "findElevatorButton";
+            this.findElevatorButton.Size = new System.Drawing.Size(66, 23);
+            this.findElevatorButton.TabIndex = 2;
+            this.findElevatorButton.Text = "Find";
+            this.findElevatorButton.UseVisualStyleBackColor = true;
+            // 
+            // deleteElevatorButton
+            // 
+            this.deleteElevatorButton.Enabled = false;
+            this.deleteElevatorButton.Location = new System.Drawing.Point(80, 7);
+            this.deleteElevatorButton.Name = "deleteElevatorButton";
+            this.deleteElevatorButton.Size = new System.Drawing.Size(66, 23);
+            this.deleteElevatorButton.TabIndex = 1;
+            this.deleteElevatorButton.Text = "Delete";
+            this.deleteElevatorButton.UseVisualStyleBackColor = true;
+            // 
+            // addElevatorButton
+            // 
+            this.addElevatorButton.Location = new System.Drawing.Point(8, 7);
+            this.addElevatorButton.Name = "addElevatorButton";
+            this.addElevatorButton.Size = new System.Drawing.Size(66, 23);
+            this.addElevatorButton.TabIndex = 0;
+            this.addElevatorButton.Text = "Add";
+            this.addElevatorButton.UseVisualStyleBackColor = true;
+            // 
             // LevelEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -666,6 +748,8 @@
             this.statusStrip.PerformLayout();
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
+            this.elTabPage.ResumeLayout(false);
+            this.elTabBottomPanel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -727,5 +811,12 @@
         private System.Windows.Forms.ToolStripMenuItem showElevatorsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem hideNonBgToolStringMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+        private System.Windows.Forms.TabPage elTabPage;
+        private System.Windows.Forms.ListBox elevatorsListBox;
+        private System.Windows.Forms.Panel elTabBottomPanel;
+        private System.Windows.Forms.Button editElevatorButton;
+        private System.Windows.Forms.Button findElevatorButton;
+        private System.Windows.Forms.Button deleteElevatorButton;
+        private System.Windows.Forms.Button addElevatorButton;
     }
 }

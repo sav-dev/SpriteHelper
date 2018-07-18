@@ -9,6 +9,7 @@
         public const int ElevatorSprite = 249;
         public const int ElevatorEndRSprite = 250;
         public const int ElevatorPalette = 2;
+        public const int ElevatorHeight = 6;
 
         // Player constants, hardcoded in the game code.
         public const int PlayerXOffset = 8;

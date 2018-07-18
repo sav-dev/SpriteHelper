@@ -15,6 +15,9 @@ namespace SpriteHelper.Contract
         public Enemy[] Enemies { get; set; }
 
         [DataMember]
+        public Elevator[] Elevators { get; set; }
+
+        [DataMember]
         public Point PlayerStartingPosition { get; set; }
 
         [DataMember]

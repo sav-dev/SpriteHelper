@@ -73,7 +73,7 @@ namespace SpriteHelper.Dialogs
         // Set to true if OK is clicked.
         public bool Succeeded { get; private set; }
 
-        // Set to true if enemy is being added.
+        // Set to null if enemy is being added.
         public Enemy ExistingEnemy { get; private set; }
 
         //
@@ -218,6 +218,11 @@ namespace SpriteHelper.Dialogs
             this.positionPanel.SetDefaultValues();
             this.movementPanel.SetDefaultValues();
             this.shootingPanel.SetDefaultValues();
+        }
+
+        private void AddEditEnemyDialog_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

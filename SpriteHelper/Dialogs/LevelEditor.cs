@@ -250,12 +250,14 @@ namespace SpriteHelper.Dialogs
 
             string[][] newLevel;
             Enemy[] enemies;
+            Elevator[] elevators;
 
             if (File.Exists(level))
             {
                 var readLevel = Level.Read(level);
                 newLevel = readLevel.Tiles;
                 enemies = readLevel.Enemies;
+                elevators = readLevel.Elevators;
                 this.playerStartingPosition = readLevel.PlayerStartingPosition;
                 this.exitPosition = readLevel.ExitPosition;
             }
@@ -273,6 +275,7 @@ namespace SpriteHelper.Dialogs
                 }
 
                 enemies = new Enemy[0];
+                elevators = new Elevator[0];
                 this.playerStartingPosition = default(Point);
                 this.exitPosition = default(Point);
             }
@@ -352,6 +355,10 @@ namespace SpriteHelper.Dialogs
 
             this.enemiesListBox.Items.Clear();
             this.enemiesListBox.Items.AddRange(enemies);
+
+            // Set elevators.
+            this.elevatorsListBox.Items.Clear();
+            this.elevatorsListBox.Items.AddRange(elevators);
 
             // Add/edit enemy dictionaries.
             this.enBitmapsSimple = this.enBitmaps.Keys.ToDictionary(k => k, k => this.enBitmaps[k][false]);
@@ -572,13 +579,11 @@ namespace SpriteHelper.Dialogs
             // Draw enemies.
             this.DrawEnemies();
 
+            // Draw elevators.
+            this.DrawElevators();
+
             // Draw player and exit.
             this.DrawPlayerAndExit();
-
-            this.graphics.DrawImage(this.elevatorEndLBmp, 10, 10);
-            this.graphics.DrawImage(this.elevatorBmp, 26, 10);
-            this.graphics.DrawImage(this.elevatorBmp, 42, 10);
-            this.graphics.DrawImage(this.elevatorEndRBmp, 58, 10);
 
             this.UpdateDrawPanel();
         }
@@ -686,6 +691,11 @@ namespace SpriteHelper.Dialogs
                     }
                 }
             }
+        }
+
+        private void DrawElevators()
+        {
+            // todo ...
         }
 
         private void DrawPlayerAndExit()
@@ -824,11 +834,24 @@ namespace SpriteHelper.Dialogs
                 return;
             }
 
+            if (!this.ValidateAllElevators())
+            {
+                return;
+            }
+
             var saveFileDialog = new SaveFileDialog { InitialDirectory = Defaults.Instance.LevelsDefaultDir, Filter = "xml files (*.xml)|*.xml" };
             saveFileDialog.ShowDialog();
             if (!string.IsNullOrEmpty(saveFileDialog.FileName))
             {
-                var level = new Level { Tiles = this.level, Enemies = this.Enemies, PlayerStartingPosition = this.playerStartingPosition, ExitPosition = this.exitPosition };
+                var level = new Level
+                {
+                    Tiles = this.level,
+                    Enemies = this.Enemies,
+                    Elevators = this.Elevators,
+                    PlayerStartingPosition = this.playerStartingPosition,
+                    ExitPosition = this.exitPosition
+                };
+
                 level.Write(saveFileDialog.FileName);
             }
         }
@@ -836,6 +859,11 @@ namespace SpriteHelper.Dialogs
         private void ExportLevelToolStripMenuItemClick(object sender, EventArgs e)
         {
             if (!this.ValidateAllEnemies())
+            {
+                return;
+            }
+
+            if (!this.ValidateAllElevators())
             {
                 return;
             }
@@ -1022,6 +1050,13 @@ namespace SpriteHelper.Dialogs
                     if (clippedEnemies.Any())
                     {
                         MessageBox.Show($"Enemies\r\n{string.Join("\r\n", clippedEnemies)}\r\n would be removed from the screen");
+                        return null;
+                    }
+
+                    var clippedElevators = this.Elevators.Where(el => el.X > levelWidth * Constants.BackgroundTileWidth).Select(el => el.ToString()).ToArray();
+                    if (clippedElevators.Any())
+                    {
+                        MessageBox.Show($"Elevators\r\n{string.Join("\r\n", clippedElevators)}\r\n would be removed from the screen");
                         return null;
                     }
 
@@ -1233,31 +1268,60 @@ namespace SpriteHelper.Dialogs
                     this.DrawPanelDrawTileCursor(position);
                 }
             }
-            else if (this.showEnemiesToolStripMenuItem.Checked)
+            else if (this.showEnemiesToolStripMenuItem.Checked || this.showElevatorsToolStripMenuItem.Checked)
             {
-                // If control pressed, if enemies are shown, select an ememy and (on right click) open edit window.
+                // If control pressed, if enemies or elevators are shown, select an ememy or elevator and (on right click) open edit window.
                 var position = MouseGamePosition(e.X, e.Y);
-                var clickedEnemy = this.Enemies.FirstOrDefault(en => en.Select(position));
-                if (clickedEnemy != null)
-                {
-                    var left = e.Button.HasFlag(MouseButtons.Left);
-                    var right = e.Button.HasFlag(MouseButtons.Right);
-                    if (left || right)
-                    {
-                        this.mainTabControl.SelectedTab = enTabPage;
-                        this.enemiesListBox.Focus();
-                        this.enemiesListBox.SelectedItem = clickedEnemy;                        
 
-                        if (right)
-                        {
-                            this.EditEnemy();
-                        }
-                    }                    
-                }
-                else
+                if (this.showEnemiesToolStripMenuItem.Checked)
                 {
-                    this.enemiesListBox.SelectedItem = null;
-                }              
+                    var clickedEnemy = this.Enemies.FirstOrDefault(en => en.Select(position));
+                    if (clickedEnemy != null)
+                    {
+                        var left = e.Button.HasFlag(MouseButtons.Left);
+                        var right = e.Button.HasFlag(MouseButtons.Right);
+                        if (left || right)
+                        {
+                            this.mainTabControl.SelectedTab = enTabPage;
+                            this.enemiesListBox.Focus();
+                            this.enemiesListBox.SelectedItem = clickedEnemy;
+
+                            if (right)
+                            {
+                                this.EditEnemy();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        this.enemiesListBox.SelectedItem = null;
+                    }
+                }
+
+                if (this.showElevatorsToolStripMenuItem.Checked)
+                {
+                    var clickedElevator = this.Elevators.FirstOrDefault(el => el.Select(position));
+                    if (clickedElevator != null)
+                    {
+                        var left = e.Button.HasFlag(MouseButtons.Left);
+                        var right = e.Button.HasFlag(MouseButtons.Right);
+                        if (left || right)
+                        {
+                            this.mainTabControl.SelectedTab = elTabPage;
+                            this.elevatorsListBox.Focus();
+                            this.elevatorsListBox.SelectedItem = clickedElevator;
+
+                            if (right)
+                            {
+                                this.EditElevator();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        this.elevatorsListBox.SelectedItem = null;
+                    }
+                }
             }
         }
 
@@ -1488,6 +1552,10 @@ namespace SpriteHelper.Dialogs
 
             // Enemies.
             result.AddRange(GetExportEnemiesData(logger));
+            logger.WriteLineIfNotNull();
+
+            // Elevators.
+            result.AddRange(GetExportElevatorsData(logger));
             logger.WriteLineIfNotNull();
 
             // Starting position and level end.
@@ -1974,6 +2042,12 @@ namespace SpriteHelper.Dialogs
             return result.ToArray();
         }
 
+        private byte[] GetExportElevatorsData(TextWriter logger = null)
+        {
+            // todo ...
+            return new byte[0];
+        }
+
         private byte[] GetStartingPositionAndEndData(TextWriter logger = null)
         {
             //
@@ -2105,6 +2179,8 @@ namespace SpriteHelper.Dialogs
 
         private void AddEnemy()
         {
+            // todo: max # of enemies in a level
+
             this.AddOrEditEnemy(null);
         }
 
@@ -2172,6 +2248,190 @@ namespace SpriteHelper.Dialogs
             }
         }
 
+        #endregion
+
+        #region Elevators
+
+        // Basically copy of enemies, don't change anything here unless it's also changed in enemies.
+
+        public Elevator[] Elevators => this.elevatorsListBox.Items.Cast<Elevator>().ToArray();
+
+        public Elevator SelectedElevator => this.elevatorsListBox.SelectedItem as Elevator;
+
+        private void ElevatorsListBoxSelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Enable/disable buttons.
+            this.deleteElevatorButton.Enabled = this.SelectedElevator != null;
+            this.editElevatorButton.Enabled = this.SelectedElevator != null;
+            this.findElevatorButton.Enabled = this.SelectedElevator != null;
+
+            // Update bitmap (highlight elevator).
+            this.UpdateBitmap();
+        }
+
+        private void ElevatorsListBoxMouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button.HasFlag(MouseButtons.Right))
+            {
+                var index = this.elevatorsListBox.IndexFromPoint(e.Location);
+                if (index != ListBox.NoMatches)
+                {
+                    var item = this.elevatorsListBox.Items[index];
+                    this.elevatorsListBox.SelectedItem = item;
+
+                    // On right click edit the enemy.
+                    this.EditElevator();
+                }
+            }
+        }
+
+        private void ElevatorsListBoxMouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            var index = this.elevatorsListBox.IndexFromPoint(e.Location);
+            if (index != ListBox.NoMatches)
+            {
+                var item = this.elevatorsListBox.Items[index];
+                if (item == this.SelectedElevator)
+                {
+                    this.FindElevator();
+                }
+            }
+        }
+
+        private void ElevatorsListBoxKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete && this.SelectedElevator != null)
+            {
+                this.DeleteElevator();
+            }
+        }
+
+        private void AddElevatorButtonClick(object sender, EventArgs e)
+        {
+            this.AddElevator();
+        }
+
+        private void DeleteElevatorButtonClick(object sender, EventArgs e)
+        {
+            this.DeleteElevator();
+        }
+
+        private void EditElevatorButtonClick(object sender, EventArgs e)
+        {
+            this.EditElevator();
+        }
+
+        private void FindElevatorButtonClick(object sender, EventArgs e)
+        {
+            this.FindElevator();
+        }
+
+        private void FindElevator()
+        {
+            if (this.SelectedElevator == null)
+            {
+                // No elevator selected.
+                return;
+            }
+
+            if (!this.scrollBar.Enabled)
+            {
+                // Level too small, no scroll.
+                return;
+            }
+
+            // Get elevator's center in metatiles.
+            var enemyRectangle = this.SelectedEnemy.GetGameRectangleInMetaTiles();
+            var x1 = enemyRectangle.X;
+            var x2 = enemyRectangle.X + enemyRectangle.Width;
+            var center = (x1 + x2) / 2;
+
+            // Outer panel width in metatiles.
+            var outerOuterPanelWidth = this.outerOuterDrawPanel.Width;
+            var outerOuterPanelWidthInMetaTiles = outerOuterPanelWidth / TileWidth;
+
+            // TARGET SCROLL + OUTER PANEL WIDTH / 2 = ELEVATOR CENTER
+            // TARGET SCROLL = ELEVATOR CENTER - OUTER PANEL WIDTH / 2
+
+            // Calculate target scroll.
+            var targetScroll = Math.Max(this.scrollBar.Minimum, Math.Min(this.scrollBar.Maximum, center - outerOuterPanelWidthInMetaTiles / 2));
+            this.scrollBar.Value = targetScroll;
+            this.UpdateScroll();
+        }
+
+        private void AddElevator()
+        {            
+            this.AddOrEditElevator(null);
+        }
+
+        private void EditElevator()
+        {
+            this.AddOrEditElevator(this.SelectedElevator);
+        }
+
+        private void AddOrEditElevator(Elevator selectedElevator)
+        {
+            // todo: save history in this method
+
+            // Show the dialog.
+            var dialog = new AddEditElevatorDialog(selectedElevator, this.ValidateElevator);
+            dialog.ShowDialog();
+            if (!dialog.Succeeded)
+            {
+                return;
+            }
+            
+            // Get the new elevator.
+            Elevator newElevator;
+            if (!dialog.TryGetElevator(out newElevator))
+            {
+                MessageBox.Show("Something went wrong.");
+                return;
+            }
+            
+            // Remove old elevator from the list if given.
+            if (selectedElevator != null)
+            {
+                this.enemiesListBox.Items.Remove(selectedElevator);
+            }
+            
+            // Add the new elevator to the list and select it.
+            this.elevatorsListBox.Items.Add(newElevator);
+            this.elevatorsListBox.SelectedItem = newElevator;
+            
+            // Sort the list.
+            this.SortElevatorsListBox();
+            
+            // Update bitmap.
+            this.UpdateBitmap();
+        }
+
+        private void DeleteElevator()
+        {
+            // todo: save history in this method
+
+            this.elevatorsListBox.Items.Remove(this.SelectedElevator);
+            this.UpdateBitmap();
+        }
+
+        private void SortElevatorsListBox()
+        {
+            // optimize this?
+            // Sort by X. Keep the same item selected.
+            var selectedItem = this.SelectedElevator;
+            var elevators = this.elevatorsListBox.Items.Cast<Elevator>().OrderBy(e => e.X).ToArray();
+            this.elevatorsListBox.Items.Clear();
+            this.elevatorsListBox.Items.AddRange(elevators);
+            if (selectedItem != null)
+            {
+                this.elevatorsListBox.SelectedItem = selectedItem;
+            }
+        }
+
+        #endregion
+
+        #region ValidationFunctions
+
         private bool ValidateAllEnemies()
         {
             var stringBuilder = new StringBuilder();
@@ -2179,7 +2439,7 @@ namespace SpriteHelper.Dialogs
 
             var errors = false;
             foreach (var enemy in this.Enemies)
-            {                
+            {
                 var validation = this.ValidateEnemy(enemy, enemy);
                 if (validation != null)
                 {
@@ -2246,7 +2506,7 @@ namespace SpriteHelper.Dialogs
             if (!dialog.TryGetEnemy(this.enConfig, out enemy))
             {
                 return "Something went wrong.";
-            }            
+            }
 
             // Validate the enemy.
             return this.ValidateEnemy(enemy, dialog.ExistingEnemy);
@@ -2435,7 +2695,7 @@ namespace SpriteHelper.Dialogs
                 {
                     return "This enemy cannot shoot";
                 }
-            }            
+            }
 
             if (enemy.ShootingInitialFrequency < 0)
             {
@@ -2450,6 +2710,94 @@ namespace SpriteHelper.Dialogs
             return null;
         }
 
+        private bool ValidateAllElevators()
+        {
+            var stringBuilder = new StringBuilder();
+            stringBuilder.AppendLine("Elevator errors:");
+
+            var errors = false;
+            foreach (var elevator in this.Elevators)
+            {
+                var validation = this.ValidateElevator(elevator, elevator);
+                if (validation != null)
+                {
+                    errors = true;
+                    stringBuilder.AppendLineFormat("{0}: {1}", elevator, validation);
+                }
+            }
+
+            if (errors)
+            {
+                MessageBox.Show(stringBuilder.ToString());
+            }
+
+            return !errors;
+        }
+
+        private string ValidateElevator(AddEditElevatorDialog dialog)
+        {
+            // todo ...
+
+            ////// Get all values.
+            ////int x;
+            ////if (!dialog.TryGetX(out x))
+            ////{
+            ////    return "X is not a valid number";
+            ////}
+            ////
+            ////int y;
+            ////if (!dialog.TryGetY(out y))
+            ////{
+            ////    return "Y is not a valid number";
+            ////}
+            ////
+            ////int speed;
+            ////if (!dialog.TryGetSpeed(out speed))
+            ////{
+            ////    return "Speed is not a valid number";
+            ////}
+            ////
+            ////int min;
+            ////if (!dialog.TryGetMin(out min))
+            ////{
+            ////    return "Min. position is not a valid number";
+            ////}
+            ////
+            ////int max;
+            ////if (!dialog.TryGetMin(out max))
+            ////{
+            ////    return "Max. position is not a valid number";
+            ////}
+            ////
+            ////int shootingFreq;
+            ////if (!dialog.TryGetShootingFreq(out shootingFreq))
+            ////{
+            ////    return "Shooting freq. is not a valid number";
+            ////}
+            ////
+            ////int shootingFreqOffset;
+            ////if (!dialog.TryGetShootingInitialFreq(out shootingFreqOffset))
+            ////{
+            ////    return "Shooting initial freq. is not a valid number";
+            ////}
+            ////
+            ////// Try creating an enemy. This should never fail.
+            ////Enemy enemy;
+            ////if (!dialog.TryGetEnemy(this.enConfig, out enemy))
+            ////{
+            ////    return "Something went wrong.";
+            ////}
+
+            // Validate the enemy.
+            //return this.ValidateElevator(elevator, dialog.ExistingElevator);
+            return null;
+        }
+
+        private string ValidateElevator(Elevator elevator, Elevator existingElevator)
+        {
+            // todo ...
+            return null;
+        }
 
         #endregion
 
