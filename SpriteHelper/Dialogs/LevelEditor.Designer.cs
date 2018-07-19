@@ -45,6 +45,13 @@
             this.findEnemyButton = new System.Windows.Forms.Button();
             this.deleteEnemyButton = new System.Windows.Forms.Button();
             this.addEnemyButton = new System.Windows.Forms.Button();
+            this.elTabPage = new System.Windows.Forms.TabPage();
+            this.elevatorsListBox = new System.Windows.Forms.ListBox();
+            this.elTabBottomPanel = new System.Windows.Forms.Panel();
+            this.editElevatorButton = new System.Windows.Forms.Button();
+            this.findElevatorButton = new System.Windows.Forms.Button();
+            this.deleteElevatorButton = new System.Windows.Forms.Button();
+            this.addElevatorButton = new System.Windows.Forms.Button();
             this.uniqueTilesCountLabel = new System.Windows.Forms.Label();
             this.uniqueTilesLabel = new System.Windows.Forms.Label();
             this.selectedTilePictureBox = new System.Windows.Forms.PictureBox();
@@ -82,13 +89,8 @@
             this.viewThreatsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.exportCheckToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.elTabPage = new System.Windows.Forms.TabPage();
-            this.elevatorsListBox = new System.Windows.Forms.ListBox();
-            this.elTabBottomPanel = new System.Windows.Forms.Panel();
-            this.editElevatorButton = new System.Windows.Forms.Button();
-            this.findElevatorButton = new System.Windows.Forms.Button();
-            this.deleteElevatorButton = new System.Windows.Forms.Button();
-            this.addElevatorButton = new System.Windows.Forms.Button();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            this.showElevatorMovementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerVertical)).BeginInit();
             this.splitContainerVertical.Panel1.SuspendLayout();
             this.splitContainerVertical.Panel2.SuspendLayout();
@@ -99,11 +101,11 @@
             this.bgTabControl.SuspendLayout();
             this.enTabPage.SuspendLayout();
             this.enTabBottomPanel.SuspendLayout();
+            this.elTabPage.SuspendLayout();
+            this.elTabBottomPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.selectedTilePictureBox)).BeginInit();
             this.statusStrip.SuspendLayout();
             this.menuStrip.SuspendLayout();
-            this.elTabPage.SuspendLayout();
-            this.elTabBottomPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainerVertical
@@ -304,6 +306,86 @@
             this.addEnemyButton.UseVisualStyleBackColor = true;
             this.addEnemyButton.Click += new System.EventHandler(this.AddEnemyButtonClick);
             // 
+            // elTabPage
+            // 
+            this.elTabPage.Controls.Add(this.elevatorsListBox);
+            this.elTabPage.Controls.Add(this.elTabBottomPanel);
+            this.elTabPage.Location = new System.Drawing.Point(4, 4);
+            this.elTabPage.Name = "elTabPage";
+            this.elTabPage.Size = new System.Drawing.Size(301, 438);
+            this.elTabPage.TabIndex = 2;
+            this.elTabPage.Text = "Elevators";
+            this.elTabPage.UseVisualStyleBackColor = true;
+            // 
+            // elevatorsListBox
+            // 
+            this.elevatorsListBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.elevatorsListBox.FormattingEnabled = true;
+            this.elevatorsListBox.Location = new System.Drawing.Point(0, 0);
+            this.elevatorsListBox.Name = "elevatorsListBox";
+            this.elevatorsListBox.Size = new System.Drawing.Size(301, 400);
+            this.elevatorsListBox.TabIndex = 3;
+            this.elevatorsListBox.SelectedIndexChanged += new System.EventHandler(this.ElevatorsListBoxSelectedIndexChanged);
+            this.elevatorsListBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ElevatorsListBoxKeyDown);
+            this.elevatorsListBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ElevatorsListBoxMouseDoubleClick);
+            this.elevatorsListBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ElevatorsListBoxMouseDown);
+            // 
+            // elTabBottomPanel
+            // 
+            this.elTabBottomPanel.BackColor = System.Drawing.SystemColors.Control;
+            this.elTabBottomPanel.Controls.Add(this.editElevatorButton);
+            this.elTabBottomPanel.Controls.Add(this.findElevatorButton);
+            this.elTabBottomPanel.Controls.Add(this.deleteElevatorButton);
+            this.elTabBottomPanel.Controls.Add(this.addElevatorButton);
+            this.elTabBottomPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.elTabBottomPanel.Location = new System.Drawing.Point(0, 400);
+            this.elTabBottomPanel.Name = "elTabBottomPanel";
+            this.elTabBottomPanel.Size = new System.Drawing.Size(301, 38);
+            this.elTabBottomPanel.TabIndex = 2;
+            // 
+            // editElevatorButton
+            // 
+            this.editElevatorButton.Enabled = false;
+            this.editElevatorButton.Location = new System.Drawing.Point(152, 7);
+            this.editElevatorButton.Name = "editElevatorButton";
+            this.editElevatorButton.Size = new System.Drawing.Size(66, 23);
+            this.editElevatorButton.TabIndex = 2;
+            this.editElevatorButton.Text = "Edit";
+            this.editElevatorButton.UseVisualStyleBackColor = true;
+            this.editElevatorButton.Click += new System.EventHandler(this.EditElevatorButtonClick);
+            // 
+            // findElevatorButton
+            // 
+            this.findElevatorButton.Enabled = false;
+            this.findElevatorButton.Location = new System.Drawing.Point(224, 7);
+            this.findElevatorButton.Name = "findElevatorButton";
+            this.findElevatorButton.Size = new System.Drawing.Size(66, 23);
+            this.findElevatorButton.TabIndex = 2;
+            this.findElevatorButton.Text = "Find";
+            this.findElevatorButton.UseVisualStyleBackColor = true;
+            this.findElevatorButton.Click += new System.EventHandler(this.FindElevatorButtonClick);
+            // 
+            // deleteElevatorButton
+            // 
+            this.deleteElevatorButton.Enabled = false;
+            this.deleteElevatorButton.Location = new System.Drawing.Point(80, 7);
+            this.deleteElevatorButton.Name = "deleteElevatorButton";
+            this.deleteElevatorButton.Size = new System.Drawing.Size(66, 23);
+            this.deleteElevatorButton.TabIndex = 1;
+            this.deleteElevatorButton.Text = "Delete";
+            this.deleteElevatorButton.UseVisualStyleBackColor = true;
+            this.deleteElevatorButton.Click += new System.EventHandler(this.DeleteElevatorButtonClick);
+            // 
+            // addElevatorButton
+            // 
+            this.addElevatorButton.Location = new System.Drawing.Point(8, 7);
+            this.addElevatorButton.Name = "addElevatorButton";
+            this.addElevatorButton.Size = new System.Drawing.Size(66, 23);
+            this.addElevatorButton.TabIndex = 0;
+            this.addElevatorButton.Text = "Add";
+            this.addElevatorButton.UseVisualStyleBackColor = true;
+            this.addElevatorButton.Click += new System.EventHandler(this.AddElevatorButtonClick);
+            // 
             // uniqueTilesCountLabel
             // 
             this.uniqueTilesCountLabel.AutoSize = true;
@@ -489,9 +571,11 @@
             this.toolStripSeparator7,
             this.showEnemiesToolStripMenuItem,
             this.showEnemyMovementToolStripMenuItem,
+            this.toolStripSeparator8,
+            this.showElevatorsToolStripMenuItem,
+            this.showElevatorMovementToolStripMenuItem,
             this.toolStripSeparator6,
             this.showPlayerToolStripMenuItem,
-            this.showElevatorsToolStripMenuItem,
             this.toolStripSeparator2,
             this.viewPlatformsToolStripMenuItem,
             this.viewThreatsToolStripMenuItem,
@@ -507,7 +591,7 @@
             this.showGridToolStripMenuItem.Name = "showGridToolStripMenuItem";
             this.showGridToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.G)));
-            this.showGridToolStripMenuItem.Size = new System.Drawing.Size(276, 22);
+            this.showGridToolStripMenuItem.Size = new System.Drawing.Size(283, 22);
             this.showGridToolStripMenuItem.Text = "Show &grid";
             this.showGridToolStripMenuItem.Click += new System.EventHandler(this.ShowGridToolStripMenuItemClick);
             // 
@@ -517,7 +601,7 @@
             this.showTypeToolStripMenuItem.Name = "showTypeToolStripMenuItem";
             this.showTypeToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.T)));
-            this.showTypeToolStripMenuItem.Size = new System.Drawing.Size(276, 22);
+            this.showTypeToolStripMenuItem.Size = new System.Drawing.Size(283, 22);
             this.showTypeToolStripMenuItem.Text = "Show &type";
             this.showTypeToolStripMenuItem.Click += new System.EventHandler(this.ShowTypeToolStripMenuItemClick);
             // 
@@ -527,7 +611,7 @@
             this.hideNonBgToolStringMenuItem.Name = "hideNonBgToolStringMenuItem";
             this.hideNonBgToolStringMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.Q)));
-            this.hideNonBgToolStringMenuItem.Size = new System.Drawing.Size(276, 22);
+            this.hideNonBgToolStringMenuItem.Size = new System.Drawing.Size(283, 22);
             this.hideNonBgToolStringMenuItem.Text = "&Hide non-background";
             this.hideNonBgToolStringMenuItem.CheckedChanged += new System.EventHandler(this.HideNonBgToolStringMenuItemCheckedChanged);
             this.hideNonBgToolStringMenuItem.Click += new System.EventHandler(this.HideNonBgToolStringMenuItemClick);
@@ -535,7 +619,7 @@
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(273, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(280, 6);
             // 
             // showScreensToolStripMenuItem
             // 
@@ -545,14 +629,14 @@
             this.showScreensToolStripMenuItem.Name = "showScreensToolStripMenuItem";
             this.showScreensToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.S)));
-            this.showScreensToolStripMenuItem.Size = new System.Drawing.Size(276, 22);
+            this.showScreensToolStripMenuItem.Size = new System.Drawing.Size(283, 22);
             this.showScreensToolStripMenuItem.Text = "Show &screens";
             this.showScreensToolStripMenuItem.Click += new System.EventHandler(this.ShowScreensToolStripMenuItemClick);
             // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(273, 6);
+            this.toolStripSeparator7.Size = new System.Drawing.Size(280, 6);
             // 
             // showEnemiesToolStripMenuItem
             // 
@@ -562,7 +646,7 @@
             this.showEnemiesToolStripMenuItem.Name = "showEnemiesToolStripMenuItem";
             this.showEnemiesToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.E)));
-            this.showEnemiesToolStripMenuItem.Size = new System.Drawing.Size(276, 22);
+            this.showEnemiesToolStripMenuItem.Size = new System.Drawing.Size(283, 22);
             this.showEnemiesToolStripMenuItem.Text = "Show &enemies";
             this.showEnemiesToolStripMenuItem.CheckedChanged += new System.EventHandler(this.ShowEnemiesToolStripMenuItemCheckedChanged);
             this.showEnemiesToolStripMenuItem.Click += new System.EventHandler(this.ShowEnemiesToolStripMenuItemClick);
@@ -575,14 +659,14 @@
             this.showEnemyMovementToolStripMenuItem.Name = "showEnemyMovementToolStripMenuItem";
             this.showEnemyMovementToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.R)));
-            this.showEnemyMovementToolStripMenuItem.Size = new System.Drawing.Size(276, 22);
+            this.showEnemyMovementToolStripMenuItem.Size = new System.Drawing.Size(283, 22);
             this.showEnemyMovementToolStripMenuItem.Text = "Show enemy &movement";
             this.showEnemyMovementToolStripMenuItem.Click += new System.EventHandler(this.ShowEnemyMovementToolStripMenuItemClick);
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(273, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(280, 6);
             // 
             // showPlayerToolStripMenuItem
             // 
@@ -592,7 +676,7 @@
             this.showPlayerToolStripMenuItem.Name = "showPlayerToolStripMenuItem";
             this.showPlayerToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.P)));
-            this.showPlayerToolStripMenuItem.Size = new System.Drawing.Size(276, 22);
+            this.showPlayerToolStripMenuItem.Size = new System.Drawing.Size(283, 22);
             this.showPlayerToolStripMenuItem.Text = "Show &player and exit";
             this.showPlayerToolStripMenuItem.Click += new System.EventHandler(this.ShowPlayerToolStripMenuItemClick);
             // 
@@ -604,21 +688,22 @@
             this.showElevatorsToolStripMenuItem.Name = "showElevatorsToolStripMenuItem";
             this.showElevatorsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.O)));
-            this.showElevatorsToolStripMenuItem.Size = new System.Drawing.Size(276, 22);
+            this.showElevatorsToolStripMenuItem.Size = new System.Drawing.Size(283, 22);
             this.showElevatorsToolStripMenuItem.Text = "Show e&levators";
+            this.showElevatorsToolStripMenuItem.CheckedChanged += new System.EventHandler(this.ShowElevatorsToolStripMenuItemCheckedChanged);
             this.showElevatorsToolStripMenuItem.Click += new System.EventHandler(this.ShowElevatorsToolStripMenuItemClick);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(273, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(280, 6);
             // 
             // viewPlatformsToolStripMenuItem
             // 
             this.viewPlatformsToolStripMenuItem.Name = "viewPlatformsToolStripMenuItem";
             this.viewPlatformsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.V)));
-            this.viewPlatformsToolStripMenuItem.Size = new System.Drawing.Size(276, 22);
+            this.viewPlatformsToolStripMenuItem.Size = new System.Drawing.Size(283, 22);
             this.viewPlatformsToolStripMenuItem.Text = "View platforms";
             this.viewPlatformsToolStripMenuItem.Click += new System.EventHandler(this.ViewPlatformsToolStripMenuItemClick);
             // 
@@ -627,95 +712,40 @@
             this.viewThreatsToolStripMenuItem.Name = "viewThreatsToolStripMenuItem";
             this.viewThreatsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.I)));
-            this.viewThreatsToolStripMenuItem.Size = new System.Drawing.Size(276, 22);
+            this.viewThreatsToolStripMenuItem.Size = new System.Drawing.Size(283, 22);
             this.viewThreatsToolStripMenuItem.Text = "View threats";
             this.viewThreatsToolStripMenuItem.Click += new System.EventHandler(this.ViewThreatsToolStripMenuItemClick);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(273, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(280, 6);
             // 
             // exportCheckToolStripMenuItem
             // 
             this.exportCheckToolStripMenuItem.Name = "exportCheckToolStripMenuItem";
             this.exportCheckToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
             | System.Windows.Forms.Keys.X)));
-            this.exportCheckToolStripMenuItem.Size = new System.Drawing.Size(276, 22);
+            this.exportCheckToolStripMenuItem.Size = new System.Drawing.Size(283, 22);
             this.exportCheckToolStripMenuItem.Text = "Export check";
             this.exportCheckToolStripMenuItem.Click += new System.EventHandler(this.ExportCheckToolStripMenuItemClick);
             // 
-            // elTabPage
+            // toolStripSeparator8
             // 
-            this.elTabPage.Controls.Add(this.elevatorsListBox);
-            this.elTabPage.Controls.Add(this.elTabBottomPanel);
-            this.elTabPage.Location = new System.Drawing.Point(4, 4);
-            this.elTabPage.Name = "elTabPage";
-            this.elTabPage.Size = new System.Drawing.Size(301, 438);
-            this.elTabPage.TabIndex = 2;
-            this.elTabPage.Text = "Elevators";
-            this.elTabPage.UseVisualStyleBackColor = true;
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(280, 6);
             // 
-            // elevatorsListBox
+            // showElevatorMovementToolStripMenuItem
             // 
-            this.elevatorsListBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.elevatorsListBox.FormattingEnabled = true;
-            this.elevatorsListBox.Location = new System.Drawing.Point(0, 0);
-            this.elevatorsListBox.Name = "elevatorsListBox";
-            this.elevatorsListBox.Size = new System.Drawing.Size(301, 400);
-            this.elevatorsListBox.TabIndex = 3;
-            // 
-            // elTabBottomPanel
-            // 
-            this.elTabBottomPanel.BackColor = System.Drawing.SystemColors.Control;
-            this.elTabBottomPanel.Controls.Add(this.editElevatorButton);
-            this.elTabBottomPanel.Controls.Add(this.findElevatorButton);
-            this.elTabBottomPanel.Controls.Add(this.deleteElevatorButton);
-            this.elTabBottomPanel.Controls.Add(this.addElevatorButton);
-            this.elTabBottomPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.elTabBottomPanel.Location = new System.Drawing.Point(0, 400);
-            this.elTabBottomPanel.Name = "elTabBottomPanel";
-            this.elTabBottomPanel.Size = new System.Drawing.Size(301, 38);
-            this.elTabBottomPanel.TabIndex = 2;
-            // 
-            // editElevatorButton
-            // 
-            this.editElevatorButton.Enabled = false;
-            this.editElevatorButton.Location = new System.Drawing.Point(152, 7);
-            this.editElevatorButton.Name = "editElevatorButton";
-            this.editElevatorButton.Size = new System.Drawing.Size(66, 23);
-            this.editElevatorButton.TabIndex = 2;
-            this.editElevatorButton.Text = "Edit";
-            this.editElevatorButton.UseVisualStyleBackColor = true;
-            // 
-            // findElevatorButton
-            // 
-            this.findElevatorButton.Enabled = false;
-            this.findElevatorButton.Location = new System.Drawing.Point(224, 7);
-            this.findElevatorButton.Name = "findElevatorButton";
-            this.findElevatorButton.Size = new System.Drawing.Size(66, 23);
-            this.findElevatorButton.TabIndex = 2;
-            this.findElevatorButton.Text = "Find";
-            this.findElevatorButton.UseVisualStyleBackColor = true;
-            // 
-            // deleteElevatorButton
-            // 
-            this.deleteElevatorButton.Enabled = false;
-            this.deleteElevatorButton.Location = new System.Drawing.Point(80, 7);
-            this.deleteElevatorButton.Name = "deleteElevatorButton";
-            this.deleteElevatorButton.Size = new System.Drawing.Size(66, 23);
-            this.deleteElevatorButton.TabIndex = 1;
-            this.deleteElevatorButton.Text = "Delete";
-            this.deleteElevatorButton.UseVisualStyleBackColor = true;
-            // 
-            // addElevatorButton
-            // 
-            this.addElevatorButton.Location = new System.Drawing.Point(8, 7);
-            this.addElevatorButton.Name = "addElevatorButton";
-            this.addElevatorButton.Size = new System.Drawing.Size(66, 23);
-            this.addElevatorButton.TabIndex = 0;
-            this.addElevatorButton.Text = "Add";
-            this.addElevatorButton.UseVisualStyleBackColor = true;
+            this.showElevatorMovementToolStripMenuItem.Checked = true;
+            this.showElevatorMovementToolStripMenuItem.CheckOnClick = true;
+            this.showElevatorMovementToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.showElevatorMovementToolStripMenuItem.Name = "showElevatorMovementToolStripMenuItem";
+            this.showElevatorMovementToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.I)));
+            this.showElevatorMovementToolStripMenuItem.Size = new System.Drawing.Size(283, 22);
+            this.showElevatorMovementToolStripMenuItem.Text = "Show elevators m&ovement";
+            this.showElevatorMovementToolStripMenuItem.Click += new System.EventHandler(this.ShowElevatorMovementToolStripMenuItemClick);
             // 
             // LevelEditor
             // 
@@ -743,13 +773,13 @@
             this.bgTabControl.ResumeLayout(false);
             this.enTabPage.ResumeLayout(false);
             this.enTabBottomPanel.ResumeLayout(false);
+            this.elTabPage.ResumeLayout(false);
+            this.elTabBottomPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.selectedTilePictureBox)).EndInit();
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
-            this.elTabPage.ResumeLayout(false);
-            this.elTabBottomPanel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -818,5 +848,7 @@
         private System.Windows.Forms.Button findElevatorButton;
         private System.Windows.Forms.Button deleteElevatorButton;
         private System.Windows.Forms.Button addElevatorButton;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+        private System.Windows.Forms.ToolStripMenuItem showElevatorMovementToolStripMenuItem;
     }
 }

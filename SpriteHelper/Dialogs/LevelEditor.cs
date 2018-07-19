@@ -33,13 +33,8 @@ namespace SpriteHelper.Dialogs
         // Player bitmap.
         private Bitmap playerBitmap;
 
-        // Sprites.
-        private ChrLoader spriteChr;
-
         // Elevators.
-        public Bitmap elevatorBmp;
-        public Bitmap elevatorEndLBmp;
-        public Bitmap elevatorEndRBmp;
+        private Dictionary<int, Bitmap> elevatorBitmaps;
 
         // Add/edit enemy dictionaries.
         private Dictionary<string, Bitmap> enBitmapsSimple;
@@ -387,12 +382,25 @@ namespace SpriteHelper.Dialogs
             this.playerBitmap = playerConfig.Frames.First().GetPlayerBitmap(playerConfig, this.transparentColor, true, false, false, Constants.LevelEditorZoom, true);
 
             // Elevators
-            this.spriteChr = new ChrLoader(spriteChr, this.palettes.SpritesPalette);
-            var elevator = this.spriteChr.GetSprite(Constants.ElevatorSprite, Constants.ElevatorPalette).Scale(Constants.LevelEditorZoom);
-            var elevatorEndR = this.spriteChr.GetSprite(Constants.ElevatorEndRSprite, Constants.ElevatorPalette).Scale(Constants.LevelEditorZoom);
-            this.elevatorBmp = elevator.ToBitmap(backgroundColor: this.transparentColor);
-            this.elevatorEndRBmp = elevatorEndR.ToBitmap(backgroundColor: this.transparentColor);
-            this.elevatorEndLBmp = elevatorEndR.ReverseHorizontally().ToBitmap(backgroundColor: this.transparentColor);
+            var sprites = new ChrLoader(spriteChr, this.palettes.SpritesPalette);
+            var elevator = sprites.GetSprite(Constants.ElevatorSprite, Constants.ElevatorPalette);
+            var elevatorEndR = sprites.GetSprite(Constants.ElevatorEndRSprite, Constants.ElevatorPalette);
+            var elevatorEndL = elevatorEndR.ReverseHorizontally();
+
+            this.elevatorBitmaps = new Dictionary<int, Bitmap>();
+            for (var i = Constants.MinElevatorSize; i <= Constants.MaxElevatorSize; i++)
+            {
+                var bmp = new MyBitmap(i * Constants.SpriteWidth, Constants.SpriteHeight);
+                bmp.DrawImage(elevatorEndL, 0, 0);
+                bmp.DrawImage(elevatorEndR, i * Constants.SpriteWidth - Constants.SpriteWidth, 0);
+
+                for (var x = 1; x <= i - 2; x++)
+                {
+                    bmp.DrawImage(elevator, x * Constants.SpriteWidth, 0);
+                }
+
+                this.elevatorBitmaps.Add(i, bmp.Scale(Constants.LevelEditorZoom).ToBitmap(backgroundColor: this.transparentColor));
+            }
 
             // Populate tiles, set level.
             this.PopulateTiles();
@@ -695,7 +703,33 @@ namespace SpriteHelper.Dialogs
 
         private void DrawElevators()
         {
-            // todo ...
+            if (this.showElevatorsToolStripMenuItem.Checked)
+            {
+                foreach (var elevator in this.Elevators)
+                {
+                    // Get image.
+                    var image = this.elevatorBitmaps[elevator.Size];
+
+                    if (this.showElevatorMovementToolStripMenuItem.Checked)
+                    {
+                        // todo elevators
+                    }
+
+                    // Draw regular image.                   
+                    this.graphics.DrawImage(image, new Point(elevator.X * Constants.LevelEditorZoom, elevator.Y * Constants.LevelEditorZoom));
+
+                    if (elevator == this.SelectedElevator)
+                    {
+                        // Draw red box around selected elevator.
+                        this.graphics.DrawRectangle(
+                            Pens.Red, 
+                            elevator.X * Constants.LevelEditorZoom, 
+                            elevator.Y * Constants.LevelEditorZoom, 
+                            elevator.Width * Constants.LevelEditorZoom, 
+                            elevator.Height * Constants.LevelEditorZoom);
+                    }
+                }
+            }
         }
 
         private void DrawPlayerAndExit()
@@ -771,13 +805,24 @@ namespace SpriteHelper.Dialogs
             this.hideNonBgToolStringMenuItem.Checked = this.OnlyBackgroundShown;
         }
 
-        private void ShowPlayerToolStripMenuItemClick(object sender, EventArgs e)
+        private void ShowElevatorsToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            this.UpdateBitmap();
+            this.hideNonBgToolStringMenuItem.Checked = this.OnlyBackgroundShown;
+        }
+        
+        private void ShowElevatorsToolStripMenuItemCheckedChanged(object sender, EventArgs e)
+        {
+            this.showElevatorMovementToolStripMenuItem.Enabled = this.showElevatorsToolStripMenuItem.Checked;
+        }
+
+        private void ShowElevatorMovementToolStripMenuItemClick(object sender, EventArgs e)
         {
             this.UpdateBitmap();
             this.hideNonBgToolStringMenuItem.Checked = this.OnlyBackgroundShown;
         }
 
-        private void ShowElevatorsToolStripMenuItemClick(object sender, EventArgs e)
+        private void ShowPlayerToolStripMenuItemClick(object sender, EventArgs e)
         {
             this.UpdateBitmap();
             this.hideNonBgToolStringMenuItem.Checked = this.OnlyBackgroundShown;
@@ -1142,8 +1187,9 @@ namespace SpriteHelper.Dialogs
                 return !(this.showScreensToolStripMenuItem.Checked ||
                          this.showEnemiesToolStripMenuItem.Checked ||
                          this.showEnemyMovementToolStripMenuItem.Checked ||
-                         this.showPlayerToolStripMenuItem.Checked ||
-                         this.showElevatorsToolStripMenuItem.Checked);
+                         this.showElevatorsToolStripMenuItem.Checked ||
+                         this.showElevatorMovementToolStripMenuItem.Checked ||
+                         this.showPlayerToolStripMenuItem.Checked);
             }
 
             set
@@ -1153,8 +1199,9 @@ namespace SpriteHelper.Dialogs
                     this.showScreensToolStripMenuItem.Checked = false;
                     this.showEnemiesToolStripMenuItem.Checked = false;
                     this.showEnemyMovementToolStripMenuItem.Checked = false;
-                    this.showPlayerToolStripMenuItem.Checked = false;
                     this.showElevatorsToolStripMenuItem.Checked = false;
+                    this.showElevatorMovementToolStripMenuItem.Checked = false;
+                    this.showPlayerToolStripMenuItem.Checked = false;                    
                     this.UpdateBitmap();
                 }
             }
@@ -2044,7 +2091,7 @@ namespace SpriteHelper.Dialogs
 
         private byte[] GetExportElevatorsData(TextWriter logger = null)
         {
-            // todo ...
+            // todo elevator
             return new byte[0];
         }
 
@@ -2341,9 +2388,9 @@ namespace SpriteHelper.Dialogs
             }
 
             // Get elevator's center in metatiles.
-            var enemyRectangle = this.SelectedEnemy.GetGameRectangleInMetaTiles();
-            var x1 = enemyRectangle.X;
-            var x2 = enemyRectangle.X + enemyRectangle.Width;
+            var elevatorRectangle = this.SelectedElevator.GetGameRectangleInMetaTiles();
+            var x1 = elevatorRectangle.X;
+            var x2 = elevatorRectangle.X + elevatorRectangle.Width;
             var center = (x1 + x2) / 2;
 
             // Outer panel width in metatiles.
@@ -2392,7 +2439,7 @@ namespace SpriteHelper.Dialogs
             // Remove old elevator from the list if given.
             if (selectedElevator != null)
             {
-                this.enemiesListBox.Items.Remove(selectedElevator);
+                this.elevatorsListBox.Items.Remove(selectedElevator);
             }
             
             // Add the new elevator to the list and select it.
@@ -2484,7 +2531,7 @@ namespace SpriteHelper.Dialogs
             }
 
             int max;
-            if (!dialog.TryGetMin(out max))
+            if (!dialog.TryGetMax(out max))
             {
                 return "Max. position is not a valid number";
             }
@@ -2545,6 +2592,11 @@ namespace SpriteHelper.Dialogs
             if (enemy.X < 0)
             {
                 return "X cannot be negative";
+            }
+
+            if (enemy.X + enemy.Width > (enemy.Screen + 1) * Constants.ScreenWidth)
+            {
+                return "Enemy is spanning across screens";
             }
 
             if (enemy.Y > Constants.ScreenHeight)
@@ -2618,9 +2670,8 @@ namespace SpriteHelper.Dialogs
                     return "Enemy walking off-screen to the left";
                 }
 
-                if (enemy.MaxPosition >= Math.Min((enemy.Screen + 1) * Constants.ScreenWidth, this.level.Length * Constants.BackgroundTileWidth))
+                if (enemy.MaxPosition + enemy.Width >= Math.Min((enemy.Screen + 1) * Constants.ScreenWidth, this.level.Length * Constants.BackgroundTileWidth))
                 {
-
                     return "Enemy walking off-screen to the right";
                 }
             }
@@ -2736,66 +2787,208 @@ namespace SpriteHelper.Dialogs
 
         private string ValidateElevator(AddEditElevatorDialog dialog)
         {
-            // todo ...
+            // Get all values.
+            int x;
+            if (!dialog.TryGetX(out x))
+            {
+                return "X is not a valid number";
+            }
 
-            ////// Get all values.
-            ////int x;
-            ////if (!dialog.TryGetX(out x))
-            ////{
-            ////    return "X is not a valid number";
-            ////}
-            ////
-            ////int y;
-            ////if (!dialog.TryGetY(out y))
-            ////{
-            ////    return "Y is not a valid number";
-            ////}
-            ////
-            ////int speed;
-            ////if (!dialog.TryGetSpeed(out speed))
-            ////{
-            ////    return "Speed is not a valid number";
-            ////}
-            ////
-            ////int min;
-            ////if (!dialog.TryGetMin(out min))
-            ////{
-            ////    return "Min. position is not a valid number";
-            ////}
-            ////
-            ////int max;
-            ////if (!dialog.TryGetMin(out max))
-            ////{
-            ////    return "Max. position is not a valid number";
-            ////}
-            ////
-            ////int shootingFreq;
-            ////if (!dialog.TryGetShootingFreq(out shootingFreq))
-            ////{
-            ////    return "Shooting freq. is not a valid number";
-            ////}
-            ////
-            ////int shootingFreqOffset;
-            ////if (!dialog.TryGetShootingInitialFreq(out shootingFreqOffset))
-            ////{
-            ////    return "Shooting initial freq. is not a valid number";
-            ////}
-            ////
-            ////// Try creating an enemy. This should never fail.
-            ////Enemy enemy;
-            ////if (!dialog.TryGetEnemy(this.enConfig, out enemy))
-            ////{
-            ////    return "Something went wrong.";
-            ////}
+            int y;
+            if (!dialog.TryGetY(out y))
+            {
+                return "Y is not a valid number";
+            }
 
-            // Validate the enemy.
-            //return this.ValidateElevator(elevator, dialog.ExistingElevator);
-            return null;
+            int speed;
+            if (!dialog.TryGetSpeed(out speed))
+            {
+                return "Speed is not a valid number";
+            }
+
+            int min;
+            if (!dialog.TryGetMin(out min))
+            {
+                return "Min. position is not a valid number";
+            }
+
+            int max;
+            if (!dialog.TryGetMax(out max))
+            {
+                return "Max. position is not a valid number";
+            }
+            
+            // Try creating an elevator. This should never fail.
+            Elevator elevator;
+            if (!dialog.TryGetElevator(out elevator))
+            {
+                return "Something went wrong.";
+            }
+
+            // Validate the elevator.
+            return this.ValidateElevator(elevator, dialog.ExistingElevator);
         }
 
         private string ValidateElevator(Elevator elevator, Elevator existingElevator)
         {
-            // todo ...
+            if (elevator.Size < Constants.MinElevatorSize || elevator.Size > Constants.MaxElevatorSize)
+            {
+                return "Elevator size is invalid";
+            }
+
+            var position = this.ValidateElevatorPosition(elevator, existingElevator);
+            if (position != null)
+            {
+                return position;
+            }
+
+            var movement = this.ValidateElevatorMovement(elevator);
+            if (movement != null)
+            {
+                return movement;
+            }
+
+            return null;
+        }
+
+        private string ValidateElevatorPosition(Elevator elevator, Elevator existingElevator)
+        {
+            if (elevator.X > this.level.Length * Constants.BackgroundTileWidth)
+            {
+                return "X is too high";
+            }
+
+            if (elevator.X < 0)
+            {
+                return "X cannot be negative";
+            }
+
+            if (elevator.X + elevator.Width > (elevator.Screen + 1) * Constants.ScreenWidth)
+            {
+                return "Elevator is spanning across screens";
+            }
+
+            if (elevator.Y > Constants.ScreenHeight)
+            {
+                return "Y is too high";
+            }
+
+            if (elevator.Y < 0)
+            {
+                return "Y cannot be negative";
+            }
+
+            var previousScreenCount = this.Elevators.Count(e => e != existingElevator && e.Screen == elevator.Screen - 1);
+            var currentScreenCount = this.Elevators.Count(e => e != existingElevator && e.Screen == elevator.Screen) + 1;
+            var nextScreenCount = this.Elevators.Count(e => e != existingElevator && e.Screen == elevator.Screen + 1);
+
+            if (previousScreenCount + currentScreenCount > Constants.ElevatorsLimitPerTwoScreens)
+            {
+                return "Too many elevators on this an the previous screen";
+            }
+
+            if (currentScreenCount + nextScreenCount > Constants.ElevatorsLimitPerTwoScreens)
+            {
+                return "Too many elevators on this an the next screen";
+            }
+
+            return null;
+        }
+
+        private string ValidateElevatorMovement(Elevator elevator)
+        {
+            if (elevator.MovementType == MovementType.None)
+            {
+                if (elevator.Speed != 0)
+                {
+                    return "Speed must be 0 for non-moving elevators";
+                }
+
+                if (elevator.InitialDistanceLeft != 0)
+                {
+                    return "Distance left must be 0 for non-moving elevators";
+                }
+
+                return null;
+            }
+
+            if (elevator.Speed <= 0)
+            {
+                return "Speed must be greater than 0";
+            }
+
+            if (elevator.Speed > 255)
+            {
+                return "Speed is too high";
+            }
+
+            if (elevator.MinPosition > elevator.MaxPosition)
+            {
+                return "Min. position must be less than max. position";
+            }
+
+            int elevatorPosition;
+            string elevatorPositionString;
+            if (elevator.MovementType == MovementType.Horizontal)
+            {
+                elevatorPosition = elevator.X;
+                elevatorPositionString = "X";
+
+                if (elevator.MinPosition < elevator.Screen * Constants.ScreenWidth)
+                {
+                    return "Elevator moving off-screen to the left";
+                }
+
+                if (elevator.MaxPosition + elevator.Width >= Math.Min((elevator.Screen + 1) * Constants.ScreenWidth, this.level.Length * Constants.BackgroundTileWidth))
+                {
+                    return "Elevator moving off-screen to the right";
+                }
+            }
+            else if (elevator.MovementType == MovementType.Vertical)
+            {
+                elevatorPosition = elevator.Y;
+                elevatorPositionString = "Y";
+
+                if (elevator.MinPosition < 0)
+                {
+                    return "Min. position cannot be negative";
+                }
+
+                if (elevator.MaxPosition > Constants.ScreenHeight)
+                {
+                    return "Max. position is too high";
+                }
+            }
+            else
+            {
+                return "Unknown movement type";
+            }
+
+            if (elevator.MinPosition > elevatorPosition)
+            {
+                return $"Min. position must be <= {elevatorPositionString}";
+            }
+
+            if (elevator.MaxPosition < elevatorPosition)
+            {
+                return $"Max. position must be >= {elevatorPositionString}";
+            }
+
+            if (elevator.InitialDistanceLeft == 0)
+            {
+                return "Elevator must have some initial movement in the direction it's facing";
+            }
+
+            if ((elevatorPosition - elevator.MinPosition) % elevator.Speed != 0)
+            {
+                return "Min. position is not reachable with given speed";
+            }
+
+            if ((elevator.MaxPosition - elevatorPosition) % elevator.Speed != 0)
+            {
+                return "Max. position is not reachable with given speed";
+            }
+
             return null;
         }
 

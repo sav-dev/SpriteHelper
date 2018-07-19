@@ -155,7 +155,6 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "AddEditEnemyDialog";
             this.Text = "placeholder";
-            this.Load += new System.EventHandler(this.AddEditEnemyDialog_Load);
             ((System.ComponentModel.ISupportInitialize)(this.enemyPictureBox)).EndInit();
             this.positionGroupBox.ResumeLayout(false);
             this.movementGroupBox.ResumeLayout(false);

@@ -114,6 +114,9 @@ namespace SpriteHelper.Contract
             }
         }
 
+        // Width getter.
+        public int Width => this.width;
+
         private int width;
         private int height;
 

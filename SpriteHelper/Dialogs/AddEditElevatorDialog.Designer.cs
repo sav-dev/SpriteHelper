@@ -33,10 +33,10 @@
             this.positionGroupBox = new System.Windows.Forms.GroupBox();
             this.positionPanel = new SpriteHelper.Controls.PositionPanel();
             this.sizeGroupBox = new System.Windows.Forms.GroupBox();
+            this.sizeNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.sizeLabel = new System.Windows.Forms.Label();
             this.cancelButton = new System.Windows.Forms.Button();
             this.okButton = new System.Windows.Forms.Button();
-            this.sizeNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.movementGroupBox.SuspendLayout();
             this.positionGroupBox.SuspendLayout();
             this.sizeGroupBox.SuspendLayout();
@@ -91,33 +91,6 @@
             this.sizeGroupBox.TabStop = false;
             this.sizeGroupBox.Text = "Size";
             // 
-            // sizeLabel
-            // 
-            this.sizeLabel.AutoSize = true;
-            this.sizeLabel.Location = new System.Drawing.Point(58, 35);
-            this.sizeLabel.Name = "sizeLabel";
-            this.sizeLabel.Size = new System.Drawing.Size(27, 13);
-            this.sizeLabel.TabIndex = 0;
-            this.sizeLabel.Text = "Size";
-            // 
-            // cancelButton
-            // 
-            this.cancelButton.Location = new System.Drawing.Point(364, 42);
-            this.cancelButton.Name = "cancelButton";
-            this.cancelButton.Size = new System.Drawing.Size(55, 23);
-            this.cancelButton.TabIndex = 52;
-            this.cancelButton.Text = "Cancel";
-            this.cancelButton.UseVisualStyleBackColor = true;
-            // 
-            // okButton
-            // 
-            this.okButton.Location = new System.Drawing.Point(303, 42);
-            this.okButton.Name = "okButton";
-            this.okButton.Size = new System.Drawing.Size(55, 23);
-            this.okButton.TabIndex = 51;
-            this.okButton.Text = "OK";
-            this.okButton.UseVisualStyleBackColor = true;
-            // 
             // sizeNumericUpDown
             // 
             this.sizeNumericUpDown.Location = new System.Drawing.Point(105, 33);
@@ -140,6 +113,35 @@
             0,
             0});
             // 
+            // sizeLabel
+            // 
+            this.sizeLabel.AutoSize = true;
+            this.sizeLabel.Location = new System.Drawing.Point(58, 35);
+            this.sizeLabel.Name = "sizeLabel";
+            this.sizeLabel.Size = new System.Drawing.Size(27, 13);
+            this.sizeLabel.TabIndex = 0;
+            this.sizeLabel.Text = "Size";
+            // 
+            // cancelButton
+            // 
+            this.cancelButton.Location = new System.Drawing.Point(364, 42);
+            this.cancelButton.Name = "cancelButton";
+            this.cancelButton.Size = new System.Drawing.Size(55, 23);
+            this.cancelButton.TabIndex = 52;
+            this.cancelButton.Text = "Cancel";
+            this.cancelButton.UseVisualStyleBackColor = true;
+            this.cancelButton.Click += new System.EventHandler(this.CancelButtonClick);
+            // 
+            // okButton
+            // 
+            this.okButton.Location = new System.Drawing.Point(303, 42);
+            this.okButton.Name = "okButton";
+            this.okButton.Size = new System.Drawing.Size(55, 23);
+            this.okButton.TabIndex = 51;
+            this.okButton.Text = "OK";
+            this.okButton.UseVisualStyleBackColor = true;
+            this.okButton.Click += new System.EventHandler(this.OkButtonClick);
+            // 
             // AddEditElevatorDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -153,7 +155,6 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "AddEditElevatorDialog";
             this.Text = "placeholder";
-            this.Load += new System.EventHandler(this.AddEditElevatorDialog_Load);
             this.movementGroupBox.ResumeLayout(false);
             this.positionGroupBox.ResumeLayout(false);
             this.sizeGroupBox.ResumeLayout(false);

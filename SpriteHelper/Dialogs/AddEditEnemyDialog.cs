@@ -66,6 +66,10 @@ namespace SpriteHelper.Dialogs
                 this.shootingPanel.SetFreq(existingEnemy.ShootingFrequency);
                 this.shootingPanel.SetInitialFreq(existingEnemy.ShootingInitialFrequency);
             }
+            else
+            {
+                this.SetDefaultValues();
+            }
 
             this.ExistingEnemy = existingEnemy;
         }
@@ -218,11 +222,6 @@ namespace SpriteHelper.Dialogs
             this.positionPanel.SetDefaultValues();
             this.movementPanel.SetDefaultValues();
             this.shootingPanel.SetDefaultValues();
-        }
-
-        private void AddEditEnemyDialog_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }
