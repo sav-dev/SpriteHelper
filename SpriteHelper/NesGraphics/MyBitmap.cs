@@ -72,6 +72,20 @@ namespace SpriteHelper.NesGraphics
             return newBitmap;
         }
 
+        public MyBitmap Crop(int newWidth, int newHeight)
+        {
+            var newBitmap = new MyBitmap(newWidth, newHeight);
+            for (var i = 0; i < newWidth; i++)
+            {
+                for (var j = 0; j < newHeight; j++)
+                {
+                    newBitmap.SetPixel(this.GetPixel(i, j), i, j);
+                }
+            }
+
+            return newBitmap;
+        }
+
         public void DrawGrid()
         {
             var gridColor = GridColor;

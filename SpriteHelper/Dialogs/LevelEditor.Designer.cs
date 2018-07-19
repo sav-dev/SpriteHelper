@@ -81,16 +81,16 @@
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.showEnemiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showEnemyMovementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            this.showElevatorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showElevatorMovementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.showPlayerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.showElevatorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.viewPlatformsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewThreatsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.exportCheckToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
-            this.showElevatorMovementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerVertical)).BeginInit();
             this.splitContainerVertical.Panel1.SuspendLayout();
             this.splitContainerVertical.Panel2.SuspendLayout();
@@ -663,6 +663,36 @@
             this.showEnemyMovementToolStripMenuItem.Text = "Show enemy &movement";
             this.showEnemyMovementToolStripMenuItem.Click += new System.EventHandler(this.ShowEnemyMovementToolStripMenuItemClick);
             // 
+            // toolStripSeparator8
+            // 
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(280, 6);
+            // 
+            // showElevatorsToolStripMenuItem
+            // 
+            this.showElevatorsToolStripMenuItem.Checked = true;
+            this.showElevatorsToolStripMenuItem.CheckOnClick = true;
+            this.showElevatorsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.showElevatorsToolStripMenuItem.Name = "showElevatorsToolStripMenuItem";
+            this.showElevatorsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.O)));
+            this.showElevatorsToolStripMenuItem.Size = new System.Drawing.Size(283, 22);
+            this.showElevatorsToolStripMenuItem.Text = "Show e&levators";
+            this.showElevatorsToolStripMenuItem.CheckedChanged += new System.EventHandler(this.ShowElevatorsToolStripMenuItemCheckedChanged);
+            this.showElevatorsToolStripMenuItem.Click += new System.EventHandler(this.ShowElevatorsToolStripMenuItemClick);
+            // 
+            // showElevatorMovementToolStripMenuItem
+            // 
+            this.showElevatorMovementToolStripMenuItem.Checked = true;
+            this.showElevatorMovementToolStripMenuItem.CheckOnClick = true;
+            this.showElevatorMovementToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.showElevatorMovementToolStripMenuItem.Name = "showElevatorMovementToolStripMenuItem";
+            this.showElevatorMovementToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.I)));
+            this.showElevatorMovementToolStripMenuItem.Size = new System.Drawing.Size(283, 22);
+            this.showElevatorMovementToolStripMenuItem.Text = "Show elevators m&ovement";
+            this.showElevatorMovementToolStripMenuItem.Click += new System.EventHandler(this.ShowElevatorMovementToolStripMenuItemClick);
+            // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
@@ -679,19 +709,6 @@
             this.showPlayerToolStripMenuItem.Size = new System.Drawing.Size(283, 22);
             this.showPlayerToolStripMenuItem.Text = "Show &player and exit";
             this.showPlayerToolStripMenuItem.Click += new System.EventHandler(this.ShowPlayerToolStripMenuItemClick);
-            // 
-            // showElevatorsToolStripMenuItem
-            // 
-            this.showElevatorsToolStripMenuItem.Checked = true;
-            this.showElevatorsToolStripMenuItem.CheckOnClick = true;
-            this.showElevatorsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.showElevatorsToolStripMenuItem.Name = "showElevatorsToolStripMenuItem";
-            this.showElevatorsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.O)));
-            this.showElevatorsToolStripMenuItem.Size = new System.Drawing.Size(283, 22);
-            this.showElevatorsToolStripMenuItem.Text = "Show e&levators";
-            this.showElevatorsToolStripMenuItem.CheckedChanged += new System.EventHandler(this.ShowElevatorsToolStripMenuItemCheckedChanged);
-            this.showElevatorsToolStripMenuItem.Click += new System.EventHandler(this.ShowElevatorsToolStripMenuItemClick);
             // 
             // toolStripSeparator2
             // 
@@ -711,7 +728,7 @@
             // 
             this.viewThreatsToolStripMenuItem.Name = "viewThreatsToolStripMenuItem";
             this.viewThreatsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.I)));
+            | System.Windows.Forms.Keys.B)));
             this.viewThreatsToolStripMenuItem.Size = new System.Drawing.Size(283, 22);
             this.viewThreatsToolStripMenuItem.Text = "View threats";
             this.viewThreatsToolStripMenuItem.Click += new System.EventHandler(this.ViewThreatsToolStripMenuItemClick);
@@ -729,23 +746,6 @@
             this.exportCheckToolStripMenuItem.Size = new System.Drawing.Size(283, 22);
             this.exportCheckToolStripMenuItem.Text = "Export check";
             this.exportCheckToolStripMenuItem.Click += new System.EventHandler(this.ExportCheckToolStripMenuItemClick);
-            // 
-            // toolStripSeparator8
-            // 
-            this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(280, 6);
-            // 
-            // showElevatorMovementToolStripMenuItem
-            // 
-            this.showElevatorMovementToolStripMenuItem.Checked = true;
-            this.showElevatorMovementToolStripMenuItem.CheckOnClick = true;
-            this.showElevatorMovementToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.showElevatorMovementToolStripMenuItem.Name = "showElevatorMovementToolStripMenuItem";
-            this.showElevatorMovementToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.I)));
-            this.showElevatorMovementToolStripMenuItem.Size = new System.Drawing.Size(283, 22);
-            this.showElevatorMovementToolStripMenuItem.Text = "Show elevators m&ovement";
-            this.showElevatorMovementToolStripMenuItem.Click += new System.EventHandler(this.ShowElevatorMovementToolStripMenuItemClick);
             // 
             // LevelEditor
             // 

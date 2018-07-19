@@ -35,6 +35,7 @@ namespace SpriteHelper.Dialogs
 
         // Elevators.
         private Dictionary<int, Bitmap> elevatorBitmaps;
+        private Dictionary<int, Bitmap> elevatorBitmapsTransparent;
 
         // Add/edit enemy dictionaries.
         private Dictionary<string, Bitmap> enBitmapsSimple;
@@ -388,6 +389,7 @@ namespace SpriteHelper.Dialogs
             var elevatorEndL = elevatorEndR.ReverseHorizontally();
 
             this.elevatorBitmaps = new Dictionary<int, Bitmap>();
+            this.elevatorBitmapsTransparent = new Dictionary<int, Bitmap>();
             for (var i = Constants.MinElevatorSize; i <= Constants.MaxElevatorSize; i++)
             {
                 var bmp = new MyBitmap(i * Constants.SpriteWidth, Constants.SpriteHeight);
@@ -399,7 +401,11 @@ namespace SpriteHelper.Dialogs
                     bmp.DrawImage(elevator, x * Constants.SpriteWidth, 0);
                 }
 
-                this.elevatorBitmaps.Add(i, bmp.Scale(Constants.LevelEditorZoom).ToBitmap(backgroundColor: this.transparentColor));
+                // crop height and scale
+                bmp = bmp.Crop(bmp.Width, Constants.ElevatorHeight).Scale(Constants.LevelEditorZoom);
+
+                this.elevatorBitmaps.Add(i, bmp.ToBitmap(backgroundColor: this.transparentColor));
+                this.elevatorBitmapsTransparent.Add(i, bmp.ToBitmap(alpha: 50, backgroundColor: this.transparentColor));
             }
 
             // Populate tiles, set level.
@@ -645,8 +651,8 @@ namespace SpriteHelper.Dialogs
                         var height = image.Height;
                         var p1 = new Point(minX * Constants.LevelEditorZoom + width / 2, minY * Constants.LevelEditorZoom + height / 2);
                         var p2 = new Point(maxX * Constants.LevelEditorZoom + width / 2, maxY * Constants.LevelEditorZoom + height / 2);
-                        var orangePen = new Pen(Color.DarkOrange, 3);
-                        this.graphics.DrawLine(orangePen, p1, p2);
+                        var pen = new Pen(Color.DarkOrange, 3);
+                        this.graphics.DrawLine(pen, p1, p2);
 
                         // Draw arrow.
                         if (enemy.MovementType == MovementType.Horizontal)
@@ -654,12 +660,12 @@ namespace SpriteHelper.Dialogs
                             if (enemy.InitialFlip)
                             {
                                 // Left, p1
-                                this.graphics.DrawPolygon(orangePen, new[] { p1, new Point(p1.X + 3, p1.Y + 3), new Point(p1.X + 3, p1.Y - 3) });
+                                this.graphics.DrawPolygon(pen, new[] { p1, new Point(p1.X + 3, p1.Y + 3), new Point(p1.X + 3, p1.Y - 3) });
                             }
                             else
                             {
                                 // Right, p2
-                                this.graphics.DrawPolygon(orangePen, new[] { p2, new Point(p2.X - 3, p2.Y + 3), new Point(p2.X - 3, p2.Y - 3) });
+                                this.graphics.DrawPolygon(pen, new[] { p2, new Point(p2.X - 3, p2.Y + 3), new Point(p2.X - 3, p2.Y - 3) });
                             }
                         }
                         else if (enemy.MovementType == MovementType.Vertical)
@@ -667,12 +673,12 @@ namespace SpriteHelper.Dialogs
                             if (enemy.InitialFlip)
                             {
                                 // Up, p1
-                                this.graphics.DrawPolygon(orangePen, new[] { p1, new Point(p1.X - 3, p1.Y + 3), new Point(p1.X + 3, p1.Y + 3) });
+                                this.graphics.DrawPolygon(pen, new[] { p1, new Point(p1.X - 3, p1.Y + 3), new Point(p1.X + 3, p1.Y + 3) });
                             }
                             else
                             {
                                 // Down, p2
-                                this.graphics.DrawPolygon(orangePen, new[] { p2, new Point(p2.X - 3, p2.Y - 3), new Point(p2.X + 3, p2.Y - 3) });
+                                this.graphics.DrawPolygon(pen, new[] { p2, new Point(p2.X - 3, p2.Y - 3), new Point(p2.X + 3, p2.Y - 3) });
                             }
                         }
 
@@ -703,6 +709,9 @@ namespace SpriteHelper.Dialogs
 
         private void DrawElevators()
         {
+            // this logic is a copy of DrawEnemies except for line color.
+            // when one is update, update the other.
+            
             if (this.showElevatorsToolStripMenuItem.Checked)
             {
                 foreach (var elevator in this.Elevators)
@@ -712,7 +721,62 @@ namespace SpriteHelper.Dialogs
 
                     if (this.showElevatorMovementToolStripMenuItem.Checked)
                     {
-                        // todo elevators
+                        // Get transparent image.
+                        var imageTransparent = this.elevatorBitmapsTransparent[elevator.Size];
+
+                        // Calculate coordinates.
+                        var minX = elevator.MovementType == MovementType.Horizontal ? elevator.MinPosition : elevator.X;
+                        var minY = elevator.MovementType == MovementType.Vertical ? elevator.MinPosition : elevator.Y;
+                        var maxX = elevator.MovementType == MovementType.Horizontal ? elevator.MaxPosition : elevator.X;
+                        var maxY = elevator.MovementType == MovementType.Vertical ? elevator.MaxPosition : elevator.Y;
+
+                        // Draw line.
+                        var width = image.Width;
+                        var height = image.Height;
+                        var p1 = new Point(minX * Constants.LevelEditorZoom + width / 2, minY * Constants.LevelEditorZoom + height / 2);
+                        var p2 = new Point(maxX * Constants.LevelEditorZoom + width / 2, maxY * Constants.LevelEditorZoom + height / 2);
+                        var pen = new Pen(Color.Crimson, 3);
+                        this.graphics.DrawLine(pen, p1, p2);
+
+                        // Draw arrow.
+                        if (elevator.MovementType == MovementType.Horizontal)
+                        {
+                            if (elevator.InitialFlip)
+                            {
+                                // Left, p1
+                                this.graphics.DrawPolygon(pen, new[] { p1, new Point(p1.X + 3, p1.Y + 3), new Point(p1.X + 3, p1.Y - 3) });
+                            }
+                            else
+                            {
+                                // Right, p2
+                                this.graphics.DrawPolygon(pen, new[] { p2, new Point(p2.X - 3, p2.Y + 3), new Point(p2.X - 3, p2.Y - 3) });
+                            }
+                        }
+                        else if (elevator.MovementType == MovementType.Vertical)
+                        {
+                            if (elevator.InitialFlip)
+                            {
+                                // Up, p1
+                                this.graphics.DrawPolygon(pen, new[] { p1, new Point(p1.X - 3, p1.Y + 3), new Point(p1.X + 3, p1.Y + 3) });
+                            }
+                            else
+                            {
+                                // Down, p2
+                                this.graphics.DrawPolygon(pen, new[] { p2, new Point(p2.X - 3, p2.Y - 3), new Point(p2.X + 3, p2.Y - 3) });
+                            }
+                        }
+
+                        if (minX != elevator.X || minY != elevator.Y)
+                        {
+                            // Draw min. transparent image.
+                            this.graphics.DrawImage(imageTransparent, new Point(minX * Constants.LevelEditorZoom, minY * Constants.LevelEditorZoom));
+                        }
+
+                        if (maxX != elevator.X || maxY != elevator.Y)
+                        {
+                            // Draw max. transparent image.
+                            this.graphics.DrawImage(imageTransparent, new Point(maxX * Constants.LevelEditorZoom, maxY * Constants.LevelEditorZoom));
+                        }
                     }
 
                     // Draw regular image.                   
@@ -2091,7 +2155,7 @@ namespace SpriteHelper.Dialogs
 
         private byte[] GetExportElevatorsData(TextWriter logger = null)
         {
-            // todo elevator
+            // todo elevators
             return new byte[0];
         }
 
