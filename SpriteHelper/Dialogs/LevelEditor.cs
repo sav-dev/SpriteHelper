@@ -2022,12 +2022,12 @@ namespace SpriteHelper.Dialogs
             //        - id (1 byte)
             //        - slot to put enemy in (1 byte)
             //        - pointer to const. data (1 byte)
-            //        - screen the enemy is on (1 byte)            
+            //        - screen the enemy is on (1 byte)
             //        - movement speed (1 byte)
-            //        - max movement distance (1 byte)            
-            //        - initial movement left (1 byte)            
+            //        - max movement distance (1 byte)
             //        - initial flip (1 byte)
-            //        - movement type (1 byte)
+            //        - initial movement left (1 byte)
+            //        - movement direction (1 byte)
             //        - x position (1 byte)
             //        - y position (1 byte)            
             //        - initial life (1 byte)
@@ -2155,8 +2155,116 @@ namespace SpriteHelper.Dialogs
 
         private byte[] GetExportElevatorsData(TextWriter logger = null)
         {
-            // todo elevators
-            return new byte[0];
+            //
+            // - elelvators in the following format:
+            //   - pointer to next screen (from here): (n x 9) + 3 (1 byte)
+            //   - number of elevators (1 byte)
+            //   - n times the elevator data (9 bytes)
+            //        - slot to put elevator in (1 byte)
+            //        - elevator size (1 byte)
+            //        - screen the elevator is on (1 byte)
+            //        - movement speed (1 byte)
+            //        - max movement distance (1 byte)
+            //        - initial flip + movement direction (1 byte)
+            //        - initial movement left (1 byte)
+            //        - x position (1 byte)
+            //        - y position (1 byte)
+            //   - pointer to the previous screen (from here): (n x 9) + 2 (1 byte)
+            //
+
+            var result = new List<byte>();
+
+            // same logic as export enemies
+            var width = this.level.Length;
+            var numberOfScreens = (width / Constants.ScreenWidthInTiles) + 1;
+
+            var dataPerScreen = new Dictionary<int, byte[]>();
+
+            // Available slots. -1 means empty, n (>0) means taken for elevator from the nth screen.
+            var slots = new int[Constants.ElevatorsLimitPerTwoScreens];
+            for (var i = 0; i < Constants.ElevatorsLimitPerTwoScreens; i++)
+            {
+                slots[i] = -1;
+            }
+
+            for (var screen = 0; screen < numberOfScreens; screen++)
+            {
+                // Clear the slots for two screens ago.
+                for (var slot = 0; slot < Constants.ElevatorsLimitPerTwoScreens; slot++)
+                {
+                    if (slots[slot] == screen - 2)
+                    {
+                        slots[slot] = -1;
+                    }
+                }
+
+                var elevators = this.Elevators.Where(e => e.Screen == screen).ToArray();
+                var n = (byte)elevators.Length;
+
+                // Pointer to the next screen
+                result.Add((byte)(n * Constants.ElevatorInLevelDataSize + 3));
+
+                // Number of elevators.
+                result.Add(n);
+
+                // Elevator data.
+                foreach (var elevator in elevators)
+                {
+                    int slot;
+                    for (slot = 0; slot < Constants.ElevatorsLimitPerTwoScreens; slot++)
+                    {
+                        if (slots[slot] == -1)
+                        {
+                            slots[slot] = screen;
+                            break;
+                        }
+                    }
+
+                    if (slot == Constants.ElevatorsLimitPerTwoScreens)
+                    {
+                        // Sanity check.
+                        throw new Exception();
+                    }
+
+                    //
+                    // Set the data.
+                    //                   
+
+                    // slot to put elevator in (1 byte)
+                    result.Add((byte)(slot * Constants.ElevatorInMemorySize));
+
+                    // size
+                    result.Add((byte)elevator.Size);
+
+                    // screen
+                    result.Add((byte)screen);
+
+                    // movement speed
+                    result.Add((byte)elevator.Speed);
+
+                    // max movement distance
+                    result.Add((byte)(elevator.MovementRange));
+
+                    // initial flip + movement direction
+                    result.Add((byte)(elevator.Direction));
+
+                    // initial movement distance
+                    result.Add((byte)(elevator.InitialDistanceLeft));
+
+                    // x position
+                    result.Add((byte)elevator.X);
+
+                    // y position
+                    result.Add((byte)elevator.Y);
+
+                }
+
+                // Pointer to the previous screen
+                result.Add((byte)(n * Constants.ElevatorInLevelDataSize + 2));
+            }
+
+            logger.WriteLineIfNotNull("Total bytes for Elevator data: {0}", result.Count);
+            return result.ToArray();
         }
 
         private byte[] GetStartingPositionAndEndData(TextWriter logger = null)
@@ -2527,6 +2635,8 @@ namespace SpriteHelper.Dialogs
 
         private void SortElevatorsListBox()
         {
+            // todo elevators - instead of ordering by X, order by min X to optimize collision checking?
+
             // optimize this?
             // Sort by X. Keep the same item selected.
             var selectedItem = this.SelectedElevator;

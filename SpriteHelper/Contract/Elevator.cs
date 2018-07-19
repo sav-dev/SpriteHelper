@@ -44,6 +44,48 @@ namespace SpriteHelper.Contract
         // Movement range.
         public int MovementRange => this.MaxPosition - this.MinPosition;
 
+        // Direction.
+        public int Direction
+        {
+            get
+            {
+                // per game consts:
+                //  LEFT     == 0
+                //  RIGHT    == 1
+                //  UP       == 2
+                //  DOWN     == 3
+                //
+                // for us:
+                //  LEFT     == horizontal movement + flip
+                //  RIGHT    == horizontal movement + no flip
+                //  UP       == vertical movement + flip
+                //  DOWN     == vertical movement + no flip
+                //
+                // so basically:
+                //  2nd bit = 1 if vertical, 0 if horizontal
+                //  1st bit = 1 if no flip, 0 if flip
+                //
+                // for non moving elevators this doesn't matter
+                //
+                // todo - update this by changing left/right and up/down?
+
+                int direction;
+                switch (this.MovementType)
+                {
+                    case MovementType.Horizontal:
+                        direction = 0;
+                        break;
+                    default: // Vertical
+                        direction = 2;
+                        break;
+                }
+
+                direction |= this.InitialFlip ? 0 : 1;
+
+                return direction;
+            }
+        }
+
         // Width and height.
         public int Width => this.Size * Constants.SpriteWidth;
         public int Height => Constants.ElevatorHeight;
