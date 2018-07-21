@@ -1665,7 +1665,7 @@ namespace SpriteHelper.Dialogs
             result.AddRange(GetExportEnemiesData(logger));
             logger.WriteLineIfNotNull();
 
-            // Elevators.
+            // Elevators. todo update this
             result.AddRange(GetExportElevatorsData(logger));
             logger.WriteLineIfNotNull();
 
@@ -2156,7 +2156,7 @@ namespace SpriteHelper.Dialogs
         private byte[] GetExportElevatorsData(TextWriter logger = null)
         {
             //
-            // - elelvators in the following format:
+            // - elevators in the following format:
             //   - pointer to next screen (from here): (n x 9) + 3 (1 byte)
             //   - number of elevators (1 byte)
             //   - n times the elevator data (9 bytes)
@@ -2164,9 +2164,9 @@ namespace SpriteHelper.Dialogs
             //        - elevator size (1 byte)
             //        - screen the elevator is on (1 byte)
             //        - movement speed (1 byte)
-            //        - max movement distance (1 byte)
-            //        - initial flip + movement direction (1 byte)
-            //        - initial movement left (1 byte)
+            //        - max movement distance (1 byte)            
+            //        - (initial) movement left (1 byte)
+            //        - (initial) flip + movement direction (1 byte)
             //        - x position (1 byte)
             //        - y position (1 byte)
             //   - pointer to the previous screen (from here): (n x 9) + 2 (1 byte)
@@ -2245,11 +2245,11 @@ namespace SpriteHelper.Dialogs
                     // max movement distance
                     result.Add((byte)(elevator.MovementRange));
 
-                    // initial flip + movement direction
-                    result.Add((byte)(elevator.Direction));
-
                     // initial movement distance
                     result.Add((byte)(elevator.InitialDistanceLeft));
+
+                    // initial flip + movement direction
+                    result.Add((byte)(elevator.Direction));
 
                     // x position
                     result.Add((byte)elevator.X);

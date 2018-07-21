@@ -73,6 +73,7 @@
 
         // Max enemies per consecutive screens.
         public const int EnemiesLimitPerTwoScreens = 10;
+        public const int EnemiesLimitPerLevel = 80;
 
         // Memory sizes.
         public const int EnemyDefinitionSize = 15;
