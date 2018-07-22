@@ -72,6 +72,7 @@ namespace SpriteHelper.Contract
                 int direction;
                 switch (this.MovementType)
                 {
+                    // not really a thing
                     case MovementType.Horizontal:
                         direction = 0;
                         break;

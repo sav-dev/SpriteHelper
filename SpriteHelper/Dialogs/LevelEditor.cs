@@ -739,6 +739,7 @@ namespace SpriteHelper.Dialogs
                         this.graphics.DrawLine(pen, p1, p2);
 
                         // Draw arrow.
+                        // this isn't really required since horizontal elevators are not a thing
                         if (elevator.MovementType == MovementType.Horizontal)
                         {
                             if (elevator.InitialFlip)
@@ -3066,6 +3067,8 @@ namespace SpriteHelper.Dialogs
                 return "Too many elevators on this an the next screen";
             }
 
+            // todo - validate no collision with other elevators
+
             return null;
         }
 
@@ -3105,18 +3108,7 @@ namespace SpriteHelper.Dialogs
             string elevatorPositionString;
             if (elevator.MovementType == MovementType.Horizontal)
             {
-                elevatorPosition = elevator.X;
-                elevatorPositionString = "X";
-
-                if (elevator.MinPosition < elevator.Screen * Constants.ScreenWidth)
-                {
-                    return "Elevator moving off-screen to the left";
-                }
-
-                if (elevator.MaxPosition + elevator.Width >= Math.Min((elevator.Screen + 1) * Constants.ScreenWidth, this.level.Length * Constants.BackgroundTileWidth))
-                {
-                    return "Elevator moving off-screen to the right";
-                }
+                return "Elevator cannot have a horizontal movement";
             }
             else if (elevator.MovementType == MovementType.Vertical)
             {
