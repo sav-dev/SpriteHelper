@@ -3071,6 +3071,7 @@ namespace SpriteHelper.Dialogs
             }
 
             // todo: validate no collision with other elevators
+            // make sure to include the fact that player cannot move off an elevator and collide with another.
 
             return null;
         }

@@ -49,41 +49,19 @@ namespace SpriteHelper.Contract
         {
             get
             {
-                // per game consts:
-                //  LEFT     == 0
-                //  RIGHT    == 1
-                //  UP       == 2
-                //  DOWN     == 3
+                
+                // return:
+                //  no movement: 0
+                //  up : 2
+                //  down: 3
                 //
-                // for us:
-                //  LEFT     == horizontal movement + flip
-                //  RIGHT    == horizontal movement + no flip
-                //  UP       == vertical movement + flip
-                //  DOWN     == vertical movement + no flip
-                //
-                // so basically:
-                //  2nd bit = 1 if vertical, 0 if horizontal
-                //  1st bit = 1 if no flip, 0 if flip
-                //
-                // for non moving elevators this doesn't matter
-                //
-                // todo - update this by changing left/right and up/down?
-
-                int direction;
-                switch (this.MovementType)
+                // todo update this?
+                if (this.MovementType == MovementType.Vertical)
                 {
-                    // not really a thing
-                    case MovementType.Horizontal:
-                        direction = 0;
-                        break;
-                    default: // Vertical
-                        direction = 2;
-                        break;
+                    return this.InitialFlip ? 2 : 3;
                 }
 
-                direction |= this.InitialFlip ? 0 : 1;
-
-                return direction;
+                return 0;
             }
         }
 
