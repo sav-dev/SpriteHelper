@@ -1211,7 +1211,7 @@ namespace SpriteHelper.Dialogs
                 this.UpdateBitmap();
             }
 
-            // todo: store player and exit position in history
+            // todo history: store player and exit position in history
         }
 
         private void UndoToolStripMenuItemClick(object sender, EventArgs e)
@@ -1243,6 +1243,11 @@ namespace SpriteHelper.Dialogs
             var bytes = GetExportPayload(writer);            
             writer.WriteLineIfNotNull("Total size: {0} bytes", bytes.Length);
             MessageBox.Show(builder.ToString(), "Export data", MessageBoxButtons.OK);
+        }
+
+        private void DiagnosticsToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            // todo: diagnostics (like number of sprites per screen and such)
         }
 
         private bool OnlyBackgroundShown
@@ -1666,7 +1671,7 @@ namespace SpriteHelper.Dialogs
             result.AddRange(GetExportEnemiesData(logger));
             logger.WriteLineIfNotNull();
 
-            // Elevators. todo update this
+            // Elevators.
             result.AddRange(GetExportElevatorsData(logger));
             logger.WriteLineIfNotNull();
 
@@ -2411,7 +2416,7 @@ namespace SpriteHelper.Dialogs
 
         private void AddOrEditEnemy(Enemy selectedEnemy)
         {
-            // todo: save history in this method
+            // todo history: save history in this method
 
             // Show the dialog.
             var dialog = new AddEditEnemyDialog(selectedEnemy, this.enBitmapsSimple, this.enMovements, this.enShooting, this.transparentColor, this.ValidateEnemy);
@@ -2448,7 +2453,7 @@ namespace SpriteHelper.Dialogs
 
         private void DeleteEnemy()
         {
-            // todo: save history in this method
+            // todo history: save history in this method
 
             this.enemiesListBox.Items.Remove(this.SelectedEnemy);
             this.UpdateBitmap();
@@ -2591,7 +2596,7 @@ namespace SpriteHelper.Dialogs
 
         private void AddOrEditElevator(Elevator selectedElevator)
         {
-            // todo: save history in this method
+            // todo history: save history in this method
 
             // Show the dialog.
             var dialog = new AddEditElevatorDialog(selectedElevator, this.ValidateElevator);
@@ -2628,7 +2633,7 @@ namespace SpriteHelper.Dialogs
 
         private void DeleteElevator()
         {
-            // todo: save history in this method
+            // todo history: save history in this method
 
             this.elevatorsListBox.Items.Remove(this.SelectedElevator);
             this.UpdateBitmap();
@@ -2636,8 +2641,6 @@ namespace SpriteHelper.Dialogs
 
         private void SortElevatorsListBox()
         {
-            // todo elevators - instead of ordering by X, order by min X to optimize collision checking?
-
             // optimize this?
             // Sort by X. Keep the same item selected.
             var selectedItem = this.SelectedElevator;
@@ -3067,7 +3070,7 @@ namespace SpriteHelper.Dialogs
                 return "Too many elevators on this an the next screen";
             }
 
-            // todo - validate no collision with other elevators
+            // todo: validate no collision with other elevators
 
             return null;
         }
@@ -3226,6 +3229,6 @@ namespace SpriteHelper.Dialogs
             }
         }
 
-        #endregion
+        #endregion        
     }
 }
