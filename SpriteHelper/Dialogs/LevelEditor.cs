@@ -2167,9 +2167,9 @@ namespace SpriteHelper.Dialogs
             //        - movement speed (1 byte)
             //        - max movement distance (1 byte)            
             //        - (initial) movement left (1 byte)
-            //        - (initial) flip + movement direction (1 byte)
-            //        - x position (1 byte)
+            //        - (initial) flip + movement direction (1 byte)            
             //        - y position (1 byte)
+            //        - x position (1 byte) (y comes before x!)
             //   - pointer to the previous screen (from here): (n x 9) + 2 (1 byte)
             //
 
@@ -2252,11 +2252,11 @@ namespace SpriteHelper.Dialogs
                     // initial flip + movement direction
                     result.Add((byte)(elevator.Direction));
 
-                    // x position
-                    result.Add((byte)elevator.X);
-
                     // y position
                     result.Add((byte)elevator.Y);
+
+                    // x position
+                    result.Add((byte)elevator.X);
 
                 }
 
