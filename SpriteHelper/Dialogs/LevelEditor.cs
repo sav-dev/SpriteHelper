@@ -2425,8 +2425,6 @@ namespace SpriteHelper.Dialogs
 
         private void AddEnemy()
         {
-            // todo: max # of enemies in a level
-
             this.AddOrEditEnemy(null);
         }
 
@@ -2468,6 +2466,9 @@ namespace SpriteHelper.Dialogs
             // Sort the list.
             this.SortEnemiesListBox();
 
+            // Enable/disable the add button as needed.
+            this.addEnemyButton.Enabled = this.Enemies.Length < Constants.EnemiesLimitPerLevel;
+
             // Update bitmap.
             this.UpdateBitmap();
         }
@@ -2476,7 +2477,13 @@ namespace SpriteHelper.Dialogs
         {
             // history: save history in this method
 
+            // Remove the enemy.
             this.enemiesListBox.Items.Remove(this.SelectedEnemy);
+
+            // Enable/disable the add button as needed.
+            this.addEnemyButton.Enabled = this.Enemies.Length < Constants.EnemiesLimitPerLevel;
+
+            // Update bitmap.
             this.UpdateBitmap();
         }
 
@@ -2760,6 +2767,11 @@ namespace SpriteHelper.Dialogs
 
         private string ValidateEnemy(Enemy enemy, Enemy existingEnemy)
         {
+            if (this.Enemies.Count(e => e != existingEnemy) + 1 > Constants.EnemiesLimitPerLevel)
+            {
+                return "Too many enemies in the level";
+            }
+
             var position = this.ValidateEnemyPosition(enemy, existingEnemy);
             if (position != null)
             {
