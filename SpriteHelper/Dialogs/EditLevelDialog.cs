@@ -14,8 +14,8 @@ namespace SpriteHelper.Dialogs
             this.widthTextBox.Text = width.ToString();
             this.playerXTextBox.Text = playerStartingPosition.X.ToString();
             this.playerYTextBox.Text = playerStartingPosition.Y.ToString();
-            this.exitXTextBox.Text = exitPosition.X.ToString();
-            this.exitYTextBox.Text = exitPosition.Y.ToString();
+            this.exitXTextBox.Text = (exitPosition.X / Constants.BackgroundTileWidth).ToString();
+            this.exitYTextBox.Text = (exitPosition.Y / Constants.BackgroundTileHeight).ToString();
             this.validationFunc = validationFunc;
         }
 
@@ -60,7 +60,10 @@ namespace SpriteHelper.Dialogs
             int x, y;
             if (int.TryParse(this.exitXTextBox.Text, out x) && int.TryParse(this.exitYTextBox.Text, out y))
             {
-                position = new Point(x, y);
+                position = new Point(
+                    x * Constants.BackgroundTileWidth + Constants.ExitXOff, 
+                    y * Constants.BackgroundTileHeight + Constants.ExitYOff);
+
                 return true;
             }
             else

@@ -806,6 +806,27 @@ namespace SpriteHelper.Dialogs
                     new Point(
                         (this.playerStartingPosition.X - Constants.PlayerXOffset) * Constants.LevelEditorZoom, 
                         (this.playerStartingPosition.Y - Constants.PlayerYOffset) * Constants.LevelEditorZoom));
+
+                this.graphics.FillRectangle(
+                    new SolidBrush(Color.FromArgb(150, Color.LightCoral)),
+                    this.exitPosition.X * Constants.LevelEditorZoom,
+                    this.exitPosition.Y * Constants.LevelEditorZoom,
+                    Constants.ExitWidth * Constants.LevelEditorZoom,
+                    Constants.ExitHeight * Constants.LevelEditorZoom);
+
+                this.graphics.DrawRectangle(
+                    Pens.Red,
+                    this.exitPosition.X * Constants.LevelEditorZoom,
+                    this.exitPosition.Y * Constants.LevelEditorZoom,
+                    Constants.ExitWidth * Constants.LevelEditorZoom,
+                    Constants.ExitHeight * Constants.LevelEditorZoom);
+
+                this.graphics.DrawRectangle(
+                    Pens.Red,
+                    this.exitPosition.X * Constants.LevelEditorZoom + 1,
+                    this.exitPosition.Y * Constants.LevelEditorZoom + 1,
+                    Constants.ExitWidth * Constants.LevelEditorZoom - 2,
+                    Constants.ExitHeight * Constants.LevelEditorZoom - 2);
             }
         }
 
@@ -1211,7 +1232,7 @@ namespace SpriteHelper.Dialogs
                 this.UpdateBitmap();
             }
 
-            // todo history: store player and exit position in history
+            // history: store player and exit position in history
         }
 
         private void UndoToolStripMenuItemClick(object sender, EventArgs e)
@@ -2416,7 +2437,7 @@ namespace SpriteHelper.Dialogs
 
         private void AddOrEditEnemy(Enemy selectedEnemy)
         {
-            // todo history: save history in this method
+            // history: save history in this method
 
             // Show the dialog.
             var dialog = new AddEditEnemyDialog(selectedEnemy, this.enBitmapsSimple, this.enMovements, this.enShooting, this.transparentColor, this.ValidateEnemy);
@@ -2453,7 +2474,7 @@ namespace SpriteHelper.Dialogs
 
         private void DeleteEnemy()
         {
-            // todo history: save history in this method
+            // history: save history in this method
 
             this.enemiesListBox.Items.Remove(this.SelectedEnemy);
             this.UpdateBitmap();
@@ -2596,7 +2617,7 @@ namespace SpriteHelper.Dialogs
 
         private void AddOrEditElevator(Elevator selectedElevator)
         {
-            // todo history: save history in this method
+            // history: save history in this method
 
             // Show the dialog.
             var dialog = new AddEditElevatorDialog(selectedElevator, this.ValidateElevator);
@@ -2633,7 +2654,7 @@ namespace SpriteHelper.Dialogs
 
         private void DeleteElevator()
         {
-            // todo history: save history in this method
+            // history: save history in this method
 
             this.elevatorsListBox.Items.Remove(this.SelectedElevator);
             this.UpdateBitmap();

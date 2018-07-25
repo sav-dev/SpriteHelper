@@ -84,5 +84,11 @@
 
         // Transparency.
         public const int TransparentAlpha = 50;
+
+        // Exit width and height (in game pixels).
+        public const int ExitXOff = 4;
+        public const int ExitYOff = 13;
+        public const int ExitWidth = 23; // todo make sure this works right in the game (+1?)
+        public const int ExitHeight = 35;
     }
 }

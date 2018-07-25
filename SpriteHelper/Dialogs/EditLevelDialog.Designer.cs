@@ -78,67 +78,67 @@
             this.cancelButton.UseVisualStyleBackColor = true;
             this.cancelButton.Click += new System.EventHandler(this.CancelButtonClick);
             // 
-            // label1
+            // playerXLabel
             // 
             this.playerXLabel.AutoSize = true;
             this.playerXLabel.Location = new System.Drawing.Point(12, 35);
-            this.playerXLabel.Name = "label1";
+            this.playerXLabel.Name = "playerXLabel";
             this.playerXLabel.Size = new System.Drawing.Size(46, 13);
             this.playerXLabel.TabIndex = 43;
             this.playerXLabel.Text = "Player X";
             // 
-            // textBox1
+            // playerXTextBox
             // 
             this.playerXTextBox.Location = new System.Drawing.Point(88, 32);
-            this.playerXTextBox.Name = "textBox1";
+            this.playerXTextBox.Name = "playerXTextBox";
             this.playerXTextBox.Size = new System.Drawing.Size(48, 20);
             this.playerXTextBox.TabIndex = 42;
             // 
-            // textBox2
+            // playerYTextBox
             // 
             this.playerYTextBox.Location = new System.Drawing.Point(226, 32);
-            this.playerYTextBox.Name = "textBox2";
+            this.playerYTextBox.Name = "playerYTextBox";
             this.playerYTextBox.Size = new System.Drawing.Size(48, 20);
             this.playerYTextBox.TabIndex = 44;
             // 
-            // label2
+            // playerYLabel
             // 
             this.playerYLabel.AutoSize = true;
             this.playerYLabel.Location = new System.Drawing.Point(150, 35);
-            this.playerYLabel.Name = "label2";
+            this.playerYLabel.Name = "playerYLabel";
             this.playerYLabel.Size = new System.Drawing.Size(46, 13);
             this.playerYLabel.TabIndex = 45;
             this.playerYLabel.Text = "Player Y";
             // 
-            // label3
+            // exitYLabel
             // 
             this.exitYLabel.AutoSize = true;
             this.exitYLabel.Location = new System.Drawing.Point(150, 61);
-            this.exitYLabel.Name = "label3";
-            this.exitYLabel.Size = new System.Drawing.Size(34, 13);
+            this.exitYLabel.Name = "exitYLabel";
+            this.exitYLabel.Size = new System.Drawing.Size(50, 13);
             this.exitYLabel.TabIndex = 49;
-            this.exitYLabel.Text = "Exit Y";
+            this.exitYLabel.Text = "Exit tile Y";
             // 
-            // textBox3
+            // exitYTextBox
             // 
             this.exitYTextBox.Location = new System.Drawing.Point(226, 58);
-            this.exitYTextBox.Name = "textBox3";
+            this.exitYTextBox.Name = "exitYTextBox";
             this.exitYTextBox.Size = new System.Drawing.Size(48, 20);
             this.exitYTextBox.TabIndex = 48;
             // 
-            // label4
+            // exitXLabel
             // 
             this.exitXLabel.AutoSize = true;
             this.exitXLabel.Location = new System.Drawing.Point(12, 61);
-            this.exitXLabel.Name = "label4";
-            this.exitXLabel.Size = new System.Drawing.Size(34, 13);
+            this.exitXLabel.Name = "exitXLabel";
+            this.exitXLabel.Size = new System.Drawing.Size(50, 13);
             this.exitXLabel.TabIndex = 47;
-            this.exitXLabel.Text = "Exit X";
+            this.exitXLabel.Text = "Exit tile X";
             // 
-            // textBox4
+            // exitXTextBox
             // 
             this.exitXTextBox.Location = new System.Drawing.Point(88, 58);
-            this.exitXTextBox.Name = "textBox4";
+            this.exitXTextBox.Name = "exitXTextBox";
             this.exitXTextBox.Size = new System.Drawing.Size(48, 20);
             this.exitXTextBox.TabIndex = 46;
             // 
