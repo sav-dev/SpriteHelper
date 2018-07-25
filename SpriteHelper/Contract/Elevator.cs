@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Runtime.Serialization;
 
 namespace SpriteHelper.Contract
@@ -49,7 +50,7 @@ namespace SpriteHelper.Contract
         {
             get
             {
-                
+
                 // return:
                 //  no movement: 0
                 //  up : 2
@@ -89,6 +90,38 @@ namespace SpriteHelper.Contract
                 }
 
                 return this.InitialFlip ? position - this.MinPosition : this.MaxPosition - position;
+            }
+        }
+
+        // Player rectangle (the rectangle the player can be in either when on the platform on when colliding with the platform -
+        // the latter includes the former)
+        public Rectangle PlayerRectangle
+        {
+            get
+            {
+                var elevatorRectangle = this.ElevatorRectangle;
+
+                // Not sure about this logic, let's be more strict than needed (hence the +/- 2)
+                var x1 = elevatorRectangle.X - Constants.PlayerPlatformBoxWidth - Constants.PlayerSpeed - 2;
+                var x2 = elevatorRectangle.X + elevatorRectangle.Width + Constants.PlayerPlatformBoxWidth + Constants.PlayerSpeed + 2;
+                var y1 = elevatorRectangle.Y - Math.Abs(Constants.PlayerPlatformBoxHeight) - 2;
+                var y2 = elevatorRectangle.Y + elevatorRectangle.Height + Math.Abs(Constants.PlayerPlatformBoxHeight) + 2;
+
+                return new Rectangle(x1, y1, x2 - x1, y2 - y1);
+            }
+        }
+
+        // Elevator rectangle (the rectangle the elevator moves in).
+        public Rectangle ElevatorRectangle
+        {
+            get
+            {
+                var x1 = this.X;
+                var x2 = this.X + this.Size * Constants.SpriteWidth;
+                var y1 = this.MovementType == MovementType.Vertical ? this.MinPosition : this.Y;
+                var y2 = (this.MovementType == MovementType.Vertical ? this.MaxPosition : this.Y) + Constants.ElevatorHeight;
+
+                return new Rectangle(x1, y1, x2 - x1, y2 - y1);
             }
         }
 

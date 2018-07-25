@@ -5,6 +5,9 @@
         // Number of sprites for the player.
         public const int PlayerSprites = 9;
 
+        // Max number of bullets on screen.
+        public const int MaxBullets = 5 + 10;
+
         // Elevators, hardcoded in game code.
         public const int ElevatorSprite = 249;
         public const int ElevatorEndRSprite = 250;
@@ -28,6 +31,7 @@
         public const int PlayerThreatBoxHeight = -25;
         public const int PlayerThreatBoxHeightCrouch = -17;
         public const int PlayerThreatBoxWidth = 13;
+        public const int PlayerSpeed = 2;
 
         // Bullet constants.
         public const int BulletHOff = 2;
@@ -56,6 +60,7 @@
         public const int ScreenWidth = Constants.ScreenWidthInTiles * Constants.BackgroundTileWidth;
         public const int ScreenHeight = Constants.ScreenHeightInTiles * Constants.BackgroundTileHeight;
         public const int Framerate = 60;
+        public const int SpritesPerFrame = 64;
 
         // Max zoom for sprite viweres.
         public const int MaxZoom = 10;

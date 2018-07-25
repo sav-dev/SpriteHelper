@@ -64,7 +64,7 @@ namespace SpriteHelper.Dialogs
         private Point playerStartingPosition;
         private Point exitPosition;
 
-        // History/future (for undo-redo).
+        // POI history/future (for undo-redo).
         private Stack<string[][]> history;
         private Stack<string[][]> future;
 
@@ -716,6 +716,25 @@ namespace SpriteHelper.Dialogs
             {
                 foreach (var elevator in this.Elevators)
                 {
+                    if (this.showElevatorCollisionsStripMenuItem.Checked)
+                    {
+                        var rectangle = elevator.PlayerRectangle;
+                        var x1 = Math.Max(rectangle.X * Constants.LevelEditorZoom, 0);
+                        var x2 = Math.Min(
+                            (rectangle.X + rectangle.Width) * Constants.LevelEditorZoom, 
+                            this.level.Length * Constants.BackgroundTileWidth * Constants.LevelEditorZoom);
+                        var y1 = rectangle.Y * Constants.LevelEditorZoom;
+                        var y2 = (rectangle.Y + rectangle.Height) * Constants.LevelEditorZoom;
+
+                        this.graphics.FillRectangle(
+                            new SolidBrush(Color.FromArgb(100, Color.LightCoral)),
+                            new Rectangle(
+                                x1,
+                                y1,
+                                x2 - x1,
+                                y2 - y1));
+                    }
+
                     // Get image.
                     var image = this.elevatorBitmaps[elevator.Size];
 
@@ -900,9 +919,16 @@ namespace SpriteHelper.Dialogs
         private void ShowElevatorsToolStripMenuItemCheckedChanged(object sender, EventArgs e)
         {
             this.showElevatorMovementToolStripMenuItem.Enabled = this.showElevatorsToolStripMenuItem.Checked;
+            this.showElevatorCollisionsStripMenuItem.Enabled = this.showElevatorsToolStripMenuItem.Checked;
         }
 
         private void ShowElevatorMovementToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            this.UpdateBitmap();
+            this.hideNonBgToolStringMenuItem.Checked = this.OnlyBackgroundShown;
+        }
+
+        private void ShowElevatorCollisionsStripMenuItemClick(object sender, EventArgs e)
         {
             this.UpdateBitmap();
             this.hideNonBgToolStringMenuItem.Checked = this.OnlyBackgroundShown;
@@ -1232,7 +1258,7 @@ namespace SpriteHelper.Dialogs
                 this.UpdateBitmap();
             }
 
-            // history: store player and exit position in history
+            // POI history: store player and exit position in history
         }
 
         private void UndoToolStripMenuItemClick(object sender, EventArgs e)
@@ -1266,9 +1292,60 @@ namespace SpriteHelper.Dialogs
             MessageBox.Show(builder.ToString(), "Export data", MessageBoxButtons.OK);
         }
 
-        private void DiagnosticsToolStripMenuItemClick(object sender, EventArgs e)
+        private void DiagnosticsToolStripMenuItemClick(object sender, EventArgs eventArgs)
         {
-            // todo: diagnostics (like number of sprites per screen and such)
+            // POI diagnostics - this is an untested beta kind of
+
+            // Same logic as export enemies/elevators.
+            var width = this.level.Length;
+            var numberOfScreens = (width / Constants.ScreenWidthInTiles) + 1;
+
+            var stringBuilder = new StringBuilder();
+
+            for (var screen = 0; screen < numberOfScreens; screen++)
+            {
+                var enemies = this.Enemies.Where(e => e.Screen == screen || e.Screen == screen + 1);
+                var elevators = this.Elevators.Where(e => e.Screen == screen || e.Screen == screen + 1);
+
+                var enemySprites = 0;
+                var elevatorSprites = 0;
+
+                for (var i = 0; i < Constants.ScreenWidth - 1; i++)
+                {
+                    var enemiesOnScreen = enemies.Where(e =>
+                    {
+                        int x1;
+                        switch (e.MovementType)
+                        {
+                            case MovementType.Horizontal:
+                                x1 = e.MinPosition;
+                                break;
+                            default:
+                                x1 = e.X;
+                                break;
+                        }
+
+                        var x2 = x1 + e.Width;
+
+                        return x1 <= i + Constants.ScreenWidth - 1 && x2 >= i;
+                    });
+
+                    var elevatorsOnScreen = elevators.Where(e => e.X <= i + Constants.ScreenWidth && e.X + e.Size + Constants.SpriteWidth >= i);
+
+                    enemySprites = Math.Max(enemySprites, enemiesOnScreen.Sum(e => e.Sprites));
+                    elevatorSprites = Math.Max(elevatorSprites, elevatorsOnScreen.Sum(e => e.Size));
+                }                              
+
+                var totalSprites = Constants.PlayerSprites + Constants.MaxBullets + enemySprites + elevatorSprites;
+
+                stringBuilder.AppendLineFormat("Screens {0}/{1}: max sprite count: {2}", screen, screen + 1, totalSprites);
+                if (totalSprites > Constants.SpritesPerFrame)
+                {
+                    stringBuilder.AppendLine("  WARNING - possibly too many sprites");
+                }
+            }
+
+            MessageBox.Show(stringBuilder.ToString());
         }
 
         private bool OnlyBackgroundShown
@@ -1280,6 +1357,7 @@ namespace SpriteHelper.Dialogs
                          this.showEnemyMovementToolStripMenuItem.Checked ||
                          this.showElevatorsToolStripMenuItem.Checked ||
                          this.showElevatorMovementToolStripMenuItem.Checked ||
+                         this.showElevatorCollisionsStripMenuItem.Checked ||
                          this.showPlayerToolStripMenuItem.Checked);
             }
 
@@ -1292,6 +1370,7 @@ namespace SpriteHelper.Dialogs
                     this.showEnemyMovementToolStripMenuItem.Checked = false;
                     this.showElevatorsToolStripMenuItem.Checked = false;
                     this.showElevatorMovementToolStripMenuItem.Checked = false;
+                    this.showElevatorCollisionsStripMenuItem.Checked = false;
                     this.showPlayerToolStripMenuItem.Checked = false;                    
                     this.UpdateBitmap();
                 }
@@ -1591,7 +1670,7 @@ namespace SpriteHelper.Dialogs
         #region History
 
         ////
-        //// History stuff
+        //// POI history stuff
         ////
 
         public void ClearHistory()
@@ -2435,7 +2514,7 @@ namespace SpriteHelper.Dialogs
 
         private void AddOrEditEnemy(Enemy selectedEnemy)
         {
-            // history: save history in this method
+            // POI history: save history in this method
 
             // Show the dialog.
             var dialog = new AddEditEnemyDialog(selectedEnemy, this.enBitmapsSimple, this.enMovements, this.enShooting, this.transparentColor, this.ValidateEnemy);
@@ -2475,7 +2554,7 @@ namespace SpriteHelper.Dialogs
 
         private void DeleteEnemy()
         {
-            // history: save history in this method
+            // POI history: save history in this method
 
             // Remove the enemy.
             this.enemiesListBox.Items.Remove(this.SelectedEnemy);
@@ -2624,7 +2703,7 @@ namespace SpriteHelper.Dialogs
 
         private void AddOrEditElevator(Elevator selectedElevator)
         {
-            // history: save history in this method
+            // POI history: save history in this method
 
             // Show the dialog.
             var dialog = new AddEditElevatorDialog(selectedElevator, this.ValidateElevator);
@@ -2661,7 +2740,7 @@ namespace SpriteHelper.Dialogs
 
         private void DeleteElevator()
         {
-            // history: save history in this method
+            // POI history: save history in this method
 
             this.elevatorsListBox.Items.Remove(this.SelectedElevator);
             this.UpdateBitmap();
@@ -3103,8 +3182,13 @@ namespace SpriteHelper.Dialogs
                 return "Too many elevators on this an the next screen";
             }
 
-            // todo: validate no collision with other elevators
-            // make sure to include the fact that player cannot move off an elevator and collide with another.
+            var intersectingElevator = this.Elevators.FirstOrDefault(e => e != existingElevator && e.ElevatorRectangle.IntersectsWith(elevator.PlayerRectangle));
+            if (intersectingElevator != null)
+            {
+                return $"Elevator may intersect with elevator {intersectingElevator}";
+            }
+
+            // POI elevators: validate the elevator won't crush player into a wall?
 
             return null;
         }
@@ -3263,6 +3347,6 @@ namespace SpriteHelper.Dialogs
             }
         }
 
-        #endregion        
+        #endregion      
     }
 }

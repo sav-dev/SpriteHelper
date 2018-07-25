@@ -117,6 +117,16 @@ namespace SpriteHelper.Contract
         // Width getter.
         public int Width => this.width;
 
+        // Number of sprites for the enemy.
+        public int Sprites
+        {
+            get
+            {
+                var frame = this.Animation.Frames.First();
+                return frame.Width * frame.Height;
+            }
+        }
+
         private int width;
         private int height;
 

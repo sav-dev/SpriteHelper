@@ -84,13 +84,14 @@
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.showElevatorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showElevatorMovementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showElevatorCollisionsStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.showPlayerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.viewPlatformsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewThreatsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exportCheckToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
+            this.exportCheckToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.diagnosticsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerVertical)).BeginInit();
             this.splitContainerVertical.Panel1.SuspendLayout();
@@ -575,6 +576,7 @@
             this.toolStripSeparator8,
             this.showElevatorsToolStripMenuItem,
             this.showElevatorMovementToolStripMenuItem,
+            this.showElevatorCollisionsStripMenuItem,
             this.toolStripSeparator6,
             this.showPlayerToolStripMenuItem,
             this.toolStripSeparator2,
@@ -695,6 +697,16 @@
             this.showElevatorMovementToolStripMenuItem.Text = "Show elevators m&ovement";
             this.showElevatorMovementToolStripMenuItem.Click += new System.EventHandler(this.ShowElevatorMovementToolStripMenuItemClick);
             // 
+            // showElevatorCollisionsStripMenuItem
+            // 
+            this.showElevatorCollisionsStripMenuItem.CheckOnClick = true;
+            this.showElevatorCollisionsStripMenuItem.Name = "showElevatorCollisionsStripMenuItem";
+            this.showElevatorCollisionsStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.U)));
+            this.showElevatorCollisionsStripMenuItem.Size = new System.Drawing.Size(283, 22);
+            this.showElevatorCollisionsStripMenuItem.Text = "Show elevators &collisions";
+            this.showElevatorCollisionsStripMenuItem.Click += new System.EventHandler(this.ShowElevatorCollisionsStripMenuItemClick);
+            // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
@@ -735,6 +747,11 @@
             this.viewThreatsToolStripMenuItem.Text = "View threats";
             this.viewThreatsToolStripMenuItem.Click += new System.EventHandler(this.ViewThreatsToolStripMenuItemClick);
             // 
+            // toolStripSeparator9
+            // 
+            this.toolStripSeparator9.Name = "toolStripSeparator9";
+            this.toolStripSeparator9.Size = new System.Drawing.Size(280, 6);
+            // 
             // exportCheckToolStripMenuItem
             // 
             this.exportCheckToolStripMenuItem.Name = "exportCheckToolStripMenuItem";
@@ -743,11 +760,6 @@
             this.exportCheckToolStripMenuItem.Size = new System.Drawing.Size(283, 22);
             this.exportCheckToolStripMenuItem.Text = "Export check";
             this.exportCheckToolStripMenuItem.Click += new System.EventHandler(this.ExportCheckToolStripMenuItemClick);
-            // 
-            // toolStripSeparator9
-            // 
-            this.toolStripSeparator9.Name = "toolStripSeparator9";
-            this.toolStripSeparator9.Size = new System.Drawing.Size(280, 6);
             // 
             // diagnosticsToolStripMenuItem
             // 
@@ -862,5 +874,6 @@
         private System.Windows.Forms.ToolStripMenuItem showElevatorMovementToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
         private System.Windows.Forms.ToolStripMenuItem diagnosticsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem showElevatorCollisionsStripMenuItem;
     }
 }
