@@ -2124,8 +2124,9 @@ namespace SpriteHelper.Dialogs
             // - enemies in the following format:
             //   - pointer to next screen (from here): (n x 14) + 3 (1 byte)
             //   - number of enemies (1 byte)
-            //   - n times the enemy data (14 bytes)
-            //        - id (1 byte)
+            //   - n times the enemy data (15 bytes)
+            //        - 1st byte of id - pointer to the right variable (1 byte)
+            //        - 2nd byte of id - a mask in the right variable (1 byte)
             //        - slot to put enemy in (1 byte)
             //        - pointer to const. data (1 byte)
             //        - screen the enemy is on (1 byte)
@@ -2207,9 +2208,12 @@ namespace SpriteHelper.Dialogs
                     // Set the data.
                     //
 
-                    // id
-                    // todo: make this two bytes
-                    result.Add((byte)enemyId++);
+                    // id first byte
+                    result.Add((byte)(enemyId / 8));
+
+                    // id second byte
+                    result.Add((byte)((enemyId % 8) << enemyId));
+                    enemyId++;
 
                     // slot to put enemy in (1 byte)
                     result.Add((byte)(slot * Constants.EnemyInMemorySize));

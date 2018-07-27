@@ -82,8 +82,8 @@
 
         // Memory sizes.
         public const int EnemyDefinitionSize = 15;
-        public const int EnemyInMemorySize = 16;
-        public const int EnemyInLevelDataSize = 14;
+        public const int EnemyInMemorySize = 17;
+        public const int EnemyInLevelDataSize = 15;
         public const int ElevatorInMemorySize = 8;
         public const int ElevatorInLevelDataSize = 9;
 
