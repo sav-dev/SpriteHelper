@@ -1143,9 +1143,9 @@ namespace SpriteHelper.Dialogs
                         return null;
                     }
 
-                    if (levelWidth < 16 | levelWidth > 252)
+                    if (levelWidth < 32 | levelWidth > 252)
                     {
-                        MessageBox.Show("Wrongh width: min is 16, max is 252");
+                        MessageBox.Show("Wrongh width: min is 32, max is 252");
                         return null;
                     }
 
