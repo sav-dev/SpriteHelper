@@ -2208,11 +2208,12 @@ namespace SpriteHelper.Dialogs
                     // Set the data.
                     //
 
-                    // id first byte
-                    result.Add((byte)(enemyId / 8));
+                    // id (two bytes)
+                    var idFirstByte = (byte)(enemyId / 8);
+                    var idSecondByte = (byte)(1 << (enemyId % 8));
 
-                    // id second byte
-                    result.Add((byte)((enemyId % 8) << enemyId));
+                    result.Add(idFirstByte);      
+                    result.Add(idSecondByte);
                     enemyId++;
 
                     // slot to put enemy in (1 byte)
