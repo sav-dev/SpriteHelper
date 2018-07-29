@@ -2965,7 +2965,7 @@ namespace SpriteHelper.Dialogs
                     return "Enemy walking off-screen to the left";
                 }
 
-                if (enemy.MaxPosition + enemy.Width >= Math.Min((enemy.Screen + 1) * Constants.ScreenWidth, this.level.Length * Constants.BackgroundTileWidth))
+                if (enemy.MaxPosition + enemy.Width > Math.Min((enemy.Screen + 1) * Constants.ScreenWidth, this.level.Length * Constants.BackgroundTileWidth))
                 {
                     return "Enemy walking off-screen to the right";
                 }
