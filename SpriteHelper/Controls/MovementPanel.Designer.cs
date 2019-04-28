@@ -47,6 +47,7 @@
             this.initialFlipCheckBox = new System.Windows.Forms.CheckBox();
             this.speedTextBox = new System.Windows.Forms.TextBox();
             this.movementComboBox = new System.Windows.Forms.ComboBox();
+            this.hintLabel = new System.Windows.Forms.Label();
             this.propertiesLayoutPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -75,6 +76,7 @@
             this.propertiesLayoutPanel.Controls.Add(this.initialFlipCheckBox, 1, 1);
             this.propertiesLayoutPanel.Controls.Add(this.speedTextBox, 3, 1);
             this.propertiesLayoutPanel.Controls.Add(this.movementComboBox, 1, 0);
+            this.propertiesLayoutPanel.Controls.Add(this.hintLabel, 3, 0);
             this.propertiesLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.propertiesLayoutPanel.Location = new System.Drawing.Point(0, 0);
             this.propertiesLayoutPanel.Name = "propertiesLayoutPanel";
@@ -84,6 +86,7 @@
             this.propertiesLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.propertiesLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.propertiesLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.propertiesLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.propertiesLayoutPanel.Size = new System.Drawing.Size(487, 196);
             this.propertiesLayoutPanel.TabIndex = 1;
             // 
@@ -267,6 +270,16 @@
             this.movementComboBox.TabIndex = 20;
             this.movementComboBox.SelectedIndexChanged += new System.EventHandler(this.MovementComboBoxSelectedIndexChanged);
             // 
+            // hintLabel
+            // 
+            this.hintLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.hintLabel.AutoSize = true;
+            this.hintLabel.Location = new System.Drawing.Point(343, 13);
+            this.hintLabel.Name = "hintLabel";
+            this.hintLabel.Size = new System.Drawing.Size(107, 13);
+            this.hintLabel.TabIndex = 21;
+            this.hintLabel.Text = "254 = 1/4, 255 = 1/2";
+            // 
             // MovementPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -300,5 +313,6 @@
         private System.Windows.Forms.CheckBox initialFlipCheckBox;
         private System.Windows.Forms.TextBox speedTextBox;
         private System.Windows.Forms.ComboBox movementComboBox;
+        private System.Windows.Forms.Label hintLabel;
     }
 }

@@ -3005,14 +3005,17 @@ namespace SpriteHelper.Dialogs
                 return "Enemy must have some initial movement in the direction it's facing";
             }
 
-            if ((enemyPosition - enemy.MinPosition) % enemy.Speed != 0)
+            if (enemy.Speed != 254 && enemy.Speed != 255) // special values for 1/4 and 1/2 - everything is reachable with those
             {
-                return "Min. position is not reachable with given speed";
-            }
+                if ((enemyPosition - enemy.MinPosition) % enemy.Speed != 0)
+                {
+                    return "Min. position is not reachable with given speed";
+                }
 
-            if ((enemy.MaxPosition - enemyPosition) % enemy.Speed != 0)
-            {
-                return "Max. position is not reachable with given speed";
+                if ((enemy.MaxPosition - enemyPosition) % enemy.Speed != 0)
+                {
+                    return "Max. position is not reachable with given speed";
+                }
             }
 
             return null;
@@ -3271,14 +3274,17 @@ namespace SpriteHelper.Dialogs
                 return "Elevator must have some initial movement in the direction it's facing";
             }
 
-            if ((elevatorPosition - elevator.MinPosition) % elevator.Speed != 0)
+            if (elevator.Speed != 254 && elevator.Speed != 255) // special values for 1/4 and 1/2 - everything is reachable with those
             {
-                return "Min. position is not reachable with given speed";
-            }
+                if ((elevatorPosition - elevator.MinPosition) % elevator.Speed != 0)
+                {
+                    return "Min. position is not reachable with given speed";
+                }
 
-            if ((elevator.MaxPosition - elevatorPosition) % elevator.Speed != 0)
-            {
-                return "Max. position is not reachable with given speed";
+                if ((elevator.MaxPosition - elevatorPosition) % elevator.Speed != 0)
+                {
+                    return "Max. position is not reachable with given speed";
+                }
             }
 
             return null;
