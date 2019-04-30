@@ -206,7 +206,7 @@ namespace SpriteHelper.Dialogs
             builder.AppendLine();
             foreach (var animation in this.config.Animations.OrderBy(a => a.Id))
             {
-                builder.AppendLineFormat("{0}Consts:", animation.Name);
+                builder.AppendLineFormat("{0}Consts:", animation.Name.Replace(" ", ""));
 
                 var firstFrame = animation.Frames.First();
                 var widthInPixes = firstFrame.Width * Constants.SpriteWidth;
@@ -262,7 +262,7 @@ namespace SpriteHelper.Dialogs
                 builder.AppendLineFormat("  .byte ${0:X2}", animation.Frames.Count());
 
                 builder.AppendLine(".renderingInfo:");
-                builder.AppendLineFormat("  .byte LOW({0}Render), HIGH({0}Render)", animation.Name);
+                builder.AppendLineFormat("  .byte LOW({0}Render), HIGH({0}Render)", animation.Name.Replace(" ", ""));
 
                 builder.AppendLine(".explosionOffset:");
                 builder.AppendLineFormat("  .byte ${0:X2}, ${1:X2}", (widthInPixes / 2) - 8, (heightInPixels / 2) - 8);
@@ -390,7 +390,7 @@ namespace SpriteHelper.Dialogs
             {
                 var firstFrame = animation.Frames.First();
 
-                builder.AppendLineFormat("{0}Render:", animation.Name);
+                builder.AppendLineFormat("{0}Render:", animation.Name.Replace(" ", ""));
                 
                 // Sprite count.
                 builder.AppendLineFormat(".spriteCount:");
