@@ -432,6 +432,7 @@ namespace SpriteHelper.Dialogs
                 }
 
                 // Start with atts. We're assuming all animation frames have the same atts.
+                // todo - to save sprites at cost of processing, allow for flip in frames?
                 var attsList = new List<int>();                
                 for (var x = 0; x < firstFrame.Width; x++)
                 {
