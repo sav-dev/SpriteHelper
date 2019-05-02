@@ -22,6 +22,8 @@ namespace SpriteHelper.Dialogs
             Func<AddEditElevatorDialog, string> validationFunction)
         {
             InitializeComponent();
+            this.movementPanel.ShouldFlipEnabled = false;
+            this.movementPanel.ShouldFlip = false;
             this.sizeNumericUpDown.Minimum = Constants.MinElevatorSize;
             this.sizeNumericUpDown.Maximum = Constants.MaxElevatorSize;
 

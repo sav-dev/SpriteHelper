@@ -27,6 +27,10 @@ namespace SpriteHelper.Contract
         [DataMember]
         public int Speed { get; set; }
 
+        // Should flip
+        [DataMember]
+        public bool ShouldFlip { get; set; }
+
         // Movement range.
         [DataMember]
         public int MinPosition { get; set; }
@@ -54,7 +58,7 @@ namespace SpriteHelper.Contract
         public int MovementRange => this.MaxPosition - this.MinPosition;
 
         // Movement orientation.
-        // A bit of a hack to store the movement and shooting direction in one byte.
+        // A bit of a hack to store the movement and shooting direction in one byte. // TODO_SHOOTING_DIR: update this
         public int MovementOrientation
         {
             get

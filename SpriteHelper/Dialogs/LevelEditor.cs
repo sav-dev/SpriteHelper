@@ -2121,15 +2121,16 @@ namespace SpriteHelper.Dialogs
         private byte[] GetExportEnemiesData(TextWriter logger = null)
         {
             //
-            // - enemies in the following format:
-            //   - pointer to next screen (from here): (n x 14) + 3 (1 byte)
+            // - enemies in level data the following format:
+            //   - pointer to next screen (from here): (n x 17) + 3 (1 byte)
             //   - number of enemies (1 byte)
-            //   - n times the enemy data (15 bytes)
+            //   - n times the enemy data (17 bytes)
             //        - 1st byte of id - pointer to the right variable (1 byte)
-            //        - 2nd byte of id - a mask in the right variable (1 byte)
+            //        - 2nd byte of id - a mask in the right variable (1 byte) 
             //        - slot to put enemy in (1 byte)
             //        - pointer to const. data (1 byte)
             //        - screen the enemy is on (1 byte)
+            //        - should flip (1 byte)
             //        - movement speed (1 byte)
             //        - max movement distance (1 byte)
             //        - initial flip (1 byte)
@@ -2140,7 +2141,8 @@ namespace SpriteHelper.Dialogs
             //        - initial life (1 byte)
             //        - shooting frequency initial (1 byte)
             //        - shooting frequency (1 byte)
-            //   - pointer to the previous screen (from here): (n x 14) + 2 (1 byte)
+            //        - shooting direction (1 byte)
+            //   - pointer to the previous screen (from here): (n x 17) + 2 (1 byte)
             //
 
             var result = new List<byte>();
@@ -2225,6 +2227,9 @@ namespace SpriteHelper.Dialogs
                     // screen
                     result.Add((byte)screen);
 
+                    // should flip: todo
+                    result.Add((byte)(enemy.ShouldFlip ? 1 : 0));
+
                     // movement speed
                     result.Add((byte)enemy.Speed);
 
@@ -2249,11 +2254,14 @@ namespace SpriteHelper.Dialogs
                     // initial life
                     result.Add((byte)animation.MaxHealth);
 
-                                        // shooting frequency initial
+                    // shooting frequency initial
                     result.Add((byte)enemy.ShootingInitialFrequency);
 
                     // shooting frequency
                     result.Add((byte)enemy.ShootingFrequency);
+
+                    // shootind direction - TODO_SHOOTING_DIR
+                    result.Add((byte)0);
                 }
 
                 // Pointer to the previous screen

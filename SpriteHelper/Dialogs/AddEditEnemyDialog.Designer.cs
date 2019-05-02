@@ -119,6 +119,8 @@
             this.movementPanel.InitialFlip = false;
             this.movementPanel.Location = new System.Drawing.Point(3, 16);
             this.movementPanel.Name = "movementPanel";
+            this.movementPanel.ShouldFlip = false;
+            this.movementPanel.ShouldFlipEnabled = true;
             this.movementPanel.Size = new System.Drawing.Size(435, 151);
             this.movementPanel.TabIndex = 0;
             // 

@@ -10,6 +10,7 @@ namespace SpriteHelper.Controls
         public MovementPanel()
         {
             InitializeComponent();
+            this.toolTip.SetToolTip(this.movementSpeedLabel, "254 = 1/4, 255 = 1/2");
         }
 
         private void InputTextChanged(object sender, EventArgs e)
@@ -60,6 +61,30 @@ namespace SpriteHelper.Controls
             }
         }
 
+        public bool ShouldFlip
+        {
+            get
+            {
+                return this.shouldFlipCheckBox.Checked;
+            }
+            set
+            {
+                this.shouldFlipCheckBox.Checked = value;
+            }
+        }
+
+        public bool ShouldFlipEnabled
+        {
+            get
+            {
+                return this.shouldFlipCheckBox.Enabled;
+            }
+            set
+            {
+                this.shouldFlipCheckBox.Enabled = value;
+            }
+        }
+
         public bool TryGetSpeed(out int speed)
         {
             return int.TryParse(this.speedTextBox.Text, out speed);
@@ -90,7 +115,7 @@ namespace SpriteHelper.Controls
         {
             this.maxTilesTextBox.Text = $"{max / Constants.BackgroundTileHeight}";
             this.maxOffsetTextBox.Text = $"{max % Constants.BackgroundTileHeight}";
-        }
+        }        
 
         public void SetTypes(params MovementType[] types)
         {
@@ -102,6 +127,7 @@ namespace SpriteHelper.Controls
         {
             this.MovementType = Contract.MovementType.None;
             this.InitialFlip = false;
+            this.ShouldFlip = true;
             this.SetSpeed(0);
             this.SetMin(0);
             this.SetMax(0);
@@ -118,6 +144,7 @@ namespace SpriteHelper.Controls
             this.maxOffsetTextBox.Enabled = !setToNone;
             this.minTextBox.Enabled = !setToNone;
             this.maxTextBox.Enabled = !setToNone;
-        }
+            this.shouldFlipCheckBox.Enabled = !setToNone;
+        }        
     }
 }

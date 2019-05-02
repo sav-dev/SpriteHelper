@@ -50,13 +50,12 @@ namespace SpriteHelper.Contract
         {
             get
             {
-
                 // return:
                 //  no movement: 0
                 //  up : 2
                 //  down: 3
                 //
-                // todo update this?
+                // per constants
                 if (this.MovementType == MovementType.Vertical)
                 {
                     return this.InitialFlip ? 2 : 3;

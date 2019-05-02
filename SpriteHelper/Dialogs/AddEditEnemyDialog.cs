@@ -60,6 +60,7 @@ namespace SpriteHelper.Dialogs
                 this.movementPanel.MovementType = existingEnemy.MovementType;
                 this.movementPanel.SetSpeed(existingEnemy.Speed);
                 this.movementPanel.InitialFlip = existingEnemy.InitialFlip;
+                this.movementPanel.ShouldFlip = existingEnemy.ShouldFlip;
                 this.movementPanel.SetMin(existingEnemy.MinPosition);
                 this.movementPanel.SetMax(existingEnemy.MaxPosition);
 
@@ -105,6 +106,7 @@ namespace SpriteHelper.Dialogs
         public MovementType MovementType => this.movementPanel.MovementType ?? MovementType.None;
 
         public bool InitialFlip => this.movementPanel.InitialFlip;
+        public bool ShouldFlip => this.movementPanel.ShouldFlip;
 
         public bool TryGetSpeed(out int speed)
         {
@@ -151,7 +153,8 @@ namespace SpriteHelper.Dialogs
 
             // Set values that cannot fail.
             newEnemy.MovementType = this.MovementType;
-            newEnemy.InitialFlip = this.InitialFlip;            
+            newEnemy.InitialFlip = this.InitialFlip;
+            newEnemy.ShouldFlip = this.ShouldFlip;          
 
             // Get values that can fail.
             int x, y, speed, min, max, shootingFreq, shootingInitialFreq;
