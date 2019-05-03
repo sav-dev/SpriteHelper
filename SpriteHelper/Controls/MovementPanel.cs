@@ -49,39 +49,16 @@ namespace SpriteHelper.Controls
             }
         }
 
-        public bool InitialFlip
+        public Direction? Direction
         {
             get
             {
-                return this.initialFlipCheckBox.Checked;
+                var value = this.directionComboBox.SelectedItem as string;
+                return (Direction)Enum.Parse(typeof(Direction), value);
             }
             set
             {
-                this.initialFlipCheckBox.Checked = value;
-            }
-        }
-
-        public bool ShouldFlip
-        {
-            get
-            {
-                return this.shouldFlipCheckBox.Checked;
-            }
-            set
-            {
-                this.shouldFlipCheckBox.Checked = value;
-            }
-        }
-
-        public bool ShouldFlipEnabled
-        {
-            get
-            {
-                return this.shouldFlipCheckBox.Enabled;
-            }
-            set
-            {
-                this.shouldFlipCheckBox.Enabled = value;
+                this.directionComboBox.SelectedItem = value?.ToString();
             }
         }
 
@@ -126,8 +103,6 @@ namespace SpriteHelper.Controls
         public void SetDefaultValues()
         {
             this.MovementType = Contract.MovementType.None;
-            this.InitialFlip = false;
-            this.ShouldFlip = true;
             this.SetSpeed(0);
             this.SetMin(0);
             this.SetMax(0);
@@ -144,7 +119,29 @@ namespace SpriteHelper.Controls
             this.maxOffsetTextBox.Enabled = !setToNone;
             this.minTextBox.Enabled = !setToNone;
             this.maxTextBox.Enabled = !setToNone;
-            this.shouldFlipCheckBox.Enabled = !setToNone;
-        }        
+
+            if (setToNone)
+            {
+                this.SetDefaultValues();
+            }
+
+            this.directionComboBox.Items.Clear();
+            switch (this.MovementType)
+            {
+                case Contract.MovementType.None:
+                    this.directionComboBox.Items.Add(Contract.Direction.None.ToString());
+                    break;
+                case Contract.MovementType.Horizontal:
+                    this.directionComboBox.Items.Add(Contract.Direction.Left.ToString());
+                    this.directionComboBox.Items.Add(Contract.Direction.Right.ToString());
+                    break;
+                case Contract.MovementType.Vertical:
+                    this.directionComboBox.Items.Add(Contract.Direction.Up.ToString());
+                    this.directionComboBox.Items.Add(Contract.Direction.Down.ToString());
+                    break;
+            }
+
+            this.directionComboBox.SelectedIndex = 0;
+        }
     }
 }

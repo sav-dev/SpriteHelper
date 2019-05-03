@@ -22,8 +22,6 @@ namespace SpriteHelper.Dialogs
             Func<AddEditElevatorDialog, string> validationFunction)
         {
             InitializeComponent();
-            this.movementPanel.ShouldFlipEnabled = false;
-            this.movementPanel.ShouldFlip = false;
             this.sizeNumericUpDown.Minimum = Constants.MinElevatorSize;
             this.sizeNumericUpDown.Maximum = Constants.MaxElevatorSize;
 
@@ -47,8 +45,8 @@ namespace SpriteHelper.Dialogs
                 this.positionPanel.SetY(existingElevator.Y);
 
                 this.movementPanel.MovementType = existingElevator.MovementType;
+                this.movementPanel.Direction = existingElevator.Direction;
                 this.movementPanel.SetSpeed(existingElevator.Speed);
-                this.movementPanel.InitialFlip = existingElevator.InitialFlip;
                 this.movementPanel.SetMin(existingElevator.MinPosition);
                 this.movementPanel.SetMax(existingElevator.MaxPosition);
             }
@@ -95,8 +93,7 @@ namespace SpriteHelper.Dialogs
         //
 
         public MovementType MovementType => this.movementPanel.MovementType ?? MovementType.None;
-
-        public bool InitialFlip => this.movementPanel.InitialFlip;
+        public Direction Direction => this.movementPanel.Direction ?? Direction.None;
 
         public bool TryGetSpeed(out int speed)
         {
@@ -128,7 +125,7 @@ namespace SpriteHelper.Dialogs
             // Set values that cannot fail.
             newElevator.Size = this.ElevatorSize;
             newElevator.MovementType = this.MovementType;
-            newElevator.InitialFlip = this.InitialFlip;
+            newElevator.Direction = this.Direction;
 
             // Get values that can fail.
             int x, y, speed, min, max;

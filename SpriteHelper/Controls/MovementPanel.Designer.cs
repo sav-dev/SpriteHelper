@@ -44,13 +44,11 @@
             this.yTilesLabel = new System.Windows.Forms.Label();
             this.maxTilesTextBox = new System.Windows.Forms.TextBox();
             this.movementSpeedLabel = new System.Windows.Forms.Label();
-            this.initialFlipLabel = new System.Windows.Forms.Label();
-            this.initialFlipCheckBox = new System.Windows.Forms.CheckBox();
             this.speedTextBox = new System.Windows.Forms.TextBox();
             this.movementComboBox = new System.Windows.Forms.ComboBox();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.shouldFlipLabel = new System.Windows.Forms.Label();
-            this.shouldFlipCheckBox = new System.Windows.Forms.CheckBox();
+            this.directionLabel = new System.Windows.Forms.Label();
+            this.directionComboBox = new System.Windows.Forms.ComboBox();
             this.propertiesLayoutPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -74,13 +72,11 @@
             this.propertiesLayoutPanel.Controls.Add(this.minTilesTextBox, 1, 2);
             this.propertiesLayoutPanel.Controls.Add(this.yTilesLabel, 2, 2);
             this.propertiesLayoutPanel.Controls.Add(this.maxTilesTextBox, 3, 2);
-            this.propertiesLayoutPanel.Controls.Add(this.movementSpeedLabel, 2, 1);
-            this.propertiesLayoutPanel.Controls.Add(this.initialFlipLabel, 0, 1);
-            this.propertiesLayoutPanel.Controls.Add(this.initialFlipCheckBox, 1, 1);
             this.propertiesLayoutPanel.Controls.Add(this.speedTextBox, 3, 1);
             this.propertiesLayoutPanel.Controls.Add(this.movementComboBox, 1, 0);
-            this.propertiesLayoutPanel.Controls.Add(this.shouldFlipLabel, 2, 0);
-            this.propertiesLayoutPanel.Controls.Add(this.shouldFlipCheckBox, 3, 0);
+            this.propertiesLayoutPanel.Controls.Add(this.movementSpeedLabel, 2, 1);
+            this.propertiesLayoutPanel.Controls.Add(this.directionLabel, 0, 1);
+            this.propertiesLayoutPanel.Controls.Add(this.directionComboBox, 1, 1);
             this.propertiesLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.propertiesLayoutPanel.Location = new System.Drawing.Point(0, 0);
             this.propertiesLayoutPanel.Name = "propertiesLayoutPanel";
@@ -234,26 +230,6 @@
             this.movementSpeedLabel.TabIndex = 16;
             this.movementSpeedLabel.Text = "Speed (*)";
             // 
-            // initialFlipLabel
-            // 
-            this.initialFlipLabel.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.initialFlipLabel.AutoSize = true;
-            this.initialFlipLabel.Location = new System.Drawing.Point(47, 52);
-            this.initialFlipLabel.Name = "initialFlipLabel";
-            this.initialFlipLabel.Size = new System.Drawing.Size(47, 13);
-            this.initialFlipLabel.TabIndex = 17;
-            this.initialFlipLabel.Text = "Initial flip";
-            // 
-            // initialFlipCheckBox
-            // 
-            this.initialFlipCheckBox.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.initialFlipCheckBox.AutoSize = true;
-            this.initialFlipCheckBox.Location = new System.Drawing.Point(162, 51);
-            this.initialFlipCheckBox.Name = "initialFlipCheckBox";
-            this.initialFlipCheckBox.Size = new System.Drawing.Size(15, 14);
-            this.initialFlipCheckBox.TabIndex = 18;
-            this.initialFlipCheckBox.UseVisualStyleBackColor = true;
-            // 
             // speedTextBox
             // 
             this.speedTextBox.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -274,25 +250,25 @@
             this.movementComboBox.TabIndex = 20;
             this.movementComboBox.SelectedIndexChanged += new System.EventHandler(this.MovementComboBoxSelectedIndexChanged);
             // 
-            // shouldFlipLabel
+            // directionLabel
             // 
-            this.shouldFlipLabel.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.shouldFlipLabel.AutoSize = true;
-            this.shouldFlipLabel.Location = new System.Drawing.Point(278, 13);
-            this.shouldFlipLabel.Name = "shouldFlipLabel";
-            this.shouldFlipLabel.Size = new System.Drawing.Size(59, 13);
-            this.shouldFlipLabel.TabIndex = 21;
-            this.shouldFlipLabel.Text = "Should Flip";
+            this.directionLabel.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.directionLabel.AutoSize = true;
+            this.directionLabel.Location = new System.Drawing.Point(18, 52);
+            this.directionLabel.Name = "directionLabel";
+            this.directionLabel.Size = new System.Drawing.Size(76, 13);
+            this.directionLabel.TabIndex = 21;
+            this.directionLabel.Text = "Initial Direciton";
             // 
-            // shouldFlipCheckBox
+            // directionComboBox
             // 
-            this.shouldFlipCheckBox.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.shouldFlipCheckBox.AutoSize = true;
-            this.shouldFlipCheckBox.Location = new System.Drawing.Point(406, 12);
-            this.shouldFlipCheckBox.Name = "shouldFlipCheckBox";
-            this.shouldFlipCheckBox.Size = new System.Drawing.Size(15, 14);
-            this.shouldFlipCheckBox.TabIndex = 22;
-            this.shouldFlipCheckBox.UseVisualStyleBackColor = true;
+            this.directionComboBox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.directionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.directionComboBox.FormattingEnabled = true;
+            this.directionComboBox.Location = new System.Drawing.Point(109, 48);
+            this.directionComboBox.Name = "directionComboBox";
+            this.directionComboBox.Size = new System.Drawing.Size(121, 21);
+            this.directionComboBox.TabIndex = 22;
             // 
             // MovementPanel
             // 
@@ -323,12 +299,10 @@
         private System.Windows.Forms.TextBox maxTextBox;
         private System.Windows.Forms.Label movementTypeLabel;
         private System.Windows.Forms.Label movementSpeedLabel;
-        private System.Windows.Forms.Label initialFlipLabel;
-        private System.Windows.Forms.CheckBox initialFlipCheckBox;
         private System.Windows.Forms.TextBox speedTextBox;
         private System.Windows.Forms.ComboBox movementComboBox;
         private System.Windows.Forms.ToolTip toolTip;
-        private System.Windows.Forms.Label shouldFlipLabel;
-        private System.Windows.Forms.CheckBox shouldFlipCheckBox;
+        private System.Windows.Forms.Label directionLabel;
+        private System.Windows.Forms.ComboBox directionComboBox;
     }
 }

@@ -19,7 +19,6 @@ namespace SpriteHelper.Dialogs
 
         // Private fields        
         Dictionary<string, Bitmap> bitmaps;
-        Dictionary<string, MovementType[]> movements;
         Dictionary<string, bool> shooting;
         Func<AddEditEnemyDialog, string> validationFunction;
 
@@ -27,7 +26,6 @@ namespace SpriteHelper.Dialogs
         public AddEditEnemyDialog(
             Enemy existingEnemy,
             Dictionary<string, Bitmap> bitmaps,
-            Dictionary<string, MovementType[]> movements,
             Dictionary<string, bool> shooting,
             Color backColor,
             Func<AddEditEnemyDialog, string> validationFunction)
@@ -41,7 +39,6 @@ namespace SpriteHelper.Dialogs
             // Set right back color, store the dictionary of enemies.
             this.enemyPictureBox.BackColor = backColor;
             this.bitmaps = bitmaps;
-            this.movements = movements;
             this.shooting = shooting;
 
             // Populate the combo box, select the right element (or first one if adding).
@@ -58,14 +55,16 @@ namespace SpriteHelper.Dialogs
                 this.positionPanel.SetY(existingEnemy.Y);
 
                 this.movementPanel.MovementType = existingEnemy.MovementType;
+                this.movementPanel.Direction = existingEnemy.Direction;
                 this.movementPanel.SetSpeed(existingEnemy.Speed);
-                this.movementPanel.InitialFlip = existingEnemy.InitialFlip;
-                this.movementPanel.ShouldFlip = existingEnemy.ShouldFlip;
                 this.movementPanel.SetMin(existingEnemy.MinPosition);
                 this.movementPanel.SetMax(existingEnemy.MaxPosition);
 
                 this.shootingPanel.SetFreq(existingEnemy.ShootingFrequency);
                 this.shootingPanel.SetInitialFreq(existingEnemy.ShootingInitialFrequency);
+
+                this.flipPanel.InitialFlip = existingEnemy.InitialFlip;
+                this.flipPanel.ShouldFlip = existingEnemy.ShouldFlip;
             }
             else
             {
@@ -104,9 +103,10 @@ namespace SpriteHelper.Dialogs
         //
 
         public MovementType MovementType => this.movementPanel.MovementType ?? MovementType.None;
+        public Direction Direction => this.movementPanel.Direction ?? Direction.None;
 
-        public bool InitialFlip => this.movementPanel.InitialFlip;
-        public bool ShouldFlip => this.movementPanel.ShouldFlip;
+        public bool InitialFlip => this.flipPanel.InitialFlip;
+        public bool ShouldFlip => this.flipPanel.ShouldFlip;
 
         public bool TryGetSpeed(out int speed)
         {
@@ -153,6 +153,7 @@ namespace SpriteHelper.Dialogs
 
             // Set values that cannot fail.
             newEnemy.MovementType = this.MovementType;
+            newEnemy.Direction = this.Direction;
             newEnemy.InitialFlip = this.InitialFlip;
             newEnemy.ShouldFlip = this.ShouldFlip;          
 
@@ -192,7 +193,7 @@ namespace SpriteHelper.Dialogs
             var selectedEnemy = (string)this.enemyComboBox.SelectedItem;
 
             this.enemyPictureBox.Image = bitmaps[selectedEnemy];
-            this.movementPanel.SetTypes(this.movements[selectedEnemy]);
+            this.movementPanel.SetTypes(new MovementType[] { MovementType.None, MovementType.Horizontal, MovementType.Vertical });
             this.shootingPanel.Enabled = this.shooting[selectedEnemy];
             this.SetDefaultValues();
         }
@@ -225,6 +226,7 @@ namespace SpriteHelper.Dialogs
             this.positionPanel.SetDefaultValues();
             this.movementPanel.SetDefaultValues();
             this.shootingPanel.SetDefaultValues();
+            this.flipPanel.SetDefaultValues();
         }
     }
 }

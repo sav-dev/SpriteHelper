@@ -35,35 +35,15 @@ namespace SpriteHelper.Contract
         [DataMember]
         public int MaxPosition { get; set; }
 
-        // Whether initially the elevator is flipped.
+        // Initial direction
         [DataMember]
-        public bool InitialFlip { get; set; }
+        public Direction Direction { get; set; }
 
         // Screen the elevator is on.
         public int Screen => this.X / (Constants.ScreenWidthInTiles * Constants.BackgroundTileWidth);
 
         // Movement range.
         public int MovementRange => this.MaxPosition - this.MinPosition;
-
-        // Direction.
-        public int Direction
-        {
-            get
-            {
-                // return:
-                //  no movement: 0
-                //  up : 2
-                //  down: 3
-                //
-                // per constants
-                if (this.MovementType == MovementType.Vertical)
-                {
-                    return this.InitialFlip ? 2 : 3;
-                }
-
-                return 0;
-            }
-        }
 
         // Width and height.
         public int Width => this.Size * Constants.SpriteWidth;
@@ -88,7 +68,7 @@ namespace SpriteHelper.Contract
                         return 0;
                 }
 
-                return this.InitialFlip ? position - this.MinPosition : this.MaxPosition - position;
+                return this.Direction == Direction.Up ? position - this.MinPosition : this.MaxPosition - position;
             }
         }
 

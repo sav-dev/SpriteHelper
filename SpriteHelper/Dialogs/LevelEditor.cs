@@ -39,7 +39,6 @@ namespace SpriteHelper.Dialogs
 
         // Add/edit enemy dictionaries.
         private Dictionary<string, Bitmap> enBitmapsSimple;
-        private Dictionary<string, MovementType[]> enMovements;
         private Dictionary<string, bool> enShooting;
 
         // Cached tiles. Key is tile ID + palette.
@@ -359,23 +358,6 @@ namespace SpriteHelper.Dialogs
             // Add/edit enemy dictionaries.
             this.enBitmapsSimple = this.enBitmaps.Keys.ToDictionary(k => k, k => this.enBitmaps[k][false]);
 
-            this.enMovements = this.enConfig.Animations.ToDictionary(
-                a => a.Name,
-                a =>
-                {
-                    var movements = new List<MovementType> { MovementType.None, MovementType.Horizontal, MovementType.Vertical };
-                    if (a.Flip == Flip.Horizontal)
-                    {
-                        movements.Remove(MovementType.Vertical);
-                    }
-                    else if (a.Flip == Flip.Vertical)
-                    {
-                        movements.Remove(MovementType.Horizontal);
-                    }
-
-                    return movements.ToArray();
-                });
-
             this.enShooting = this.enConfig.Animations.ToDictionary(a => a.Name, a => a.Offsets.GunXOff >= 0);
 
             // Player config.
@@ -657,7 +639,7 @@ namespace SpriteHelper.Dialogs
                         // Draw arrow.
                         if (enemy.MovementType == MovementType.Horizontal)
                         {
-                            if (enemy.InitialFlip)
+                            if (enemy.Direction == Direction.Left)
                             {
                                 // Left, p1
                                 this.graphics.DrawPolygon(pen, new[] { p1, new Point(p1.X + 3, p1.Y + 3), new Point(p1.X + 3, p1.Y - 3) });
@@ -670,7 +652,7 @@ namespace SpriteHelper.Dialogs
                         }
                         else if (enemy.MovementType == MovementType.Vertical)
                         {
-                            if (enemy.InitialFlip)
+                            if (enemy.Direction == Direction.Up)
                             {
                                 // Up, p1
                                 this.graphics.DrawPolygon(pen, new[] { p1, new Point(p1.X - 3, p1.Y + 3), new Point(p1.X + 3, p1.Y + 3) });
@@ -761,7 +743,7 @@ namespace SpriteHelper.Dialogs
                         // this isn't really required since horizontal elevators are not a thing
                         if (elevator.MovementType == MovementType.Horizontal)
                         {
-                            if (elevator.InitialFlip)
+                            if (elevator.Direction == Direction.Left)
                             {
                                 // Left, p1
                                 this.graphics.DrawPolygon(pen, new[] { p1, new Point(p1.X + 3, p1.Y + 3), new Point(p1.X + 3, p1.Y - 3) });
@@ -774,7 +756,7 @@ namespace SpriteHelper.Dialogs
                         }
                         else if (elevator.MovementType == MovementType.Vertical)
                         {
-                            if (elevator.InitialFlip)
+                            if (elevator.Direction == Direction.Up)
                             {
                                 // Up, p1
                                 this.graphics.DrawPolygon(pen, new[] { p1, new Point(p1.X - 3, p1.Y + 3), new Point(p1.X + 3, p1.Y + 3) });
@@ -2122,9 +2104,9 @@ namespace SpriteHelper.Dialogs
         {
             //
             // - enemies in level data the following format:
-            //   - pointer to next screen (from here): (n x 17) + 3 (1 byte)
+            //   - pointer to next screen (from here): (n x 16) + 3 (1 byte)
             //   - number of enemies (1 byte)
-            //   - n times the enemy data (17 bytes)
+            //   - n times the enemy data (16 bytes)
             //        - 1st byte of id - pointer to the right variable (1 byte)
             //        - 2nd byte of id - a mask in the right variable (1 byte) 
             //        - slot to put enemy in (1 byte)
@@ -2141,8 +2123,7 @@ namespace SpriteHelper.Dialogs
             //        - initial life (1 byte)
             //        - shooting frequency initial (1 byte)
             //        - shooting frequency (1 byte)
-            //        - shooting direction (1 byte)
-            //   - pointer to the previous screen (from here): (n x 17) + 2 (1 byte)
+            //   - pointer to the previous screen (from here): (n x 16) + 2 (1 byte)
             //
 
             var result = new List<byte>();
@@ -2242,8 +2223,8 @@ namespace SpriteHelper.Dialogs
                     // initial movement distance
                     result.Add((byte)(enemy.InitialDistanceLeft));
 
-                    // movement type
-                    result.Add((byte)enemy.MovementOrientation);
+                    // movement direction
+                    result.Add((byte)enemy.Direction);
 
                     // x position
                     result.Add((byte)enemy.X);
@@ -2259,9 +2240,6 @@ namespace SpriteHelper.Dialogs
 
                     // shooting frequency
                     result.Add((byte)enemy.ShootingFrequency);
-
-                    // shootind direction - TODO_SHOOTING_DIR
-                    result.Add((byte)0);
                 }
 
                 // Pointer to the previous screen
@@ -2530,7 +2508,7 @@ namespace SpriteHelper.Dialogs
             // POI history: save history in this method
 
             // Show the dialog.
-            var dialog = new AddEditEnemyDialog(selectedEnemy, this.enBitmapsSimple, this.enMovements, this.enShooting, this.transparentColor, this.ValidateEnemy);
+            var dialog = new AddEditEnemyDialog(selectedEnemy, this.enBitmapsSimple, this.enShooting, this.transparentColor, this.ValidateEnemy);
             dialog.ShowDialog();
             if (!dialog.Succeeded)
             {
@@ -2943,7 +2921,23 @@ namespace SpriteHelper.Dialogs
                     return "Distance left must be 0 for non-moving enemies";
                 }
 
+                if (enemy.Direction != Direction.None)
+                {
+                    return "Direction must be none for non-moving enemies";
+                }
+
                 return null;
+            }
+
+            if (enemy.Direction == Direction.None)
+            {
+                return "Direction cannot be none";
+            }
+
+            if (enemy.MovementType == MovementType.Vertical && (enemy.Direction == Direction.Left || enemy.Direction == Direction.Right) ||
+                enemy.MovementType == MovementType.Horizontal && (enemy.Direction == Direction.Up || enemy.Direction == Direction.Down))
+            {
+                return "Invalid direction for given movement type";
             }
 
             if (enemy.Speed <= 0)
@@ -3047,8 +3041,8 @@ namespace SpriteHelper.Dialogs
                 {
                     return "If enemy is shooting, initial frequency cannot be 0";
                 }
-
-                if (enemy.MovementOrientation == 0)
+               
+                if (!this.enShooting[enemy.Animation.Name])
                 {
                     return "This enemy cannot shoot";
                 }
@@ -3223,7 +3217,27 @@ namespace SpriteHelper.Dialogs
                     return "Distance left must be 0 for non-moving elevators";
                 }
 
+                if (elevator.Direction != Direction.None)
+                {
+                    return "Direction must be none for non-moving elevators";
+                }
+
                 return null;
+            }
+
+            if (elevator.MovementType == MovementType.Horizontal)
+            {
+                return "Elevators cannot have horizontal movement";
+            }
+
+            if (elevator.Direction == Direction.None)
+            {
+                return "Direction cannot be none";
+            }
+
+            if (elevator.Direction == Direction.Left || elevator.Direction == Direction.Right)
+            {
+                return "Direction cannot be left or right";
             }
 
             if (elevator.Speed <= 0)

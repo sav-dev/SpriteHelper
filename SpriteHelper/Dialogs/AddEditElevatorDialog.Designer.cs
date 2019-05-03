@@ -56,7 +56,6 @@
             // movementPanel
             // 
             this.movementPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.movementPanel.InitialFlip = false;
             this.movementPanel.Location = new System.Drawing.Point(3, 16);
             this.movementPanel.Name = "movementPanel";
             this.movementPanel.Size = new System.Drawing.Size(435, 151);

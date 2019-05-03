@@ -23,6 +23,10 @@ namespace SpriteHelper.Contract
         [DataMember]
         public MovementType MovementType { get; set; }
 
+        // Direction.
+        [DataMember]
+        public Direction Direction { get; set; }
+
         // Speed
         [DataMember]
         public int Speed { get; set; }
@@ -57,40 +61,6 @@ namespace SpriteHelper.Contract
         // Movement range.
         public int MovementRange => this.MaxPosition - this.MinPosition;
 
-        // Movement orientation.
-        // A bit of a hack to store the movement and shooting direction in one byte. // TODO_SHOOTING_DIR: update this
-        public int MovementOrientation
-        {
-            get
-            {
-                // all values are hardcoded in the game
-                //   0 = 00000000 - none
-                //   1 = 00000001 - static horizontal
-                //   2 = 00000010 - static vertical
-                //   5 = 00000101 - moving horizontal
-                //   6 = 00000110 - moving vertical
-                switch (this.MovementType)
-                {
-                    case MovementType.None:
-                        switch (this.animation.Flip)
-                        {
-                            case Flip.None:
-                                return 0;
-                            case Flip.Horizontal:
-                                return 1;
-                            case Flip.Vertical:
-                                return 2;
-                        }
-                        break;
-                    case MovementType.Horizontal:
-                        return 5;
-                    case MovementType.Vertical:
-                        return 6;
-                }
-                throw new System.Exception("We should never get here");
-            }
-        }
-
         // Animation.
         public Animation Animation => this.animation;
         private Animation animation;
@@ -101,20 +71,23 @@ namespace SpriteHelper.Contract
             get
             {
                 int position;
+                bool flip;
                 switch (this.MovementType)
                 {                    
                     case MovementType.Horizontal:
                         position = this.X;
+                        flip = this.Direction == Direction.Left;
                         break;
                     case MovementType.Vertical:
                         position = this.Y;
+                        flip = this.Direction == Direction.Up;
                         break;
                     case MovementType.None:
                     default:
                         return 0;
                 }
 
-                return this.InitialFlip ? position - this.MinPosition : this.MaxPosition - position;
+                return flip ? position - this.MinPosition : this.MaxPosition - position;
             }
         }
 

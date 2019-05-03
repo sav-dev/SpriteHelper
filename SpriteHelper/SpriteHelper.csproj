@@ -48,7 +48,14 @@
     <Reference Include="System.Xml.Serialization" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contract\Direction.cs" />
     <Compile Include="Contract\Elevator.cs" />
+    <Compile Include="Controls\FlipPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\FlipPanel.Designer.cs">
+      <DependentUpon>FlipPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\AddEditElevatorDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -194,6 +201,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\PositionPanel.resx">
       <DependentUpon>PositionPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\FlipPanel.resx">
+      <DependentUpon>FlipPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ShootingPanel.resx">
       <DependentUpon>ShootingPanel.cs</DependentUpon>

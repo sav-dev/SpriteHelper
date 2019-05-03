@@ -38,10 +38,13 @@
             this.movementPanel = new SpriteHelper.Controls.MovementPanel();
             this.shootingGroupBox = new System.Windows.Forms.GroupBox();
             this.shootingPanel = new SpriteHelper.Controls.ShootingPanel();
+            this.flipPanel = new SpriteHelper.Controls.FlipPanel();
+            this.flipGroupBox = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.enemyPictureBox)).BeginInit();
             this.positionGroupBox.SuspendLayout();
             this.movementGroupBox.SuspendLayout();
             this.shootingGroupBox.SuspendLayout();
+            this.flipGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // cancelButton
@@ -116,11 +119,8 @@
             // movementPanel
             // 
             this.movementPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.movementPanel.InitialFlip = false;
             this.movementPanel.Location = new System.Drawing.Point(3, 16);
             this.movementPanel.Name = "movementPanel";
-            this.movementPanel.ShouldFlip = false;
-            this.movementPanel.ShouldFlipEnabled = true;
             this.movementPanel.Size = new System.Drawing.Size(435, 151);
             this.movementPanel.TabIndex = 0;
             // 
@@ -142,11 +142,32 @@
             this.shootingPanel.Size = new System.Drawing.Size(435, 54);
             this.shootingPanel.TabIndex = 0;
             // 
+            // flipPanel
+            // 
+            this.flipPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flipPanel.InitialFlip = false;
+            this.flipPanel.Location = new System.Drawing.Point(3, 16);
+            this.flipPanel.Name = "flipPanel";
+            this.flipPanel.ShouldFlip = false;
+            this.flipPanel.Size = new System.Drawing.Size(429, 35);
+            this.flipPanel.TabIndex = 48;
+            // 
+            // flipGroupBox
+            // 
+            this.flipGroupBox.Controls.Add(this.flipPanel);
+            this.flipGroupBox.Location = new System.Drawing.Point(18, 372);
+            this.flipGroupBox.Name = "flipGroupBox";
+            this.flipGroupBox.Size = new System.Drawing.Size(435, 54);
+            this.flipGroupBox.TabIndex = 49;
+            this.flipGroupBox.TabStop = false;
+            this.flipGroupBox.Text = "Flip";
+            // 
             // AddEditEnemyDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(618, 385);
+            this.ClientSize = new System.Drawing.Size(618, 447);
+            this.Controls.Add(this.flipGroupBox);
             this.Controls.Add(this.shootingGroupBox);
             this.Controls.Add(this.movementGroupBox);
             this.Controls.Add(this.positionGroupBox);
@@ -161,6 +182,7 @@
             this.positionGroupBox.ResumeLayout(false);
             this.movementGroupBox.ResumeLayout(false);
             this.shootingGroupBox.ResumeLayout(false);
+            this.flipGroupBox.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -177,5 +199,7 @@
         private Controls.MovementPanel movementPanel;
         private System.Windows.Forms.GroupBox shootingGroupBox;
         private Controls.ShootingPanel shootingPanel;
+        private Controls.FlipPanel flipPanel;
+        private System.Windows.Forms.GroupBox flipGroupBox;
     }
 }
