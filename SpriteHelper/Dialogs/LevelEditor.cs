@@ -2116,8 +2116,8 @@ namespace SpriteHelper.Dialogs
             //        - movement speed (1 byte)
             //        - max movement distance (1 byte)
             //        - initial flip (1 byte)
-            //        - initial movement left (1 byte)
-            //        - movement direction (1 byte)
+            //        - initial movement direction (1 byte)
+            //        - initial movement left (1 byte)            
             //        - x position (1 byte)
             //        - y position (1 byte)            
             //        - initial life (1 byte)
@@ -2220,11 +2220,11 @@ namespace SpriteHelper.Dialogs
                     // initial flip
                     result.Add((byte)(enemy.InitialFlip ? 1 : 0));
 
-                    // initial movement distance
-                    result.Add((byte)(enemy.InitialDistanceLeft));
-
-                    // movement direction
+                    // initial movement direction
                     result.Add((byte)enemy.Direction);
+
+                    // initial movement distance
+                    result.Add((byte)(enemy.InitialDistanceLeft));                   
 
                     // x position
                     result.Add((byte)enemy.X);
