@@ -101,6 +101,7 @@ namespace SpriteHelper.Contract
             get
             {
                 switch (this.SpecialMovement)
+                {
                     case SpecialMovement.None:
                         return 0;
                     case SpecialMovement.Stop15:
