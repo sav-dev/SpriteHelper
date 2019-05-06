@@ -2211,7 +2211,7 @@ namespace SpriteHelper.Dialogs
                     // screen
                     result.Add((byte)screen);
 
-                    // should flip: todo
+                    // should flip
                     result.Add((byte)(enemy.ShouldFlip ? 1 : 0));
 
                     // movement speed
