@@ -43,12 +43,14 @@
             this.minTilesTextBox = new System.Windows.Forms.TextBox();
             this.yTilesLabel = new System.Windows.Forms.Label();
             this.maxTilesTextBox = new System.Windows.Forms.TextBox();
-            this.movementSpeedLabel = new System.Windows.Forms.Label();
             this.speedTextBox = new System.Windows.Forms.TextBox();
             this.movementComboBox = new System.Windows.Forms.ComboBox();
-            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.movementSpeedLabel = new System.Windows.Forms.Label();
             this.directionLabel = new System.Windows.Forms.Label();
             this.directionComboBox = new System.Windows.Forms.ComboBox();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.specialMovementLabel = new System.Windows.Forms.Label();
+            this.specialMovementComboBox = new System.Windows.Forms.ComboBox();
             this.propertiesLayoutPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -77,6 +79,8 @@
             this.propertiesLayoutPanel.Controls.Add(this.movementSpeedLabel, 2, 1);
             this.propertiesLayoutPanel.Controls.Add(this.directionLabel, 0, 1);
             this.propertiesLayoutPanel.Controls.Add(this.directionComboBox, 1, 1);
+            this.propertiesLayoutPanel.Controls.Add(this.specialMovementLabel, 2, 0);
+            this.propertiesLayoutPanel.Controls.Add(this.specialMovementComboBox, 3, 0);
             this.propertiesLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.propertiesLayoutPanel.Location = new System.Drawing.Point(0, 0);
             this.propertiesLayoutPanel.Name = "propertiesLayoutPanel";
@@ -220,16 +224,6 @@
             this.maxTilesTextBox.Text = "0";
             this.maxTilesTextBox.TextChanged += new System.EventHandler(this.InputTextChanged);
             // 
-            // movementSpeedLabel
-            // 
-            this.movementSpeedLabel.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.movementSpeedLabel.AutoSize = true;
-            this.movementSpeedLabel.Location = new System.Drawing.Point(286, 52);
-            this.movementSpeedLabel.Name = "movementSpeedLabel";
-            this.movementSpeedLabel.Size = new System.Drawing.Size(51, 13);
-            this.movementSpeedLabel.TabIndex = 16;
-            this.movementSpeedLabel.Text = "Speed (*)";
-            // 
             // speedTextBox
             // 
             this.speedTextBox.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -250,6 +244,16 @@
             this.movementComboBox.TabIndex = 20;
             this.movementComboBox.SelectedIndexChanged += new System.EventHandler(this.MovementComboBoxSelectedIndexChanged);
             // 
+            // movementSpeedLabel
+            // 
+            this.movementSpeedLabel.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.movementSpeedLabel.AutoSize = true;
+            this.movementSpeedLabel.Location = new System.Drawing.Point(286, 52);
+            this.movementSpeedLabel.Name = "movementSpeedLabel";
+            this.movementSpeedLabel.Size = new System.Drawing.Size(51, 13);
+            this.movementSpeedLabel.TabIndex = 16;
+            this.movementSpeedLabel.Text = "Speed (*)";
+            // 
             // directionLabel
             // 
             this.directionLabel.Anchor = System.Windows.Forms.AnchorStyles.Right;
@@ -269,6 +273,26 @@
             this.directionComboBox.Name = "directionComboBox";
             this.directionComboBox.Size = new System.Drawing.Size(121, 21);
             this.directionComboBox.TabIndex = 22;
+            // 
+            // specialMovementLabel
+            // 
+            this.specialMovementLabel.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.specialMovementLabel.AutoSize = true;
+            this.specialMovementLabel.Location = new System.Drawing.Point(280, 6);
+            this.specialMovementLabel.Name = "specialMovementLabel";
+            this.specialMovementLabel.Size = new System.Drawing.Size(57, 26);
+            this.specialMovementLabel.TabIndex = 23;
+            this.specialMovementLabel.Text = "Special Movement";
+            // 
+            // specialMovementComboBox
+            // 
+            this.specialMovementComboBox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.specialMovementComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.specialMovementComboBox.FormattingEnabled = true;
+            this.specialMovementComboBox.Location = new System.Drawing.Point(353, 9);
+            this.specialMovementComboBox.Name = "specialMovementComboBox";
+            this.specialMovementComboBox.Size = new System.Drawing.Size(121, 21);
+            this.specialMovementComboBox.TabIndex = 24;
             // 
             // MovementPanel
             // 
@@ -304,5 +328,7 @@
         private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.Label directionLabel;
         private System.Windows.Forms.ComboBox directionComboBox;
+        private System.Windows.Forms.Label specialMovementLabel;
+        private System.Windows.Forms.ComboBox specialMovementComboBox;
     }
 }

@@ -11,6 +11,14 @@ namespace SpriteHelper.Controls
         {
             InitializeComponent();
             this.toolTip.SetToolTip(this.movementSpeedLabel, "254 = 1/4, 255 = 1/2");
+
+            for (var i = 0; i < 255; i++)
+            {
+                if (Enum.IsDefined(typeof(Contract.SpecialMovement), i))
+                {
+                    this.specialMovementComboBox.Items.Add(((SpecialMovement)i).ToString());
+                }
+            }
         }
 
         private void InputTextChanged(object sender, EventArgs e)
@@ -46,6 +54,19 @@ namespace SpriteHelper.Controls
             set
             {
                 this.movementComboBox.SelectedItem = value?.ToString();
+            }
+        }
+
+        public SpecialMovement? SpecialMovement
+        {
+            get
+            {
+                var value = this.specialMovementComboBox.SelectedItem as string;
+                return (SpecialMovement)Enum.Parse(typeof(SpecialMovement), value);
+            }
+            set
+            {
+                this.specialMovementComboBox.SelectedItem = value?.ToString();
             }
         }
 
@@ -103,10 +124,13 @@ namespace SpriteHelper.Controls
         public void SetDefaultValues()
         {
             this.MovementType = Contract.MovementType.None;
+            this.SpecialMovement = Contract.SpecialMovement.None;
             this.SetSpeed(0);
             this.SetMin(0);
             this.SetMax(0);
         }
+
+        public bool AllowSpecialMovement { get; set; }
 
         private void MovementComboBoxSelectedIndexChanged(object sender, EventArgs e)
         {
@@ -119,6 +143,7 @@ namespace SpriteHelper.Controls
             this.maxOffsetTextBox.Enabled = !setToNone;
             this.minTextBox.Enabled = !setToNone;
             this.maxTextBox.Enabled = !setToNone;
+            this.specialMovementComboBox.Enabled = !setToNone && AllowSpecialMovement;
 
             if (setToNone)
             {

@@ -56,6 +56,7 @@ namespace SpriteHelper.Dialogs
             }
             
             this.ExistingElevator = existingElevator;
+            this.movementPanel.SpecialMovement = SpecialMovement.None;
         }
 
         // Set to true if OK is clicked.

@@ -118,6 +118,7 @@
             // 
             // movementPanel
             // 
+            this.movementPanel.AllowSpecialMovement = true;
             this.movementPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.movementPanel.Location = new System.Drawing.Point(3, 16);
             this.movementPanel.Name = "movementPanel";

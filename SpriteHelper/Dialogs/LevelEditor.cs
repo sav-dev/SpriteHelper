@@ -637,6 +637,7 @@ namespace SpriteHelper.Dialogs
                         this.graphics.DrawLine(pen, p1, p2);
 
                         // Draw arrow.
+                        // todo - show special movement type? show shooting?
                         if (enemy.MovementType == MovementType.Horizontal)
                         {
                             if (enemy.Direction == Direction.Left)
@@ -2104,9 +2105,9 @@ namespace SpriteHelper.Dialogs
         {
             //
             // - enemies in level data the following format:
-            //   - pointer to next screen (from here): (n x 16) + 3 (1 byte)
+            //   - pointer to next screen (from here): (n x 18) + 3 (1 byte)
             //   - number of enemies (1 byte)
-            //   - n times the enemy data (16 bytes)
+            //   - n times the enemy data (18 bytes)
             //        - 1st byte of id - pointer to the right variable (1 byte)
             //        - 2nd byte of id - a mask in the right variable (1 byte) 
             //        - slot to put enemy in (1 byte)
@@ -2114,16 +2115,18 @@ namespace SpriteHelper.Dialogs
             //        - screen the enemy is on (1 byte)
             //        - should flip (1 byte)
             //        - movement speed (1 byte)
+            //        - special movement type (1 byte)
             //        - max movement distance (1 byte)
             //        - initial flip (1 byte)
             //        - initial movement direction (1 byte)
             //        - initial movement left (1 byte)            
+            //        - initial special movement var (1 byte)
             //        - x position (1 byte)
             //        - y position (1 byte)            
             //        - initial life (1 byte)
             //        - shooting frequency initial (1 byte)
             //        - shooting frequency (1 byte)
-            //   - pointer to the previous screen (from here): (n x 16) + 2 (1 byte)
+            //   - pointer to the previous screen (from here): (n x 18) + 2 (1 byte)
             //
 
             var result = new List<byte>();
@@ -2214,6 +2217,9 @@ namespace SpriteHelper.Dialogs
                     // movement speed
                     result.Add((byte)enemy.Speed);
 
+                    // special movement type
+                    result.Add((byte)enemy.SpecialMovement);
+
                     // max movement distance
                     result.Add((byte)(enemy.MovementRange));
 
@@ -2224,7 +2230,10 @@ namespace SpriteHelper.Dialogs
                     result.Add((byte)enemy.Direction);
 
                     // initial movement distance
-                    result.Add((byte)(enemy.InitialDistanceLeft));                   
+                    result.Add((byte)(enemy.InitialDistanceLeft));
+
+                    // initial special movement var
+                    result.Add((byte)(enemy.InitialSpecialMovementVar));
 
                     // x position
                     result.Add((byte)enemy.X);
@@ -2926,6 +2935,11 @@ namespace SpriteHelper.Dialogs
                     return "Direction must be none for non-moving enemies";
                 }
 
+                if (enemy.SpecialMovement != SpecialMovement.None)
+                {
+                    return "Non-moving enemies cannot have special movement";
+                }
+
                 return null;
             }
 
@@ -3017,6 +3031,33 @@ namespace SpriteHelper.Dialogs
                 if ((enemy.MaxPosition - enemyPosition) % enemy.Speed != 0)
                 {
                     return "Max. position is not reachable with given speed";
+                }
+            }
+
+            if (enemy.SpecialMovement == SpecialMovement.Sinus8 ||
+                enemy.SpecialMovement == SpecialMovement.Sinus16)
+            {
+                var frames1 = (enemyPosition - enemy.MinPosition) / enemy.Speed;
+                var frames2 = (enemy.MaxPosition - enemyPosition) / enemy.Speed;
+
+                if (enemy.SpecialMovement == SpecialMovement.Sinus8 && frames1 % 32 != 0)
+                {
+                    return "Min. posisition is not reachable with given speed and special movement";
+                }
+
+                if (enemy.SpecialMovement == SpecialMovement.Sinus16 && frames1 % 64 != 0)
+                {
+                    return "Min. posisition is not reachable with given speed and special movement";
+                }
+
+                if (enemy.SpecialMovement == SpecialMovement.Sinus8 && frames2 % 32 != 0)
+                {
+                    return "Max. posisition is not reachable with given speed and special movement";
+                }
+
+                if (enemy.SpecialMovement == SpecialMovement.Sinus16 && frames2 % 64 != 0)
+                {
+                    return "Max. posisition is not reachable with given speed and special movement";
                 }
             }
 

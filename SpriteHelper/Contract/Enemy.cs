@@ -27,6 +27,10 @@ namespace SpriteHelper.Contract
         [DataMember]
         public Direction Direction { get; set; }
 
+        // Direction.
+        [DataMember]
+        public SpecialMovement SpecialMovement { get; set; }
+
         // Speed
         [DataMember]
         public int Speed { get; set; }
@@ -88,6 +92,30 @@ namespace SpriteHelper.Contract
                 }
 
                 return flip ? position - this.MinPosition : this.MaxPosition - position;
+            }
+        }
+
+        // Initial special movement var.
+        public int InitialSpecialMovementVar
+        {
+            get
+            {
+                switch (this.SpecialMovement)
+                    case SpecialMovement.None:
+                        return 0;
+                    case SpecialMovement.Stop15:
+                        return 15;
+                    case SpecialMovement.Stop30:
+                        return 30;
+                    case SpecialMovement.Stop60:
+                        return 60;
+                    case SpecialMovement.Sinus8:
+                        return 32;
+                    case SpecialMovement.Sinus16:
+                        return 64;
+                    default:
+                        throw new System.Exception("This should not happen");
+                }
             }
         }
 

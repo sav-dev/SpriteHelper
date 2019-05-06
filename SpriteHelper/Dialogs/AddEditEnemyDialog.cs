@@ -1,5 +1,4 @@
 ﻿using SpriteHelper.Contract;
-using SpriteHelper.Controls;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -56,6 +55,7 @@ namespace SpriteHelper.Dialogs
 
                 this.movementPanel.MovementType = existingEnemy.MovementType;
                 this.movementPanel.Direction = existingEnemy.Direction;
+                this.movementPanel.SpecialMovement = existingEnemy.SpecialMovement;
                 this.movementPanel.SetSpeed(existingEnemy.Speed);
                 this.movementPanel.SetMin(existingEnemy.MinPosition);
                 this.movementPanel.SetMax(existingEnemy.MaxPosition);
@@ -104,6 +104,7 @@ namespace SpriteHelper.Dialogs
 
         public MovementType MovementType => this.movementPanel.MovementType ?? MovementType.None;
         public Direction Direction => this.movementPanel.Direction ?? Direction.None;
+        public SpecialMovement SpecialMovement => this.movementPanel.SpecialMovement ?? SpecialMovement.None;
 
         public bool InitialFlip => this.flipPanel.InitialFlip;
         public bool ShouldFlip => this.flipPanel.ShouldFlip;
@@ -154,6 +155,7 @@ namespace SpriteHelper.Dialogs
             // Set values that cannot fail.
             newEnemy.MovementType = this.MovementType;
             newEnemy.Direction = this.Direction;
+            newEnemy.SpecialMovement = this.SpecialMovement;
             newEnemy.InitialFlip = this.InitialFlip;
             newEnemy.ShouldFlip = this.ShouldFlip;          
 
