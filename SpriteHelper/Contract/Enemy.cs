@@ -104,12 +104,10 @@ namespace SpriteHelper.Contract
                 {
                     case SpecialMovement.None:
                         return 0;
-                    case SpecialMovement.Stop15:
-                        return 15;
-                    case SpecialMovement.Stop30:
-                        return 30;
                     case SpecialMovement.Stop60:
                         return 60;
+                    case SpecialMovement.Stop120:
+                        return 120;
                     case SpecialMovement.Sinus8:
                         return 32;
                     case SpecialMovement.Sinus16:

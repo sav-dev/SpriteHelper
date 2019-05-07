@@ -6,9 +6,8 @@
 
         None = 0,
 
-        Stop15 = 1,
-        Stop30 = 2,
-        Stop60 = 3,
+        Stop60 = 1,
+        Stop120 = 2,
 
         Sinus8 = 10,
         Sinus16 = 11
