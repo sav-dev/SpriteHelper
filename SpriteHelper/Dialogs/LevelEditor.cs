@@ -3037,8 +3037,23 @@ namespace SpriteHelper.Dialogs
             if (enemy.SpecialMovement == SpecialMovement.Sinus8 ||
                 enemy.SpecialMovement == SpecialMovement.Sinus16)
             {
-                var frames1 = (enemyPosition - enemy.MinPosition) / enemy.Speed;
-                var frames2 = (enemy.MaxPosition - enemyPosition) / enemy.Speed;
+                int frames1, frames2;
+
+                if (enemy.Speed == 255) // 1/2
+                {
+                    frames1 = (enemyPosition - enemy.MinPosition) * 2;
+                    frames2 = (enemy.MaxPosition - enemyPosition) * 2;
+                }
+                else if (enemy.Speed == 254) // 1/4
+                {
+                    frames1 = (enemyPosition - enemy.MinPosition) * 4;
+                    frames2 = (enemy.MaxPosition - enemyPosition) * 4;
+                }
+                else
+                {
+                    frames1 = (enemyPosition - enemy.MinPosition) / enemy.Speed;
+                    frames2 = (enemy.MaxPosition - enemyPosition) / enemy.Speed;
+                }
 
                 if (enemy.SpecialMovement == SpecialMovement.Sinus8 && frames1 % 32 != 0)
                 {
