@@ -184,7 +184,7 @@ namespace SpriteHelper.Dialogs
 ;    hitbox width    : 1 byte (inclusive)
 ;    hitbox y off    : 1 byte
 ;    hitbox height   : 1 byte (inclusive)
-;    shooting dir.   : 1 byte (see SHOOT_DIR_* consts)
+;    orientation     : 1 byte (see ORIENTATION_* consts)
 ;    gun x off       : 1 byte (signed, 0 for non shooting)
 ;    gun y off       : 1 byte (signed, 0 for non shooting)
 ;    gun x off flip  : 1 byte (signed, 0 for non shooting)
@@ -254,9 +254,9 @@ namespace SpriteHelper.Dialogs
                     gun = new[] { 0, 0, 0, 0 };
                 }
 
-                builder.AppendLine(".shootingDir:");
-                builder.AppendLineFormat("  .byte ${0:X2}", // see SHOOT_DIR_* consts
-                    animation.Offsets.GunXOff < 0 || animation.Flip == Flip.None ? 2 :  (animation.Flip == Flip.Horizontal ? 1 : 0));
+                builder.AppendLine(".orientation:");
+                builder.AppendLineFormat("  .byte ${0:X2}", // see ORIENTATION_* consts
+                    animation.Flip == Flip.None ? 2 : (animation.Flip == Flip.Horizontal ? 1 : 0));
 
                 builder.AppendLine(".gunInfo:");
                 builder.AppendLineFormat("  .byte {0}", string.Join(",", gun.Select(v => "$" + (v % 256).ToString("X2"))));
