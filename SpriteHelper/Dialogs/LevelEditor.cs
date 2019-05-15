@@ -717,79 +717,34 @@ namespace SpriteHelper.Dialogs
         {
             if (drawMovement && movementType != MovementType.None)
             {
-                // Draw line.
-                var width = image.Width;
-                var height = image.Height;
-                var p1 = new Point(minX * Constants.LevelEditorZoom + width / 2, minY * Constants.LevelEditorZoom + height / 2);
-                var p2 = new Point(maxX * Constants.LevelEditorZoom + width / 2, maxY * Constants.LevelEditorZoom + height / 2);
-                
                 if (specialMovement == SpecialMovement.Sinus8 || specialMovement == SpecialMovement.Sinus16)
                 {
-                    var sinusLength = (specialMovement == SpecialMovement.Sinus8 ? 32 : 64) * Constants.LevelEditorZoom;
-                    var radius = sinusLength / 4; // so 8 * zoom or 16 * zoom
-                    var horizontal = movementType == MovementType.Horizontal;
-                    if (horizontal)
-                    {
-                        var distance = Math.Abs(p2.X - p1.X);
-                        var startPoint = new Point(p1.X, p1.Y);
-                        for (var i = 0; i < distance / sinusLength; i++)
-                        {
-                            var points = new Point[]
-                            {
-                                startPoint,
-                                new Point(startPoint.X + radius, startPoint.Y + (direction == Direction.Left ? -radius : radius)),
-                                new Point(startPoint.X + radius * 2, startPoint.Y),
-                                new Point(startPoint.X + 3 * radius, startPoint.Y + (direction == Direction.Left ? radius : -radius)),
-                                new Point(startPoint.X + 4 * radius, startPoint.Y),
-                            };
-            
-                            this.graphics.DrawCurve(pen, points);
-            
-                            startPoint = new Point(startPoint.X + 4 * radius, startPoint.Y);
-                        }
-                    }
-                    else // vertical
-                    {
-                        var distance = Math.Abs(p2.Y - p1.Y);
-                        var startPoint = new Point(p1.X, p1.Y);
-                        for (var i = 0; i < distance / sinusLength; i++)
-                        {
-                            var points = new Point[]
-                            {
-                                startPoint,
-                                new Point(startPoint.X + (direction == Direction.Up ? -radius : radius), startPoint.Y + radius),
-                                new Point(startPoint.X, startPoint.Y + radius * 2),
-                                new Point(startPoint.X + (direction == Direction.Up ? radius : -radius), startPoint.Y + radius * 3),
-                                new Point(startPoint.X, startPoint.Y + radius * 4),
-                            };
-            
-                            this.graphics.DrawCurve(pen, points);
-            
-                            startPoint = new Point(startPoint.X, startPoint.Y + radius * 4);
-                        }
-                    }
+                    this.DrawSinusMovement(
+                        imageTransparent,
+                        pen,
+                        movementType,
+                        direction,
+                        specialMovement,
+                        x,
+                        y,
+                        movementType == MovementType.Horizontal ? minX : x, // for sinus movement, there's the 8/16 (x2) movement in the different 
+                        movementType == MovementType.Horizontal ? maxX : x, // plane. But we don't want to draw the transparent images on the 
+                        movementType == MovementType.Vertical ? minY : y,   // edges of the rectangle. so we have this logic of calculating
+                        movementType == MovementType.Vertical ? maxY : y);  // min/max x/y here.
                 }                        
                 else
                 {
-                    this.graphics.DrawLine(pen, p1, p2);
-                }
-            
-                // Draw arrow.
-                this.DrawArrow(
-                    pen,
-                    direction,
-                    (direction == Direction.Left || direction == Direction.Up) ? p1 : p2);
-            
-                if (minX != x || minY != y)
-                {
-                    // Draw min. transparent image.
-                    this.graphics.DrawImage(imageTransparent, new Point(minX * Constants.LevelEditorZoom, minY * Constants.LevelEditorZoom));
-                }
-            
-                if (maxX != x || maxY != y)
-                {
-                    // Draw max. transparent image.
-                    this.graphics.DrawImage(imageTransparent, new Point(maxX * Constants.LevelEditorZoom, maxY * Constants.LevelEditorZoom));
+                    this.DrawNormalMovement(
+                        imageTransparent,
+                        pen,
+                        movementType,
+                        direction,
+                        x,
+                        y,
+                        minX,
+                        maxX,
+                        minY,
+                        maxY);
                 }
             }
             
@@ -802,6 +757,128 @@ namespace SpriteHelper.Dialogs
                 this.graphics.DrawRectangle(Pens.Red, x * Constants.LevelEditorZoom, y * Constants.LevelEditorZoom, image.Width, image.Height);
             }
         }      
+
+        private void DrawNormalMovement(
+            Image imageTransparent,
+            Pen pen,
+            MovementType movementType,
+            Direction direction,
+            int x,
+            int y,
+            int minX,
+            int maxX,
+            int minY,
+            int maxY)
+        {
+            var width = imageTransparent.Width;
+            var height = imageTransparent.Height;
+
+            var p1 = new Point(minX * Constants.LevelEditorZoom + width / 2, minY * Constants.LevelEditorZoom + height / 2);
+            var p2 = new Point(maxX * Constants.LevelEditorZoom + width / 2, maxY * Constants.LevelEditorZoom + height / 2);
+
+            this.graphics.DrawLine(pen, p1, p2);
+
+            // Draw arrow.
+            this.DrawArrow(
+                pen,
+                direction,
+                (direction == Direction.Left || direction == Direction.Up) ? p1 : p2);
+
+            if (minX != x || minY != y)
+            {
+                // Draw min. transparent image.
+                this.graphics.DrawImage(imageTransparent, new Point(minX * Constants.LevelEditorZoom, minY * Constants.LevelEditorZoom));
+            }
+
+            if (maxX != x || maxY != y)
+            {
+                // Draw max. transparent image.
+                this.graphics.DrawImage(imageTransparent, new Point(maxX * Constants.LevelEditorZoom, maxY * Constants.LevelEditorZoom));
+            }
+        }
+
+
+        private void DrawSinusMovement(
+            Image imageTransparent,
+            Pen pen, 
+            MovementType movementType, 
+            Direction direction, 
+            SpecialMovement specialMovement,
+            int x,
+            int y,
+            int minX,
+            int maxX,
+            int minY,
+            int maxY)
+        {
+            var width = imageTransparent.Width;
+            var height = imageTransparent.Height;
+
+            var p1 = new Point(minX * Constants.LevelEditorZoom + width / 2, minY * Constants.LevelEditorZoom + height / 2);
+            var p2 = new Point(maxX * Constants.LevelEditorZoom + width / 2, maxY * Constants.LevelEditorZoom + height / 2);
+
+            var sinusLength = (specialMovement == SpecialMovement.Sinus8 ? 32 : 64) * Constants.LevelEditorZoom;
+            var radius = sinusLength / 4; // so 8 * zoom or 16 * zoom
+            var horizontal = movementType == MovementType.Horizontal;
+            if (horizontal)
+            {
+                var distance = Math.Abs(p2.X - p1.X);
+                var startPoint = new Point(p1.X, p1.Y);
+                for (var i = 0; i < distance / sinusLength; i++)
+                {
+                    var points = new Point[]
+                    {
+                                startPoint,
+                                new Point(startPoint.X + radius, startPoint.Y + (direction == Direction.Left ? -radius : radius)),
+                                new Point(startPoint.X + radius * 2, startPoint.Y),
+                                new Point(startPoint.X + 3 * radius, startPoint.Y + (direction == Direction.Left ? radius : -radius)),
+                                new Point(startPoint.X + 4 * radius, startPoint.Y),
+                    };
+
+                    this.graphics.DrawCurve(pen, points);
+
+                    startPoint = new Point(startPoint.X + 4 * radius, startPoint.Y);
+                }
+            }
+            else // vertical
+            {
+                var distance = Math.Abs(p2.Y - p1.Y);
+                var startPoint = new Point(p1.X, p1.Y);
+                for (var i = 0; i < distance / sinusLength; i++)
+                {
+                    var points = new Point[]
+                    {
+                                startPoint,
+                                new Point(startPoint.X + (direction == Direction.Up ? -radius : radius), startPoint.Y + radius),
+                                new Point(startPoint.X, startPoint.Y + radius * 2),
+                                new Point(startPoint.X + (direction == Direction.Up ? radius : -radius), startPoint.Y + radius * 3),
+                                new Point(startPoint.X, startPoint.Y + radius * 4),
+                    };
+
+                    this.graphics.DrawCurve(pen, points);
+
+                    startPoint = new Point(startPoint.X, startPoint.Y + radius * 4);
+                }
+            }
+
+            // Draw arrow.
+            this.DrawArrow(
+                pen,
+                direction,
+                (direction == Direction.Left || direction == Direction.Up) ? p1 : p2);
+
+            if (minX != x || minY != y)
+            {
+                // Draw min. transparent image.
+                this.graphics.DrawImage(imageTransparent, new Point(minX * Constants.LevelEditorZoom, minY * Constants.LevelEditorZoom));
+            }
+
+            if (maxX != x || maxY != y)
+            {
+                // Draw max. transparent image.
+                this.graphics.DrawImage(imageTransparent, new Point(maxX * Constants.LevelEditorZoom, maxY * Constants.LevelEditorZoom));
+            }
+        }
 
         private void DrawArrow(Pen pen, Direction dir, Point p)
         {
