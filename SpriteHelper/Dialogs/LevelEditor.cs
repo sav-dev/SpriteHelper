@@ -72,6 +72,10 @@ namespace SpriteHelper.Dialogs
         private Bitmap bitmap;
         private Graphics graphics;
 
+        // Pens and brushes.
+        private Pen EnemyMovementPen = new Pen(Color.DarkOrange, 3);
+        private Pen ElevatorMovementPen = new Pen(Color.Crimson, 3);
+
         #region FormRelated
 
         ////
@@ -611,133 +615,35 @@ namespace SpriteHelper.Dialogs
         private void DrawEnemies()
         {
             if (this.showEnemiesToolStripMenuItem.Checked)
-            {
-                //// todo: draw shooting?
-                //// todo: draw stop movement?
-
+            {                
                 foreach (var enemy in Enemies)
                 {
-                    // Get image.
+                    //// todo: draw shooting?
+
                     var image = this.enBitmaps[enemy.Name][enemy.InitialFlip];
+                    var imageTransparent = this.enBitmapsTransparent[enemy.Name][enemy.InitialFlip];
 
-                    if (this.showEnemyMovementToolStripMenuItem.Checked && enemy.MovementType != MovementType.None)
-                    {
-                        // Get transparent image.
-                        var imageTransparent = this.enBitmapsTransparent[enemy.Name][enemy.InitialFlip];
+                    var rectangle = enemy.GetMovementRectangle();
+                    var enemyMinX = rectangle.X;
+                    var enemyMaxX = rectangle.X + rectangle.Width;
+                    var enemyMinY = rectangle.Y;
+                    var enemyMaxY = rectangle.Y + rectangle.Height;
 
-                        // Calculate coordinates.
-                        var enemyMinX = enemy.MovementType == MovementType.Horizontal ? enemy.MinPosition : enemy.X;
-                        var enemyMinY = enemy.MovementType == MovementType.Vertical ? enemy.MinPosition : enemy.Y;
-                        var enemyMaxX = enemy.MovementType == MovementType.Horizontal ? enemy.MaxPosition : enemy.X;
-                        var enemyMaxY = enemy.MovementType == MovementType.Vertical ? enemy.MaxPosition : enemy.Y;
-
-                        // Draw line.
-                        var width = image.Width;
-                        var height = image.Height;
-                        var p1 = new Point(enemyMinX * Constants.LevelEditorZoom + width / 2, enemyMinY * Constants.LevelEditorZoom + height / 2);
-                        var p2 = new Point(enemyMaxX * Constants.LevelEditorZoom + width / 2, enemyMaxY * Constants.LevelEditorZoom + height / 2);
-                        var pen = new Pen(Color.DarkOrange, 3);
-
-                        if (enemy.SpecialMovement == SpecialMovement.Sinus8 || enemy.SpecialMovement == SpecialMovement.Sinus16)
-                        {
-                            var sinusLength = (enemy.SpecialMovement == SpecialMovement.Sinus8 ? 32 : 64) * Constants.LevelEditorZoom;
-                            var radius = sinusLength / 4; // so 8 * zoom or 16 * zoom
-                            var horizontal = enemy.MovementType == MovementType.Horizontal;
-                            if (horizontal)
-                            {
-                                var distance = Math.Abs(p2.X - p1.X);
-                                var startPoint = new Point(p1.X, p1.Y);
-                                for (var i = 0; i < distance / sinusLength; i++)
-                                {
-                                    var points = new Point[]
-                                    {
-                                        startPoint,
-                                        new Point(startPoint.X + radius, startPoint.Y + (enemy.Direction == Direction.Left ? -radius : radius)),
-                                        new Point(startPoint.X + radius * 2, startPoint.Y),
-                                        new Point(startPoint.X + 3 * radius, startPoint.Y + (enemy.Direction == Direction.Left ? radius : -radius)),
-                                        new Point(startPoint.X + 4 * radius, startPoint.Y),
-                                    };
-
-                                    this.graphics.DrawCurve(pen, points);
-
-                                    startPoint = new Point(startPoint.X + 4 * radius, startPoint.Y);
-                                }
-                            }
-                            else // vertical
-                            {
-                                var distance = Math.Abs(p2.Y - p1.Y);
-                                var startPoint = new Point(p1.X, p1.Y);
-                                for (var i = 0; i < distance / sinusLength; i++)
-                                {
-                                    var points = new Point[]
-                                    {
-                                        startPoint,
-                                        new Point(startPoint.X + (enemy.Direction == Direction.Up ? -radius : radius), startPoint.Y + radius),
-                                        new Point(startPoint.X, startPoint.Y + radius * 2),
-                                        new Point(startPoint.X + (enemy.Direction == Direction.Up ? radius : -radius), startPoint.Y + radius * 3),
-                                        new Point(startPoint.X, startPoint.Y + radius * 4),
-                                    };
-
-                                    this.graphics.DrawCurve(pen, points);
-
-                                    startPoint = new Point(startPoint.X, startPoint.Y + radius * 4);
-                                }
-                            }
-                        }                        
-                        else
-                        {
-                            this.graphics.DrawLine(pen, p1, p2);
-                        }
-
-                        // Draw arrow.
-                        if (enemy.MovementType == MovementType.Horizontal)
-                        {
-                            if (enemy.Direction == Direction.Left)
-                            {
-                                // Left, p1
-                                this.graphics.DrawPolygon(pen, new[] { p1, new Point(p1.X + 3, p1.Y + 3), new Point(p1.X + 3, p1.Y - 3) });
-                            }
-                            else
-                            {
-                                // Right, p2
-                                this.graphics.DrawPolygon(pen, new[] { p2, new Point(p2.X - 3, p2.Y + 3), new Point(p2.X - 3, p2.Y - 3) });
-                            }
-                        }
-                        else if (enemy.MovementType == MovementType.Vertical)
-                        {
-                            if (enemy.Direction == Direction.Up)
-                            {
-                                // Up, p1
-                                this.graphics.DrawPolygon(pen, new[] { p1, new Point(p1.X - 3, p1.Y + 3), new Point(p1.X + 3, p1.Y + 3) });
-                            }
-                            else
-                            {
-                                // Down, p2
-                                this.graphics.DrawPolygon(pen, new[] { p2, new Point(p2.X - 3, p2.Y - 3), new Point(p2.X + 3, p2.Y - 3) });
-                            }
-                        }
-
-                        if (enemyMinX != enemy.X || enemyMinY != enemy.Y)
-                        {
-                            // Draw min. transparent image.
-                            this.graphics.DrawImage(imageTransparent, new Point(enemyMinX * Constants.LevelEditorZoom, enemyMinY * Constants.LevelEditorZoom));
-                        }
-
-                        if (enemyMaxX != enemy.X || enemyMaxY != enemy.Y)
-                        {
-                            // Draw max. transparent image.
-                            this.graphics.DrawImage(imageTransparent, new Point(enemyMaxX * Constants.LevelEditorZoom, enemyMaxY * Constants.LevelEditorZoom));
-                        }
-                    }
-
-                    // Draw regular image.                   
-                    this.graphics.DrawImage(image, new Point(enemy.X * Constants.LevelEditorZoom, enemy.Y * Constants.LevelEditorZoom));
-
-                    if (enemy == this.SelectedEnemy)
-                    {
-                        // Draw red box around selected enemy.
-                        this.graphics.DrawRectangle(Pens.Red, enemy.X * Constants.LevelEditorZoom, enemy.Y * Constants.LevelEditorZoom, image.Width, image.Height);
-                    }
+                    this.DrawObject(
+                        image,
+                        imageTransparent,
+                        this.EnemyMovementPen,
+                        this.showEnemyMovementToolStripMenuItem.Checked,
+                        enemy.MovementType,
+                        enemy.Direction,
+                        enemy.SpecialMovement,
+                        enemy.X,
+                        enemy.Y,
+                        enemyMinX,
+                        enemyMaxX,
+                        enemyMinY,
+                        enemyMaxY,
+                        enemy == this.SelectedEnemy);
                 }
             }
         }
@@ -756,7 +662,7 @@ namespace SpriteHelper.Dialogs
                         var rectangle = elevator.PlayerRectangle;
                         var x1 = Math.Max(rectangle.X * Constants.LevelEditorZoom, 0);
                         var x2 = Math.Min(
-                            (rectangle.X + rectangle.Width) * Constants.LevelEditorZoom, 
+                            (rectangle.X + rectangle.Width) * Constants.LevelEditorZoom,
                             this.level.Length * Constants.BackgroundTileWidth * Constants.LevelEditorZoom);
                         var y1 = rectangle.Y * Constants.LevelEditorZoom;
                         var y2 = (rectangle.Y + rectangle.Height) * Constants.LevelEditorZoom;
@@ -770,84 +676,149 @@ namespace SpriteHelper.Dialogs
                                 y2 - y1));
                     }
 
-                    // Get image.
                     var image = this.elevatorBitmaps[elevator.Size];
+                    var imageTransparent = this.elevatorBitmapsTransparent[elevator.Size];
 
-                    if (this.showElevatorMovementToolStripMenuItem.Checked)
-                    {
-                        // Get transparent image.
-                        var imageTransparent = this.elevatorBitmapsTransparent[elevator.Size];
-
-                        // Calculate coordinates.
-                        var enemyMinX = elevator.MovementType == MovementType.Horizontal ? elevator.MinPosition : elevator.X;
-                        var enemyMinY = elevator.MovementType == MovementType.Vertical ? elevator.MinPosition : elevator.Y;
-                        var enemyMaxX = elevator.MovementType == MovementType.Horizontal ? elevator.MaxPosition : elevator.X;
-                        var enemyMaxY = elevator.MovementType == MovementType.Vertical ? elevator.MaxPosition : elevator.Y;
-
-                        // Draw line.
-                        var width = image.Width;
-                        var height = image.Height;
-                        var p1 = new Point(enemyMinX * Constants.LevelEditorZoom + width / 2, enemyMinY * Constants.LevelEditorZoom + height / 2);
-                        var p2 = new Point(enemyMaxX * Constants.LevelEditorZoom + width / 2, enemyMaxY * Constants.LevelEditorZoom + height / 2);
-                        var pen = new Pen(Color.Crimson, 3);
-                        this.graphics.DrawLine(pen, p1, p2);
-
-                        // Draw arrow.
-                        // this isn't really required since horizontal elevators are not a thing
-                        if (elevator.MovementType == MovementType.Horizontal)
-                        {
-                            if (elevator.Direction == Direction.Left)
-                            {
-                                // Left, p1
-                                this.graphics.DrawPolygon(pen, new[] { p1, new Point(p1.X + 3, p1.Y + 3), new Point(p1.X + 3, p1.Y - 3) });
-                            }
-                            else
-                            {
-                                // Right, p2
-                                this.graphics.DrawPolygon(pen, new[] { p2, new Point(p2.X - 3, p2.Y + 3), new Point(p2.X - 3, p2.Y - 3) });
-                            }
-                        }
-                        else if (elevator.MovementType == MovementType.Vertical)
-                        {
-                            if (elevator.Direction == Direction.Up)
-                            {
-                                // Up, p1
-                                this.graphics.DrawPolygon(pen, new[] { p1, new Point(p1.X - 3, p1.Y + 3), new Point(p1.X + 3, p1.Y + 3) });
-                            }
-                            else
-                            {
-                                // Down, p2
-                                this.graphics.DrawPolygon(pen, new[] { p2, new Point(p2.X - 3, p2.Y - 3), new Point(p2.X + 3, p2.Y - 3) });
-                            }
-                        }
-
-                        if (enemyMinX != elevator.X || enemyMinY != elevator.Y)
-                        {
-                            // Draw min. transparent image.
-                            this.graphics.DrawImage(imageTransparent, new Point(enemyMinX * Constants.LevelEditorZoom, enemyMinY * Constants.LevelEditorZoom));
-                        }
-
-                        if (enemyMaxX != elevator.X || enemyMaxY != elevator.Y)
-                        {
-                            // Draw max. transparent image.
-                            this.graphics.DrawImage(imageTransparent, new Point(enemyMaxX * Constants.LevelEditorZoom, enemyMaxY * Constants.LevelEditorZoom));
-                        }
-                    }
-
-                    // Draw regular image.                   
-                    this.graphics.DrawImage(image, new Point(elevator.X * Constants.LevelEditorZoom, elevator.Y * Constants.LevelEditorZoom));
-
-                    if (elevator == this.SelectedElevator)
-                    {
-                        // Draw red box around selected elevator.
-                        this.graphics.DrawRectangle(
-                            Pens.Red, 
-                            elevator.X * Constants.LevelEditorZoom, 
-                            elevator.Y * Constants.LevelEditorZoom, 
-                            elevator.Width * Constants.LevelEditorZoom, 
-                            elevator.Height * Constants.LevelEditorZoom);
-                    }
+                    this.DrawObject(
+                        image,
+                        imageTransparent,
+                        this.ElevatorMovementPen,
+                        this.showElevatorMovementToolStripMenuItem.Checked,
+                        elevator.MovementType,
+                        elevator.Direction,
+                        SpecialMovement.None,
+                        elevator.X,
+                        elevator.Y,
+                        elevator.MovementType == MovementType.Horizontal ? elevator.MinPosition : elevator.X,
+                        elevator.MovementType == MovementType.Horizontal ? elevator.MaxPosition : elevator.X,
+                        elevator.MovementType == MovementType.Vertical ? elevator.MinPosition : elevator.Y,
+                        elevator.MovementType == MovementType.Vertical ? elevator.MaxPosition : elevator.Y,
+                        elevator == this.SelectedElevator);
                 }
+            }
+        }
+
+        // todo: draw stop movement?
+        private void DrawObject(
+            Bitmap image,
+            Bitmap imageTransparent,
+            Pen pen,
+            bool drawMovement,
+            MovementType movementType,
+            Direction direction,
+            SpecialMovement specialMovement,
+            int x,
+            int y,
+            int minX,
+            int maxX,
+            int minY,
+            int maxY,
+            bool selected)
+        {
+            if (drawMovement && movementType != MovementType.None)
+            {
+                // Draw line.
+                var width = image.Width;
+                var height = image.Height;
+                var p1 = new Point(minX * Constants.LevelEditorZoom + width / 2, minY * Constants.LevelEditorZoom + height / 2);
+                var p2 = new Point(maxX * Constants.LevelEditorZoom + width / 2, maxY * Constants.LevelEditorZoom + height / 2);
+                
+                if (specialMovement == SpecialMovement.Sinus8 || specialMovement == SpecialMovement.Sinus16)
+                {
+                    var sinusLength = (specialMovement == SpecialMovement.Sinus8 ? 32 : 64) * Constants.LevelEditorZoom;
+                    var radius = sinusLength / 4; // so 8 * zoom or 16 * zoom
+                    var horizontal = movementType == MovementType.Horizontal;
+                    if (horizontal)
+                    {
+                        var distance = Math.Abs(p2.X - p1.X);
+                        var startPoint = new Point(p1.X, p1.Y);
+                        for (var i = 0; i < distance / sinusLength; i++)
+                        {
+                            var points = new Point[]
+                            {
+                                startPoint,
+                                new Point(startPoint.X + radius, startPoint.Y + (direction == Direction.Left ? -radius : radius)),
+                                new Point(startPoint.X + radius * 2, startPoint.Y),
+                                new Point(startPoint.X + 3 * radius, startPoint.Y + (direction == Direction.Left ? radius : -radius)),
+                                new Point(startPoint.X + 4 * radius, startPoint.Y),
+                            };
+            
+                            this.graphics.DrawCurve(pen, points);
+            
+                            startPoint = new Point(startPoint.X + 4 * radius, startPoint.Y);
+                        }
+                    }
+                    else // vertical
+                    {
+                        var distance = Math.Abs(p2.Y - p1.Y);
+                        var startPoint = new Point(p1.X, p1.Y);
+                        for (var i = 0; i < distance / sinusLength; i++)
+                        {
+                            var points = new Point[]
+                            {
+                                startPoint,
+                                new Point(startPoint.X + (direction == Direction.Up ? -radius : radius), startPoint.Y + radius),
+                                new Point(startPoint.X, startPoint.Y + radius * 2),
+                                new Point(startPoint.X + (direction == Direction.Up ? radius : -radius), startPoint.Y + radius * 3),
+                                new Point(startPoint.X, startPoint.Y + radius * 4),
+                            };
+            
+                            this.graphics.DrawCurve(pen, points);
+            
+                            startPoint = new Point(startPoint.X, startPoint.Y + radius * 4);
+                        }
+                    }
+                }                        
+                else
+                {
+                    this.graphics.DrawLine(pen, p1, p2);
+                }
+            
+                // Draw arrow.
+                this.DrawArrow(
+                    pen,
+                    direction,
+                    (direction == Direction.Left || direction == Direction.Up) ? p1 : p2);
+            
+                if (minX != x || minY != y)
+                {
+                    // Draw min. transparent image.
+                    this.graphics.DrawImage(imageTransparent, new Point(minX * Constants.LevelEditorZoom, minY * Constants.LevelEditorZoom));
+                }
+            
+                if (maxX != x || maxY != y)
+                {
+                    // Draw max. transparent image.
+                    this.graphics.DrawImage(imageTransparent, new Point(maxX * Constants.LevelEditorZoom, maxY * Constants.LevelEditorZoom));
+                }
+            }
+            
+            // Draw regular image at the very end.
+            this.graphics.DrawImage(image, new Point(x * Constants.LevelEditorZoom, y * Constants.LevelEditorZoom));
+            
+            if (selected)
+            {
+                // Draw red box around selected enemy.
+                this.graphics.DrawRectangle(Pens.Red, x * Constants.LevelEditorZoom, y * Constants.LevelEditorZoom, image.Width, image.Height);
+            }
+        }      
+
+        private void DrawArrow(Pen pen, Direction dir, Point p)
+        {
+            switch (dir)
+            {
+                case Direction.Left:
+                    this.graphics.DrawPolygon(pen, new[] { p, new Point(p.X + 3, p.Y + 3), new Point(p.X + 3, p.Y - 3) });
+                    break;
+                case Direction.Right:
+                    this.graphics.DrawPolygon(pen, new[] { p, new Point(p.X - 3, p.Y + 3), new Point(p.X - 3, p.Y - 3) });
+                    break;
+                case Direction.Up:
+                    this.graphics.DrawPolygon(pen, new[] { p, new Point(p.X - 3, p.Y + 3), new Point(p.X + 3, p.Y + 3) });
+                    break;
+                case Direction.Down:
+                    this.graphics.DrawPolygon(pen, new[] { p, new Point(p.X - 3, p.Y - 3), new Point(p.X + 3, p.Y - 3) });
+                    break;
             }
         }
 
