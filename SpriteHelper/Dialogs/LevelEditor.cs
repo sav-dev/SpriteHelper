@@ -626,16 +626,16 @@ namespace SpriteHelper.Dialogs
                         var imageTransparent = this.enBitmapsTransparent[enemy.Name][enemy.InitialFlip];
 
                         // Calculate coordinates.
-                        var minX = enemy.MovementType == MovementType.Horizontal ? enemy.MinPosition : enemy.X;
-                        var minY = enemy.MovementType == MovementType.Vertical ? enemy.MinPosition : enemy.Y;
-                        var maxX = enemy.MovementType == MovementType.Horizontal ? enemy.MaxPosition : enemy.X;
-                        var maxY = enemy.MovementType == MovementType.Vertical ? enemy.MaxPosition : enemy.Y;
+                        var enemyMinX = enemy.MovementType == MovementType.Horizontal ? enemy.MinPosition : enemy.X;
+                        var enemyMinY = enemy.MovementType == MovementType.Vertical ? enemy.MinPosition : enemy.Y;
+                        var enemyMaxX = enemy.MovementType == MovementType.Horizontal ? enemy.MaxPosition : enemy.X;
+                        var enemyMaxY = enemy.MovementType == MovementType.Vertical ? enemy.MaxPosition : enemy.Y;
 
                         // Draw line.
                         var width = image.Width;
                         var height = image.Height;
-                        var p1 = new Point(minX * Constants.LevelEditorZoom + width / 2, minY * Constants.LevelEditorZoom + height / 2);
-                        var p2 = new Point(maxX * Constants.LevelEditorZoom + width / 2, maxY * Constants.LevelEditorZoom + height / 2);
+                        var p1 = new Point(enemyMinX * Constants.LevelEditorZoom + width / 2, enemyMinY * Constants.LevelEditorZoom + height / 2);
+                        var p2 = new Point(enemyMaxX * Constants.LevelEditorZoom + width / 2, enemyMaxY * Constants.LevelEditorZoom + height / 2);
                         var pen = new Pen(Color.DarkOrange, 3);
 
                         if (enemy.SpecialMovement == SpecialMovement.Sinus8 || enemy.SpecialMovement == SpecialMovement.Sinus16)
@@ -717,16 +717,16 @@ namespace SpriteHelper.Dialogs
                             }
                         }
 
-                        if (minX != enemy.X || minY != enemy.Y)
+                        if (enemyMinX != enemy.X || enemyMinY != enemy.Y)
                         {
                             // Draw min. transparent image.
-                            this.graphics.DrawImage(imageTransparent, new Point(minX * Constants.LevelEditorZoom, minY * Constants.LevelEditorZoom));
+                            this.graphics.DrawImage(imageTransparent, new Point(enemyMinX * Constants.LevelEditorZoom, enemyMinY * Constants.LevelEditorZoom));
                         }
 
-                        if (maxX != enemy.X || maxY != enemy.Y)
+                        if (enemyMaxX != enemy.X || enemyMaxY != enemy.Y)
                         {
                             // Draw max. transparent image.
-                            this.graphics.DrawImage(imageTransparent, new Point(maxX * Constants.LevelEditorZoom, maxY * Constants.LevelEditorZoom));
+                            this.graphics.DrawImage(imageTransparent, new Point(enemyMaxX * Constants.LevelEditorZoom, enemyMaxY * Constants.LevelEditorZoom));
                         }
                     }
 
@@ -779,16 +779,16 @@ namespace SpriteHelper.Dialogs
                         var imageTransparent = this.elevatorBitmapsTransparent[elevator.Size];
 
                         // Calculate coordinates.
-                        var minX = elevator.MovementType == MovementType.Horizontal ? elevator.MinPosition : elevator.X;
-                        var minY = elevator.MovementType == MovementType.Vertical ? elevator.MinPosition : elevator.Y;
-                        var maxX = elevator.MovementType == MovementType.Horizontal ? elevator.MaxPosition : elevator.X;
-                        var maxY = elevator.MovementType == MovementType.Vertical ? elevator.MaxPosition : elevator.Y;
+                        var enemyMinX = elevator.MovementType == MovementType.Horizontal ? elevator.MinPosition : elevator.X;
+                        var enemyMinY = elevator.MovementType == MovementType.Vertical ? elevator.MinPosition : elevator.Y;
+                        var enemyMaxX = elevator.MovementType == MovementType.Horizontal ? elevator.MaxPosition : elevator.X;
+                        var enemyMaxY = elevator.MovementType == MovementType.Vertical ? elevator.MaxPosition : elevator.Y;
 
                         // Draw line.
                         var width = image.Width;
                         var height = image.Height;
-                        var p1 = new Point(minX * Constants.LevelEditorZoom + width / 2, minY * Constants.LevelEditorZoom + height / 2);
-                        var p2 = new Point(maxX * Constants.LevelEditorZoom + width / 2, maxY * Constants.LevelEditorZoom + height / 2);
+                        var p1 = new Point(enemyMinX * Constants.LevelEditorZoom + width / 2, enemyMinY * Constants.LevelEditorZoom + height / 2);
+                        var p2 = new Point(enemyMaxX * Constants.LevelEditorZoom + width / 2, enemyMaxY * Constants.LevelEditorZoom + height / 2);
                         var pen = new Pen(Color.Crimson, 3);
                         this.graphics.DrawLine(pen, p1, p2);
 
@@ -821,16 +821,16 @@ namespace SpriteHelper.Dialogs
                             }
                         }
 
-                        if (minX != elevator.X || minY != elevator.Y)
+                        if (enemyMinX != elevator.X || enemyMinY != elevator.Y)
                         {
                             // Draw min. transparent image.
-                            this.graphics.DrawImage(imageTransparent, new Point(minX * Constants.LevelEditorZoom, minY * Constants.LevelEditorZoom));
+                            this.graphics.DrawImage(imageTransparent, new Point(enemyMinX * Constants.LevelEditorZoom, enemyMinY * Constants.LevelEditorZoom));
                         }
 
-                        if (maxX != elevator.X || maxY != elevator.Y)
+                        if (enemyMaxX != elevator.X || enemyMaxY != elevator.Y)
                         {
                             // Draw max. transparent image.
-                            this.graphics.DrawImage(imageTransparent, new Point(maxX * Constants.LevelEditorZoom, maxY * Constants.LevelEditorZoom));
+                            this.graphics.DrawImage(imageTransparent, new Point(enemyMaxX * Constants.LevelEditorZoom, enemyMaxY * Constants.LevelEditorZoom));
                         }
                     }
 
@@ -3021,37 +3021,43 @@ namespace SpriteHelper.Dialogs
                 return "Min. position must be less than max. position";
             }
 
+            var rectangle = enemy.GetMovementRectangle();
+            var enemyMinX = rectangle.X;
+            var enemyMaxX = rectangle.X + rectangle.Width;
+            var enemyMinY = rectangle.Y;
+            var enemyMaxY = rectangle.Y + rectangle.Height;
+
+            if (enemyMinX < enemy.Screen * Constants.ScreenWidth)
+            {
+                return "Enemy walking off-screen to the left";
+            }
+            
+            if (enemyMaxX + enemy.Width > Math.Min((enemy.Screen + 1) * Constants.ScreenWidth, this.level.Length * Constants.BackgroundTileWidth))
+            {
+                return "Enemy walking off-screen to the right";
+            }
+            
+            if (enemyMinY < 0)
+            {
+                return "Enemy walking off-screen on the top";
+            }
+            
+            if (enemyMaxY > Constants.ScreenHeight)
+            {
+                return "Enemy walking off-screen on the bottom";
+            }
+
             int enemyPosition;
             string enemyPositionString;
             if (enemy.MovementType == MovementType.Horizontal)
             {
                 enemyPosition = enemy.X;
                 enemyPositionString = "X";
-
-                if (enemy.MinPosition < enemy.Screen * Constants.ScreenWidth)
-                {
-                    return "Enemy walking off-screen to the left";
-                }
-
-                if (enemy.MaxPosition + enemy.Width > Math.Min((enemy.Screen + 1) * Constants.ScreenWidth, this.level.Length * Constants.BackgroundTileWidth))
-                {
-                    return "Enemy walking off-screen to the right";
-                }
             }
             else if (enemy.MovementType == MovementType.Vertical)
             {
                 enemyPosition = enemy.Y;
                 enemyPositionString = "Y";
-
-                if (enemy.MinPosition < 0)
-                {
-                    return "Min. position cannot be negative";
-                }
-
-                if (enemy.MaxPosition > Constants.ScreenHeight)
-                {
-                    return "Max. position is too high";
-                }
             }
             else
             {

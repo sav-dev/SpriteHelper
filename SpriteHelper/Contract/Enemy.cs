@@ -180,6 +180,141 @@ namespace SpriteHelper.Contract
             return new Rectangle(x1, y1, x2 - x1, y2 - y1);
         }
 
+        // Movement rectangle (minX, minY, maxX, maxY)
+        public Rectangle GetMovementRectangle()
+        {
+            var enemyMinX = -1;
+            var enemyMaxX = -1;
+            var enemyMinY = -1;
+            var enemyMaxY = -1;
+
+            if (this.MovementType == MovementType.None)
+            {
+                enemyMinX = this.X;
+                enemyMaxX = this.X;
+                enemyMinY = this.Y;
+                enemyMaxY = this.Y;
+            }
+            if (this.SpecialMovement == SpecialMovement.Clockwise)
+            {
+                switch (this.Direction)
+                {
+                    case Direction.Left:
+                        enemyMinX = this.MinPosition;
+                        enemyMaxX = this.MaxPosition;
+                        enemyMinY = this.Y - this.MovementRange;
+                        enemyMaxY = this.Y;
+                        break;
+                    case Direction.Right:
+                        enemyMinX = this.MinPosition;
+                        enemyMaxX = this.MaxPosition;
+                        enemyMinY = this.Y;
+                        enemyMaxY = this.Y + this.MovementRange;
+                        break;
+                    case Direction.Up:
+                        enemyMinX = this.X;
+                        enemyMaxX = this.X + this.MovementRange;
+                        enemyMinY = this.MinPosition;
+                        enemyMaxY = this.MaxPosition;
+                        break;
+                    case Direction.Down:
+                        enemyMinX = this.X - this.MovementRange;
+                        enemyMaxX = this.X;
+                        enemyMinY = this.MinPosition;
+                        enemyMaxY = this.MaxPosition;
+                        break;
+                }
+            }
+            else if (this.SpecialMovement == SpecialMovement.CounterClockwise)
+            {
+                switch (this.Direction)
+                {
+                    case Direction.Left:
+                        enemyMinX = this.MinPosition;
+                        enemyMaxX = this.MaxPosition;
+                        enemyMinY = this.Y;
+                        enemyMaxY = this.Y + this.MovementRange;
+                        break;
+                    case Direction.Right:
+                        enemyMinX = this.MinPosition;
+                        enemyMaxX = this.MaxPosition;
+                        enemyMinY = this.Y - this.MovementRange;
+                        enemyMaxY = this.Y;
+                        break;
+                    case Direction.Up:
+                        enemyMinX = this.X - this.MovementRange;
+                        enemyMaxX = this.X;
+                        enemyMinY = this.MinPosition;
+                        enemyMaxY = this.MaxPosition;
+                        break;
+                    case Direction.Down:
+                        enemyMinX = this.X;
+                        enemyMaxX = this.X + this.MovementRange;
+                        enemyMinY = this.MinPosition;
+                        enemyMaxY = this.MaxPosition;
+                        break;
+                }
+            }
+            else if (this.SpecialMovement == SpecialMovement.Sinus8)
+            {
+                if (this.Direction == Direction.Left || this.Direction == Direction.Right)
+                {
+                    enemyMinX = this.MinPosition;
+                    enemyMaxX = this.MaxPosition;
+                    enemyMinY = this.Y - 8;
+                    enemyMaxY = this.Y + 8;
+                }
+                else if (this.Direction == Direction.Up || this.Direction == Direction.Down)
+                {
+                    enemyMinX = this.X - 8;
+                    enemyMaxX = this.X + 8;
+                    enemyMinY = this.MinPosition;
+                    enemyMaxY = this.MaxPosition;
+                }
+            }
+            else if (this.SpecialMovement == SpecialMovement.Sinus16)
+            {
+                if (this.Direction == Direction.Left || this.Direction == Direction.Right)
+                {
+                    enemyMinX = this.MinPosition;
+                    enemyMaxX = this.MaxPosition;
+                    enemyMinY = this.Y - 16;
+                    enemyMaxY = this.Y + 16;
+                }
+                else if (this.Direction == Direction.Up || this.Direction == Direction.Down)
+                {
+                    enemyMinX = this.X - 16;
+                    enemyMaxX = this.X + 16;
+                    enemyMinY = this.MinPosition;
+                    enemyMaxY = this.MaxPosition;
+                }
+            }
+            else
+            {
+                if (this.Direction == Direction.Left || this.Direction == Direction.Right)
+                {
+                    enemyMinX = this.MinPosition;
+                    enemyMaxX = this.MaxPosition;
+                    enemyMinY = this.Y;
+                    enemyMaxY = this.Y;
+                }
+                else if (this.Direction == Direction.Up || this.Direction == Direction.Down)
+                {
+                    enemyMinX = this.X;
+                    enemyMaxX = this.X;
+                    enemyMinY = this.MinPosition;
+                    enemyMaxY = this.MaxPosition;
+                }
+            }
+
+            if (enemyMinX == -1 || enemyMaxX == -1 || enemyMinY == -1 || enemyMaxY == -1)
+            {
+                throw new System.Exception("This should never happen");
+            }
+
+            return new Rectangle(enemyMinX, enemyMinY, enemyMaxX - enemyMinX, enemyMaxY - enemyMinY);
+        }
+
         // String representation.
         public override string ToString()
         {
