@@ -612,6 +612,9 @@ namespace SpriteHelper.Dialogs
         {
             if (this.showEnemiesToolStripMenuItem.Checked)
             {
+                //// todo: draw shooting?
+                //// todo: draw stop movement?
+
                 foreach (var enemy in Enemies)
                 {
                     // Get image.
@@ -634,10 +637,59 @@ namespace SpriteHelper.Dialogs
                         var p1 = new Point(minX * Constants.LevelEditorZoom + width / 2, minY * Constants.LevelEditorZoom + height / 2);
                         var p2 = new Point(maxX * Constants.LevelEditorZoom + width / 2, maxY * Constants.LevelEditorZoom + height / 2);
                         var pen = new Pen(Color.DarkOrange, 3);
-                        this.graphics.DrawLine(pen, p1, p2);
+
+                        if (enemy.SpecialMovement == SpecialMovement.Sinus8 || enemy.SpecialMovement == SpecialMovement.Sinus16)
+                        {
+                            var sinusLength = (enemy.SpecialMovement == SpecialMovement.Sinus8 ? 32 : 64) * Constants.LevelEditorZoom;
+                            var radius = sinusLength / 4; // so 8 * zoom or 16 * zoom
+                            var horizontal = enemy.MovementType == MovementType.Horizontal;
+                            if (horizontal)
+                            {
+                                var distance = Math.Abs(p2.X - p1.X);
+                                var startPoint = new Point(p1.X, p1.Y);
+                                for (var i = 0; i < distance / sinusLength; i++)
+                                {
+                                    var points = new Point[]
+                                    {
+                                        startPoint,
+                                        new Point(startPoint.X + radius, startPoint.Y + (enemy.Direction == Direction.Left ? -radius : radius)),
+                                        new Point(startPoint.X + radius * 2, startPoint.Y),
+                                        new Point(startPoint.X + 3 * radius, startPoint.Y + (enemy.Direction == Direction.Left ? radius : -radius)),
+                                        new Point(startPoint.X + 4 * radius, startPoint.Y),
+                                    };
+
+                                    this.graphics.DrawCurve(pen, points);
+
+                                    startPoint = new Point(startPoint.X + 4 * radius, startPoint.Y);
+                                }
+                            }
+                            else // vertical
+                            {
+                                var distance = Math.Abs(p2.Y - p1.Y);
+                                var startPoint = new Point(p1.X, p1.Y);
+                                for (var i = 0; i < distance / sinusLength; i++)
+                                {
+                                    var points = new Point[]
+                                    {
+                                        startPoint,
+                                        new Point(startPoint.X + (enemy.Direction == Direction.Up ? -radius : radius), startPoint.Y + radius),
+                                        new Point(startPoint.X, startPoint.Y + radius * 2),
+                                        new Point(startPoint.X + (enemy.Direction == Direction.Up ? radius : -radius), startPoint.Y + radius * 3),
+                                        new Point(startPoint.X, startPoint.Y + radius * 4),
+                                    };
+
+                                    this.graphics.DrawCurve(pen, points);
+
+                                    startPoint = new Point(startPoint.X, startPoint.Y + radius * 4);
+                                }
+                            }
+                        }                        
+                        else
+                        {
+                            this.graphics.DrawLine(pen, p1, p2);
+                        }
 
                         // Draw arrow.
-                        // todo - show special movement type? show shooting?
                         if (enemy.MovementType == MovementType.Horizontal)
                         {
                             if (enemy.Direction == Direction.Left)
