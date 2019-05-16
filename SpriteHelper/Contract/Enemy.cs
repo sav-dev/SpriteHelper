@@ -102,8 +102,6 @@ namespace SpriteHelper.Contract
             {
                 switch (this.SpecialMovement)
                 {
-                    case SpecialMovement.None:
-                        return 0;
                     case SpecialMovement.Stop60:
                         return 60;
                     case SpecialMovement.Stop120:
@@ -113,7 +111,7 @@ namespace SpriteHelper.Contract
                     case SpecialMovement.Sinus16:
                         return 64;
                     default:
-                        throw new System.Exception("This should not happen");
+                        return 0;
                 }
             }
         }

@@ -731,7 +731,22 @@ namespace SpriteHelper.Dialogs
                         movementType == MovementType.Horizontal ? maxX : x, // plane. But we don't want to draw the transparent images on the 
                         movementType == MovementType.Vertical ? minY : y,   // edges of the rectangle. so we have this logic of calculating
                         movementType == MovementType.Vertical ? maxY : y);  // min/max x/y here.
-                }                        
+                }
+                else if (specialMovement == SpecialMovement.Clockwise || specialMovement == SpecialMovement.CounterClockwise)
+                {
+                    this.DrawRectangleMovement(
+                        imageTransparent,
+                        pen,
+                        movementType,
+                        direction,
+                        specialMovement,
+                        x,
+                        y,
+                        minX,
+                        maxX,
+                        minY,
+                        maxY);
+                }             
                 else
                 {
                     this.DrawNormalMovement(
@@ -877,6 +892,53 @@ namespace SpriteHelper.Dialogs
             {
                 // Draw max. transparent image.
                 this.graphics.DrawImage(imageTransparent, new Point(maxX * Constants.LevelEditorZoom, maxY * Constants.LevelEditorZoom));
+            }
+        }
+
+        private void DrawRectangleMovement(
+            Image imageTransparent,
+            Pen pen,
+            MovementType movementType,
+            Direction direction,
+            SpecialMovement specialMovement,
+            int x,
+            int y,
+            int minX,
+            int maxX,
+            int minY,
+            int maxY)
+        {
+            var width = imageTransparent.Width;
+            var height = imageTransparent.Height;
+
+            // points in clockwise order
+            var p1 = new Point(minX, minY);
+            var p2 = new Point(maxX, minY);
+            var p3 = new Point(maxX, maxY);
+            var p4 = new Point(minX, maxY);
+            var points = new[] { p1, p2, p3, p4 };
+            var scaledPoints = points.Select(
+                p => new Point(p.X * Constants.LevelEditorZoom + width / 2, p.Y * Constants.LevelEditorZoom + height / 2)).ToArray();
+
+            var directions = specialMovement == SpecialMovement.Clockwise ?
+                new[] { Direction.Up, Direction.Right, Direction.Down, Direction.Left } :
+                new[] { Direction.Left, Direction.Up, Direction.Right, Direction.Down };
+
+            // draw all lines
+            for (var i = 0; i < scaledPoints.Length; i++)
+            {
+                this.graphics.DrawLine(pen, scaledPoints[i], scaledPoints[(i + 1) % scaledPoints.Length]);
+                this.DrawArrow(pen, directions[i], scaledPoints[i]);
+            }
+
+            // draw transparent images
+            foreach (var point in points)
+            { 
+                if (point.X != x || point.Y != y)
+                {
+                    // Draw min. transparent image.
+                    this.graphics.DrawImage(imageTransparent, new Point(point.X * Constants.LevelEditorZoom, point.Y * Constants.LevelEditorZoom));
+                }
             }
         }
 
