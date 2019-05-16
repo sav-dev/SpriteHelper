@@ -104,12 +104,38 @@ namespace SpriteHelper.Contract
                 {
                     case SpecialMovement.Stop60:
                         return 60;
+
                     case SpecialMovement.Stop120:
                         return 120;
+
                     case SpecialMovement.Sinus8:
                         return 32;
+
                     case SpecialMovement.Sinus16:
                         return 64;
+
+                    case SpecialMovement.Clockwise:
+                    case SpecialMovement.CounterClockwise:
+                        // hack - we need orientation to process these mov types, but we don't know it yet
+                        // instead, we'll set this to a special value: if 
+                        //
+                        // enemy moving horizontally: flip if was *not* moving horizontally
+                        //   - up = 2, down = 3, so non-horizontal movement has the 2nd bit set
+                        // enemy moving vertically: flip if was *not* moving vertically
+                        //   - left = 0, right = 1, so non-vertical movement doesn't have 2nd bit set
+                        //
+                        // we'll set the special value to an expected result of old direction AND 0000 0010
+                        //
+                        // so 2 for horizontal, 0 for vertical
+
+                        if (this.animation.Orientation == Orientation.Horizontal)
+                        {
+                            return 2;
+                        }
+                        else // vertical or none which doesn't matter
+                        {
+                            return 0;
+                        }
                     default:
                         return 0;
                 }

@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="Contract\Direction.cs" />
     <Compile Include="Contract\Elevator.cs" />
+    <Compile Include="Contract\Orientation.cs" />
     <Compile Include="Contract\SpecialMovement.cs" />
     <Compile Include="Controls\FlipPanel.cs">
       <SubType>UserControl</SubType>

@@ -261,8 +261,7 @@ namespace SpriteHelper.Dialogs
                 }
 
                 builder.AppendLine(".orientation:");
-                builder.AppendLineFormat("  .byte ${0:X2}", // see ORIENTATION_* consts
-                    animation.Flip == Flip.None ? 2 : (animation.Flip == Flip.Horizontal ? 1 : 0));
+                builder.AppendLineFormat("  .byte ${0:X2}", (int)animation.Orientation);
 
                 builder.AppendLine(".gunInfo:");
                 builder.AppendLineFormat("  .byte {0}", string.Join(",", gun.Select(v => "$" + (v % 256).ToString("X2"))));

@@ -26,6 +26,10 @@ namespace SpriteHelper.Contract
         [DataMember]
         public int MaxHealth { get; set; }
 
+        // Same as ORIENTATION_* consts
+        public Orientation Orientation => 
+            this.Flip == Flip.None ? Orientation.None : (this.Flip == Flip.Horizontal ? Orientation.Horizontal : Orientation.Vertical);
+
         public override string ToString()
         {
             return this.Name;
