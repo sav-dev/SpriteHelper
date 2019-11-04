@@ -2432,8 +2432,8 @@ namespace SpriteHelper.Dialogs
             //        - elevator size (1 byte)
             //        - screen the elevator is on (1 byte)            
             //        - movement speed (1 byte)
-            //        - movement type (1 byte)
-            //        - max movement distance (1 byte)            
+            //        - max movement distance (1 byte)
+            //        - movement type (1 byte)            
             //        - (initial) movement left (1 byte)
             //        - (initial) movement direction (1 byte)            
             //        - y position (1 byte)
@@ -2509,13 +2509,13 @@ namespace SpriteHelper.Dialogs
                     result.Add((byte)screen);
 
                     // movement speed
-                    result.Add((byte)elevator.Speed);
-
-                    // movement type
-                    result.Add((byte)elevator.MovementType);
+                    result.Add((byte)elevator.Speed);                    
 
                     // max movement distance
                     result.Add((byte)(elevator.MovementRange));
+
+                    // movement type
+                    result.Add((byte)elevator.MovementType);
 
                     // initial movement distance
                     result.Add((byte)(elevator.InitialDistanceLeft));
