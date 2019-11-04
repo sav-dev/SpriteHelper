@@ -95,12 +95,53 @@ namespace SpriteHelper.Contract
         {
             get
             {
-                var x1 = this.X;
-                var x2 = this.X + this.Size * Constants.SpriteWidth;
+                var x1 = this.MovementType == MovementType.Horizontal ? this.MinPosition : this.X;
+                var x2 = (this.MovementType == MovementType.Horizontal ? this.MaxPosition : this.X) + this.Size * Constants.ElevatorWidthPerBlock;
                 var y1 = this.MovementType == MovementType.Vertical ? this.MinPosition : this.Y;
                 var y2 = (this.MovementType == MovementType.Vertical ? this.MaxPosition : this.Y) + Constants.ElevatorHeight;
 
                 return new Rectangle(x1, y1, x2 - x1, y2 - y1);
+            }
+        }
+
+        // Movement rectangle (how the top left point moves)
+        public Rectangle MovementRectangle
+        {
+            get
+            {
+                var elevatorMinX = -1;
+                var elevatorMaxX = -1;
+                var elevatorMinY = -1;
+                var elevatorMaxY = -1;
+
+                if (this.MovementType == MovementType.None)
+                {
+                    elevatorMinX = this.X;
+                    elevatorMaxX = this.X;
+                    elevatorMinY = this.Y;
+                    elevatorMaxY = this.Y;
+                }
+                else if (this.MovementType == MovementType.Horizontal)
+                {
+                    elevatorMinX = this.MinPosition;
+                    elevatorMaxX = this.MaxPosition;
+                    elevatorMinY = this.Y;
+                    elevatorMaxY = this.Y;
+                }
+                else if (this.MovementType == MovementType.Vertical)
+                {
+                    elevatorMinX = this.X;
+                    elevatorMaxX = this.X;
+                    elevatorMinY = this.MinPosition;
+                    elevatorMaxY = this.MaxPosition;
+                }
+
+                if (elevatorMinX == -1 || elevatorMaxX == -1 || elevatorMinY == -1 || elevatorMaxY == -1)
+                {
+                    throw new Exception("This should never happen");
+                }
+
+                return new Rectangle(elevatorMinX, elevatorMinY, elevatorMaxX - elevatorMinX, elevatorMaxY - elevatorMinY);
             }
         }
 

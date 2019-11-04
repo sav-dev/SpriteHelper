@@ -13,6 +13,7 @@
         public const int ElevatorEndRSprite = 250;
         public const int ElevatorPalette = 2;
         public const int ElevatorHeight = 6;
+        public const int ElevatorWidthPerBlock = SpriteWidth;
         public const int ElevatorsLimitPerTwoScreens = 6;
         public const int MinElevatorSize = 2;
         public const int MaxElevatorSize = 8;

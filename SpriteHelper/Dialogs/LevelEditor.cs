@@ -2425,19 +2425,20 @@ namespace SpriteHelper.Dialogs
         {
             //
             // - elevators in the following format:
-            //   - pointer to next screen (from here): (n x 9) + 3 (1 byte)
+            //   - pointer to next screen (from here): (n x 10) + 3 (1 byte)
             //   - number of elevators (1 byte)
-            //   - n times the elevator data (9 bytes)
+            //   - n times the elevator data (10 bytes)
             //        - slot to put elevator in (1 byte)
             //        - elevator size (1 byte)
-            //        - screen the elevator is on (1 byte)
+            //        - screen the elevator is on (1 byte)            
             //        - movement speed (1 byte)
+            //        - movement type (1 byte)
             //        - max movement distance (1 byte)            
             //        - (initial) movement left (1 byte)
-            //        - (initial) flip + movement direction (1 byte)            
+            //        - (initial) movement direction (1 byte)            
             //        - y position (1 byte)
             //        - x position (1 byte) (y comes before x!)
-            //   - pointer to the previous screen (from here): (n x 9) + 2 (1 byte)
+            //   - pointer to the previous screen (from here): (n x 10) + 2 (1 byte)
             //
 
             var result = new List<byte>();
@@ -2510,13 +2511,16 @@ namespace SpriteHelper.Dialogs
                     // movement speed
                     result.Add((byte)elevator.Speed);
 
+                    // movement tyoe
+                    result.Add((byte)elevator.MovementType);
+
                     // max movement distance
                     result.Add((byte)(elevator.MovementRange));
 
                     // initial movement distance
                     result.Add((byte)(elevator.InitialDistanceLeft));
 
-                    // initial flip + movement direction
+                    // initial movement direction
                     result.Add((byte)(elevator.Direction));
 
                     // y position
@@ -3422,8 +3426,6 @@ namespace SpriteHelper.Dialogs
                 return $"Elevator may intersect with elevator {intersectingElevator}";
             }
 
-            // POI elevators: validate the elevator won't crush player into a wall?
-
             return null;
         }
 
@@ -3447,21 +3449,11 @@ namespace SpriteHelper.Dialogs
                 }
 
                 return null;
-            }
-
-            if (elevator.MovementType == MovementType.Horizontal)
-            {
-                return "Elevators cannot have horizontal movement";
-            }
+            }          
 
             if (elevator.Direction == Direction.None)
             {
                 return "Direction cannot be none";
-            }
-
-            if (elevator.Direction == Direction.Left || elevator.Direction == Direction.Right)
-            {
-                return "Direction cannot be left or right";
             }
 
             if (elevator.Speed <= 0)
@@ -3473,32 +3465,65 @@ namespace SpriteHelper.Dialogs
             {
                 return "Speed is too high";
             }
-
+            
             if (elevator.MinPosition > elevator.MaxPosition)
             {
                 return "Min. position must be less than max. position";
+            }
+
+            if (elevator.MinPosition < 0)
+            {
+                return "Min. position cannot be negative";
+            }
+
+            if (elevator.MovementType == MovementType.Vertical && (elevator.Direction == Direction.Left || elevator.Direction == Direction.Right) ||
+                elevator.MovementType == MovementType.Horizontal && (elevator.Direction == Direction.Up || elevator.Direction == Direction.Down))
+            {
+                return "Invalid direction for given movement type";
+            }           
+
+            var rectangle = elevator.MovementRectangle;
+            var elevatorMinX = rectangle.X;
+            var elevatorMaxX = rectangle.X + rectangle.Width;
+            var elevatorMinY = rectangle.Y;
+            var elevatorMaxY = rectangle.Y + rectangle.Height;
+
+            if (elevatorMinX < elevator.Screen * Constants.ScreenWidth)
+            {
+                return "Elevator moving off-screen to the left";
+            }
+
+            if (elevatorMaxX + elevator.Width > Math.Min((elevator.Screen + 1) * Constants.ScreenWidth, this.level.Length * Constants.BackgroundTileWidth))
+            {
+                return "Elevator moving off-screen to the right";
+            }
+
+            if (elevatorMinY < 0)
+            {
+                return "Elevator walking off-screen on the top";
+            }
+
+            if (elevatorMaxY > Constants.ScreenHeight)
+            {
+                return "Elevator walking off-screen on the bottom";
             }
 
             int elevatorPosition;
             string elevatorPositionString;
             if (elevator.MovementType == MovementType.Horizontal)
             {
-                return "Elevator cannot have a horizontal movement";
+                if (elevator.Speed % Constants.PlayerSpeed != 0 || elevator.Speed >= 244)
+                {
+                    return "Speed must be a multiple of player's speed with horizontal movement";
+                }
+
+                elevatorPosition = elevator.X;
+                elevatorPositionString = "X";
             }
             else if (elevator.MovementType == MovementType.Vertical)
             {
                 elevatorPosition = elevator.Y;
                 elevatorPositionString = "Y";
-
-                if (elevator.MinPosition < 0)
-                {
-                    return "Min. position cannot be negative";
-                }
-
-                if (elevator.MaxPosition > Constants.ScreenHeight)
-                {
-                    return "Max. position is too high";
-                }
             }
             else
             {
