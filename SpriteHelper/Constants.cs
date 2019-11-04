@@ -85,8 +85,8 @@
         public const int EnemyDefinitionSize = 16;
         public const int EnemyInMemorySize = 20;
         public const int EnemyInLevelDataSize = 18;
-        public const int ElevatorInMemorySize = 8;
-        public const int ElevatorInLevelDataSize = 9;
+        public const int ElevatorInMemorySize = 9;
+        public const int ElevatorInLevelDataSize = 10;
 
         // Transparency.
         public const int TransparentAlpha = 50;
