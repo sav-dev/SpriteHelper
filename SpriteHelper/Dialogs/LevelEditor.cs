@@ -2514,9 +2514,6 @@ namespace SpriteHelper.Dialogs
                     // max movement distance
                     result.Add((byte)(elevator.MovementRange));
 
-                    // movement type
-                    result.Add((byte)elevator.MovementType);
-
                     // initial movement distance
                     result.Add((byte)(elevator.InitialDistanceLeft));
 
