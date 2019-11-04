@@ -2511,7 +2511,7 @@ namespace SpriteHelper.Dialogs
                     // movement speed
                     result.Add((byte)elevator.Speed);
 
-                    // movement tyoe
+                    // movement type
                     result.Add((byte)elevator.MovementType);
 
                     // max movement distance
