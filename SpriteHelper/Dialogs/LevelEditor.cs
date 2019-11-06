@@ -3509,11 +3509,6 @@ namespace SpriteHelper.Dialogs
             string elevatorPositionString;
             if (elevator.MovementType == MovementType.Horizontal)
             {
-                if (elevator.Speed % Constants.PlayerSpeed != 0 || elevator.Speed >= 244)
-                {
-                    return "Speed must be a multiple of player's speed with horizontal movement";
-                }
-
                 elevatorPosition = elevator.X;
                 elevatorPositionString = "X";
             }
