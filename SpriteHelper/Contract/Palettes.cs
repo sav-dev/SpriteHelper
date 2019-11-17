@@ -11,11 +11,13 @@ namespace SpriteHelper.Contract
     public class Palettes
     {        
         [DataMember]
-        public Palette[] SpritesPalette { get; set; }
+        public PaletteSet[] SpritesPalettes { get; set; }
        
         [DataMember]
-        public Palette[] BackgroundPalette { get; set; }
-   
+        public PaletteSet[] BackgroundPalettes { get; set; }
+
+        public Palette[] SpritesPalette { get; set; }
+
         public static Palettes Read(string file)
         {
             Palettes palettes;
@@ -32,7 +34,14 @@ namespace SpriteHelper.Contract
                 }
             }
 
-            foreach (var palette in (palettes.SpritesPalette.Union(palettes.BackgroundPalette)))
+            if (palettes.SpritesPalettes.Count() > 1)
+            {
+                throw new System.Exception("There can only be one sprites palette");
+            }
+
+            palettes.SpritesPalette = palettes.SpritesPalettes[0].Palettes;
+
+            foreach (var palette in (palettes.SpritesPalettes.SelectMany(p => p.Palettes).Union(palettes.BackgroundPalettes.SelectMany(p => p.Palettes))))
             {
                 palette.ActualColors = palette.Colors.Select(c => NesPalette.Colors[c]).ToArray();
             }
@@ -42,11 +51,21 @@ namespace SpriteHelper.Contract
     }
 
     [DataContract]
+    public class PaletteSet
+    {
+        [DataMember]
+        public Palette[] Palettes { get; set; }
+
+        [DataMember]
+        public int Id { get; set; }
+    }
+
+    [DataContract]
     public class Palette
     {
         [DataMember]
         public int[] Colors { get; set; }
-
+        
         public Color[] ActualColors { get; set; }
     }
 }

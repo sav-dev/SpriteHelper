@@ -7,7 +7,7 @@
   <AnimationOutput>C:\Users\tomas\Documents\NES\GitHub\platformer\PlatformerGraphics\Chr\player.chr</AnimationOutput>
   <ConstChrInput>C:\Users\tomas\Documents\NES\GitHub\platformer\PlatformerGraphics\Chr\const.chr</ConstChrInput>
   <CombinedChrOutput>C:\Users\tomas\Documents\NES\GitHub\platformer\PlatformerGraphics\Chr\spr_00.chr</CombinedChrOutput>
-  <PalettesSpec>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\palettes\palettes_00.xml</PalettesSpec>
+  <PalettesSpec>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\palettes\palettes.xml</PalettesSpec>
   <NonBlockingBackgrounds>
     <string>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\00\nonblocking1.png;3</string>
     <string>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\00\nonblocking2.png;3</string>
@@ -30,7 +30,7 @@
   <GraphicsDefaultDir>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\00\</GraphicsDefaultDir> 
   <DefaultLevel>C:\users\tomas\documents\nes\github\platformer\data\levels\00.xml</DefaultLevel>
   <LevelsDefaultDir>C:\users\tomas\documents\nes\github\platformer\data\levels\</LevelsDefaultDir>
-  <SpritesPalette>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\palettes\spr_00.bin</SpritesPalette>
-  <BackgroundPalette>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\palettes\bg_00.bin</BackgroundPalette>
+  <SpritesPalette>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\palettes\spr.bin</SpritesPalette>
+  <BackgroundPalette>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\palettes\bg.bin</BackgroundPalette>
   <BgColor>0</BgColor>
 </Defaults>

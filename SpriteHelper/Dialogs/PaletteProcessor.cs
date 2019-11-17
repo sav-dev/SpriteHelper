@@ -42,10 +42,13 @@ namespace SpriteHelper.Dialogs
         {
             var palettesConfig = Palettes.Read(this.palettesTextBox.Text);
             var spritesPalette = new List<byte>();
-            var backgroundPalette = new List<byte>();
+            var backgroundPalettes = new List<byte>();
 
             spritesPalette.AddRange(palettesConfig.SpritesPalette.SelectMany(p => p.Colors).Select(c => (byte)c));
-            backgroundPalette.AddRange(palettesConfig.BackgroundPalette.SelectMany(p => p.Colors).Select(c => (byte)c));
+            foreach (var bgPalette in palettesConfig.BackgroundPalettes)
+            {
+                backgroundPalettes.AddRange(bgPalette.Palettes.SelectMany(p => p.Colors).Select(c => (byte)c));
+            }
 
             if (File.Exists(spritesTextBox.Text))
             {
@@ -59,7 +62,7 @@ namespace SpriteHelper.Dialogs
                 File.Delete(backgroundTextBox.Text);
             }
 
-            File.WriteAllBytes(backgroundTextBox.Text, backgroundPalette.ToArray());
+            File.WriteAllBytes(backgroundTextBox.Text, backgroundPalettes.ToArray());
 
             const int HorizontalPadding = 6;
             const int VerticalPadding = 12;
@@ -103,13 +106,24 @@ namespace SpriteHelper.Dialogs
             };
 
             var spriteBitmap = bigBitmapCreator(palettesConfig.SpritesPalette.Select(bitmapCreator).ToArray());
-            var backgroundBitmap = bigBitmapCreator(palettesConfig.BackgroundPalette.Select(bitmapCreator).ToArray());
+            var backgroundBitmaps = palettesConfig.BackgroundPalettes.Select(p => bigBitmapCreator(p.Palettes.Select(bitmapCreator).ToArray())).ToArray();
 
-            var resultBitmap = new Bitmap(spriteBitmap.Width, spriteBitmap.Height * 2 + VerticalPadding);
+            // Default height is just for one bg pallete, resize
+            var paletteHeight = spriteBitmap.Height + VerticalPadding;
+            var resize = (backgroundBitmaps.Length - 1) * paletteHeight;
+            this.Height = this.Height + resize;
+            this.palettesPictureBox.Height = this.palettesPictureBox.Height + resize;
+
+            var resultBitmap = new Bitmap(spriteBitmap.Width, paletteHeight * (backgroundBitmaps.Length + 1));
             using (var graphics = Graphics.FromImage(resultBitmap))
             {
                 graphics.DrawImage(spriteBitmap, 0, 0);
-                graphics.DrawImage(backgroundBitmap, 0, spriteBitmap.Height + VerticalPadding);
+                var y = paletteHeight;
+                foreach (var bgBitmap in backgroundBitmaps)
+                {
+                    graphics.DrawImage(bgBitmap, 0, y);
+                    y += paletteHeight;
+                }
             }
 
             this.palettesPictureBox.Image = resultBitmap;

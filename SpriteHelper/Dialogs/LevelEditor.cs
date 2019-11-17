@@ -184,7 +184,7 @@ namespace SpriteHelper.Dialogs
                 for (var i = 0; i < 4; i++)
                 {
                     var clone = bitmap.Clone();
-                    clone.UpdateColors(clone.UniqueColors(), this.palettes.BackgroundPalette[i].ActualColors);
+                    clone.UpdateColors(clone.UniqueColors(), this.palettes.BackgroundPalettes[0].Palettes[i].ActualColors); // todo: choose palette
                     dictionary.Add(i, clone);
                 }
 
