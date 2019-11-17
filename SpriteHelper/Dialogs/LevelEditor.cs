@@ -76,6 +76,9 @@ namespace SpriteHelper.Dialogs
         private Pen EnemyMovementPen = new Pen(Color.DarkOrange, 3);
         private Pen ElevatorMovementPen = new Pen(Color.Crimson, 3);
 
+        // Palette related.
+        private int bgPalette;
+
         #region FormRelated
 
         ////
@@ -166,86 +169,7 @@ namespace SpriteHelper.Dialogs
         private void LoadLevel(string level, string bgSpec, string enSpec, string palettes, string player, string spriteChr)
         {
             this.palettes = Palettes.Read(palettes);
-            this.bgConfig = BackgroundConfig.Read(bgSpec);
-
-            this.bgBitmaps = new Dictionary<TileType, Dictionary<int, MyBitmap>>();
-
-            foreach (var kvp in new Dictionary<TileType, MyBitmap>
-                                    {
-                                        { TileType.NonBlocking, MyBitmap.FromFile(bgConfig.NonBlockingFile) },
-                                        { TileType.Blocking, MyBitmap.FromFile(bgConfig.BlockingFile) },
-                                        { TileType.Threat, MyBitmap.FromFile(bgConfig.ThreatFile) },
-                                    })
-            {
-                var type = kvp.Key;
-                var bitmap = kvp.Value;
-                var dictionary = new Dictionary<int, MyBitmap>();
-
-                for (var i = 0; i < 4; i++)
-                {
-                    var clone = bitmap.Clone();
-                    clone.UpdateColors(clone.UniqueColors(), this.palettes.BackgroundPalettes[0].Palettes[i].ActualColors); // todo: choose palette
-                    dictionary.Add(i, clone);
-                }
-
-                this.bgBitmaps.Add(type, dictionary);
-            }
-
-            this.tiles = new Dictionary<string, Bitmap[]>();
-            foreach (var tile in this.bgConfig.Tiles)
-            {
-                for (var palette = 0; palette < 4; palette++)
-                {
-                    var tileBitmaps = new Bitmap[(int)TileVersion.All + 1];
-                    var tileBitmap = bgBitmaps[tile.Type][palette].GetPart(
-                        tile.X * Constants.BackgroundTileWidth, 
-                        tile.Y * Constants.BackgroundTileHeight, 
-                        Constants.BackgroundTileWidth, 
-                        Constants.BackgroundTileHeight).Scale(Constants.LevelEditorZoom);
-
-                    // None
-                    tileBitmaps[(int)TileVersion.None] = tileBitmap.ToBitmap();
-
-                    // Grid
-                    var tileBitmapGrid = tileBitmap.Clone();
-                    tileBitmapGrid.DrawGrid();
-                    tileBitmaps[(int)TileVersion.Grid] = tileBitmapGrid.ToBitmap();
-
-                    // Type
-                    foreach (var tileVersion in new[] { TileVersion.None, TileVersion.Grid })
-                    {
-                        var bitmapForVersion = tileBitmaps[(int)tileVersion];
-                        var bitmapCopy = new Bitmap(bitmapForVersion);
-
-                        Brush brush = null;
-                        switch (tile.Type)
-                        {
-                            case TileType.Blocking:
-                                brush = new SolidBrush(Color.FromArgb(100, 0, 255, 0));
-                                break;
-
-                            case TileType.Threat:
-                                brush = new SolidBrush(Color.FromArgb(100, 255, 0, 0));
-                                break;
-                        }
-
-                        if (brush != null)
-                        {
-                            using (var graphics = Graphics.FromImage(bitmapCopy))
-                            {
-                                graphics.FillRectangle(brush, 0, 0, bitmapCopy.Width, bitmapCopy.Height);
-                            }
-                        }
-
-                        tileBitmaps[(int)(tileVersion | TileVersion.Type)] = bitmapCopy;
-                    }
-
-                    this.tiles.Add(TileIds.PaletteTileId(palette, tile.Id), tileBitmaps);
-                }
-            }
-
-            // Empty tile should always be the 1st one
-            this.emptyTile = TileIds.PaletteTileId(0, this.bgConfig.Tiles[0].Id);
+            this.bgConfig = BackgroundConfig.Read(bgSpec);           
 
             string[][] newLevel;
             Enemy[] enemies;
@@ -259,6 +183,7 @@ namespace SpriteHelper.Dialogs
                 elevators = readLevel.Elevators;
                 this.playerStartingPosition = readLevel.PlayerStartingPosition;
                 this.exitPosition = readLevel.ExitPosition;
+                this.bgPalette = readLevel.BgPalette;
             }
             else
             {
@@ -277,7 +202,10 @@ namespace SpriteHelper.Dialogs
                 elevators = new Elevator[0];
                 this.playerStartingPosition = default(Point);
                 this.exitPosition = default(Point);
+                this.bgPalette = 0;
             }
+
+            this.CreateTileDictionaries();
 
             // Load enemies config
             this.enConfig = SpriteConfig.Read(enSpec, this.palettes);
@@ -393,11 +321,93 @@ namespace SpriteHelper.Dialogs
                 this.elevatorBitmaps.Add(i, bmp.ToBitmap(backgroundColor: this.transparentColor));
                 this.elevatorBitmapsTransparent.Add(i, bmp.ToBitmap(alpha: 50, backgroundColor: this.transparentColor));
             }
-
-            // Populate tiles, set level.
-            this.PopulateTiles();
+                        
             this.SetLevel(newLevel);
             this.ClearHistory();
+        }
+
+        private void CreateTileDictionaries()
+        {
+            // Empty tile should always be the 1st one
+            this.emptyTile = TileIds.PaletteTileId(0, this.bgConfig.Tiles[0].Id);
+
+            this.bgBitmaps = new Dictionary<TileType, Dictionary<int, MyBitmap>>();
+
+            foreach (var kvp in new Dictionary<TileType, MyBitmap>
+                                    {
+                                        { TileType.NonBlocking, MyBitmap.FromFile(bgConfig.NonBlockingFile) },
+                                        { TileType.Blocking, MyBitmap.FromFile(bgConfig.BlockingFile) },
+                                        { TileType.Threat, MyBitmap.FromFile(bgConfig.ThreatFile) },
+                                    })
+            {
+                var type = kvp.Key;
+                var bitmap = kvp.Value;
+                var dictionary = new Dictionary<int, MyBitmap>();
+
+                for (var i = 0; i < 4; i++)
+                {
+                    var clone = bitmap.Clone();
+                    clone.UpdateColors(clone.UniqueColors(), this.palettes.BackgroundPalettes[this.bgPalette].Palettes[i].ActualColors);
+                    dictionary.Add(i, clone);
+                }
+
+                this.bgBitmaps.Add(type, dictionary);
+            }
+
+            this.tiles = new Dictionary<string, Bitmap[]>();
+            foreach (var tile in this.bgConfig.Tiles)
+            {
+                for (var palette = 0; palette < 4; palette++)
+                {
+                    var tileBitmaps = new Bitmap[(int)TileVersion.All + 1];
+                    var tileBitmap = bgBitmaps[tile.Type][palette].GetPart(
+                        tile.X * Constants.BackgroundTileWidth,
+                        tile.Y * Constants.BackgroundTileHeight,
+                        Constants.BackgroundTileWidth,
+                        Constants.BackgroundTileHeight).Scale(Constants.LevelEditorZoom);
+
+                    // None
+                    tileBitmaps[(int)TileVersion.None] = tileBitmap.ToBitmap();
+
+                    // Grid
+                    var tileBitmapGrid = tileBitmap.Clone();
+                    tileBitmapGrid.DrawGrid();
+                    tileBitmaps[(int)TileVersion.Grid] = tileBitmapGrid.ToBitmap();
+
+                    // Type
+                    foreach (var tileVersion in new[] { TileVersion.None, TileVersion.Grid })
+                    {
+                        var bitmapForVersion = tileBitmaps[(int)tileVersion];
+                        var bitmapCopy = new Bitmap(bitmapForVersion);
+
+                        Brush brush = null;
+                        switch (tile.Type)
+                        {
+                            case TileType.Blocking:
+                                brush = new SolidBrush(Color.FromArgb(100, 0, 255, 0));
+                                break;
+
+                            case TileType.Threat:
+                                brush = new SolidBrush(Color.FromArgb(100, 255, 0, 0));
+                                break;
+                        }
+
+                        if (brush != null)
+                        {
+                            using (var graphics = Graphics.FromImage(bitmapCopy))
+                            {
+                                graphics.FillRectangle(brush, 0, 0, bitmapCopy.Width, bitmapCopy.Height);
+                            }
+                        }
+
+                        tileBitmaps[(int)(tileVersion | TileVersion.Type)] = bitmapCopy;
+                    }
+
+                    this.tiles.Add(TileIds.PaletteTileId(palette, tile.Id), tileBitmaps);
+                }
+            }
+
+            this.PopulateTiles();
         }
 
         #endregion
@@ -1148,6 +1158,7 @@ namespace SpriteHelper.Dialogs
                 var level = new Level
                 {
                     Tiles = this.level,
+                    BgPalette = this.bgPalette,
                     Enemies = this.Enemies,
                     Elevators = this.Elevators,
                     PlayerStartingPosition = this.playerStartingPosition,
@@ -1264,7 +1275,7 @@ namespace SpriteHelper.Dialogs
 
         private void PropertiesToolStripMenuItemClick(object sender, EventArgs e)
         {
-            Func<EditLevelDialog, Tuple<int, Point, Point>> getResultFunc =
+            Func<EditLevelDialog, Tuple<int, int, Point, Point>> getResultFunc =
                 dialog =>
                 {
                     int levelWidth;
@@ -1362,13 +1373,15 @@ namespace SpriteHelper.Dialogs
                         return null;
                     }
 
-                    return Tuple.Create(levelWidth, playerStartingPosition, exitPosition);
+                    return Tuple.Create(levelWidth, dialog.BgPalette, playerStartingPosition, exitPosition);
                 };
 
             var editLevelDialog = new EditLevelDialog(
-                this.level.Length, 
+                this.level.Length,
                 this.playerStartingPosition, 
-                this.exitPosition, 
+                this.exitPosition,
+                this.palettes.BackgroundPalettes.Length, 
+                this.bgPalette,
                 dialog => getResultFunc(dialog) != null);
 
             editLevelDialog.ShowDialog();
@@ -1383,22 +1396,30 @@ namespace SpriteHelper.Dialogs
             var exitPositionDifferent = false;
             var widthChanged = false;
 
-            if (this.playerStartingPosition != result.Item2)
+            if (this.playerStartingPosition != result.Item3)
             {
-                this.playerStartingPosition = result.Item2;
+                this.playerStartingPosition = result.Item3;
                 playerStartingPositionDifferent = true;
             }
 
-            if (this.exitPosition != result.Item3)
+            if (this.exitPosition != result.Item4)
             {
-                this.exitPosition = result.Item3;
+                this.exitPosition = result.Item4;
                 exitPositionDifferent = true;
+            }
+
+            var paletteChanged = false;
+            if (this.bgPalette != result.Item2)
+            {
+                paletteChanged = true;
+                this.bgPalette = result.Item2;
+                this.CreateTileDictionaries();
             }
             
             widthChanged = this.ChangeWidth(result.Item1);
 
             // Only update bitmap if either position has changed, and width hasn't changed - ChangeWidth updates the bitmap if that's the case.
-            if ((playerStartingPositionDifferent || exitPositionDifferent) && !widthChanged)
+            if ((playerStartingPositionDifferent || exitPositionDifferent || paletteChanged) && !widthChanged)
             {
                 this.UpdateBitmap();
             }

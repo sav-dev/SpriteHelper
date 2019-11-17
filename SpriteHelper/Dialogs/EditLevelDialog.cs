@@ -8,7 +8,13 @@ namespace SpriteHelper.Dialogs
     {
         private Func<EditLevelDialog, bool> validationFunc;
 
-        public EditLevelDialog(int width, Point playerStartingPosition, Point exitPosition, Func<EditLevelDialog, bool> validationFunc)
+        public EditLevelDialog(
+            int width, 
+            Point playerStartingPosition, 
+            Point exitPosition,
+            int bgPaletteCount,
+            int selectedBgPalette,
+            Func<EditLevelDialog, bool> validationFunc)
         {
             InitializeComponent();
             this.widthTextBox.Text = width.ToString();
@@ -16,6 +22,13 @@ namespace SpriteHelper.Dialogs
             this.playerYTextBox.Text = playerStartingPosition.Y.ToString();
             this.exitXTextBox.Text = (exitPosition.X / Constants.BackgroundTileWidth).ToString();
             this.exitYTextBox.Text = (exitPosition.Y / Constants.BackgroundTileHeight).ToString();
+            for (var i = 0; i < bgPaletteCount; i++)
+            {
+                this.bgPaletteComboBox.Items.Add(i);
+            }
+
+            this.bgPaletteComboBox.SelectedItem = selectedBgPalette;
+
             this.validationFunc = validationFunc;
         }
 
@@ -72,5 +85,7 @@ namespace SpriteHelper.Dialogs
                 return false;
             }
         }
+
+        public int BgPalette => (int)this.bgPaletteComboBox.SelectedItem;
     }
 }

@@ -9,6 +9,9 @@ namespace SpriteHelper.Contract
     public class Level
     {
         [DataMember]
+        public int BgPalette { get; set; }
+
+        [DataMember]
         public string[][] Tiles { get; set; }
 
         [DataMember]

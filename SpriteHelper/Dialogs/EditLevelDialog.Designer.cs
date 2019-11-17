@@ -40,6 +40,8 @@
             this.exitYTextBox = new System.Windows.Forms.TextBox();
             this.exitXLabel = new System.Windows.Forms.Label();
             this.exitXTextBox = new System.Windows.Forms.TextBox();
+            this.bgPaletteLabel = new System.Windows.Forms.Label();
+            this.bgPaletteComboBox = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // widthLabel
@@ -60,7 +62,7 @@
             // 
             // okButton
             // 
-            this.okButton.Location = new System.Drawing.Point(153, 102);
+            this.okButton.Location = new System.Drawing.Point(153, 103);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(55, 23);
             this.okButton.TabIndex = 40;
@@ -70,7 +72,7 @@
             // 
             // cancelButton
             // 
-            this.cancelButton.Location = new System.Drawing.Point(219, 102);
+            this.cancelButton.Location = new System.Drawing.Point(219, 103);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(55, 23);
             this.cancelButton.TabIndex = 41;
@@ -81,7 +83,7 @@
             // playerXLabel
             // 
             this.playerXLabel.AutoSize = true;
-            this.playerXLabel.Location = new System.Drawing.Point(12, 35);
+            this.playerXLabel.Location = new System.Drawing.Point(12, 33);
             this.playerXLabel.Name = "playerXLabel";
             this.playerXLabel.Size = new System.Drawing.Size(46, 13);
             this.playerXLabel.TabIndex = 43;
@@ -89,14 +91,14 @@
             // 
             // playerXTextBox
             // 
-            this.playerXTextBox.Location = new System.Drawing.Point(88, 32);
+            this.playerXTextBox.Location = new System.Drawing.Point(88, 30);
             this.playerXTextBox.Name = "playerXTextBox";
             this.playerXTextBox.Size = new System.Drawing.Size(48, 20);
             this.playerXTextBox.TabIndex = 42;
             // 
             // playerYTextBox
             // 
-            this.playerYTextBox.Location = new System.Drawing.Point(226, 32);
+            this.playerYTextBox.Location = new System.Drawing.Point(226, 30);
             this.playerYTextBox.Name = "playerYTextBox";
             this.playerYTextBox.Size = new System.Drawing.Size(48, 20);
             this.playerYTextBox.TabIndex = 44;
@@ -104,7 +106,7 @@
             // playerYLabel
             // 
             this.playerYLabel.AutoSize = true;
-            this.playerYLabel.Location = new System.Drawing.Point(150, 35);
+            this.playerYLabel.Location = new System.Drawing.Point(150, 33);
             this.playerYLabel.Name = "playerYLabel";
             this.playerYLabel.Size = new System.Drawing.Size(46, 13);
             this.playerYLabel.TabIndex = 45;
@@ -113,7 +115,7 @@
             // exitYLabel
             // 
             this.exitYLabel.AutoSize = true;
-            this.exitYLabel.Location = new System.Drawing.Point(150, 61);
+            this.exitYLabel.Location = new System.Drawing.Point(150, 80);
             this.exitYLabel.Name = "exitYLabel";
             this.exitYLabel.Size = new System.Drawing.Size(50, 13);
             this.exitYLabel.TabIndex = 49;
@@ -121,7 +123,7 @@
             // 
             // exitYTextBox
             // 
-            this.exitYTextBox.Location = new System.Drawing.Point(226, 58);
+            this.exitYTextBox.Location = new System.Drawing.Point(226, 77);
             this.exitYTextBox.Name = "exitYTextBox";
             this.exitYTextBox.Size = new System.Drawing.Size(48, 20);
             this.exitYTextBox.TabIndex = 48;
@@ -129,7 +131,7 @@
             // exitXLabel
             // 
             this.exitXLabel.AutoSize = true;
-            this.exitXLabel.Location = new System.Drawing.Point(12, 61);
+            this.exitXLabel.Location = new System.Drawing.Point(12, 80);
             this.exitXLabel.Name = "exitXLabel";
             this.exitXLabel.Size = new System.Drawing.Size(50, 13);
             this.exitXLabel.TabIndex = 47;
@@ -137,16 +139,36 @@
             // 
             // exitXTextBox
             // 
-            this.exitXTextBox.Location = new System.Drawing.Point(88, 58);
+            this.exitXTextBox.Location = new System.Drawing.Point(88, 77);
             this.exitXTextBox.Name = "exitXTextBox";
             this.exitXTextBox.Size = new System.Drawing.Size(48, 20);
             this.exitXTextBox.TabIndex = 46;
+            // 
+            // bgPaletteLabel
+            // 
+            this.bgPaletteLabel.AutoSize = true;
+            this.bgPaletteLabel.Location = new System.Drawing.Point(150, 9);
+            this.bgPaletteLabel.Name = "bgPaletteLabel";
+            this.bgPaletteLabel.Size = new System.Drawing.Size(57, 13);
+            this.bgPaletteLabel.TabIndex = 50;
+            this.bgPaletteLabel.Text = "BG palette";
+            // 
+            // bgPaletteComboBox
+            // 
+            this.bgPaletteComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.bgPaletteComboBox.FormattingEnabled = true;
+            this.bgPaletteComboBox.Location = new System.Drawing.Point(226, 6);
+            this.bgPaletteComboBox.Name = "bgPaletteComboBox";
+            this.bgPaletteComboBox.Size = new System.Drawing.Size(48, 21);
+            this.bgPaletteComboBox.TabIndex = 51;
             // 
             // EditLevelDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(301, 135);
+            this.ClientSize = new System.Drawing.Size(301, 138);
+            this.Controls.Add(this.bgPaletteComboBox);
+            this.Controls.Add(this.bgPaletteLabel);
             this.Controls.Add(this.exitYLabel);
             this.Controls.Add(this.exitYTextBox);
             this.Controls.Add(this.exitXLabel);
@@ -181,5 +203,7 @@
         private System.Windows.Forms.TextBox exitYTextBox;
         private System.Windows.Forms.Label exitXLabel;
         private System.Windows.Forms.TextBox exitXTextBox;
+        private System.Windows.Forms.Label bgPaletteLabel;
+        private System.Windows.Forms.ComboBox bgPaletteComboBox;
     }
 }

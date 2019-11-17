@@ -46,6 +46,17 @@ namespace SpriteHelper.Contract
                 palette.ActualColors = palette.Colors.Select(c => NesPalette.Colors[c]).ToArray();
             }
 
+            var id = 0;
+            foreach (var palette in palettes.BackgroundPalettes)
+            {
+                if (palette.Id != id)
+                {
+                    throw new System.Exception("Invalid ids for bg palettes");
+                }
+
+                id++;
+            }
+
             return palettes;
         }
     }
