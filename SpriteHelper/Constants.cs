@@ -62,6 +62,7 @@
         public const int ScreenHeight = Constants.ScreenHeightInTiles * Constants.BackgroundTileHeight;
         public const int Framerate = 60;
         public const int SpritesPerFrame = 64;
+        public const int PaletteSize = 16;
 
         // Max zoom for sprite viweres.
         public const int MaxZoom = 10;

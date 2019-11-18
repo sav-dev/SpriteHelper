@@ -57,6 +57,11 @@ namespace SpriteHelper.Contract
                 id++;
             }
 
+            if (id > 8)
+            {
+                throw new System.Exception("Too many bg palettes");
+            }
+
             return palettes;
         }
     }

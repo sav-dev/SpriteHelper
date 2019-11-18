@@ -1941,8 +1941,16 @@ namespace SpriteHelper.Dialogs
             result.AddRange(GetExportElevatorsData(logger));
             logger.WriteLineIfNotNull();
 
-            // Starting position and level end.
-            result.AddRange(GetStartingPositionAndEndData(logger));
+            // Bg Palette.
+            result.AddRange(GetBgPalette(logger));
+            logger.WriteLineIfNotNull();
+
+            // Starting position
+            result.AddRange(GetStartingPosition(logger));
+            logger.WriteLineIfNotNull();
+
+            // Exit data.
+            result.AddRange(GetExitData(logger));
             logger.WriteLineIfNotNull();
 
             return result.ToArray();
@@ -2557,23 +2565,46 @@ namespace SpriteHelper.Dialogs
             return result.ToArray();
         }
 
-        private byte[] GetStartingPositionAndEndData(TextWriter logger = null)
+        private byte[] GetBgPalette(TextWriter logger = null)
+        {
+            // Bg palette offset, 1 byte.
+            var paletteOffset = this.bgPalette * Constants.PaletteSize;
+            var result = new byte[] { (byte)paletteOffset };
+            logger.WriteLineIfNotNull("Total bytes for Bg Palette: {0}", result.Length);
+            return result;
+
+        }
+
+        private byte[] GetStartingPosition(TextWriter logger = null)
         {
             //
             // - data in the following format:
             //   - 2 bytes: player position (x/y, always on screen 0)
-            //   - 3 bytes: exit position (screen/x/y)
             //
 
             var result = new List<byte>();
 
             result.Add((byte)this.playerStartingPosition.X);
             result.Add((byte)this.playerStartingPosition.Y);
+            
+            logger.WriteLineIfNotNull("Total bytes for Player data: {0}", result.Count);
+            return result.ToArray();
+        }
+
+        private byte[] GetExitData(TextWriter logger = null)
+        {
+            //
+            // - data in the following format:
+            //   - 3 bytes: exit position (screen/x/y)
+            //
+
+            var result = new List<byte>();
+
             result.Add((byte)(this.exitPosition.X / 256));
             result.Add((byte)(this.exitPosition.X % 256));
             result.Add((byte)this.exitPosition.Y);
 
-            logger.WriteLineIfNotNull("Total bytes for Player and Exit data: {0}", result.Count);
+            logger.WriteLineIfNotNull("Total bytes for Exit data: {0}", result.Count);
             return result.ToArray();
         }
 
