@@ -1,5 +1,5 @@
 ﻿<Defaults>
-  <DefaultApp>Level</DefaultApp>
+  <DefaultApp>Background</DefaultApp>
   <ApplyDefaults>true</ApplyDefaults>
   <AnimationDirectory>C:\Users\tomas\Desktop\enemies\done\bug</AnimationDirectory>
   <PlayerSpec>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\sprites\player.xml</PlayerSpec>
@@ -33,7 +33,9 @@
     <string>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\00\threat2.png</string>
     <string>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\00\threat3.png</string>
   </ThreatBackgrounds>
-  <BgDefaultLevels></BgDefaultLevels>
+  <BgDefaultLevels>
+    <string>C:\users\tomas\documents\nes\github\platformer\data\levels\00.xml</string>
+  </BgDefaultLevels>
   <BackgroundImage>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\00\_chr.png</BackgroundImage>
   <BackgroundSpec>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\00\_back.xml</BackgroundSpec>
   <BackgroundChr>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\chr\bg_00.chr</BackgroundChr>

@@ -36,7 +36,7 @@ namespace SpriteHelper.Dialogs
             this.outputSpecTextBox.Text = Defaults.Instance.BackgroundSpec;
             this.outputChrTextBox.Text = Defaults.Instance.BackgroundChr;
             this.lvlFilesTextBox.Lines = Defaults.Instance.BgDefaultLevels;
-            this.Process();
+            //this.Process();
         }
 
         private void ProcessButtonClick(object sender, EventArgs e)
@@ -46,15 +46,15 @@ namespace SpriteHelper.Dialogs
 
         private void Process()
         {
-            // TODO: if ever needed, have a way to remove files with a '-'
-
-            var allFiles = this.nonBlockingTextBox.Lines.Union(this.blockingTextBox.Lines).Union(this.threatTextBox.Lines).Where(f => f != "+");
+            // Validate all files are in the same directory.
+            var allFiles = this.nonBlockingTextBox.Lines.Union(this.blockingTextBox.Lines).Union(this.threatTextBox.Lines).Where(f => f != "+" && f != "-");
             var directories = allFiles.Select(f => new FileInfo(f).Directory.ToString()).Distinct();
             if (directories.Count() > 1)
             {
                 throw new Exception("All input files should be in the same directory");
             }
 
+            // Validate no files are called the same as the intermediate files.
             var directory = directories.First();
             var nonBlockingFile = directory + "\\_nonblocking_gs.png";
             var blockingFile = directory + "\\_blocking_gs.png";
@@ -63,80 +63,90 @@ namespace SpriteHelper.Dialogs
             var blockingFileOld = directory + "\\_blocking_gs_old.png";
             var threatFileOld = directory + "\\_threat_gs_old.png";
 
-            if (allFiles.Any(f => new FileInfo(f).FullName == new FileInfo(nonBlockingFile).FullName ||
-                                  new FileInfo(f).FullName == new FileInfo(blockingFile).FullName ||
-                                  new FileInfo(f).FullName == new FileInfo(threatFile).FullName ||
-                                  new FileInfo(f).FullName == new FileInfo(nonBlockingFileOld).FullName ||
-                                  new FileInfo(f).FullName == new FileInfo(blockingFileOld).FullName ||
-                                  new FileInfo(f).FullName == new FileInfo(threatFileOld).FullName))
+            var allIntermediate = new[] { nonBlockingFile, blockingFile, threatFile, nonBlockingFileOld, blockingFileOld, threatFileOld };
+            var intermediateInfos = allIntermediate.Select(f => new FileInfo(f).FullName);
+            if (allFiles.Any(f => intermediateInfos.Contains(new FileInfo(f).FullName)))
             {
                 throw new Exception("One input file called like the intermediate ouputs");
             }
 
-            var nonBlockingAll = this.nonBlockingTextBox.Lines.Where(f => f != "+").Select(l => MyBitmap.FromFileWithParams(l)).ToArray();
-            var blockingAll = this.blockingTextBox.Lines.Where(f => f != "+").Select(l => MyBitmap.FromFileWithParams(l)).ToArray();
-            var threatAll = this.threatTextBox.Lines.Where(f => f != "+").Select(l => MyBitmap.FromFileWithParams(l)).ToArray();
-
+            // Create all collections.
+            var nonBlockingAll = new List<MyBitmap>();
+            var blockingAll = new List<MyBitmap>();
+            var threatAll = new List<MyBitmap>();
             var nonBlockingOld = new List<MyBitmap>();
             var blockingOld = new List<MyBitmap>();
             var threatOld = new List<MyBitmap>();
 
-            foreach (var line in this.nonBlockingTextBox.Lines)
+            Action<string[], List<MyBitmap>, List<MyBitmap>> createCollections = (lines, all, old) =>
             {
-                if (line == "+")
+                var minusFound = false;
+                var plusFound = false;
+                foreach (var line in lines)
                 {
-                    break;
+                    if (line == "-")
+                    {
+                        minusFound = true;
+                        continue;
+                    }
+
+                    if (minusFound)
+                    {
+                        if (line == "+")
+                        {
+                            throw new Exception("+ after -");
+                        }
+
+                        old.Add(MyBitmap.FromFileWithParams(line));
+                    }
+                    else
+                    {
+                        if (line == "+")
+                        {
+                            plusFound = true;
+                            continue;
+                        }
+
+                        if (!plusFound)
+                        {
+                            old.Add(MyBitmap.FromFileWithParams(line));
+                        }
+
+                        all.Add(MyBitmap.FromFileWithParams(line));
+                    }                    
+
+                }
+            };
+
+            createCollections(this.nonBlockingTextBox.Lines, nonBlockingAll, nonBlockingOld);
+            createCollections(this.blockingTextBox.Lines, blockingAll, blockingOld);
+            createCollections(this.threatTextBox.Lines, threatAll, threatOld);
+
+            // Create intermediate files.
+            Action<IEnumerable<MyBitmap>, string> createIntermediate = (bitmaps, targetFile) =>
+            {
+                if (!bitmaps.Any())
+                {
+                    return;
                 }
 
-                nonBlockingOld.Add(MyBitmap.FromFileWithParams(line));
-            }
-
-            foreach (var line in this.blockingTextBox.Lines)
-            {
-                if (line == "+")
-                {
-                    break;
-                }
-
-                blockingOld.Add(MyBitmap.FromFileWithParams(line));
-            }
-
-            foreach (var line in this.threatTextBox.Lines)
-            {
-                if (line == "+")
-                {
-                    break;
-                }
-
-                threatOld.Add(MyBitmap.FromFileWithParams(line));
-            }
-
-            Func<MyBitmap[], MyBitmap> process = bitmaps =>
-            {
                 foreach (var bitmap in bitmaps)
                 {
                     bitmap.MakeNesGreyscale();
                 }
 
-                return CreateSingleBitmap(bitmaps);                
+                var result = CreateSingleBitmap(bitmaps);
+                result.ToBitmap().Save(targetFile);
             };
 
-            var nonBlockingBitmap = process(nonBlockingAll);
-            var blockingBitmap = process(blockingAll);
-            var threatBitmap = process(threatAll);
+            createIntermediate(nonBlockingAll, nonBlockingFile);
+            createIntermediate(blockingAll, blockingFile);
+            createIntermediate(threatAll, threatFile);
+            createIntermediate(nonBlockingOld, nonBlockingFileOld);
+            createIntermediate(blockingOld, blockingFileOld);
+            createIntermediate(threatOld, threatFileOld);
 
-            var nonBlockingOldBitmap = process(nonBlockingOld.ToArray());
-            var blockingOldBitmap = process(blockingOld.ToArray());
-            var threatOldBitmap = process(threatOld.ToArray());
-
-            nonBlockingBitmap.ToBitmap().Save(nonBlockingFile);
-            blockingBitmap.ToBitmap().Save(blockingFile);
-            threatBitmap.ToBitmap().Save(threatFile);
-
-            nonBlockingOldBitmap.ToBitmap().Save(nonBlockingFileOld);
-            blockingOldBitmap.ToBitmap().Save(blockingFileOld);
-            threatOldBitmap.ToBitmap().Save(threatFileOld);
-
+            // Validate level files.
             var lvlFiles = this.lvlFilesTextBox.Lines.Where(l => !string.IsNullOrWhiteSpace(l)).ToArray();
             foreach (var lvl in lvlFiles)
             {
@@ -146,30 +156,44 @@ namespace SpriteHelper.Dialogs
                 }
             }
 
+            // Process everything.
             BackgroundConfig config;
             List<MyBitmap> sprites;
             Dictionary<string, MyBitmap> tilesWithImages;
-            GetConfigAndSprites(nonBlockingFile, blockingFile, threatFile, out config, out sprites, out tilesWithImages);
+            GetConfigAndSprites(nonBlockingFile, blockingFile, threatFile, true, out config, out sprites, out tilesWithImages);
 
             if (lvlFiles.Any())
             {
-                // Get old results.
+                Dictionary<string, MyBitmap> tilesWithImagesOld = null;
                 BackgroundConfig ignore1;
                 List<MyBitmap> ignore2;
-                Dictionary<string, MyBitmap> tilesWithImagesOld;
-                GetConfigAndSprites(nonBlockingFileOld, blockingFileOld, threatFileOld, out ignore1, out ignore2, out tilesWithImagesOld);
-
-                // Process the lvl files.
+                GetConfigAndSprites(nonBlockingFileOld, blockingFileOld, threatFileOld, false, out ignore1, out ignore2, out tilesWithImagesOld);                               
                 ProcessLvlFiles(lvlFiles, tilesWithImages, tilesWithImagesOld);
             }
 
             GenerateChrImageAndSaveFiles(config, sprites);
+
+            if (File.Exists(nonBlockingFileOld))
+            {
+                File.Delete(nonBlockingFileOld);
+            }
+
+            if (File.Exists(blockingFileOld))
+            {
+                File.Delete(blockingFileOld);
+            }
+
+            if (File.Exists(threatFileOld))
+            {
+                File.Delete(threatFileOld);
+            }
         }
 
         private void GetConfigAndSprites(
             string nonBlockingFile, 
             string blockingFile, 
             string threatFile, 
+            bool handleEmptyTile,
             out BackgroundConfig configRes, 
             out List<MyBitmap> spritesRes,
             out Dictionary<string, MyBitmap> tilesWithImagesRes)
@@ -182,10 +206,10 @@ namespace SpriteHelper.Dialogs
                 ThreatFile = threatFile
             };
 
-            // Get all files
-            var nonBlocking = MyBitmap.FromFile(config.NonBlockingFile);
-            var blocking = MyBitmap.FromFile(config.BlockingFile);
-            var threat = MyBitmap.FromFile(config.ThreatFile);
+            // Get all files. Handle some not existing.
+            var nonBlocking = File.Exists(nonBlockingFile) ? MyBitmap.FromFile(config.NonBlockingFile) : null;
+            var blocking = File.Exists(blockingFile) ? MyBitmap.FromFile(config.BlockingFile) : null;
+            var threat = File.Exists(threatFile) ? MyBitmap.FromFile(config.ThreatFile) : null;
 
             // Get all tiles and sprites
             var allTiles = new List<MyBitmap>();
@@ -270,18 +294,32 @@ namespace SpriteHelper.Dialogs
             };
 
             // Process all tiles (non blocking first)
-            processList(nonBlocking, TileType.NonBlocking);
-            processList(blocking, TileType.Blocking);
-            processList(threat, TileType.Threat);
-
-            // Move empty tile to the 1st place
-            if (emptyTile == null)
+            if (nonBlocking != null)
             {
-                throw new Exception("Empty tile not found");
+                processList(nonBlocking, TileType.NonBlocking);
             }
 
-            tiles.Remove(emptyTile);
-            tiles.Insert(0, emptyTile);
+            if (blocking != null)
+            {
+                processList(blocking, TileType.Blocking);
+            }
+
+            if (threat != null)
+            {
+                processList(threat, TileType.Threat);
+            }
+
+            // Move empty tile to the 1st place
+            if (handleEmptyTile)
+            {
+                if (emptyTile == null)
+                {
+                    throw new Exception("Empty tile not found");
+                }
+
+                tiles.Remove(emptyTile);
+                tiles.Insert(0, emptyTile);
+            }
 
             // Set tiles in the config
             config.Tiles = tiles.ToArray();
@@ -375,7 +413,7 @@ namespace SpriteHelper.Dialogs
             File.WriteAllBytes(outputChrTextBox.Text, bytes.ToArray());
         }
 
-        private MyBitmap CreateSingleBitmap(MyBitmap[] bitmaps)
+        private MyBitmap CreateSingleBitmap(IEnumerable<MyBitmap> bitmaps)
         {
             var positions = Packer.Pack(bitmaps.Select(b => b.Size), Constants.PickerWidth);
             var bitmapsCopy = bitmaps.ToList();
@@ -398,14 +436,15 @@ namespace SpriteHelper.Dialogs
 
         private void ProcessLvlFiles(IEnumerable<string> files, Dictionary<string, MyBitmap> newMap, Dictionary<string, MyBitmap> oldMap)
         {
-            // Create mapping of old to new.
+            // Create the mapping.
             var mapping = new Dictionary<string, string>();
+
             foreach (var tileOld in oldMap)
             {
-                var tileNew = newMap.First(t => t.Value.Equals(tileOld.Value));
-                mapping.Add(tileOld.Key, tileNew.Key);
+                var tileNew = newMap.FirstOrDefault(t => t.Value.Equals(tileOld.Value));
+                mapping.Add(tileOld.Key, tileNew.Key); // tileNew.Key will be null if not found
             }
-
+            
             foreach (var file in files)
             {
                 var level = Level.Read(file);
@@ -414,10 +453,17 @@ namespace SpriteHelper.Dialogs
                     for (var y = 0; y < level.Tiles[x].Length; y++)
                     {
                         var id = TileIds.ParsePaletteId(level.Tiles[x][y]);
-                        level.Tiles[x][y] = TileIds.PaletteTileId(id.Item1, mapping[id.Item2]);
+                        var newId = mapping[id.Item2];
+
+                        if (newId == null)
+                        {
+                            throw new Exception($"Removed tile in level {file}");
+                        }
+
+                        level.Tiles[x][y] = TileIds.PaletteTileId(id.Item1, newId);
                     }
                 }
-
+            
                 level.Write(file);
             }
         }
