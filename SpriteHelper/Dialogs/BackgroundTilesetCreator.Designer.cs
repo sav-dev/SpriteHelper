@@ -45,6 +45,7 @@
             this.outputChrTextBox = new System.Windows.Forms.TextBox();
             this.lvlFilesTextBox = new System.Windows.Forms.TextBox();
             this.lvlFilesLabel = new System.Windows.Forms.Label();
+            this.helpButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // outputImageTextBox
@@ -203,11 +204,22 @@
             this.lvlFilesLabel.TabIndex = 28;
             this.lvlFilesLabel.Text = "Lvl Files To\r\nProcess";
             // 
+            // helpButton
+            // 
+            this.helpButton.Location = new System.Drawing.Point(537, 334);
+            this.helpButton.Name = "helpButton";
+            this.helpButton.Size = new System.Drawing.Size(75, 23);
+            this.helpButton.TabIndex = 30;
+            this.helpButton.Text = "Help";
+            this.helpButton.UseVisualStyleBackColor = true;
+            this.helpButton.Click += new System.EventHandler(this.HelpButtonClick);
+            // 
             // BackgroundTilesetCreator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(705, 362);
+            this.Controls.Add(this.helpButton);
             this.Controls.Add(this.lvlFilesTextBox);
             this.Controls.Add(this.lvlFilesLabel);
             this.Controls.Add(this.outputChrLabel);
@@ -253,6 +265,7 @@
         private System.Windows.Forms.TextBox outputChrTextBox;
         private System.Windows.Forms.TextBox lvlFilesTextBox;
         private System.Windows.Forms.Label lvlFilesLabel;
+        private System.Windows.Forms.Button helpButton;
     }
 }
 

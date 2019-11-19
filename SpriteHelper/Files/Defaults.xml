@@ -34,7 +34,6 @@
     <string>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\00\threat3.png</string>
   </ThreatBackgrounds>
   <BgDefaultLevels>
-    <string>C:\users\tomas\documents\nes\github\platformer\data\levels\00.xml</string>
   </BgDefaultLevels>
   <BackgroundImage>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\00\_chr.png</BackgroundImage>
   <BackgroundSpec>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\00\_back.xml</BackgroundSpec>

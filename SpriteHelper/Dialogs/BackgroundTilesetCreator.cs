@@ -467,5 +467,21 @@ namespace SpriteHelper.Dialogs
                 level.Write(file);
             }
         }
+
+        private void HelpButtonClick(object sender, EventArgs e)
+        {
+            MessageBox.Show(
+@"When adding/removing new files, levels must be updated.
+If new files are added, add a '+' line in the list and then list the new files.
+If files are removed, add a '-' line in the list and the list the removed files.
+A file can be updated by adding a new version after '+' and removing old one after '-'.
+List all level files in the right text box.
+If a tile is removed but referenced in a level file, exception will be thrown.
+Please note - if anything goes wrong, the files will be left in an inconsistent state.
+To fix it:
+  1) Make a copy of all updated files
+  2) Revert all graphics updates
+  3) Revert all level updates");
+        }
     }
 }
