@@ -74,7 +74,7 @@
             this.outputTextBox.Name = "outputTextBox";
             this.outputTextBox.Size = new System.Drawing.Size(562, 20);
             this.outputTextBox.TabIndex = 25;
-            this.outputTextBox.Text = "C:\\Users\\tomas\\Documents\\NES\\GitHub\\Platformer\\PlatformerGraphics\\Chr\\spr_00.chr";
+            this.outputTextBox.Text = "C:\\Users\\tomas\\Documents\\NES\\GitHub\\Platformer\\PlatformerGraphics\\Chr\\spr.chr";
             // 
             // processButton
             // 
@@ -118,8 +118,7 @@
             this.palettesTextBox.Name = "palettesTextBox";
             this.palettesTextBox.Size = new System.Drawing.Size(562, 20);
             this.palettesTextBox.TabIndex = 30;
-            this.palettesTextBox.Text = "C:\\Users\\tomas\\Documents\\NES\\GitHub\\Platformer\\PlatformerGraphics\\Palettes\\palett" +
-    "es_00.xml";
+            this.palettesTextBox.Text = "C:\\Users\\tomas\\Documents\\NES\\GitHub\\Platformer\\PlatformerGraphics\\Palettes\\palettes.xml";
             // 
             // ChrCombine
             // 
