@@ -29,9 +29,6 @@ namespace SpriteHelper.Dialogs
                 case "Explosion":
                     new Explosion().ShowDialog();
                     break;
-                ////case "Sprites":
-                ////    new AnimationHelperV2().ShowDialog();
-                ////    break;
                 case "Palettes":
                     new PaletteProcessor().ShowDialog();
                     break;

@@ -43,13 +43,15 @@
             this.bgColorComboBox = new System.Windows.Forms.ComboBox();
             this.outputChrLabel = new System.Windows.Forms.Label();
             this.outputChrTextBox = new System.Windows.Forms.TextBox();
+            this.lvlFilesTextBox = new System.Windows.Forms.TextBox();
+            this.lvlFilesLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // outputImageTextBox
             // 
-            this.outputImageTextBox.Location = new System.Drawing.Point(86, 197);
+            this.outputImageTextBox.Location = new System.Drawing.Point(86, 256);
             this.outputImageTextBox.Name = "outputImageTextBox";
-            this.outputImageTextBox.Size = new System.Drawing.Size(395, 20);
+            this.outputImageTextBox.Size = new System.Drawing.Size(607, 20);
             this.outputImageTextBox.TabIndex = 3;
             // 
             // blockingLabel
@@ -64,7 +66,7 @@
             // outputImageLabel
             // 
             this.outputImageLabel.AutoSize = true;
-            this.outputImageLabel.Location = new System.Drawing.Point(12, 200);
+            this.outputImageLabel.Location = new System.Drawing.Point(12, 259);
             this.outputImageLabel.Name = "outputImageLabel";
             this.outputImageLabel.Size = new System.Drawing.Size(70, 13);
             this.outputImageLabel.TabIndex = 5;
@@ -73,7 +75,7 @@
             // outputSpecLabel
             // 
             this.outputSpecLabel.AutoSize = true;
-            this.outputSpecLabel.Location = new System.Drawing.Point(12, 226);
+            this.outputSpecLabel.Location = new System.Drawing.Point(12, 285);
             this.outputSpecLabel.Name = "outputSpecLabel";
             this.outputSpecLabel.Size = new System.Drawing.Size(65, 13);
             this.outputSpecLabel.TabIndex = 15;
@@ -81,9 +83,9 @@
             // 
             // outputSpecTextBox
             // 
-            this.outputSpecTextBox.Location = new System.Drawing.Point(86, 223);
+            this.outputSpecTextBox.Location = new System.Drawing.Point(86, 282);
             this.outputSpecTextBox.Name = "outputSpecTextBox";
-            this.outputSpecTextBox.Size = new System.Drawing.Size(395, 20);
+            this.outputSpecTextBox.Size = new System.Drawing.Size(607, 20);
             this.outputSpecTextBox.TabIndex = 14;
             // 
             // blockingTextBox
@@ -91,13 +93,14 @@
             this.blockingTextBox.Location = new System.Drawing.Point(86, 62);
             this.blockingTextBox.Multiline = true;
             this.blockingTextBox.Name = "blockingTextBox";
-            this.blockingTextBox.Size = new System.Drawing.Size(395, 48);
+            this.blockingTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.blockingTextBox.Size = new System.Drawing.Size(607, 48);
             this.blockingTextBox.TabIndex = 16;
             this.blockingTextBox.WordWrap = false;
             // 
             // processButton
             // 
-            this.processButton.Location = new System.Drawing.Point(406, 275);
+            this.processButton.Location = new System.Drawing.Point(618, 334);
             this.processButton.Name = "processButton";
             this.processButton.Size = new System.Drawing.Size(75, 23);
             this.processButton.TabIndex = 17;
@@ -119,7 +122,8 @@
             this.nonBlockingTextBox.Location = new System.Drawing.Point(86, 8);
             this.nonBlockingTextBox.Multiline = true;
             this.nonBlockingTextBox.Name = "nonBlockingTextBox";
-            this.nonBlockingTextBox.Size = new System.Drawing.Size(395, 48);
+            this.nonBlockingTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.nonBlockingTextBox.Size = new System.Drawing.Size(607, 48);
             this.nonBlockingTextBox.TabIndex = 22;
             this.nonBlockingTextBox.WordWrap = false;
             // 
@@ -137,7 +141,8 @@
             this.threatTextBox.Location = new System.Drawing.Point(86, 116);
             this.threatTextBox.Multiline = true;
             this.threatTextBox.Name = "threatTextBox";
-            this.threatTextBox.Size = new System.Drawing.Size(395, 48);
+            this.threatTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.threatTextBox.Size = new System.Drawing.Size(607, 48);
             this.threatTextBox.TabIndex = 24;
             this.threatTextBox.WordWrap = false;
             // 
@@ -166,7 +171,7 @@
             // outputChrLabel
             // 
             this.outputChrLabel.AutoSize = true;
-            this.outputChrLabel.Location = new System.Drawing.Point(12, 252);
+            this.outputChrLabel.Location = new System.Drawing.Point(12, 311);
             this.outputChrLabel.Name = "outputChrLabel";
             this.outputChrLabel.Size = new System.Drawing.Size(57, 13);
             this.outputChrLabel.TabIndex = 27;
@@ -174,16 +179,37 @@
             // 
             // outputChrTextBox
             // 
-            this.outputChrTextBox.Location = new System.Drawing.Point(86, 249);
+            this.outputChrTextBox.Location = new System.Drawing.Point(86, 308);
             this.outputChrTextBox.Name = "outputChrTextBox";
-            this.outputChrTextBox.Size = new System.Drawing.Size(395, 20);
+            this.outputChrTextBox.Size = new System.Drawing.Size(607, 20);
             this.outputChrTextBox.TabIndex = 26;
+            // 
+            // lvlFilesTextBox
+            // 
+            this.lvlFilesTextBox.Location = new System.Drawing.Point(86, 197);
+            this.lvlFilesTextBox.Multiline = true;
+            this.lvlFilesTextBox.Name = "lvlFilesTextBox";
+            this.lvlFilesTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.lvlFilesTextBox.Size = new System.Drawing.Size(607, 48);
+            this.lvlFilesTextBox.TabIndex = 29;
+            this.lvlFilesTextBox.WordWrap = false;
+            // 
+            // lvlFilesLabel
+            // 
+            this.lvlFilesLabel.AutoSize = true;
+            this.lvlFilesLabel.Location = new System.Drawing.Point(12, 200);
+            this.lvlFilesLabel.Name = "lvlFilesLabel";
+            this.lvlFilesLabel.Size = new System.Drawing.Size(61, 26);
+            this.lvlFilesLabel.TabIndex = 28;
+            this.lvlFilesLabel.Text = "Lvl Files To\r\nProcess";
             // 
             // BackgroundTilesetCreator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(489, 306);
+            this.ClientSize = new System.Drawing.Size(705, 362);
+            this.Controls.Add(this.lvlFilesTextBox);
+            this.Controls.Add(this.lvlFilesLabel);
             this.Controls.Add(this.outputChrLabel);
             this.Controls.Add(this.outputChrTextBox);
             this.Controls.Add(this.bgColorComboBox);
@@ -225,6 +251,8 @@
         private System.Windows.Forms.ComboBox bgColorComboBox;
         private System.Windows.Forms.Label outputChrLabel;
         private System.Windows.Forms.TextBox outputChrTextBox;
+        private System.Windows.Forms.TextBox lvlFilesTextBox;
+        private System.Windows.Forms.Label lvlFilesLabel;
     }
 }
 

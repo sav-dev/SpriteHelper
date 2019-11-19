@@ -13,22 +13,32 @@
     <string>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\00\nonblocking2.png;3</string>
     <string>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\00\nonblocking3.png</string>
     <string>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\00\nonblocking4.png</string>
+    <string>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\00\nonblocking5.png</string>
   </NonBlockingBackgrounds>
   <BlockingBackgrounds>
     <string>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\00\blocking1.png</string>
     <string>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\00\blocking2.png</string>
     <string>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\00\blocking3.png</string>
     <string>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\00\blocking4.png</string>
+    <string>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\00\blocking5.png</string>
+    <string>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\00\blocking6.png</string>
+    <string>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\00\blocking7.png</string>
+    <string>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\00\blocking8.png</string>
+    <string>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\00\blocking9.png</string>
+    <string>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\00\blocking10.png</string>
+    <string>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\00\blocking11.png</string>
   </BlockingBackgrounds>
   <ThreatBackgrounds>
     <string>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\00\threat1.png</string>
     <string>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\00\threat2.png</string>
+    <string>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\00\threat3.png</string>
   </ThreatBackgrounds>
+  <BgDefaultLevels></BgDefaultLevels>
   <BackgroundImage>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\00\_chr.png</BackgroundImage>
   <BackgroundSpec>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\00\_back.xml</BackgroundSpec>
   <BackgroundChr>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\chr\bg_00.chr</BackgroundChr>
   <GraphicsDefaultDir>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\00\</GraphicsDefaultDir> 
-  <DefaultLevel>C:\users\tomas\documents\nes\github\platformer\data\levels\00.xml</DefaultLevel>
+  <DefaultLevel>C:\users\tomas\documents\nes\github\platformer\data\levels\00.xml</DefaultLevel>  
   <LevelsDefaultDir>C:\users\tomas\documents\nes\github\platformer\data\levels\</LevelsDefaultDir>
   <SpritesPalette>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\palettes\spr.bin</SpritesPalette>
   <BackgroundPalette>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\palettes\bg.bin</BackgroundPalette>

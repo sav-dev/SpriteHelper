@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SpriteHelper.NesGraphics;
+using System;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;

@@ -48,6 +48,9 @@ namespace SpriteHelper.Files
         public string[] ThreatBackgrounds { get; set; }
 
         [DataMember]
+        public string[] BgDefaultLevels { get; set; }
+
+        [DataMember]
         public int BgColor { get; set; }
 
         [DataMember]
