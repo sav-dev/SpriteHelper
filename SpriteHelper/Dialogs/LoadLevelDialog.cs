@@ -36,7 +36,7 @@ namespace SpriteHelper.Dialogs
             this.levelTextBox.Text = Defaults.Instance.DefaultLevel;
             this.enSpecTextBox.Text = @"C:\Users\tomas\Documents\NES\GitHub\Platformer\PlatformerGraphics\Sprites\enemies.xml";
             this.playerTextBox.Text = Defaults.Instance.PlayerSpec;
-            this.spriteChrTextBox.Text = @"C:\Users\tomas\Documents\NES\GitHub\Platformer\PlatformerGraphics\Chr\spr_00.chr";
+            this.spriteChrTextBox.Text = @"C:\Users\tomas\Documents\NES\GitHub\Platformer\PlatformerGraphics\Chr\spr.chr";
         }
 
         private void OkButtonClick(object sender, EventArgs e)

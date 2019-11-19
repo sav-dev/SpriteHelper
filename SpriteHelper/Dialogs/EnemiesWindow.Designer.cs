@@ -74,8 +74,7 @@
             this.palettesTextBox.Name = "palettesTextBox";
             this.palettesTextBox.Size = new System.Drawing.Size(478, 20);
             this.palettesTextBox.TabIndex = 28;
-            this.palettesTextBox.Text = "C:\\users\\tomas\\documents\\nes\\github\\platformer\\PlatformerGraphics\\palettes\\palett" +
-    "es_00.xml";
+            this.palettesTextBox.Text = "C:\\users\\tomas\\documents\\nes\\github\\platformer\\PlatformerGraphics\\palettes\\palettes.xml";
             // 
             // specLabel
             // 

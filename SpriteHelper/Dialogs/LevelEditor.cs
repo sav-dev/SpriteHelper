@@ -133,7 +133,7 @@ namespace SpriteHelper.Dialogs
                 @"C:\Users\tomas\Documents\NES\GitHub\Platformer\PlatformerGraphics\Sprites\enemies.xml",
                 Defaults.Instance.PalettesSpec,
                 Defaults.Instance.PlayerSpec,
-                @"C:\Users\tomas\Documents\NES\GitHub\Platformer\PlatformerGraphics\Chr\spr_00.chr");
+                @"C:\Users\tomas\Documents\NES\GitHub\Platformer\PlatformerGraphics\Chr\spr.chr");
         }
 
         private void ClearStatus()

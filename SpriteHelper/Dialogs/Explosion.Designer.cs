@@ -181,8 +181,7 @@
             this.palettesTextBox.Name = "palettesTextBox";
             this.palettesTextBox.Size = new System.Drawing.Size(401, 20);
             this.palettesTextBox.TabIndex = 14;
-            this.palettesTextBox.Text = "C:\\users\\tomas\\documents\\nes\\github\\platformer\\PlatformerGraphics\\palettes\\palett" +
-    "es_00.xml";
+            this.palettesTextBox.Text = "C:\\users\\tomas\\documents\\nes\\github\\platformer\\PlatformerGraphics\\palettes\\palettes.xml";
             // 
             // codeButton
             // 
