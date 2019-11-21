@@ -12,9 +12,14 @@ namespace SpriteHelper.Dialogs
 {
     public partial class PaletteProcessor : Form
     {
+        private readonly int WindowDefaultHeight;
+        private readonly int PictureBoxDefaultHeight;
+
         public PaletteProcessor()
         {
             InitializeComponent();
+            this.WindowDefaultHeight = this.Height;
+            this.PictureBoxDefaultHeight = this.palettesPictureBox.Height;
         }
 
         private void PaletteProcessorLoad(object sender, EventArgs e)
@@ -111,8 +116,8 @@ namespace SpriteHelper.Dialogs
             // Default height is just for one bg pallete, resize
             var paletteHeight = spriteBitmap.Height + VerticalPadding;
             var resize = (backgroundBitmaps.Length - 1) * paletteHeight;
-            this.Height = this.Height + resize;
-            this.palettesPictureBox.Height = this.palettesPictureBox.Height + resize;
+            this.Height = this.WindowDefaultHeight + resize;
+            this.palettesPictureBox.Height = this.PictureBoxDefaultHeight + resize;
 
             var resultBitmap = new Bitmap(spriteBitmap.Width, paletteHeight * (backgroundBitmaps.Length + 1));
             using (var graphics = Graphics.FromImage(resultBitmap))
