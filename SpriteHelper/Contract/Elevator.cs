@@ -54,21 +54,16 @@ namespace SpriteHelper.Contract
         {
             get
             {
-                int position;
                 switch (this.MovementType)
                 {
                     case MovementType.Horizontal:
-                        position = this.X;
-                        break;
+                        return this.Direction == Direction.Left ? this.X - this.MinPosition : this.MaxPosition - this.X;
                     case MovementType.Vertical:
-                        position = this.Y;
-                        break;
+                        return this.Direction == Direction.Up ? this.Y - this.MinPosition : this.MaxPosition - this.Y;
                     case MovementType.None:
                     default:
                         return 0;
                 }
-
-                return this.Direction == Direction.Up ? position - this.MinPosition : this.MaxPosition - position;
             }
         }
 
