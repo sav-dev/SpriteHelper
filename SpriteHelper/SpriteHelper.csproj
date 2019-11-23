@@ -64,6 +64,12 @@
     <Compile Include="Dialogs\AddEditElevatorDialog.Designer.cs">
       <DependentUpon>AddEditElevatorDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\EditDoorAndKeycardDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\EditDoorAndKeycardDialog.Designer.cs">
+      <DependentUpon>EditDoorAndKeycardDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="NesGraphics\ChrLoader.cs" />
     <Compile Include="Contract\Enemy.cs" />
     <Compile Include="Contract\MovementType.cs" />
@@ -221,6 +227,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\BackgroundTilesetCreator.resx">
       <DependentUpon>BackgroundTilesetCreator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\EditDoorAndKeycardDialog.resx">
+      <DependentUpon>EditDoorAndKeycardDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\EnemiesWindow.resx">
       <DependentUpon>EnemiesWindow.cs</DependentUpon>

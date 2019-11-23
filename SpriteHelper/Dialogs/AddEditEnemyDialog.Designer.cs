@@ -101,6 +101,7 @@
             // positionPanel
             // 
             this.positionPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.positionPanel.EnableFinePosition = true;
             this.positionPanel.Location = new System.Drawing.Point(3, 16);
             this.positionPanel.Name = "positionPanel";
             this.positionPanel.Size = new System.Drawing.Size(435, 83);

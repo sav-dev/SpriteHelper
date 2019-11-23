@@ -1089,6 +1089,12 @@ namespace SpriteHelper.Dialogs
             this.hideNonBgToolStringMenuItem.Checked = this.OnlyBackgroundShown;
         }
 
+        private void ShowDoorAndKeycardToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            this.UpdateBitmap();
+            this.hideNonBgToolStringMenuItem.Checked = this.OnlyBackgroundShown;
+        }
+
         private void ShowPlayerToolStripMenuItemClick(object sender, EventArgs e)
         {
             this.UpdateBitmap();
@@ -1524,6 +1530,7 @@ namespace SpriteHelper.Dialogs
                          this.showElevatorsToolStripMenuItem.Checked ||
                          this.showElevatorMovementToolStripMenuItem.Checked ||
                          this.showElevatorCollisionsStripMenuItem.Checked ||
+                         this.showDoorAndKeycardToolStripMenuItem.Checked ||
                          this.showPlayerToolStripMenuItem.Checked);
             }
 
@@ -1537,6 +1544,7 @@ namespace SpriteHelper.Dialogs
                     this.showElevatorsToolStripMenuItem.Checked = false;
                     this.showElevatorMovementToolStripMenuItem.Checked = false;
                     this.showElevatorCollisionsStripMenuItem.Checked = false;
+                    this.showDoorAndKeycardToolStripMenuItem.Checked = false;
                     this.showPlayerToolStripMenuItem.Checked = false;                    
                     this.UpdateBitmap();
                 }
@@ -3673,6 +3681,6 @@ namespace SpriteHelper.Dialogs
             }
         }
 
-        #endregion      
+        #endregion
     }
 }

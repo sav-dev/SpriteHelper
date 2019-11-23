@@ -10,6 +10,26 @@ namespace SpriteHelper.Controls
             InitializeComponent();
         }
 
+        public bool enableFinePosition;
+        public bool EnableFinePosition
+        {
+            get
+            {
+                return this.enableFinePosition;
+            }
+            set
+            {
+                this.enableFinePosition = value;
+                this.xOffsetTextBox.Enabled = value;
+                this.yOffsetTextBox.Enabled = value;
+                if (!value)
+                {
+                    this.xOffsetTextBox.Text = "0";
+                    this.yOffsetTextBox.Text = "0";
+                }
+            }
+        }
+
         private void InputTextChanged(object sender, EventArgs e)
         {
             int xTiles, xOffset, yTiles, yOffset;
