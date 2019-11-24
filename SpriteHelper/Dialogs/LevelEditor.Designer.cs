@@ -32,6 +32,26 @@
             this.outerOuterDrawPanel = new System.Windows.Forms.Panel();
             this.outerDrawPanel = new System.Windows.Forms.Panel();
             this.scrollBar = new System.Windows.Forms.HScrollBar();
+            this.mainTabControl = new System.Windows.Forms.TabControl();
+            this.bgTabPage = new System.Windows.Forms.TabPage();
+            this.bgTabControl = new System.Windows.Forms.TabControl();
+            this.blockingTilesTabPage = new System.Windows.Forms.TabPage();
+            this.nonBlockingTilesTabPage = new System.Windows.Forms.TabPage();
+            this.threatTilesTabPage = new System.Windows.Forms.TabPage();
+            this.enTabPage = new System.Windows.Forms.TabPage();
+            this.enemiesListBox = new System.Windows.Forms.ListBox();
+            this.enTabBottomPanel = new System.Windows.Forms.Panel();
+            this.editEnemyButton = new System.Windows.Forms.Button();
+            this.findEnemyButton = new System.Windows.Forms.Button();
+            this.deleteEnemyButton = new System.Windows.Forms.Button();
+            this.addEnemyButton = new System.Windows.Forms.Button();
+            this.elTabPage = new System.Windows.Forms.TabPage();
+            this.elevatorsListBox = new System.Windows.Forms.ListBox();
+            this.elTabBottomPanel = new System.Windows.Forms.Panel();
+            this.editElevatorButton = new System.Windows.Forms.Button();
+            this.findElevatorButton = new System.Windows.Forms.Button();
+            this.deleteElevatorButton = new System.Windows.Forms.Button();
+            this.addElevatorButton = new System.Windows.Forms.Button();
             this.uniqueTilesCountLabel = new System.Windows.Forms.Label();
             this.uniqueTilesLabel = new System.Windows.Forms.Label();
             this.selectedTilePictureBox = new System.Windows.Forms.PictureBox();
@@ -75,42 +95,23 @@
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.exportCheckToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.diagnosticsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.elTabPage = new System.Windows.Forms.TabPage();
-            this.elTabBottomPanel = new System.Windows.Forms.Panel();
-            this.addElevatorButton = new System.Windows.Forms.Button();
-            this.deleteElevatorButton = new System.Windows.Forms.Button();
-            this.findElevatorButton = new System.Windows.Forms.Button();
-            this.editElevatorButton = new System.Windows.Forms.Button();
-            this.elevatorsListBox = new System.Windows.Forms.ListBox();
-            this.enTabPage = new System.Windows.Forms.TabPage();
-            this.enTabBottomPanel = new System.Windows.Forms.Panel();
-            this.addEnemyButton = new System.Windows.Forms.Button();
-            this.deleteEnemyButton = new System.Windows.Forms.Button();
-            this.findEnemyButton = new System.Windows.Forms.Button();
-            this.editEnemyButton = new System.Windows.Forms.Button();
-            this.enemiesListBox = new System.Windows.Forms.ListBox();
-            this.bgTabPage = new System.Windows.Forms.TabPage();
-            this.bgTabControl = new System.Windows.Forms.TabControl();
-            this.threatTilesTabPage = new System.Windows.Forms.TabPage();
-            this.nonBlockingTilesTabPage = new System.Windows.Forms.TabPage();
-            this.blockingTilesTabPage = new System.Windows.Forms.TabPage();
-            this.mainTabControl = new System.Windows.Forms.TabControl();
             this.editDoorAndKeycardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerVertical)).BeginInit();
             this.splitContainerVertical.Panel1.SuspendLayout();
             this.splitContainerVertical.Panel2.SuspendLayout();
             this.splitContainerVertical.SuspendLayout();
             this.outerOuterDrawPanel.SuspendLayout();
+            this.mainTabControl.SuspendLayout();
+            this.bgTabPage.SuspendLayout();
+            this.bgTabControl.SuspendLayout();
+            this.enTabPage.SuspendLayout();
+            this.enTabBottomPanel.SuspendLayout();
+            this.elTabPage.SuspendLayout();
+            this.elTabBottomPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.selectedTilePictureBox)).BeginInit();
             this.statusStrip.SuspendLayout();
             this.menuStrip.SuspendLayout();
-            this.elTabPage.SuspendLayout();
-            this.elTabBottomPanel.SuspendLayout();
-            this.enTabPage.SuspendLayout();
-            this.enTabBottomPanel.SuspendLayout();
-            this.bgTabPage.SuspendLayout();
-            this.bgTabControl.SuspendLayout();
-            this.mainTabControl.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainerVertical
@@ -164,6 +165,232 @@
             this.scrollBar.Size = new System.Drawing.Size(601, 17);
             this.scrollBar.TabIndex = 0;
             this.scrollBar.Scroll += new System.Windows.Forms.ScrollEventHandler(this.ScrollBarScroll);
+            // 
+            // mainTabControl
+            // 
+            this.mainTabControl.Alignment = System.Windows.Forms.TabAlignment.Bottom;
+            this.mainTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.mainTabControl.Controls.Add(this.bgTabPage);
+            this.mainTabControl.Controls.Add(this.enTabPage);
+            this.mainTabControl.Controls.Add(this.elTabPage);
+            this.mainTabControl.Location = new System.Drawing.Point(13, 53);
+            this.mainTabControl.Name = "mainTabControl";
+            this.mainTabControl.SelectedIndex = 0;
+            this.mainTabControl.Size = new System.Drawing.Size(309, 464);
+            this.mainTabControl.TabIndex = 0;
+            // 
+            // bgTabPage
+            // 
+            this.bgTabPage.Controls.Add(this.bgTabControl);
+            this.bgTabPage.Location = new System.Drawing.Point(4, 4);
+            this.bgTabPage.Name = "bgTabPage";
+            this.bgTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.bgTabPage.Size = new System.Drawing.Size(301, 438);
+            this.bgTabPage.TabIndex = 0;
+            this.bgTabPage.Text = "Background";
+            this.bgTabPage.UseVisualStyleBackColor = true;
+            // 
+            // bgTabControl
+            // 
+            this.bgTabControl.Alignment = System.Windows.Forms.TabAlignment.Bottom;
+            this.bgTabControl.Controls.Add(this.blockingTilesTabPage);
+            this.bgTabControl.Controls.Add(this.nonBlockingTilesTabPage);
+            this.bgTabControl.Controls.Add(this.threatTilesTabPage);
+            this.bgTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.bgTabControl.Location = new System.Drawing.Point(3, 3);
+            this.bgTabControl.Multiline = true;
+            this.bgTabControl.Name = "bgTabControl";
+            this.bgTabControl.SelectedIndex = 0;
+            this.bgTabControl.Size = new System.Drawing.Size(295, 432);
+            this.bgTabControl.TabIndex = 47;
+            // 
+            // blockingTilesTabPage
+            // 
+            this.blockingTilesTabPage.Location = new System.Drawing.Point(4, 4);
+            this.blockingTilesTabPage.Name = "blockingTilesTabPage";
+            this.blockingTilesTabPage.Size = new System.Drawing.Size(287, 406);
+            this.blockingTilesTabPage.TabIndex = 2;
+            this.blockingTilesTabPage.Text = "Blocking";
+            this.blockingTilesTabPage.UseVisualStyleBackColor = true;
+            // 
+            // nonBlockingTilesTabPage
+            // 
+            this.nonBlockingTilesTabPage.Location = new System.Drawing.Point(4, 4);
+            this.nonBlockingTilesTabPage.Name = "nonBlockingTilesTabPage";
+            this.nonBlockingTilesTabPage.Size = new System.Drawing.Size(287, 406);
+            this.nonBlockingTilesTabPage.TabIndex = 3;
+            this.nonBlockingTilesTabPage.Text = "Non-blocking";
+            this.nonBlockingTilesTabPage.UseVisualStyleBackColor = true;
+            // 
+            // threatTilesTabPage
+            // 
+            this.threatTilesTabPage.Location = new System.Drawing.Point(4, 4);
+            this.threatTilesTabPage.Name = "threatTilesTabPage";
+            this.threatTilesTabPage.Size = new System.Drawing.Size(287, 406);
+            this.threatTilesTabPage.TabIndex = 4;
+            this.threatTilesTabPage.Text = "Threat";
+            this.threatTilesTabPage.UseVisualStyleBackColor = true;
+            // 
+            // enTabPage
+            // 
+            this.enTabPage.BackColor = System.Drawing.SystemColors.Control;
+            this.enTabPage.Controls.Add(this.enemiesListBox);
+            this.enTabPage.Controls.Add(this.enTabBottomPanel);
+            this.enTabPage.Location = new System.Drawing.Point(4, 4);
+            this.enTabPage.Name = "enTabPage";
+            this.enTabPage.Size = new System.Drawing.Size(301, 438);
+            this.enTabPage.TabIndex = 1;
+            this.enTabPage.Text = "Enemies";
+            // 
+            // enemiesListBox
+            // 
+            this.enemiesListBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.enemiesListBox.FormattingEnabled = true;
+            this.enemiesListBox.Location = new System.Drawing.Point(0, 0);
+            this.enemiesListBox.Name = "enemiesListBox";
+            this.enemiesListBox.Size = new System.Drawing.Size(301, 400);
+            this.enemiesListBox.TabIndex = 1;
+            this.enemiesListBox.SelectedIndexChanged += new System.EventHandler(this.EnemiesListBoxSelectedIndexChanged);
+            this.enemiesListBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.EnemiesListBoxKeyDown);
+            this.enemiesListBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.EnemiesListBoxMouseDoubleClick);
+            this.enemiesListBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.EnemiesListBoxMouseDown);
+            // 
+            // enTabBottomPanel
+            // 
+            this.enTabBottomPanel.Controls.Add(this.editEnemyButton);
+            this.enTabBottomPanel.Controls.Add(this.findEnemyButton);
+            this.enTabBottomPanel.Controls.Add(this.deleteEnemyButton);
+            this.enTabBottomPanel.Controls.Add(this.addEnemyButton);
+            this.enTabBottomPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.enTabBottomPanel.Location = new System.Drawing.Point(0, 400);
+            this.enTabBottomPanel.Name = "enTabBottomPanel";
+            this.enTabBottomPanel.Size = new System.Drawing.Size(301, 38);
+            this.enTabBottomPanel.TabIndex = 0;
+            // 
+            // editEnemyButton
+            // 
+            this.editEnemyButton.Enabled = false;
+            this.editEnemyButton.Location = new System.Drawing.Point(152, 7);
+            this.editEnemyButton.Name = "editEnemyButton";
+            this.editEnemyButton.Size = new System.Drawing.Size(66, 23);
+            this.editEnemyButton.TabIndex = 2;
+            this.editEnemyButton.Text = "Edit";
+            this.editEnemyButton.UseVisualStyleBackColor = true;
+            this.editEnemyButton.Click += new System.EventHandler(this.EditEnemyButtonClick);
+            // 
+            // findEnemyButton
+            // 
+            this.findEnemyButton.Enabled = false;
+            this.findEnemyButton.Location = new System.Drawing.Point(224, 7);
+            this.findEnemyButton.Name = "findEnemyButton";
+            this.findEnemyButton.Size = new System.Drawing.Size(66, 23);
+            this.findEnemyButton.TabIndex = 2;
+            this.findEnemyButton.Text = "Find";
+            this.findEnemyButton.UseVisualStyleBackColor = true;
+            this.findEnemyButton.Click += new System.EventHandler(this.FindEnemyButtonClick);
+            // 
+            // deleteEnemyButton
+            // 
+            this.deleteEnemyButton.Enabled = false;
+            this.deleteEnemyButton.Location = new System.Drawing.Point(80, 7);
+            this.deleteEnemyButton.Name = "deleteEnemyButton";
+            this.deleteEnemyButton.Size = new System.Drawing.Size(66, 23);
+            this.deleteEnemyButton.TabIndex = 1;
+            this.deleteEnemyButton.Text = "Delete";
+            this.deleteEnemyButton.UseVisualStyleBackColor = true;
+            this.deleteEnemyButton.Click += new System.EventHandler(this.DeleteEnemyButtonClick);
+            // 
+            // addEnemyButton
+            // 
+            this.addEnemyButton.Location = new System.Drawing.Point(8, 7);
+            this.addEnemyButton.Name = "addEnemyButton";
+            this.addEnemyButton.Size = new System.Drawing.Size(66, 23);
+            this.addEnemyButton.TabIndex = 0;
+            this.addEnemyButton.Text = "Add";
+            this.addEnemyButton.UseVisualStyleBackColor = true;
+            this.addEnemyButton.Click += new System.EventHandler(this.AddEnemyButtonClick);
+            // 
+            // elTabPage
+            // 
+            this.elTabPage.Controls.Add(this.elevatorsListBox);
+            this.elTabPage.Controls.Add(this.elTabBottomPanel);
+            this.elTabPage.Location = new System.Drawing.Point(4, 4);
+            this.elTabPage.Name = "elTabPage";
+            this.elTabPage.Size = new System.Drawing.Size(301, 438);
+            this.elTabPage.TabIndex = 2;
+            this.elTabPage.Text = "Elevators";
+            this.elTabPage.UseVisualStyleBackColor = true;
+            // 
+            // elevatorsListBox
+            // 
+            this.elevatorsListBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.elevatorsListBox.FormattingEnabled = true;
+            this.elevatorsListBox.Location = new System.Drawing.Point(0, 0);
+            this.elevatorsListBox.Name = "elevatorsListBox";
+            this.elevatorsListBox.Size = new System.Drawing.Size(301, 400);
+            this.elevatorsListBox.TabIndex = 3;
+            this.elevatorsListBox.SelectedIndexChanged += new System.EventHandler(this.ElevatorsListBoxSelectedIndexChanged);
+            this.elevatorsListBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ElevatorsListBoxKeyDown);
+            this.elevatorsListBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ElevatorsListBoxMouseDoubleClick);
+            this.elevatorsListBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ElevatorsListBoxMouseDown);
+            // 
+            // elTabBottomPanel
+            // 
+            this.elTabBottomPanel.BackColor = System.Drawing.SystemColors.Control;
+            this.elTabBottomPanel.Controls.Add(this.editElevatorButton);
+            this.elTabBottomPanel.Controls.Add(this.findElevatorButton);
+            this.elTabBottomPanel.Controls.Add(this.deleteElevatorButton);
+            this.elTabBottomPanel.Controls.Add(this.addElevatorButton);
+            this.elTabBottomPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.elTabBottomPanel.Location = new System.Drawing.Point(0, 400);
+            this.elTabBottomPanel.Name = "elTabBottomPanel";
+            this.elTabBottomPanel.Size = new System.Drawing.Size(301, 38);
+            this.elTabBottomPanel.TabIndex = 2;
+            // 
+            // editElevatorButton
+            // 
+            this.editElevatorButton.Enabled = false;
+            this.editElevatorButton.Location = new System.Drawing.Point(152, 7);
+            this.editElevatorButton.Name = "editElevatorButton";
+            this.editElevatorButton.Size = new System.Drawing.Size(66, 23);
+            this.editElevatorButton.TabIndex = 2;
+            this.editElevatorButton.Text = "Edit";
+            this.editElevatorButton.UseVisualStyleBackColor = true;
+            this.editElevatorButton.Click += new System.EventHandler(this.EditElevatorButtonClick);
+            // 
+            // findElevatorButton
+            // 
+            this.findElevatorButton.Enabled = false;
+            this.findElevatorButton.Location = new System.Drawing.Point(224, 7);
+            this.findElevatorButton.Name = "findElevatorButton";
+            this.findElevatorButton.Size = new System.Drawing.Size(66, 23);
+            this.findElevatorButton.TabIndex = 2;
+            this.findElevatorButton.Text = "Find";
+            this.findElevatorButton.UseVisualStyleBackColor = true;
+            this.findElevatorButton.Click += new System.EventHandler(this.FindElevatorButtonClick);
+            // 
+            // deleteElevatorButton
+            // 
+            this.deleteElevatorButton.Enabled = false;
+            this.deleteElevatorButton.Location = new System.Drawing.Point(80, 7);
+            this.deleteElevatorButton.Name = "deleteElevatorButton";
+            this.deleteElevatorButton.Size = new System.Drawing.Size(66, 23);
+            this.deleteElevatorButton.TabIndex = 1;
+            this.deleteElevatorButton.Text = "Delete";
+            this.deleteElevatorButton.UseVisualStyleBackColor = true;
+            this.deleteElevatorButton.Click += new System.EventHandler(this.DeleteElevatorButtonClick);
+            // 
+            // addElevatorButton
+            // 
+            this.addElevatorButton.Location = new System.Drawing.Point(8, 7);
+            this.addElevatorButton.Name = "addElevatorButton";
+            this.addElevatorButton.Size = new System.Drawing.Size(66, 23);
+            this.addElevatorButton.TabIndex = 0;
+            this.addElevatorButton.Text = "Add";
+            this.addElevatorButton.UseVisualStyleBackColor = true;
+            this.addElevatorButton.Click += new System.EventHandler(this.AddElevatorButtonClick);
             // 
             // uniqueTilesCountLabel
             // 
@@ -292,7 +519,9 @@
             this.transformToolStripMenuItem,
             this.toolStripSeparator4,
             this.undoToolStripMenuItem,
-            this.redoToolStripMenuItem});
+            this.redoToolStripMenuItem,
+            this.toolStripSeparator10,
+            this.editDoorAndKeycardToolStripMenuItem});
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
             this.editToolStripMenuItem.Text = "&Edit";
@@ -356,7 +585,6 @@
             this.showElevatorCollisionsStripMenuItem,
             this.toolStripSeparator3,
             this.showDoorAndKeycardToolStripMenuItem,
-            this.editDoorAndKeycardToolStripMenuItem,
             this.toolStripSeparator6,
             this.showPlayerToolStripMenuItem,
             this.toolStripSeparator2,
@@ -567,242 +795,18 @@
             this.diagnosticsToolStripMenuItem.Text = "&Diagnostics";
             this.diagnosticsToolStripMenuItem.Click += new System.EventHandler(this.DiagnosticsToolStripMenuItemClick);
             // 
-            // elTabPage
-            // 
-            this.elTabPage.Controls.Add(this.elevatorsListBox);
-            this.elTabPage.Controls.Add(this.elTabBottomPanel);
-            this.elTabPage.Location = new System.Drawing.Point(4, 4);
-            this.elTabPage.Name = "elTabPage";
-            this.elTabPage.Size = new System.Drawing.Size(301, 438);
-            this.elTabPage.TabIndex = 2;
-            this.elTabPage.Text = "Elevators";
-            this.elTabPage.UseVisualStyleBackColor = true;
-            // 
-            // elTabBottomPanel
-            // 
-            this.elTabBottomPanel.BackColor = System.Drawing.SystemColors.Control;
-            this.elTabBottomPanel.Controls.Add(this.editElevatorButton);
-            this.elTabBottomPanel.Controls.Add(this.findElevatorButton);
-            this.elTabBottomPanel.Controls.Add(this.deleteElevatorButton);
-            this.elTabBottomPanel.Controls.Add(this.addElevatorButton);
-            this.elTabBottomPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.elTabBottomPanel.Location = new System.Drawing.Point(0, 400);
-            this.elTabBottomPanel.Name = "elTabBottomPanel";
-            this.elTabBottomPanel.Size = new System.Drawing.Size(301, 38);
-            this.elTabBottomPanel.TabIndex = 2;
-            // 
-            // addElevatorButton
-            // 
-            this.addElevatorButton.Location = new System.Drawing.Point(8, 7);
-            this.addElevatorButton.Name = "addElevatorButton";
-            this.addElevatorButton.Size = new System.Drawing.Size(66, 23);
-            this.addElevatorButton.TabIndex = 0;
-            this.addElevatorButton.Text = "Add";
-            this.addElevatorButton.UseVisualStyleBackColor = true;
-            this.addElevatorButton.Click += new System.EventHandler(this.AddElevatorButtonClick);
-            // 
-            // deleteElevatorButton
-            // 
-            this.deleteElevatorButton.Enabled = false;
-            this.deleteElevatorButton.Location = new System.Drawing.Point(80, 7);
-            this.deleteElevatorButton.Name = "deleteElevatorButton";
-            this.deleteElevatorButton.Size = new System.Drawing.Size(66, 23);
-            this.deleteElevatorButton.TabIndex = 1;
-            this.deleteElevatorButton.Text = "Delete";
-            this.deleteElevatorButton.UseVisualStyleBackColor = true;
-            this.deleteElevatorButton.Click += new System.EventHandler(this.DeleteElevatorButtonClick);
-            // 
-            // findElevatorButton
-            // 
-            this.findElevatorButton.Enabled = false;
-            this.findElevatorButton.Location = new System.Drawing.Point(224, 7);
-            this.findElevatorButton.Name = "findElevatorButton";
-            this.findElevatorButton.Size = new System.Drawing.Size(66, 23);
-            this.findElevatorButton.TabIndex = 2;
-            this.findElevatorButton.Text = "Find";
-            this.findElevatorButton.UseVisualStyleBackColor = true;
-            this.findElevatorButton.Click += new System.EventHandler(this.FindElevatorButtonClick);
-            // 
-            // editElevatorButton
-            // 
-            this.editElevatorButton.Enabled = false;
-            this.editElevatorButton.Location = new System.Drawing.Point(152, 7);
-            this.editElevatorButton.Name = "editElevatorButton";
-            this.editElevatorButton.Size = new System.Drawing.Size(66, 23);
-            this.editElevatorButton.TabIndex = 2;
-            this.editElevatorButton.Text = "Edit";
-            this.editElevatorButton.UseVisualStyleBackColor = true;
-            this.editElevatorButton.Click += new System.EventHandler(this.EditElevatorButtonClick);
-            // 
-            // elevatorsListBox
-            // 
-            this.elevatorsListBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.elevatorsListBox.FormattingEnabled = true;
-            this.elevatorsListBox.Location = new System.Drawing.Point(0, 0);
-            this.elevatorsListBox.Name = "elevatorsListBox";
-            this.elevatorsListBox.Size = new System.Drawing.Size(301, 400);
-            this.elevatorsListBox.TabIndex = 3;
-            this.elevatorsListBox.SelectedIndexChanged += new System.EventHandler(this.ElevatorsListBoxSelectedIndexChanged);
-            this.elevatorsListBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ElevatorsListBoxKeyDown);
-            this.elevatorsListBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ElevatorsListBoxMouseDoubleClick);
-            this.elevatorsListBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ElevatorsListBoxMouseDown);
-            // 
-            // enTabPage
-            // 
-            this.enTabPage.BackColor = System.Drawing.SystemColors.Control;
-            this.enTabPage.Controls.Add(this.enemiesListBox);
-            this.enTabPage.Controls.Add(this.enTabBottomPanel);
-            this.enTabPage.Location = new System.Drawing.Point(4, 4);
-            this.enTabPage.Name = "enTabPage";
-            this.enTabPage.Size = new System.Drawing.Size(301, 438);
-            this.enTabPage.TabIndex = 1;
-            this.enTabPage.Text = "Enemies";
-            // 
-            // enTabBottomPanel
-            // 
-            this.enTabBottomPanel.Controls.Add(this.editEnemyButton);
-            this.enTabBottomPanel.Controls.Add(this.findEnemyButton);
-            this.enTabBottomPanel.Controls.Add(this.deleteEnemyButton);
-            this.enTabBottomPanel.Controls.Add(this.addEnemyButton);
-            this.enTabBottomPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.enTabBottomPanel.Location = new System.Drawing.Point(0, 400);
-            this.enTabBottomPanel.Name = "enTabBottomPanel";
-            this.enTabBottomPanel.Size = new System.Drawing.Size(301, 38);
-            this.enTabBottomPanel.TabIndex = 0;
-            // 
-            // addEnemyButton
-            // 
-            this.addEnemyButton.Location = new System.Drawing.Point(8, 7);
-            this.addEnemyButton.Name = "addEnemyButton";
-            this.addEnemyButton.Size = new System.Drawing.Size(66, 23);
-            this.addEnemyButton.TabIndex = 0;
-            this.addEnemyButton.Text = "Add";
-            this.addEnemyButton.UseVisualStyleBackColor = true;
-            this.addEnemyButton.Click += new System.EventHandler(this.AddEnemyButtonClick);
-            // 
-            // deleteEnemyButton
-            // 
-            this.deleteEnemyButton.Enabled = false;
-            this.deleteEnemyButton.Location = new System.Drawing.Point(80, 7);
-            this.deleteEnemyButton.Name = "deleteEnemyButton";
-            this.deleteEnemyButton.Size = new System.Drawing.Size(66, 23);
-            this.deleteEnemyButton.TabIndex = 1;
-            this.deleteEnemyButton.Text = "Delete";
-            this.deleteEnemyButton.UseVisualStyleBackColor = true;
-            this.deleteEnemyButton.Click += new System.EventHandler(this.DeleteEnemyButtonClick);
-            // 
-            // findEnemyButton
-            // 
-            this.findEnemyButton.Enabled = false;
-            this.findEnemyButton.Location = new System.Drawing.Point(224, 7);
-            this.findEnemyButton.Name = "findEnemyButton";
-            this.findEnemyButton.Size = new System.Drawing.Size(66, 23);
-            this.findEnemyButton.TabIndex = 2;
-            this.findEnemyButton.Text = "Find";
-            this.findEnemyButton.UseVisualStyleBackColor = true;
-            this.findEnemyButton.Click += new System.EventHandler(this.FindEnemyButtonClick);
-            // 
-            // editEnemyButton
-            // 
-            this.editEnemyButton.Enabled = false;
-            this.editEnemyButton.Location = new System.Drawing.Point(152, 7);
-            this.editEnemyButton.Name = "editEnemyButton";
-            this.editEnemyButton.Size = new System.Drawing.Size(66, 23);
-            this.editEnemyButton.TabIndex = 2;
-            this.editEnemyButton.Text = "Edit";
-            this.editEnemyButton.UseVisualStyleBackColor = true;
-            this.editEnemyButton.Click += new System.EventHandler(this.EditEnemyButtonClick);
-            // 
-            // enemiesListBox
-            // 
-            this.enemiesListBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.enemiesListBox.FormattingEnabled = true;
-            this.enemiesListBox.Location = new System.Drawing.Point(0, 0);
-            this.enemiesListBox.Name = "enemiesListBox";
-            this.enemiesListBox.Size = new System.Drawing.Size(301, 400);
-            this.enemiesListBox.TabIndex = 1;
-            this.enemiesListBox.SelectedIndexChanged += new System.EventHandler(this.EnemiesListBoxSelectedIndexChanged);
-            this.enemiesListBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.EnemiesListBoxKeyDown);
-            this.enemiesListBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.EnemiesListBoxMouseDoubleClick);
-            this.enemiesListBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.EnemiesListBoxMouseDown);
-            // 
-            // bgTabPage
-            // 
-            this.bgTabPage.Controls.Add(this.bgTabControl);
-            this.bgTabPage.Location = new System.Drawing.Point(4, 4);
-            this.bgTabPage.Name = "bgTabPage";
-            this.bgTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.bgTabPage.Size = new System.Drawing.Size(301, 438);
-            this.bgTabPage.TabIndex = 0;
-            this.bgTabPage.Text = "Background";
-            this.bgTabPage.UseVisualStyleBackColor = true;
-            // 
-            // bgTabControl
-            // 
-            this.bgTabControl.Alignment = System.Windows.Forms.TabAlignment.Bottom;
-            this.bgTabControl.Controls.Add(this.blockingTilesTabPage);
-            this.bgTabControl.Controls.Add(this.nonBlockingTilesTabPage);
-            this.bgTabControl.Controls.Add(this.threatTilesTabPage);
-            this.bgTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.bgTabControl.Location = new System.Drawing.Point(3, 3);
-            this.bgTabControl.Multiline = true;
-            this.bgTabControl.Name = "bgTabControl";
-            this.bgTabControl.SelectedIndex = 0;
-            this.bgTabControl.Size = new System.Drawing.Size(295, 432);
-            this.bgTabControl.TabIndex = 47;
-            // 
-            // threatTilesTabPage
-            // 
-            this.threatTilesTabPage.Location = new System.Drawing.Point(4, 4);
-            this.threatTilesTabPage.Name = "threatTilesTabPage";
-            this.threatTilesTabPage.Size = new System.Drawing.Size(287, 406);
-            this.threatTilesTabPage.TabIndex = 4;
-            this.threatTilesTabPage.Text = "Threat";
-            this.threatTilesTabPage.UseVisualStyleBackColor = true;
-            // 
-            // nonBlockingTilesTabPage
-            // 
-            this.nonBlockingTilesTabPage.Location = new System.Drawing.Point(4, 4);
-            this.nonBlockingTilesTabPage.Name = "nonBlockingTilesTabPage";
-            this.nonBlockingTilesTabPage.Size = new System.Drawing.Size(287, 406);
-            this.nonBlockingTilesTabPage.TabIndex = 3;
-            this.nonBlockingTilesTabPage.Text = "Non-blocking";
-            this.nonBlockingTilesTabPage.UseVisualStyleBackColor = true;
-            // 
-            // blockingTilesTabPage
-            // 
-            this.blockingTilesTabPage.Location = new System.Drawing.Point(4, 4);
-            this.blockingTilesTabPage.Name = "blockingTilesTabPage";
-            this.blockingTilesTabPage.Size = new System.Drawing.Size(287, 406);
-            this.blockingTilesTabPage.TabIndex = 2;
-            this.blockingTilesTabPage.Text = "Blocking";
-            this.blockingTilesTabPage.UseVisualStyleBackColor = true;
-            // 
-            // mainTabControl
-            // 
-            this.mainTabControl.Alignment = System.Windows.Forms.TabAlignment.Bottom;
-            this.mainTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.mainTabControl.Controls.Add(this.bgTabPage);
-            this.mainTabControl.Controls.Add(this.enTabPage);
-            this.mainTabControl.Controls.Add(this.elTabPage);
-            this.mainTabControl.Location = new System.Drawing.Point(13, 53);
-            this.mainTabControl.Name = "mainTabControl";
-            this.mainTabControl.SelectedIndex = 0;
-            this.mainTabControl.Size = new System.Drawing.Size(309, 464);
-            this.mainTabControl.TabIndex = 0;
-            // 
             // editDoorAndKeycardToolStripMenuItem
             // 
-            this.editDoorAndKeycardToolStripMenuItem.Checked = true;
-            this.editDoorAndKeycardToolStripMenuItem.CheckOnClick = true;
-            this.editDoorAndKeycardToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.editDoorAndKeycardToolStripMenuItem.Name = "editDoorAndKeycardToolStripMenuItem";
-            this.editDoorAndKeycardToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.Y)));
-            this.editDoorAndKeycardToolStripMenuItem.Size = new System.Drawing.Size(283, 22);
+            this.editDoorAndKeycardToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
+            this.editDoorAndKeycardToolStripMenuItem.Size = new System.Drawing.Size(229, 22);
             this.editDoorAndKeycardToolStripMenuItem.Text = "Edit door and ke&ycard";
+            this.editDoorAndKeycardToolStripMenuItem.Click += new System.EventHandler(this.EditDoorAndKeycardToolStripMenuItemClick);
+            // 
+            // toolStripSeparator10
+            // 
+            this.toolStripSeparator10.Name = "toolStripSeparator10";
+            this.toolStripSeparator10.Size = new System.Drawing.Size(226, 6);
             // 
             // LevelEditor
             // 
@@ -825,18 +829,18 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerVertical)).EndInit();
             this.splitContainerVertical.ResumeLayout(false);
             this.outerOuterDrawPanel.ResumeLayout(false);
+            this.mainTabControl.ResumeLayout(false);
+            this.bgTabPage.ResumeLayout(false);
+            this.bgTabControl.ResumeLayout(false);
+            this.enTabPage.ResumeLayout(false);
+            this.enTabBottomPanel.ResumeLayout(false);
+            this.elTabPage.ResumeLayout(false);
+            this.elTabBottomPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.selectedTilePictureBox)).EndInit();
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
-            this.elTabPage.ResumeLayout(false);
-            this.elTabBottomPanel.ResumeLayout(false);
-            this.enTabPage.ResumeLayout(false);
-            this.enTabBottomPanel.ResumeLayout(false);
-            this.bgTabPage.ResumeLayout(false);
-            this.bgTabControl.ResumeLayout(false);
-            this.mainTabControl.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -911,6 +915,7 @@
         private System.Windows.Forms.Button findElevatorButton;
         private System.Windows.Forms.Button deleteElevatorButton;
         private System.Windows.Forms.Button addElevatorButton;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
         private System.Windows.Forms.ToolStripMenuItem editDoorAndKeycardToolStripMenuItem;
     }
 }

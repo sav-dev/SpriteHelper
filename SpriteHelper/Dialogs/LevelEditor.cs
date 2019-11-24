@@ -37,6 +37,11 @@ namespace SpriteHelper.Dialogs
         private Dictionary<int, Bitmap> elevatorBitmaps;
         private Dictionary<int, Bitmap> elevatorBitmapsTransparent;
 
+        // Doors.
+        private DoorAndKeycard doorAndKeycard;
+        private Bitmap keycardBitmap;
+        private Bitmap doorBitmap;
+
         // Add/edit enemy dictionaries.
         private Dictionary<string, Bitmap> enBitmapsSimple;
         private Dictionary<string, bool> enShooting;
@@ -184,6 +189,7 @@ namespace SpriteHelper.Dialogs
                 this.playerStartingPosition = readLevel.PlayerStartingPosition;
                 this.exitPosition = readLevel.ExitPosition;
                 this.bgPalette = readLevel.BgPalette;
+                this.doorAndKeycard = readLevel.DoorAndKeycard;
             }
             else
             {
@@ -321,7 +327,31 @@ namespace SpriteHelper.Dialogs
                 this.elevatorBitmaps.Add(i, bmp.ToBitmap(backgroundColor: this.transparentColor));
                 this.elevatorBitmapsTransparent.Add(i, bmp.ToBitmap(alpha: 50, backgroundColor: this.transparentColor));
             }
-                        
+
+            // Door, keycard
+            var keycard1 = sprites.GetSprite(Constants.KeycardSprite1, Constants.KeycardPalette);
+            var keycard2 = sprites.GetSprite(Constants.KeycardSprite2, Constants.KeycardPalette);
+            var door = sprites.GetSprite(Constants.DoorSprite, Constants.DoorPalette);
+            var doorRev = door.ReverseHorizontally();
+
+            var keycardBmp = new MyBitmap(Constants.KeycardWidth, Constants.KeycardHeight);
+            keycardBmp.DrawImage(keycard1, 0, 0);
+            keycardBmp.DrawImage(keycard2, Constants.SpriteWidth, 0);
+            this.keycardBitmap = keycardBmp.Scale(Constants.LevelEditorZoom).ToBitmap(backgroundColor: this.transparentColor);
+
+            var doorBmp = new MyBitmap(Constants.DoorWidth, Constants.DoorHeight);
+            for (var y = 0; y < Constants.DoorHeight; y += Constants.SpriteHeight)
+            {
+                doorBmp.DrawImage(door, 0, y);
+            }
+
+            for (var y = 0; y < Constants.DoorHeight; y += Constants.SpriteHeight)
+            {
+                doorBmp.DrawImage(doorRev, Constants.SpriteWidth, y);
+            }
+
+            this.doorBitmap = doorBmp.Scale(Constants.LevelEditorZoom).ToBitmap(backgroundColor: this.transparentColor);
+
             this.SetLevel(newLevel);
             this.ClearHistory();
         }
@@ -591,6 +621,9 @@ namespace SpriteHelper.Dialogs
 
             // Draw elevators.
             this.DrawElevators();
+
+            // Draw door and keycard.
+            this.DrawDoorAndKeycard();
 
             // Draw player and exit.
             this.DrawPlayerAndExit();
@@ -971,6 +1004,15 @@ namespace SpriteHelper.Dialogs
             }
         }
 
+        private void DrawDoorAndKeycard()
+        {
+            if (this.showDoorAndKeycardToolStripMenuItem.Checked && this.doorAndKeycard != null && this.doorAndKeycard.DoorExists)
+            {
+                this.graphics.DrawImage(this.doorBitmap, new Point(this.doorAndKeycard.DoorX * Constants.LevelEditorZoom, this.doorAndKeycard.DoorY * Constants.LevelEditorZoom));
+                this.graphics.DrawImage(this.keycardBitmap, new Point(this.doorAndKeycard.KeycardX * Constants.LevelEditorZoom, this.doorAndKeycard.KeycardY * Constants.LevelEditorZoom));
+            }
+        }
+
         private void DrawPlayerAndExit()
         {
             if (this.showPlayerToolStripMenuItem.Checked)
@@ -1168,7 +1210,8 @@ namespace SpriteHelper.Dialogs
                     Enemies = this.Enemies,
                     Elevators = this.Elevators,
                     PlayerStartingPosition = this.playerStartingPosition,
-                    ExitPosition = this.exitPosition
+                    ExitPosition = this.exitPosition,
+                    DoorAndKeycard = this.doorAndKeycard,
                 };
 
                 level.Write(saveFileDialog.FileName);
@@ -1949,6 +1992,10 @@ namespace SpriteHelper.Dialogs
             result.AddRange(GetExportElevatorsData(logger));
             logger.WriteLineIfNotNull();
 
+            // Door and keycard.
+            result.AddRange(GetExportDoorAndKeycardData(logger));
+            logger.WriteLineIfNotNull();
+
             // Bg Palette.
             result.AddRange(GetBgPalette(logger));
             logger.WriteLineIfNotNull();
@@ -2573,6 +2620,44 @@ namespace SpriteHelper.Dialogs
             return result.ToArray();
         }
 
+        private byte[] GetExportDoorAndKeycardData(TextWriter logger = null)
+        {
+            //
+            // - data in the following format:
+            //   - 1 byte: door exists
+            //   - 1 byte: door Screen
+            //   - 1 byte: door X
+            //   - 1 byte: door Y
+            //   - 1 byte: keycard Screen
+            //   - 1 byte: keycard X
+            //   - 1 byte: keycard Y
+            //
+
+            var result = new List<byte>();
+
+            if (this.doorAndKeycard != null)
+            {
+                result.Add(this.doorAndKeycard.DoorExists ? (byte)1 : (byte)0);
+                result.Add((byte)(this.doorAndKeycard.DoorX / Constants.ScreenWidth));
+                result.Add((byte)(this.doorAndKeycard.DoorX % Constants.ScreenWidth));
+                result.Add((byte)this.doorAndKeycard.DoorY);
+                result.Add((byte)(this.doorAndKeycard.KeycardX / Constants.ScreenWidth));
+                result.Add((byte)(this.doorAndKeycard.KeycardX % Constants.ScreenWidth));
+                result.Add((byte)this.doorAndKeycard.KeycardY);
+            }
+            else
+            {
+                for (var i = 0; i < 7; i++)
+                {
+                    result.Add(0);
+                }
+            }
+
+            logger.WriteLineIfNotNull("Total bytes for Door and Keycard data: {0}", result.Count);
+            
+            return result.ToArray();
+        }
+
         private byte[] GetBgPalette(TextWriter logger = null)
         {
             // Bg palette offset, 1 byte.
@@ -2614,6 +2699,118 @@ namespace SpriteHelper.Dialogs
 
             logger.WriteLineIfNotNull("Total bytes for Exit data: {0}", result.Count);
             return result.ToArray();
+        }
+
+        #endregion
+
+        #region Door
+
+        private void EditDoorAndKeycardToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            this.EditDoor();
+        }
+
+        private void EditDoor()
+        {
+            // POI history: save history in this method
+            
+            // Show the dialog.
+            var dialog = new EditDoorAndKeycardDialog(this.doorAndKeycard, ValidateDoorAndKeycard);
+            dialog.ShowDialog();
+            if (!dialog.Succeeded)
+            {
+                return;
+            }
+
+            this.doorAndKeycard = new DoorAndKeycard();
+            this.doorAndKeycard.DoorExists = dialog.DoorExists;
+            int doorX, doorY, keycardX, keycardY;
+            dialog.TryGetDoorX(out doorX);
+            dialog.TryGetDoorY(out doorY);
+            dialog.TryGetKeycardX(out keycardX);
+            dialog.TryGetKeycardY(out keycardY);
+            this.doorAndKeycard.DoorX = doorX;
+            this.doorAndKeycard.DoorY = doorY;
+            this.doorAndKeycard.KeycardX = keycardX;
+            this.doorAndKeycard.KeycardY = keycardY;
+            this.UpdateBitmap();
+        }
+
+        private string ValidateDoorAndKeycard(EditDoorAndKeycardDialog dialog)
+        {
+            int doorX, doorY, keycardX, keycardY;
+
+            if (!dialog.TryGetDoorX(out doorX))
+            {
+                return "DoorX invalid";
+            }
+
+            if (!dialog.TryGetDoorY(out doorY))
+            {
+                return "DoorY invalid";
+            }
+
+            if (!dialog.TryGetKeycardX(out keycardX))
+            {
+                return "KeycardX invalid";
+            }
+
+            if (!dialog.TryGetKeycardY(out keycardY))
+            {
+                return "KeycardY invalid";
+            }
+
+            if (doorX % Constants.BackgroundTileWidth != 0)
+            {
+                return "DoorX not multiple of tile width";
+            }
+
+            if (doorY % Constants.BackgroundTileHeight != 0)
+            {
+                return "DoorY not multiple of tile height";
+            }
+
+            if (doorX > this.level.Length * Constants.BackgroundTileWidth)
+            {
+                return "DoorX is too high";
+            }
+
+            if (doorX < 0)
+            {
+                return "DoorX cannot be negative";
+            }
+
+            if (keycardX > this.level.Length * Constants.BackgroundTileWidth)
+            {
+                return "KeycardX is too high";
+            }
+
+            if (keycardX < 0)
+            {
+                return "KeycardX cannot be negative";
+            }
+
+            if (doorY < 0)
+            {
+                return "DoorY cannot be negative";
+            }
+
+            if (doorY > Constants.ScreenHeight)
+            {
+                return "DoorY is too high";
+            }
+
+            if (keycardY < 0)
+            {
+                return "KeycardY cannot be negative";
+            }
+
+            if (keycardY > Constants.ScreenHeight)
+            {
+                return "KeycardY is too high";
+            }
+
+            return null;
         }
 
         #endregion

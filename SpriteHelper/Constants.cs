@@ -18,6 +18,17 @@
         public const int MinElevatorSize = 2;
         public const int MaxElevatorSize = 8;
 
+        // Door and keycard, hardcoded in game code.
+        public const int KeycardSprite1 = 246;
+        public const int KeycardSprite2 = 247;
+        public const int DoorSprite = 248;
+        public const int DoorPalette = 2;
+        public const int KeycardPalette = 2;
+        public const int KeycardWidth = 2 * SpriteWidth;
+        public const int KeycardHeight = SpriteHeight;
+        public const int DoorWidth = 2 * SpriteWidth;
+        public const int DoorHeight = 6 * SpriteHeight;
+
         // Player constants, hardcoded in the game code.
         public const int PlayerXOffset = 8;
         public const int PlayerYOffset = 31;

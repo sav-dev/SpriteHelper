@@ -21,6 +21,9 @@ namespace SpriteHelper.Contract
         public Elevator[] Elevators { get; set; }
 
         [DataMember]
+        public DoorAndKeycard DoorAndKeycard { get; set; }
+
+        [DataMember]
         public Point PlayerStartingPosition { get; set; }
 
         [DataMember]
