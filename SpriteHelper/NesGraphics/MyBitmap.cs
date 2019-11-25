@@ -45,6 +45,13 @@ namespace SpriteHelper.NesGraphics
         public static MyBitmap FromFile(string file)
         {
             var bitmap = new Bitmap(file);
+            var result = FromBitmap(bitmap);
+            result.fileName = file;
+            return result;
+        }
+
+        public static MyBitmap FromBitmap(Bitmap bitmap)
+        {
             var result = new MyBitmap(bitmap.Width, bitmap.Height);
             for (var i = 0; i < bitmap.Width; i++)
             {
@@ -53,8 +60,7 @@ namespace SpriteHelper.NesGraphics
                     result.SetPixel(bitmap.GetPixel(i, j), i, j);
                 }
             }
-
-            result.fileName = file;
+            
             return result;
         }
 
@@ -119,7 +125,23 @@ namespace SpriteHelper.NesGraphics
                 for (var j = 0; j < this.Height; j++)
                 {
                     var color = this.GetPixel(i, j);
-                    var a = backgroundColor.HasValue ? (color == backgroundColor ? 0 : alpha) : alpha;
+                    int a;
+                    if (backgroundColor.HasValue)
+                    {
+                        if (color.R == backgroundColor.Value.R && color.G == backgroundColor.Value.G && color.B == backgroundColor.Value.B)
+                        {
+                            a = 0;
+                        }
+                        else
+                        {
+                            a = alpha;
+                        }
+                    }
+                    else
+                    {
+                        a = alpha;
+                    }
+
                     result.SetPixel(i, j, Color.FromArgb(a, color));
                 }
             }

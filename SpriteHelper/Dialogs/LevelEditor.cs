@@ -302,16 +302,23 @@ namespace SpriteHelper.Dialogs
 
             // Add/edit enemy dictionaries.
             this.enBitmapsSimple = this.enBitmaps.Keys.ToDictionary(k => k, k => this.enBitmaps[k][false]);
-
             this.enShooting = this.enConfig.Animations.ToDictionary(a => a.Name, a => a.Offsets.GunXOff >= 0);
+
+            // Sprites.
+            var sprites = new ChrLoader(spriteChr, this.palettes.SpritesPalette);
 
             // Player config.
             var playerConfig = SpriteConfig.Read(player, this.palettes);
             this.playerBitmap = playerConfig.Frames.First().GetPlayerBitmap(playerConfig, this.transparentColor, true, false, false, Constants.LevelEditorZoom, true);
-            this.playerJetpackBitmap = new Bitmap(10, 10); // todo 0002: set the player jetpack bitmap
+            var playerBitmapJump = playerConfig.Frames.First(f => f.Name == "Jump").GetPlayerBitmap(playerConfig, this.transparentColor, true, false, false, 1, true);
+            var playerMyBitmapJump = MyBitmap.FromBitmap(playerBitmapJump);
+            var jetpack = sprites.GetSprite(Constants.JetpackSprite, Constants.JetpackPalette);
+            var flames = sprites.GetSprite(Constants.FlamesSprite, Constants.FlamesPalette);
+            playerMyBitmapJump.DrawImage(jetpack, Constants.JetpackXOff, Constants.JetpackYOff);
+            playerMyBitmapJump.DrawImage(flames, Constants.FlamesXOff, Constants.FlamesYOff);
+            this.playerJetpackBitmap = playerMyBitmapJump.Scale(Constants.LevelEditorZoom).ToBitmap(backgroundColor: this.transparentColor);
 
             // Elevators
-            var sprites = new ChrLoader(spriteChr, this.palettes.SpritesPalette);
             var elevator = sprites.GetSprite(Constants.ElevatorSprite, Constants.ElevatorPalette);
             var elevatorEndR = sprites.GetSprite(Constants.ElevatorEndRSprite, Constants.ElevatorPalette);
             var elevatorEndL = elevatorEndR.ReverseHorizontally();
@@ -2727,18 +2734,43 @@ namespace SpriteHelper.Dialogs
 
         private byte[] GetLevelTypeData(TextWriter logger = null)
         {
-            // todo 0002: update this based on level type
-
             //
             // - data in the following format:
-            //   - 3 bytes: exit position (screen/x/y)
+            //   - 1st byte: level type
+            //   - next 3 bytes: depends on level type:
+            //     - normal: exit position (screen/x/y)
+            //     - jetpack: scroll speed (1 byte, 2 bytes are not important)
             //
 
             var result = new List<byte>();
+            result.Add((byte)this.levelType);
 
-            result.Add((byte)(this.exitPosition.X / 256));
-            result.Add((byte)(this.exitPosition.X % 256));
-            result.Add((byte)this.exitPosition.Y);
+            if (this.levelType == LevelType.Normal)
+            {
+                result.Add((byte)(this.exitPosition.X / 256));
+                result.Add((byte)(this.exitPosition.X % 256));
+                result.Add((byte)this.exitPosition.Y);
+            }
+            else if (this.levelType == LevelType.Jetpack)
+            {
+                byte speed;
+                if (this.scrollSpeed == 0.25)
+                {
+                    speed = 254;
+                }
+                else if (this.scrollSpeed == 0.5)
+                {
+                    speed = 255;
+                }
+                else
+                {
+                    speed = (byte)this.scrollSpeed;
+                }
+
+                result.Add(speed);
+                result.Add(0);
+                result.Add(0);
+            }
 
             logger.WriteLineIfNotNull("Total bytes for Exit data: {0}", result.Count);
             return result.ToArray();

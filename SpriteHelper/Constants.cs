@@ -29,6 +29,16 @@
         public const int DoorWidth = 2 * SpriteWidth;
         public const int DoorHeight = 6 * SpriteHeight;
 
+        // Jetpack, hardcoded in game code.
+        public const int FlamesSprite = 242;
+        public const int JetpackSprite = 245;
+        public const int JetpackXOff = 3;
+        public const int JetpackYOff = 1;
+        public const int FlamesXOff = 2;
+        public const int FlamesYOff = 16;
+        public const int JetpackPalette = 1;
+        public const int FlamesPalette = 0;
+
         // Player constants, hardcoded in the game code.
         public const int PlayerXOffset = 8;
         public const int PlayerYOffset = 31;
