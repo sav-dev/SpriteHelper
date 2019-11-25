@@ -68,7 +68,7 @@ namespace SpriteHelper.Contract
 
     public enum LevelType
     {
-        Normal = 0,
-        Jetpack = 1,
+        Jetpack = 0,
+        Normal = 1,        
     }
 }
