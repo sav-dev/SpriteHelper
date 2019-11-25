@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SpriteHelper.Contract;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -9,19 +10,21 @@ namespace SpriteHelper.Dialogs
         private Func<EditLevelDialog, bool> validationFunc;
 
         public EditLevelDialog(
-            int width, 
-            Point playerStartingPosition, 
-            Point exitPosition,
+            int width,
             int bgPaletteCount,
             int selectedBgPalette,
+            Point playerStartingPosition,
+            LevelType levelType,
+            Point exitPosition,
+            double scrollSpeed,
             Func<EditLevelDialog, bool> validationFunc)
         {
             InitializeComponent();
+
+            // Width
             this.widthTextBox.Text = width.ToString();
-            this.playerXTextBox.Text = playerStartingPosition.X.ToString();
-            this.playerYTextBox.Text = playerStartingPosition.Y.ToString();
-            this.exitXTextBox.Text = (exitPosition.X / Constants.BackgroundTileWidth).ToString();
-            this.exitYTextBox.Text = (exitPosition.Y / Constants.BackgroundTileHeight).ToString();
+
+            // Palettes
             for (var i = 0; i < bgPaletteCount; i++)
             {
                 this.bgPaletteComboBox.Items.Add(i);
@@ -29,6 +32,25 @@ namespace SpriteHelper.Dialogs
 
             this.bgPaletteComboBox.SelectedItem = selectedBgPalette;
 
+            // Starting position
+            this.playerXTextBox.Text = playerStartingPosition.X.ToString();
+            this.playerYTextBox.Text = playerStartingPosition.Y.ToString();
+                        
+            // Level type
+            this.levelTypeComboBox.Items.Clear();
+            this.levelTypeComboBox.Items.Add(LevelType.Normal.ToString());
+            this.levelTypeComboBox.Items.Add(LevelType.Jetpack.ToString());
+            this.levelTypeComboBox.SelectedItem = levelType.ToString();
+            this.LevelTypeComboBoxSelectedIndexChanged(null, null);
+
+            // Exit position
+            this.exitXTextBox.Text = (exitPosition.X / Constants.BackgroundTileWidth).ToString();
+            this.exitYTextBox.Text = (exitPosition.Y / Constants.BackgroundTileHeight).ToString();
+
+            // Scroll speed
+            this.scrollSpeedComboBox.SelectedItem = scrollSpeed.ToString();
+
+            // Store the validation function
             this.validationFunc = validationFunc;
         }
 
@@ -87,5 +109,15 @@ namespace SpriteHelper.Dialogs
         }
 
         public int BgPalette => (int)this.bgPaletteComboBox.SelectedItem;
+
+        public LevelType LevelType => (LevelType)Enum.Parse(typeof(LevelType), this.levelTypeComboBox.SelectedItem.ToString());
+
+        public double ScrollSpeed => double.Parse(this.scrollSpeedComboBox.SelectedItem.ToString());
+
+        private void LevelTypeComboBoxSelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.exitGroupBox.Enabled = this.LevelType == LevelType.Normal;
+            this.jetpackGroupBox.Enabled = this.LevelType == LevelType.Jetpack;
+        }
     }
 }

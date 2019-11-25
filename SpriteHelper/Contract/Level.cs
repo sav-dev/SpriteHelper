@@ -9,6 +9,9 @@ namespace SpriteHelper.Contract
     public class Level
     {
         [DataMember]
+        public LevelType LevelType { get; set; }
+
+        [DataMember]
         public int BgPalette { get; set; }
 
         [DataMember]
@@ -25,6 +28,9 @@ namespace SpriteHelper.Contract
 
         [DataMember]
         public Point PlayerStartingPosition { get; set; }
+
+        [DataMember]
+        public double ScrollSpeed { get; set; }
 
         [DataMember]
         public Point ExitPosition { get; set; }
@@ -58,5 +64,11 @@ namespace SpriteHelper.Contract
                 }
             }
         }
+    }
+
+    public enum LevelType
+    {
+        Normal = 0,
+        Jetpack = 1,
     }
 }

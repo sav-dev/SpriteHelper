@@ -32,6 +32,7 @@ namespace SpriteHelper.Dialogs
 
         // Player bitmap.
         private Bitmap playerBitmap;
+        private Bitmap playerJetpackBitmap;
 
         // Elevators.
         private Dictionary<int, Bitmap> elevatorBitmaps;
@@ -65,8 +66,10 @@ namespace SpriteHelper.Dialogs
         private string[][] level;
 
         // Properties.
+        private LevelType levelType;
         private Point playerStartingPosition;
         private Point exitPosition;
+        private double scrollSpeed;
 
         // POI history/future (for undo-redo).
         private Stack<string[][]> history;
@@ -113,7 +116,7 @@ namespace SpriteHelper.Dialogs
             this.tileTabs.Add(TileType.NonBlocking, nonBlockingTilesTabPage);
             this.tileTabs.Add(TileType.Threat, threatTilesTabPage);
 
-        }        
+        }
 
         private void LevelEditorLoad(object sender, EventArgs e)
         {
@@ -133,7 +136,7 @@ namespace SpriteHelper.Dialogs
         private void PreLoad()
         {
             this.LoadLevel(
-                Defaults.Instance.DefaultLevel, 
+                Defaults.Instance.DefaultLevel,
                 Defaults.Instance.BackgroundSpec,
                 @"C:\Users\tomas\Documents\NES\GitHub\Platformer\PlatformerGraphics\Sprites\enemies.xml",
                 Defaults.Instance.PalettesSpec,
@@ -174,7 +177,7 @@ namespace SpriteHelper.Dialogs
         private void LoadLevel(string level, string bgSpec, string enSpec, string palettes, string player, string spriteChr)
         {
             this.palettes = Palettes.Read(palettes);
-            this.bgConfig = BackgroundConfig.Read(bgSpec);           
+            this.bgConfig = BackgroundConfig.Read(bgSpec);
 
             string[][] newLevel;
             Enemy[] enemies;
@@ -186,8 +189,10 @@ namespace SpriteHelper.Dialogs
                 newLevel = readLevel.Tiles;
                 enemies = readLevel.Enemies;
                 elevators = readLevel.Elevators;
+                this.levelType = readLevel.LevelType;
                 this.playerStartingPosition = readLevel.PlayerStartingPosition;
                 this.exitPosition = readLevel.ExitPosition;
+                this.scrollSpeed = readLevel.ScrollSpeed;
                 this.bgPalette = readLevel.BgPalette;
                 this.doorAndKeycard = readLevel.DoorAndKeycard;
             }
@@ -209,6 +214,8 @@ namespace SpriteHelper.Dialogs
                 this.playerStartingPosition = default(Point);
                 this.exitPosition = default(Point);
                 this.bgPalette = 0;
+                this.levelType = LevelType.Normal;
+                this.scrollSpeed = 1;
             }
 
             this.CreateTileDictionaries();
@@ -222,7 +229,7 @@ namespace SpriteHelper.Dialogs
             foreach (var animation in this.enConfig.Animations)
             {
                 var firstFrame = animation.Frames.First();
-                
+
                 this.enBitmaps.Add(animation.Name, new Dictionary<bool, Bitmap>());
                 this.enBitmapsTransparent.Add(animation.Name, new Dictionary<bool, Bitmap>());
 
@@ -301,6 +308,7 @@ namespace SpriteHelper.Dialogs
             // Player config.
             var playerConfig = SpriteConfig.Read(player, this.palettes);
             this.playerBitmap = playerConfig.Frames.First().GetPlayerBitmap(playerConfig, this.transparentColor, true, false, false, Constants.LevelEditorZoom, true);
+            this.playerJetpackBitmap = new Bitmap(10, 10); // todo 0002: set the player jetpack bitmap
 
             // Elevators
             var sprites = new ChrLoader(spriteChr, this.palettes.SpritesPalette);
@@ -568,7 +576,7 @@ namespace SpriteHelper.Dialogs
             {
                 return false;
             }
-            
+
             if (width < 16 | width > 252)
             {
                 MessageBox.Show("Wrongh width: min is 16, max is 252", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -658,7 +666,7 @@ namespace SpriteHelper.Dialogs
         private void DrawEnemies()
         {
             if (this.showEnemiesToolStripMenuItem.Checked)
-            {                
+            {
                 foreach (var enemy in Enemies)
                 {
                     //// todo: draw shooting?
@@ -695,7 +703,7 @@ namespace SpriteHelper.Dialogs
         {
             // this logic is a copy of DrawEnemies except for line color.
             // when one is update, update the other.
-            
+
             if (this.showElevatorsToolStripMenuItem.Checked)
             {
                 foreach (var elevator in this.Elevators)
@@ -789,7 +797,7 @@ namespace SpriteHelper.Dialogs
                         maxX,
                         minY,
                         maxY);
-                }             
+                }
                 else
                 {
                     this.DrawNormalMovement(
@@ -805,16 +813,16 @@ namespace SpriteHelper.Dialogs
                         maxY);
                 }
             }
-            
+
             // Draw regular image at the very end.
             this.graphics.DrawImage(image, new Point(x * Constants.LevelEditorZoom, y * Constants.LevelEditorZoom));
-            
+
             if (selected)
             {
                 // Draw red box around selected enemy.
                 this.graphics.DrawRectangle(Pens.Red, x * Constants.LevelEditorZoom, y * Constants.LevelEditorZoom, image.Width, image.Height);
             }
-        }      
+        }
 
         private void DrawNormalMovement(
             Image imageTransparent,
@@ -858,9 +866,9 @@ namespace SpriteHelper.Dialogs
 
         private void DrawSinusMovement(
             Image imageTransparent,
-            Pen pen, 
-            MovementType movementType, 
-            Direction direction, 
+            Pen pen,
+            MovementType movementType,
+            Direction direction,
             SpecialMovement specialMovement,
             int x,
             int y,
@@ -976,7 +984,7 @@ namespace SpriteHelper.Dialogs
 
             // draw transparent images
             foreach (var point in points)
-            { 
+            {
                 if (point.X != x || point.Y != y)
                 {
                     // Draw min. transparent image.
@@ -1017,32 +1025,47 @@ namespace SpriteHelper.Dialogs
         {
             if (this.showPlayerToolStripMenuItem.Checked)
             {
-                this.graphics.DrawImage(
-                    this.playerBitmap, 
-                    new Point(
-                        (this.playerStartingPosition.X - Constants.PlayerXOffset) * Constants.LevelEditorZoom, 
-                        (this.playerStartingPosition.Y - Constants.PlayerYOffset) * Constants.LevelEditorZoom));
+                if (this.levelType == LevelType.Normal)
+                {
+                    this.graphics.DrawImage(
+                        this.playerBitmap,
+                        new Point(
+                            (this.playerStartingPosition.X - Constants.PlayerXOffset) * Constants.LevelEditorZoom,
+                            (this.playerStartingPosition.Y - Constants.PlayerYOffset) * Constants.LevelEditorZoom));
+                }
+                else if (this.levelType == LevelType.Jetpack)
+                {
+                    this.graphics.DrawImage(
+                        this.playerJetpackBitmap,
+                        new Point(
+                            (this.playerStartingPosition.X - Constants.PlayerXOffset) * Constants.LevelEditorZoom,
+                            (this.playerStartingPosition.Y - Constants.PlayerYOffset) * Constants.LevelEditorZoom));
+                }
 
-                this.graphics.FillRectangle(
-                    new SolidBrush(Color.FromArgb(150, Color.LightCoral)),
-                    this.exitPosition.X * Constants.LevelEditorZoom,
-                    this.exitPosition.Y * Constants.LevelEditorZoom,
-                    Constants.ExitWidth * Constants.LevelEditorZoom,
-                    Constants.ExitHeight * Constants.LevelEditorZoom);
 
-                this.graphics.DrawRectangle(
-                    Pens.Red,
-                    this.exitPosition.X * Constants.LevelEditorZoom,
-                    this.exitPosition.Y * Constants.LevelEditorZoom,
-                    Constants.ExitWidth * Constants.LevelEditorZoom,
-                    Constants.ExitHeight * Constants.LevelEditorZoom);
+                if (this.levelType == LevelType.Normal)
+                {
+                    this.graphics.FillRectangle(
+                        new SolidBrush(Color.FromArgb(150, Color.LightCoral)),
+                        this.exitPosition.X * Constants.LevelEditorZoom,
+                        this.exitPosition.Y * Constants.LevelEditorZoom,
+                        Constants.ExitWidth * Constants.LevelEditorZoom,
+                        Constants.ExitHeight * Constants.LevelEditorZoom);
 
-                this.graphics.DrawRectangle(
-                    Pens.Red,
-                    this.exitPosition.X * Constants.LevelEditorZoom + 1,
-                    this.exitPosition.Y * Constants.LevelEditorZoom + 1,
-                    Constants.ExitWidth * Constants.LevelEditorZoom - 2,
-                    Constants.ExitHeight * Constants.LevelEditorZoom - 2);
+                    this.graphics.DrawRectangle(
+                        Pens.Red,
+                        this.exitPosition.X * Constants.LevelEditorZoom,
+                        this.exitPosition.Y * Constants.LevelEditorZoom,
+                        Constants.ExitWidth * Constants.LevelEditorZoom,
+                        Constants.ExitHeight * Constants.LevelEditorZoom);
+
+                    this.graphics.DrawRectangle(
+                        Pens.Red,
+                        this.exitPosition.X * Constants.LevelEditorZoom + 1,
+                        this.exitPosition.Y * Constants.LevelEditorZoom + 1,
+                        Constants.ExitWidth * Constants.LevelEditorZoom - 2,
+                        Constants.ExitHeight * Constants.LevelEditorZoom - 2);
+                }
             }
         }
 
@@ -1112,7 +1135,7 @@ namespace SpriteHelper.Dialogs
             this.UpdateBitmap();
             this.hideNonBgToolStringMenuItem.Checked = this.OnlyBackgroundShown;
         }
-        
+
         private void ShowElevatorsToolStripMenuItemCheckedChanged(object sender, EventArgs e)
         {
             this.showElevatorMovementToolStripMenuItem.Enabled = this.showElevatorsToolStripMenuItem.Checked;
@@ -1212,6 +1235,8 @@ namespace SpriteHelper.Dialogs
                     PlayerStartingPosition = this.playerStartingPosition,
                     ExitPosition = this.exitPosition,
                     DoorAndKeycard = this.doorAndKeycard,
+                    LevelType = this.levelType,
+                    ScrollSpeed = this.scrollSpeed,
                 };
 
                 level.Write(saveFileDialog.FileName);
@@ -1236,7 +1261,7 @@ namespace SpriteHelper.Dialogs
             {
                 this.Export(saveFileDialog.FileName);
             }
-        }        
+        }
 
         private void TransformToolStripMenuItemClick(object sender, EventArgs e)
         {
@@ -1324,7 +1349,7 @@ namespace SpriteHelper.Dialogs
 
         private void PropertiesToolStripMenuItemClick(object sender, EventArgs e)
         {
-            Func<EditLevelDialog, Tuple<int, int, Point, Point>> getResultFunc =
+            Func<EditLevelDialog, Tuple<int, int, LevelType, Point, Point, double>> getResultFunc =
                 dialog =>
                 {
                     int levelWidth;
@@ -1361,13 +1386,13 @@ namespace SpriteHelper.Dialogs
                     }
 
                     if (playerStartingPosition.X < 0)
-                    { 
+                    {
                         MessageBox.Show("Player position X must be >= 0");
                         return null;
                     }
 
                     if (playerStartingPosition.X > Constants.ScreenWidth / 2 - Constants.SpriteWidth * 3)
-                    { 
+                    {
                         MessageBox.Show($"Player position X must be <= {Constants.ScreenWidth / 2 - Constants.SpriteWidth * 3}");
                         return null;
                     }
@@ -1422,15 +1447,20 @@ namespace SpriteHelper.Dialogs
                         return null;
                     }
 
-                    return Tuple.Create(levelWidth, dialog.BgPalette, playerStartingPosition, exitPosition);
+                    var levelType = dialog.LevelType;
+                    var scrollSpeed = dialog.ScrollSpeed;
+
+                    return Tuple.Create(levelWidth, dialog.BgPalette, levelType, playerStartingPosition, exitPosition, scrollSpeed);
                 };
 
             var editLevelDialog = new EditLevelDialog(
                 this.level.Length,
-                this.playerStartingPosition, 
-                this.exitPosition,
-                this.palettes.BackgroundPalettes.Length, 
+                this.palettes.BackgroundPalettes.Length,
                 this.bgPalette,
+                this.playerStartingPosition,
+                this.levelType,
+                this.exitPosition,
+                this.scrollSpeed,
                 dialog => getResultFunc(dialog) != null);
 
             editLevelDialog.ShowDialog();
@@ -1441,21 +1471,9 @@ namespace SpriteHelper.Dialogs
 
             var result = getResultFunc(editLevelDialog);
 
-            var playerStartingPositionDifferent = false;
-            var exitPositionDifferent = false;
+
             var widthChanged = false;
-
-            if (this.playerStartingPosition != result.Item3)
-            {
-                this.playerStartingPosition = result.Item3;
-                playerStartingPositionDifferent = true;
-            }
-
-            if (this.exitPosition != result.Item4)
-            {
-                this.exitPosition = result.Item4;
-                exitPositionDifferent = true;
-            }
+            widthChanged = this.ChangeWidth(result.Item1);
 
             var paletteChanged = false;
             if (this.bgPalette != result.Item2)
@@ -1464,16 +1482,39 @@ namespace SpriteHelper.Dialogs
                 this.bgPalette = result.Item2;
                 this.CreateTileDictionaries();
             }
-            
-            widthChanged = this.ChangeWidth(result.Item1);
 
-            // Only update bitmap if either position has changed, and width hasn't changed - ChangeWidth updates the bitmap if that's the case.
-            if ((playerStartingPositionDifferent || exitPositionDifferent || paletteChanged) && !widthChanged)
+            var levelTypeChanged = false;
+            if (this.levelType != result.Item3)
+            {
+                this.levelType = result.Item3;
+                levelTypeChanged = true;
+            }
+
+            var playerStartingPositionChanged = false;
+            if (this.playerStartingPosition != result.Item4)
+            {
+                this.playerStartingPosition = result.Item4;
+                playerStartingPositionChanged = true;
+            }
+
+            var exitPositionChanged = false;
+            if (this.exitPosition != result.Item5)
+            {
+                this.exitPosition = result.Item5;
+                exitPositionChanged = true;
+            }
+
+            this.scrollSpeed = result.Item6; // doesn't affect rendering
+
+            // Only update bitmap if 
+            //  1) something affecting rednering has changed, and 
+            //  2) width hasn't changed - ChangeWidth updates the bitmap if that's the case
+            if (!widthChanged && (paletteChanged || playerStartingPositionChanged || levelTypeChanged || exitPositionChanged))
             {
                 this.UpdateBitmap();
             }
 
-            // POI history: store player and exit position in history
+            // POI history: store stuff in history
         }
 
         private void UndoToolStripMenuItemClick(object sender, EventArgs e)
@@ -2004,8 +2045,8 @@ namespace SpriteHelper.Dialogs
             result.AddRange(GetStartingPosition(logger));
             logger.WriteLineIfNotNull();
 
-            // Exit data.
-            result.AddRange(GetExitData(logger));
+            // Level type data.
+            result.AddRange(GetLevelTypeData(logger));
             logger.WriteLineIfNotNull();
 
             return result.ToArray();
@@ -2684,8 +2725,10 @@ namespace SpriteHelper.Dialogs
             return result.ToArray();
         }
 
-        private byte[] GetExitData(TextWriter logger = null)
+        private byte[] GetLevelTypeData(TextWriter logger = null)
         {
+            // todo 0002: update this based on level type
+
             //
             // - data in the following format:
             //   - 3 bytes: exit position (screen/x/y)
