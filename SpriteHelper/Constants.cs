@@ -103,10 +103,12 @@
         public const int EnemiesLimitPerTwoScreens = 10;
         public const int EnemiesLimitPerLevel = 80;
 
-        // Memory sizes.
+        // Memory sizes and places.
+        public const int EnemyConstsLow = 0;    // 00
+        public const int EnemyConstsHigh = 224; // E0
         public const int EnemyDefinitionSize = 16;
-        public const int EnemyInMemorySize = 20;
-        public const int EnemyInLevelDataSize = 18;
+        public const int EnemyInMemorySize = 24;
+        public const int EnemyInLevelDataSize = 22;
         public const int ElevatorInMemorySize = 8;
         public const int ElevatorInLevelDataSize = 9;
 

@@ -2399,13 +2399,14 @@ namespace SpriteHelper.Dialogs
         {
             //
             // - enemies in level data the following format:
-            //   - pointer to next screen (from here): (n x 18) + 3 (1 byte)
+            //   - pointer to next screen (from here): (n x 22) + 3 (1 byte)
             //   - number of enemies (1 byte)
-            //   - n times the enemy data (18 bytes)
+            //   - n times the enemy data (22 bytes)
             //        - 1st byte of id - pointer to the right variable (1 byte)
             //        - 2nd byte of id - a mask in the right variable (1 byte) 
             //        - slot to put enemy in (1 byte)
-            //        - pointer to const. data (1 byte)
+            //        - pointer to const. data (low) (1 byte)
+            //        - pointer to const. data (high) (1 byte)
             //        - screen the enemy is on (1 byte)
             //        - should flip (1 byte)
             //        - movement speed (1 byte)
@@ -2417,10 +2418,13 @@ namespace SpriteHelper.Dialogs
             //        - initial special movement var (1 byte)
             //        - x position (1 byte)
             //        - y position (1 byte)            
+            //        - blinking type (1 byte)
+            //        - blinking const (1 byte)
+            //        - blinking variable (1 byte)
             //        - initial life (1 byte)
             //        - shooting frequency initial (1 byte)
             //        - shooting frequency (1 byte)
-            //   - pointer to the previous screen (from here): (n x 18) + 2 (1 byte)
+            //   - pointer to the previous screen (from here): (n x 22) + 2 (1 byte)
             //
 
             var result = new List<byte>();
@@ -2499,8 +2503,10 @@ namespace SpriteHelper.Dialogs
                     // slot to put enemy in (1 byte)
                     result.Add((byte)(slot * Constants.EnemyInMemorySize));
 
-                    // pointer to const. data
-                    result.Add((byte)(animation.Id * Constants.EnemyDefinitionSize));
+                    // pointer to const. data (low byte and high byte)
+                    var constsPointer = ((animation.Id * Constants.EnemyDefinitionSize) + Constants.EnemyConstsLow) + (Constants.EnemyConstsHigh * 256);
+                    result.Add((byte)(constsPointer % 256));
+                    result.Add((byte)(constsPointer / 256));
 
                     // screen
                     result.Add((byte)screen);
@@ -2534,6 +2540,11 @@ namespace SpriteHelper.Dialogs
 
                     // y position
                     result.Add((byte)enemy.Y);
+
+                    // todo 0004: blinking vars. for now add all 0s
+                    result.Add(0);
+                    result.Add(0);
+                    result.Add(0);
 
                     // initial life
                     result.Add((byte)animation.MaxHealth);
