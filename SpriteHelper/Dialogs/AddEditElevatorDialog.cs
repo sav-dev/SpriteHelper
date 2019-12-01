@@ -33,7 +33,6 @@ namespace SpriteHelper.Dialogs
             this.validationFunction = validationFunction;
 
             // Set movement types.
-            // todo - support horizontal movement
             this.movementPanel.SetTypes(new[] { MovementType.None, MovementType.Vertical, MovementType.Horizontal });
 
             // If editing, populate values, otherwise set defaults.

@@ -2541,7 +2541,7 @@ namespace SpriteHelper.Dialogs
                     // y position
                     result.Add((byte)enemy.Y);
 
-                    // todo 0004: blinking vars. for now add all 0s
+                    // todo game 0004: blinking vars. for now add all 0s
                     result.Add(0);
                     result.Add(0);
                     result.Add(0);
@@ -3759,13 +3759,7 @@ namespace SpriteHelper.Dialogs
             {
                 return "Too many elevators on this an the next screen";
             }
-
-            var intersectingElevator = this.Elevators.FirstOrDefault(e => e != existingElevator && e.ElevatorRectangle.IntersectsWith(elevator.PlayerRectangle));
-            if (intersectingElevator != null)
-            {
-                return $"Elevator may intersect with elevator {intersectingElevator}";
-            }
-
+            
             return null;
         }
 

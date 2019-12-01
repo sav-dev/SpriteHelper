@@ -243,6 +243,7 @@
             "0.5",
             "1",
             "2",
+            "3",
             "4"});
             this.scrollSpeedComboBox.Location = new System.Drawing.Point(84, 13);
             this.scrollSpeedComboBox.Name = "scrollSpeedComboBox";

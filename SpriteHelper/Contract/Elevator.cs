@@ -76,10 +76,10 @@ namespace SpriteHelper.Contract
                 var elevatorRectangle = this.ElevatorRectangle;
 
                 // Not sure about this logic, let's be more strict than needed (hence the +/- 2)
-                var x1 = elevatorRectangle.X - Constants.PlayerPlatformBoxWidth - Constants.PlayerSpeed - 2;
-                var x2 = elevatorRectangle.X + elevatorRectangle.Width + Constants.PlayerPlatformBoxWidth + Constants.PlayerSpeed + 2;
-                var y1 = elevatorRectangle.Y - Math.Abs(Constants.PlayerPlatformBoxHeight) - 2;
-                var y2 = elevatorRectangle.Y + elevatorRectangle.Height + Math.Abs(Constants.PlayerPlatformBoxHeight) + 2;
+                var x1 = elevatorRectangle.X - Constants.PlayerPlatformBoxWidth;
+                var x2 = elevatorRectangle.X + elevatorRectangle.Width + Constants.PlayerPlatformBoxWidth;
+                var y1 = elevatorRectangle.Y - Math.Abs(Constants.PlayerPlatformBoxHeight);
+                var y2 = elevatorRectangle.Y + elevatorRectangle.Height + Math.Abs(Constants.PlayerPlatformBoxHeight);
 
                 return new Rectangle(x1, y1, x2 - x1, y2 - y1);
             }
