@@ -1032,7 +1032,7 @@ namespace SpriteHelper.Dialogs
         {
             if (this.showPlayerToolStripMenuItem.Checked)
             {
-                if (this.levelType == LevelType.Normal)
+                if (this.levelType == LevelType.Normal || this.levelType == LevelType.Boss)
                 {
                     this.graphics.DrawImage(
                         this.playerBitmap,
@@ -1548,6 +1548,11 @@ namespace SpriteHelper.Dialogs
 
         private void ExportCheckToolStripMenuItemClick(object sender, EventArgs e)
         {
+            if (!ValidateExport())
+            {
+                return;
+            }
+
             var builder = new StringBuilder();
             var writer = new StringWriter(builder);
             var bytes = GetExportPayload(writer);            
@@ -2007,8 +2012,31 @@ namespace SpriteHelper.Dialogs
 
         #region Exporting
 
+        private bool ValidateExport()
+        {
+            string error = null;
+
+            if (this.levelType == LevelType.Boss && this.Enemies.Length > 8)
+            {
+                error = "There can be up to 8 enemies on a boss level";
+            }
+
+            if (error != null)
+            {
+                MessageBox.Show(error, "Export error", MessageBoxButtons.OK);
+                return false;
+            }
+
+            return true;
+        }
+
         private void Export(string fileName)
         {
+            if (!ValidateExport())
+            {
+                return;
+            }
+
             var bytes = GetExportPayload();
 
             if (File.Exists(fileName))
@@ -2053,7 +2081,7 @@ namespace SpriteHelper.Dialogs
             logger.WriteLineIfNotNull();
 
             // Level type data.
-            result.AddRange(GetLevelTypeData(logger));
+            result.AddRange(GetExportLevelTypeData(logger));
             logger.WriteLineIfNotNull();
 
             return result.ToArray();
@@ -2743,7 +2771,7 @@ namespace SpriteHelper.Dialogs
             return result.ToArray();
         }
 
-        private byte[] GetLevelTypeData(TextWriter logger = null)
+        private byte[] GetExportLevelTypeData(TextWriter logger = null)
         {
             //
             // - data in the following format:
@@ -2751,7 +2779,7 @@ namespace SpriteHelper.Dialogs
             //   - next 3 bytes: depends on level type:
             //     - normal: exit position (screen/x/y)
             //     - jetpack: scroll speed (1 byte, 2 bytes are not important)
-            //
+            //     - boss: 1st byte must be 0, 2nd byte is victory condition, 3rd byte is not important
 
             var result = new List<byte>();
             result.Add((byte)this.levelType);
@@ -2780,6 +2808,35 @@ namespace SpriteHelper.Dialogs
 
                 result.Add(speed);
                 result.Add(0);
+                result.Add(0);
+            }
+            else if (this.levelType == LevelType.Boss)
+            {
+                result.Add(0);
+
+                // todo 0001 - for now assume all enemies must be destroyed. Later add some tagging for bosses.
+                // This logic is the same as enemies export.
+                var resultVar = 0;
+                var enemyId = 0;
+                var width = this.level.Length;
+                var numberOfScreens = (width / Constants.ScreenWidthInTiles) + 1;
+                for (var screen = 0; screen < numberOfScreens; screen++)
+                {
+                    var enemies = this.Enemies.Where(e => e.Screen == screen).ToArray();
+                    foreach (var enemy in enemies)
+                    {
+                        var idSecondByte = (byte)(1 << (enemyId % 8));
+                        enemyId++;
+
+                        if (enemy.Animation.MaxHealth > 0)
+                        {
+                            // Skip indestructible enemies.
+                            resultVar |= idSecondByte;
+                        }
+                    }
+                }
+
+                result.Add((byte)resultVar);
                 result.Add(0);
             }
 

@@ -40,6 +40,7 @@ namespace SpriteHelper.Dialogs
             this.levelTypeComboBox.Items.Clear();
             this.levelTypeComboBox.Items.Add(LevelType.Normal.ToString());
             this.levelTypeComboBox.Items.Add(LevelType.Jetpack.ToString());
+            this.levelTypeComboBox.Items.Add(LevelType.Boss.ToString());
             this.levelTypeComboBox.SelectedItem = levelType.ToString();
             this.LevelTypeComboBoxSelectedIndexChanged(null, null);
 
