@@ -65,6 +65,10 @@ namespace SpriteHelper.Dialogs
 
                 this.flipPanel.InitialFlip = existingEnemy.InitialFlip;
                 this.flipPanel.ShouldFlip = existingEnemy.ShouldFlip;
+
+                this.blinkingPanel.SetBlinkingType(existingEnemy.BlinkingType);
+                this.blinkingPanel.SetFreq(existingEnemy.BlinkingFrequency);
+                this.blinkingPanel.SetInitialFreq(existingEnemy.BlinkingInitialFrequency);
             }
             else
             {
@@ -139,6 +143,25 @@ namespace SpriteHelper.Dialogs
         }
 
         //
+        // Blinking
+        //
+
+        public bool TryGetBlinkingType(out BlinkingType blinkingType)
+        {
+            return this.blinkingPanel.TryGetBlinkingType(out blinkingType);
+        }
+
+        public bool TryGetBlinkingFreq(out int freq)
+        {
+            return this.blinkingPanel.TryGetFreq(out freq);
+        }
+
+        public bool TryGetBlinkingInitialFreq(out int initialFreq)
+        {
+            return this.blinkingPanel.TryGetInitialFreq(out initialFreq);
+        }
+
+        //
         // Enemy
         //
 
@@ -157,17 +180,21 @@ namespace SpriteHelper.Dialogs
             newEnemy.Direction = this.Direction;
             newEnemy.SpecialMovement = this.SpecialMovement;
             newEnemy.InitialFlip = this.InitialFlip;
-            newEnemy.ShouldFlip = this.ShouldFlip;          
+            newEnemy.ShouldFlip = this.ShouldFlip;
 
             // Get values that can fail.
-            int x, y, speed, min, max, shootingFreq, shootingInitialFreq;
+            BlinkingType blinkingType;
+            int x, y, speed, min, max, shootingFreq, shootingInitialFreq, blinkingFreq, blinkingInitialFreq;
             if (!this.TryGetX(out x) || 
                 !this.TryGetY(out y) || 
                 !this.TryGetSpeed(out speed) || 
                 !this.TryGetMin(out min) || 
                 !this.TryGetMax(out max) ||
                 !this.TryGetShootingFreq(out shootingFreq) ||
-                !this.TryGetShootingInitialFreq(out shootingInitialFreq))
+                !this.TryGetShootingInitialFreq(out shootingInitialFreq) ||
+                !this.TryGetBlinkingType(out blinkingType) ||
+                !this.TryGetBlinkingFreq(out blinkingFreq) ||
+                !this.TryGetBlinkingInitialFreq(out blinkingInitialFreq))
             {
                 return false;
             }
@@ -180,6 +207,9 @@ namespace SpriteHelper.Dialogs
             newEnemy.MaxPosition = max;
             newEnemy.ShootingFrequency = shootingFreq;
             newEnemy.ShootingInitialFrequency = shootingInitialFreq;
+            newEnemy.BlinkingType = blinkingType;
+            newEnemy.BlinkingFrequency = blinkingFreq;
+            newEnemy.BlinkingInitialFrequency = blinkingInitialFreq;
 
             // Set output value.
             enemy = newEnemy;
@@ -229,6 +259,7 @@ namespace SpriteHelper.Dialogs
             this.movementPanel.SetDefaultValues();
             this.shootingPanel.SetDefaultValues();
             this.flipPanel.SetDefaultValues();
+            this.blinkingPanel.SetDefaultValues();
         }
     }
 }

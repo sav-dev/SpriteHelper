@@ -55,9 +55,21 @@ namespace SpriteHelper.Contract
         [DataMember]
         public int ShootingFrequency { get; set; }
 
-        // Shooting frequency offset.
+        // Shooting frequency initial.
         [DataMember]
         public int ShootingInitialFrequency { get; set; }
+
+        // Blinking type.
+        [DataMember]
+        public BlinkingType BlinkingType { get; set; }
+
+        // Blinking frequency.
+        [DataMember]
+        public int BlinkingFrequency { get; set; }
+
+        // Blinking frequency initial.
+        [DataMember]
+        public int BlinkingInitialFrequency { get; set; }
 
         // Screen the enemy is on.
         public int Screen => this.X / (Constants.ScreenWidthInTiles * Constants.BackgroundTileWidth);
@@ -344,5 +356,12 @@ namespace SpriteHelper.Contract
         {
             return $"{this.Name} ({this.X}/{this.Y})";
         }
+    }
+
+    public enum BlinkingType
+    {
+        NotBlinking = 0, // not blinking
+        ConstInitVisible = 1, // blinking at constant rate, initially visible
+        ConstInitInvisible = 2, // blinking at constantn rate, initially invisible
     }
 }

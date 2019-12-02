@@ -2447,8 +2447,8 @@ namespace SpriteHelper.Dialogs
             //        - x position (1 byte)
             //        - y position (1 byte)            
             //        - blinking type (1 byte)
-            //        - blinking const (1 byte)
-            //        - blinking variable (1 byte)
+            //        - blinking frequency initial (1 byte)
+            //        - blinking frequency  (1 byte)
             //        - initial life (1 byte)
             //        - shooting frequency initial (1 byte)
             //        - shooting frequency (1 byte)
@@ -2569,10 +2569,14 @@ namespace SpriteHelper.Dialogs
                     // y position
                     result.Add((byte)enemy.Y);
 
-                    // todo game 0004: blinking vars. for now add all 0s
-                    result.Add(0);
-                    result.Add(0);
-                    result.Add(0);
+                    // blinking type
+                    result.Add((byte)enemy.BlinkingType);
+
+                    // blinking frequency initial
+                    result.Add((byte)enemy.BlinkingInitialFrequency);
+
+                    // blinking frequency
+                    result.Add((byte)enemy.BlinkingFrequency);
 
                     // initial life
                     result.Add((byte)animation.MaxHealth);
@@ -3432,6 +3436,12 @@ namespace SpriteHelper.Dialogs
                 return shooting;
             }
 
+            var blinking = this.ValidateEnemyBlinking(enemy);
+            if (blinking != null)
+            {
+                return blinking;
+            }
+
             return null;
         }
 
@@ -3681,6 +3691,36 @@ namespace SpriteHelper.Dialogs
             if (enemy.ShootingInitialFrequency > 255)
             {
                 return "Shooting initial frequency is too high";
+            }
+
+            return null;
+        }
+
+        private string ValidateEnemyBlinking(Enemy enemy)
+        {
+            if (enemy.BlinkingType == BlinkingType.NotBlinking)
+            {
+                return null;
+            }
+
+            if (enemy.BlinkingFrequency <= 0)
+            {
+                return "Blinkingfrequency must be greater than 0";
+            }
+
+            if (enemy.BlinkingFrequency > 255)
+            {
+                return "Blinking frequency is too high";
+            }
+
+            if (enemy.BlinkingInitialFrequency <= 0)
+            {
+                return "Blinking initial frequency must be greater than 0";
+            }
+
+            if (enemy.BlinkingInitialFrequency > 255)
+            {
+                return "Blinking initial frequency is too high";
             }
 
             return null;

@@ -53,6 +53,12 @@
     <Compile Include="Contract\Elevator.cs" />
     <Compile Include="Contract\Orientation.cs" />
     <Compile Include="Contract\SpecialMovement.cs" />
+    <Compile Include="Controls\BlinkingPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\BlinkingPanel.Designer.cs">
+      <DependentUpon>BlinkingPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\FlipPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -205,6 +211,9 @@
     <Compile Include="Dialogs\TransformDialog.Designer.cs">
       <DependentUpon>TransformDialog.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Controls\BlinkingPanel.resx">
+      <DependentUpon>BlinkingPanel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\MovementPanel.resx">
       <DependentUpon>MovementPanel.cs</DependentUpon>
     </EmbeddedResource>
