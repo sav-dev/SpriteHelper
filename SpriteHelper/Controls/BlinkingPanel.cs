@@ -56,8 +56,18 @@ namespace SpriteHelper.Controls
         {
             BlinkingType bt;
             TryGetBlinkingType(out bt);
-            this.blinkingFreqTextBox.Enabled = bt != BlinkingType.NotBlinking;
-            this.initialFreqTextBox.Enabled = bt != BlinkingType.NotBlinking;
+            if (bt == BlinkingType.NotBlinking)
+            {
+                this.blinkingFreqTextBox.Enabled = false;
+                this.initialFreqTextBox.Enabled = false;
+                this.SetFreq(0);
+                this.SetInitialFreq(0);
+            }
+            else
+            {
+                this.blinkingFreqTextBox.Enabled = true;
+                this.initialFreqTextBox.Enabled = true;
+            }
         }
     }
 }

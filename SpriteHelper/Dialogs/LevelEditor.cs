@@ -2446,9 +2446,9 @@ namespace SpriteHelper.Dialogs
             //        - initial special movement var (1 byte)
             //        - x position (1 byte)
             //        - y position (1 byte)            
-            //        - blinking type (1 byte)
             //        - blinking frequency initial (1 byte)
             //        - blinking frequency  (1 byte)
+            //        - blinking init visible (1 byte)
             //        - initial life (1 byte)
             //        - shooting frequency initial (1 byte)
             //        - shooting frequency (1 byte)
@@ -2569,14 +2569,15 @@ namespace SpriteHelper.Dialogs
                     // y position
                     result.Add((byte)enemy.Y);
 
-                    // blinking type
-                    result.Add((byte)enemy.BlinkingType);
-
                     // blinking frequency initial
                     result.Add((byte)enemy.BlinkingInitialFrequency);
 
                     // blinking frequency
                     result.Add((byte)enemy.BlinkingFrequency);
+
+                    // blinking init visible
+                    var initVisible = enemy.BlinkingType == BlinkingType.ConstInitVisible ? 1 : 0;
+                    result.Add((byte)initVisible); // will be set to 0 for enemies that don't blink, but it's ignored
 
                     // initial life
                     result.Add((byte)animation.MaxHealth);
@@ -3700,12 +3701,17 @@ namespace SpriteHelper.Dialogs
         {
             if (enemy.BlinkingType == BlinkingType.NotBlinking)
             {
+                if (enemy.BlinkingFrequency != 0)
+                {
+                    return "Blinking frequency must be 0 for blinking enemies";
+                }
+
                 return null;
             }
 
             if (enemy.BlinkingFrequency <= 0)
             {
-                return "Blinkingfrequency must be greater than 0";
+                return "Blinking frequency must be greater than 0";
             }
 
             if (enemy.BlinkingFrequency > 255)
