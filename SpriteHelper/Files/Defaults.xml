@@ -27,6 +27,7 @@
     <string>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\blocking9.png</string>
     <string>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\blocking10.png</string>
     <string>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\blocking11.png</string>
+    <string>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\blocking12.png</string>
   </BlockingBackgrounds>
   <ThreatBackgrounds>
     <string>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\threat1.png</string>
@@ -34,6 +35,11 @@
     <string>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\threat3.png</string>
   </ThreatBackgrounds>
   <BgDefaultLevels>
+    <string>C:\Users\tomas\Documents\NES\GitHub\Platformer\data\levels\00.xml</string>
+    <string>C:\Users\tomas\Documents\NES\GitHub\Platformer\data\levels\boss.xml</string>
+    <string>C:\Users\tomas\Documents\NES\GitHub\Platformer\data\levels\elevator_checks.xml</string>
+    <string>C:\Users\tomas\Documents\NES\GitHub\Platformer\data\levels\jetpack.xml</string>
+    <string>C:\Users\tomas\Documents\NES\GitHub\Platformer\data\levels\vertical_checks.xml</string>    
   </BgDefaultLevels>
   <BackgroundImage>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\_chr.png</BackgroundImage>
   <BackgroundSpec>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\_back.xml</BackgroundSpec>
