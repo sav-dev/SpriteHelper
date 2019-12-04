@@ -216,6 +216,7 @@ namespace SpriteHelper.Dialogs
                 this.bgPalette = 0;
                 this.levelType = LevelType.Normal;
                 this.scrollSpeed = 1;
+                this.doorAndKeycard = null;
             }
 
             this.CreateTileDictionaries();
