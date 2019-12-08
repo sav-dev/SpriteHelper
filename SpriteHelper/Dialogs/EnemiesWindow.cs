@@ -167,19 +167,27 @@ namespace SpriteHelper.Dialogs
             builder.AppendLineFormat(GetTilesAndAttsComment());
             builder.AppendLineFormat(GetTilesAndAtts());
 
+            builder.AppendLineFormat(GetFooter());
 
             return builder.ToString();
         }
 
         private string GetHeader()
         {
-            return @";****************************************************************
+            return @"
+EnemiesStart:
+
+;****************************************************************
 ; Enemies                                                       ;
 ; Holds information about all enemies (auto-generated)          ;
 ;****************************************************************
 ";
         }
 
+        private string GetFooter()
+        {
+            return @"EnemiesEnd:";
+        }
 
         private string GetConstantPropertiesComment()
         {
