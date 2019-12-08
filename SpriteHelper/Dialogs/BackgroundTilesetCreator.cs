@@ -332,7 +332,48 @@ namespace SpriteHelper.Dialogs
 
 
         private void GenerateChrImageAndSaveFiles(BackgroundConfig config, List<MyBitmap> sprites)
-        { 
+        {
+            // Find the empty tile, move it to the end, update the config
+            int emptyTileIndex = -1;
+            for (var i = 0; i < sprites.Count; i++)
+            {
+                if (sprites[i].IsNesColor(this.bgColorComboBox.SelectedIndex))
+                {
+                    emptyTileIndex = i;
+                }
+            }
+
+            if (emptyTileIndex == -1)
+            {
+                throw new Exception("Empty tile not found for some reason");
+            }
+
+            // Move empty tile to the end.
+            var emptyTile = sprites[emptyTileIndex];
+            sprites.RemoveAt(emptyTileIndex);
+            var newEmptyTileIndex = sprites.Count;
+            sprites.Add(emptyTile);
+
+            // Update the config.
+            foreach (var tile in config.Tiles)
+            {
+                var newSprites = new int[4];
+                Array.Copy(tile.Sprites, newSprites, 4);
+                for (var i = 0; i < 4; i++)
+                {
+                    if (newSprites[i] == emptyTileIndex)
+                    {
+                        newSprites[i] = newEmptyTileIndex;
+                    }
+                    else if (newSprites[i] > emptyTileIndex)
+                    {
+                        newSprites[i] = newSprites[i] - 1;
+                    }
+                }
+
+                tile.Sprites = newSprites;
+            }
+
             // Generate chr image
             var chrImage = new MyBitmap(Constants.SpriteWidth * Constants.ChrFileSpritesPerRow, Constants.SpriteHeight * Constants.ChrFileRows, Color.Black);
             {                

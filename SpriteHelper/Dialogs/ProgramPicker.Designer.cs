@@ -37,6 +37,7 @@
             this.chrButton = new System.Windows.Forms.Button();
             this.enemiesButton = new System.Windows.Forms.Button();
             this.explosionButton = new System.Windows.Forms.Button();
+            this.chrCompressButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // playerButton
@@ -51,7 +52,7 @@
             // 
             // levelEditorButton
             // 
-            this.levelEditorButton.Location = new System.Drawing.Point(35, 236);
+            this.levelEditorButton.Location = new System.Drawing.Point(35, 260);
             this.levelEditorButton.Name = "levelEditorButton";
             this.levelEditorButton.Size = new System.Drawing.Size(172, 23);
             this.levelEditorButton.TabIndex = 1;
@@ -61,7 +62,7 @@
             // 
             // palettesButton
             // 
-            this.palettesButton.Location = new System.Drawing.Point(35, 172);
+            this.palettesButton.Location = new System.Drawing.Point(35, 198);
             this.palettesButton.Name = "palettesButton";
             this.palettesButton.Size = new System.Drawing.Size(172, 23);
             this.palettesButton.TabIndex = 2;
@@ -71,7 +72,7 @@
             // 
             // backgroundButton
             // 
-            this.backgroundButton.Location = new System.Drawing.Point(35, 204);
+            this.backgroundButton.Location = new System.Drawing.Point(35, 229);
             this.backgroundButton.Name = "backgroundButton";
             this.backgroundButton.Size = new System.Drawing.Size(172, 23);
             this.backgroundButton.TabIndex = 3;
@@ -81,7 +82,7 @@
             // 
             // closeButton
             // 
-            this.closeButton.Location = new System.Drawing.Point(35, 303);
+            this.closeButton.Location = new System.Drawing.Point(35, 336);
             this.closeButton.Name = "closeButton";
             this.closeButton.Size = new System.Drawing.Size(172, 23);
             this.closeButton.TabIndex = 4;
@@ -91,7 +92,7 @@
             // 
             // animationsButton
             // 
-            this.animationsButton.Location = new System.Drawing.Point(35, 140);
+            this.animationsButton.Location = new System.Drawing.Point(35, 167);
             this.animationsButton.Name = "animationsButton";
             this.animationsButton.Size = new System.Drawing.Size(172, 23);
             this.animationsButton.TabIndex = 5;
@@ -101,7 +102,7 @@
             // 
             // chrButton
             // 
-            this.chrButton.Location = new System.Drawing.Point(35, 108);
+            this.chrButton.Location = new System.Drawing.Point(35, 105);
             this.chrButton.Name = "chrButton";
             this.chrButton.Size = new System.Drawing.Size(172, 23);
             this.chrButton.TabIndex = 6;
@@ -111,7 +112,7 @@
             // 
             // enemiesButton
             // 
-            this.enemiesButton.Location = new System.Drawing.Point(35, 76);
+            this.enemiesButton.Location = new System.Drawing.Point(35, 74);
             this.enemiesButton.Name = "enemiesButton";
             this.enemiesButton.Size = new System.Drawing.Size(172, 23);
             this.enemiesButton.TabIndex = 7;
@@ -121,7 +122,7 @@
             // 
             // explosionButton
             // 
-            this.explosionButton.Location = new System.Drawing.Point(35, 44);
+            this.explosionButton.Location = new System.Drawing.Point(35, 43);
             this.explosionButton.Name = "explosionButton";
             this.explosionButton.Size = new System.Drawing.Size(172, 23);
             this.explosionButton.TabIndex = 8;
@@ -129,11 +130,22 @@
             this.explosionButton.UseVisualStyleBackColor = true;
             this.explosionButton.Click += new System.EventHandler(this.ExplosionButtonClick);
             // 
+            // chrCompressButton
+            // 
+            this.chrCompressButton.Location = new System.Drawing.Point(35, 136);
+            this.chrCompressButton.Name = "chrCompressButton";
+            this.chrCompressButton.Size = new System.Drawing.Size(172, 23);
+            this.chrCompressButton.TabIndex = 9;
+            this.chrCompressButton.Text = "CHR compress";
+            this.chrCompressButton.UseVisualStyleBackColor = true;
+            this.chrCompressButton.Click += new System.EventHandler(this.ChrCompressButtonClick);
+            // 
             // ProgramPicker
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(244, 371);
+            this.Controls.Add(this.chrCompressButton);
             this.Controls.Add(this.explosionButton);
             this.Controls.Add(this.enemiesButton);
             this.Controls.Add(this.chrButton);
@@ -164,5 +176,6 @@
         private System.Windows.Forms.Button chrButton;
         private System.Windows.Forms.Button enemiesButton;
         private System.Windows.Forms.Button explosionButton;
+        private System.Windows.Forms.Button chrCompressButton;
     }
 }

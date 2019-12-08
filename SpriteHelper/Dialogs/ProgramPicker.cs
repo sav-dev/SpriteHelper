@@ -82,6 +82,11 @@ namespace SpriteHelper.Dialogs
             new ChrCombine().ShowDialog();
         }
 
+        private void ChrCompressButtonClick(object sender, EventArgs e)
+        {
+            new ChrCompress().ShowDialog();
+        }
+
         private void EnemiesButtonClick(object sender, EventArgs e)
         {
             new EnemiesWindow().ShowDialog();
