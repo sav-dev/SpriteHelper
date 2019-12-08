@@ -476,7 +476,7 @@ namespace SpriteHelper.Dialogs
                 for (var frameIndex = animation.Frames.Length - 1; frameIndex >= 0; frameIndex--)
                 {
                     var frame = animation.Frames[frameIndex];
-                    builder.AppendLineFormat(".{0}:", frame.Name.Replace(" ", ""));
+                    builder.AppendLineFormat(".Frame{0}_{1}:", frameIndex, frame.Name.Replace(" ", ""));
 
                     var tileList = new List<int>();
                     for (var x = 0; x < frame.Width; x++)

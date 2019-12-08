@@ -11,7 +11,7 @@
         // Elevators, hardcoded in game code.
         public const int ElevatorSprite = 249;
         public const int ElevatorEndRSprite = 250;
-        public const int ElevatorPalette = 2;
+        public const int ElevatorPalette = 3;
         public const int ElevatorHeight = 6;
         public const int ElevatorWidthPerBlock = SpriteWidth;
         public const int ElevatorsLimitPerTwoScreens = 6;
@@ -22,8 +22,8 @@
         public const int KeycardSprite1 = 246;
         public const int KeycardSprite2 = 247;
         public const int DoorSprite = 248;
-        public const int DoorPalette = 2;
-        public const int KeycardPalette = 2;
+        public const int DoorPalette = 3;
+        public const int KeycardPalette = 3;
         public const int KeycardWidth = 2 * SpriteWidth;
         public const int KeycardHeight = SpriteHeight;
         public const int DoorWidth = 2 * SpriteWidth;
