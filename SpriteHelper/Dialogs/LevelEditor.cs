@@ -141,7 +141,9 @@ namespace SpriteHelper.Dialogs
                 @"C:\Users\tomas\Documents\NES\GitHub\Platformer\PlatformerGraphics\Sprites\enemies.xml",
                 Defaults.Instance.PalettesSpec,
                 Defaults.Instance.PlayerSpec,
-                @"C:\Users\tomas\Documents\NES\GitHub\Platformer\PlatformerGraphics\Chr\spr.chr");
+                @"C:\Users\tomas\Documents\NES\GitHub\Platformer\PlatformerGraphics\Chr\spr.chr",
+                Defaults.Instance.ConstChrInput,
+                Defaults.Instance.ConstSpritesConfig);
         }
 
         private void ClearStatus()
@@ -174,7 +176,7 @@ namespace SpriteHelper.Dialogs
         //// Level loading & saving
         ////
 
-        private void LoadLevel(string level, string bgSpec, string enSpec, string palettes, string player, string spriteChr)
+        private void LoadLevel(string level, string bgSpec, string enSpec, string palettes, string player, string spriteChr, string constChr, string constConfig)
         {
             this.palettes = Palettes.Read(palettes);
             this.bgConfig = BackgroundConfig.Read(bgSpec);
@@ -307,21 +309,24 @@ namespace SpriteHelper.Dialogs
 
             // Sprites.
             var sprites = new ChrLoader(spriteChr, this.palettes.SpritesPalette);
+            var constSprites = new ChrLoader(constChr, this.palettes.SpritesPalette);
+            var constSpritesConfig = ConstSprites.Read(constConfig);
+            Func<string, int> getIndexForName = name => Array.FindIndex<string>(constSpritesConfig.Names, i => i == name);
 
             // Player config.
             var playerConfig = SpriteConfig.Read(player, this.palettes);
             this.playerBitmap = playerConfig.Frames.First().GetPlayerBitmap(playerConfig, this.transparentColor, true, false, false, Constants.LevelEditorZoom, true);
             var playerBitmapJump = playerConfig.Frames.First(f => f.Name == "Jump").GetPlayerBitmap(playerConfig, this.transparentColor, true, false, false, 1, true);
             var playerMyBitmapJump = MyBitmap.FromBitmap(playerBitmapJump);
-            var jetpack = sprites.GetSprite(Constants.JetpackSprite, Constants.JetpackPalette);
-            var flames = sprites.GetSprite(Constants.FlamesSprite, Constants.FlamesPalette);
+            var jetpack = constSprites.GetSprite(getIndexForName(Constants.JetpackSpriteName), Constants.JetpackPalette);
+            var flames = constSprites.GetSprite(getIndexForName(Constants.FlamesSpriteName), Constants.FlamesPalette);
             playerMyBitmapJump.DrawImage(jetpack, Constants.JetpackXOff, Constants.JetpackYOff);
             playerMyBitmapJump.DrawImage(flames, Constants.FlamesXOff, Constants.FlamesYOff);
             this.playerJetpackBitmap = playerMyBitmapJump.Scale(Constants.LevelEditorZoom).ToBitmap(backgroundColor: this.transparentColor);
 
             // Elevators
-            var elevator = sprites.GetSprite(Constants.ElevatorSprite, Constants.ElevatorPalette);
-            var elevatorEndR = sprites.GetSprite(Constants.ElevatorEndRSprite, Constants.ElevatorPalette);
+            var elevator = constSprites.GetSprite(getIndexForName(Constants.ElevatorSpriteName), Constants.ElevatorPalette);
+            var elevatorEndR = constSprites.GetSprite(getIndexForName(Constants.ElevatorEndRSpriteName), Constants.ElevatorPalette);
             var elevatorEndL = elevatorEndR.ReverseHorizontally();
 
             this.elevatorBitmaps = new Dictionary<int, Bitmap>();
@@ -331,7 +336,7 @@ namespace SpriteHelper.Dialogs
                 var bmp = new MyBitmap(i * Constants.SpriteWidth, Constants.SpriteHeight);
                 bmp.DrawImage(elevatorEndL, 0, 0);
                 bmp.DrawImage(elevatorEndR, i * Constants.SpriteWidth - Constants.SpriteWidth, 0);
-
+                
                 for (var x = 1; x <= i - 2; x++)
                 {
                     bmp.DrawImage(elevator, x * Constants.SpriteWidth, 0);
@@ -345,9 +350,9 @@ namespace SpriteHelper.Dialogs
             }
 
             // Door, keycard
-            var keycard1 = sprites.GetSprite(Constants.KeycardSprite1, Constants.KeycardPalette);
-            var keycard2 = sprites.GetSprite(Constants.KeycardSprite2, Constants.KeycardPalette);
-            var door = sprites.GetSprite(Constants.DoorSprite, Constants.DoorPalette);
+            var keycard1 = constSprites.GetSprite(getIndexForName(Constants.KeycardSprite1Name), Constants.KeycardPalette);
+            var keycard2 = constSprites.GetSprite(getIndexForName(Constants.KeycardSprite2Name), Constants.KeycardPalette);
+            var door = constSprites.GetSprite(getIndexForName(Constants.DoorSpriteName), Constants.DoorPalette);
             var doorRev = door.ReverseHorizontally();
 
             var keycardBmp = new MyBitmap(Constants.KeycardWidth, Constants.KeycardHeight);
@@ -1197,7 +1202,15 @@ namespace SpriteHelper.Dialogs
             {
                 if (loadLevelDialog.ClickedOk)
                 {
-                    this.LoadLevel(loadLevelDialog.Level, loadLevelDialog.BgSpec, loadLevelDialog.EnSpec, loadLevelDialog.Palettes, loadLevelDialog.Player, loadLevelDialog.SpriteChr);
+                    this.LoadLevel(
+                        loadLevelDialog.Level, 
+                        loadLevelDialog.BgSpec, 
+                        loadLevelDialog.EnSpec, 
+                        loadLevelDialog.Palettes, 
+                        loadLevelDialog.Player, 
+                        loadLevelDialog.SpriteChr, 
+                        loadLevelDialog.ConstSpritesChr, 
+                        loadLevelDialog.ConstSpritesConfig);
                 }
             };
 
@@ -1211,7 +1224,15 @@ namespace SpriteHelper.Dialogs
             {
                 if (loadLevelDialog.ClickedOk)
                 {
-                    this.LoadLevel(null, loadLevelDialog.BgSpec, loadLevelDialog.EnSpec, loadLevelDialog.Palettes, loadLevelDialog.Player, loadLevelDialog.SpriteChr);
+                    this.LoadLevel(
+                        null, 
+                        loadLevelDialog.BgSpec, 
+                        loadLevelDialog.EnSpec, 
+                        loadLevelDialog.Palettes, 
+                        loadLevelDialog.Player,
+                        loadLevelDialog.SpriteChr,
+                        loadLevelDialog.ConstSpritesChr,
+                        loadLevelDialog.ConstSpritesConfig);
                 }
             };
 

@@ -49,5 +49,6 @@
   <LevelsDefaultDir>C:\users\tomas\documents\nes\github\platformer\data\levels\</LevelsDefaultDir>
   <SpritesPalette>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\palettes\spr.bin</SpritesPalette>
   <BackgroundPalette>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\palettes\bg.bin</BackgroundPalette>
+  <ConstSpritesConfig>C:\Users\tomas\Documents\NES\GitHub\Platformer\PlatformerGraphics\Sprites\constSprites.xml</ConstSpritesConfig>
   <BgColor>0</BgColor>
 </Defaults>

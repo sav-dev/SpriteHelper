@@ -48,11 +48,17 @@
             this.browseSpriteChrButton = new System.Windows.Forms.Button();
             this.spriteChrTextBox = new System.Windows.Forms.TextBox();
             this.spriteChrLabel = new System.Windows.Forms.Label();
+            this.browseConstSpritesButton = new System.Windows.Forms.Button();
+            this.constSpritesChrTextBox = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.browseConstSpritesConfButton = new System.Windows.Forms.Button();
+            this.constSpritesConfTextBox = new System.Windows.Forms.TextBox();
+            this.constSpritesConfLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // okButton
             // 
-            this.okButton.Location = new System.Drawing.Point(365, 172);
+            this.okButton.Location = new System.Drawing.Point(365, 214);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(55, 23);
             this.okButton.TabIndex = 40;
@@ -62,7 +68,7 @@
             // 
             // cancelButton
             // 
-            this.cancelButton.Location = new System.Drawing.Point(426, 172);
+            this.cancelButton.Location = new System.Drawing.Point(426, 214);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(55, 23);
             this.cancelButton.TabIndex = 41;
@@ -81,9 +87,9 @@
             // 
             // bgSpecTextBox
             // 
-            this.bgSpecTextBox.Location = new System.Drawing.Point(80, 32);
+            this.bgSpecTextBox.Location = new System.Drawing.Point(109, 32);
             this.bgSpecTextBox.Name = "bgSpecTextBox";
-            this.bgSpecTextBox.Size = new System.Drawing.Size(401, 20);
+            this.bgSpecTextBox.Size = new System.Drawing.Size(372, 20);
             this.bgSpecTextBox.TabIndex = 42;
             // 
             // bgSpecLabel
@@ -97,9 +103,9 @@
             // 
             // palettesTextBox
             // 
-            this.palettesTextBox.Location = new System.Drawing.Point(80, 84);
+            this.palettesTextBox.Location = new System.Drawing.Point(109, 84);
             this.palettesTextBox.Name = "palettesTextBox";
-            this.palettesTextBox.Size = new System.Drawing.Size(401, 20);
+            this.palettesTextBox.Size = new System.Drawing.Size(372, 20);
             this.palettesTextBox.TabIndex = 44;
             // 
             // palettesLabel
@@ -113,9 +119,9 @@
             // 
             // levelTextBox
             // 
-            this.levelTextBox.Location = new System.Drawing.Point(80, 6);
+            this.levelTextBox.Location = new System.Drawing.Point(109, 6);
             this.levelTextBox.Name = "levelTextBox";
-            this.levelTextBox.Size = new System.Drawing.Size(401, 20);
+            this.levelTextBox.Size = new System.Drawing.Size(372, 20);
             this.levelTextBox.TabIndex = 46;
             // 
             // browseLevelButton
@@ -160,9 +166,9 @@
             // 
             // enSpecTextBox
             // 
-            this.enSpecTextBox.Location = new System.Drawing.Point(80, 58);
+            this.enSpecTextBox.Location = new System.Drawing.Point(109, 58);
             this.enSpecTextBox.Name = "enSpecTextBox";
-            this.enSpecTextBox.Size = new System.Drawing.Size(401, 20);
+            this.enSpecTextBox.Size = new System.Drawing.Size(372, 20);
             this.enSpecTextBox.TabIndex = 51;
             // 
             // enSpecLabel
@@ -186,9 +192,9 @@
             // 
             // playerTextBox
             // 
-            this.playerTextBox.Location = new System.Drawing.Point(80, 110);
+            this.playerTextBox.Location = new System.Drawing.Point(109, 110);
             this.playerTextBox.Name = "playerTextBox";
-            this.playerTextBox.Size = new System.Drawing.Size(401, 20);
+            this.playerTextBox.Size = new System.Drawing.Size(372, 20);
             this.playerTextBox.TabIndex = 54;
             // 
             // playerLabel
@@ -212,9 +218,9 @@
             // 
             // spriteChrTextBox
             // 
-            this.spriteChrTextBox.Location = new System.Drawing.Point(80, 136);
+            this.spriteChrTextBox.Location = new System.Drawing.Point(109, 136);
             this.spriteChrTextBox.Name = "spriteChrTextBox";
-            this.spriteChrTextBox.Size = new System.Drawing.Size(401, 20);
+            this.spriteChrTextBox.Size = new System.Drawing.Size(372, 20);
             this.spriteChrTextBox.TabIndex = 57;
             // 
             // spriteChrLabel
@@ -226,11 +232,69 @@
             this.spriteChrLabel.TabIndex = 58;
             this.spriteChrLabel.Text = "Sprite CHR";
             // 
+            // browseConstSpritesButton
+            // 
+            this.browseConstSpritesButton.Location = new System.Drawing.Point(487, 160);
+            this.browseConstSpritesButton.Name = "browseConstSpritesButton";
+            this.browseConstSpritesButton.Size = new System.Drawing.Size(75, 23);
+            this.browseConstSpritesButton.TabIndex = 62;
+            this.browseConstSpritesButton.Text = "Browse";
+            this.browseConstSpritesButton.UseVisualStyleBackColor = true;
+            this.browseConstSpritesButton.Click += new System.EventHandler(this.BrowseConstSpritesButtonClick);
+            // 
+            // constSpritesChrTextBox
+            // 
+            this.constSpritesChrTextBox.Location = new System.Drawing.Point(109, 162);
+            this.constSpritesChrTextBox.Name = "constSpritesChrTextBox";
+            this.constSpritesChrTextBox.Size = new System.Drawing.Size(372, 20);
+            this.constSpritesChrTextBox.TabIndex = 60;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(12, 165);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(95, 13);
+            this.label1.TabIndex = 61;
+            this.label1.Text = "Const Sprites CHR";
+            // 
+            // browseConstSpritesConfButton
+            // 
+            this.browseConstSpritesConfButton.Location = new System.Drawing.Point(487, 186);
+            this.browseConstSpritesConfButton.Name = "browseConstSpritesConfButton";
+            this.browseConstSpritesConfButton.Size = new System.Drawing.Size(75, 23);
+            this.browseConstSpritesConfButton.TabIndex = 65;
+            this.browseConstSpritesConfButton.Text = "Browse";
+            this.browseConstSpritesConfButton.UseVisualStyleBackColor = true;
+            this.browseConstSpritesConfButton.Click += new System.EventHandler(this.BrowseConstSpritesConfButtonClick);
+            // 
+            // constSpritesConfTextBox
+            // 
+            this.constSpritesConfTextBox.Location = new System.Drawing.Point(109, 188);
+            this.constSpritesConfTextBox.Name = "constSpritesConfTextBox";
+            this.constSpritesConfTextBox.Size = new System.Drawing.Size(372, 20);
+            this.constSpritesConfTextBox.TabIndex = 63;
+            // 
+            // constSpritesConfLabel
+            // 
+            this.constSpritesConfLabel.AutoSize = true;
+            this.constSpritesConfLabel.Location = new System.Drawing.Point(12, 191);
+            this.constSpritesConfLabel.Name = "constSpritesConfLabel";
+            this.constSpritesConfLabel.Size = new System.Drawing.Size(97, 13);
+            this.constSpritesConfLabel.TabIndex = 64;
+            this.constSpritesConfLabel.Text = "Const Sprites Conf.";
+            // 
             // LoadLevelDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(580, 216);
+            this.ClientSize = new System.Drawing.Size(580, 247);
+            this.Controls.Add(this.browseConstSpritesConfButton);
+            this.Controls.Add(this.constSpritesConfTextBox);
+            this.Controls.Add(this.constSpritesConfLabel);
+            this.Controls.Add(this.browseConstSpritesButton);
+            this.Controls.Add(this.constSpritesChrTextBox);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.browseSpriteChrButton);
             this.Controls.Add(this.spriteChrTextBox);
             this.Controls.Add(this.spriteChrLabel);
@@ -281,5 +345,11 @@
         private System.Windows.Forms.Button browseSpriteChrButton;
         private System.Windows.Forms.TextBox spriteChrTextBox;
         private System.Windows.Forms.Label spriteChrLabel;
+        private System.Windows.Forms.Button browseConstSpritesButton;
+        private System.Windows.Forms.TextBox constSpritesChrTextBox;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button browseConstSpritesConfButton;
+        private System.Windows.Forms.TextBox constSpritesConfTextBox;
+        private System.Windows.Forms.Label constSpritesConfLabel;
     }
 }

@@ -38,6 +38,8 @@
             this.constChrTextBox = new System.Windows.Forms.TextBox();
             this.palettesLabel = new System.Windows.Forms.Label();
             this.palettesTextBox = new System.Windows.Forms.TextBox();
+            this.constChrConfigLabel = new System.Windows.Forms.Label();
+            this.constChrConfigTextBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // specsTextBox
@@ -62,7 +64,7 @@
             // outputLabel
             // 
             this.outputLabel.AutoSize = true;
-            this.outputLabel.Location = new System.Drawing.Point(12, 175);
+            this.outputLabel.Location = new System.Drawing.Point(12, 218);
             this.outputLabel.Name = "outputLabel";
             this.outputLabel.Size = new System.Drawing.Size(39, 13);
             this.outputLabel.TabIndex = 26;
@@ -70,7 +72,7 @@
             // 
             // outputTextBox
             // 
-            this.outputTextBox.Location = new System.Drawing.Point(12, 191);
+            this.outputTextBox.Location = new System.Drawing.Point(12, 234);
             this.outputTextBox.Name = "outputTextBox";
             this.outputTextBox.Size = new System.Drawing.Size(562, 20);
             this.outputTextBox.TabIndex = 25;
@@ -78,7 +80,7 @@
             // 
             // processButton
             // 
-            this.processButton.Location = new System.Drawing.Point(499, 269);
+            this.processButton.Location = new System.Drawing.Point(499, 319);
             this.processButton.Name = "processButton";
             this.processButton.Size = new System.Drawing.Size(75, 23);
             this.processButton.TabIndex = 27;
@@ -106,7 +108,7 @@
             // palettesLabel
             // 
             this.palettesLabel.AutoSize = true;
-            this.palettesLabel.Location = new System.Drawing.Point(12, 215);
+            this.palettesLabel.Location = new System.Drawing.Point(12, 259);
             this.palettesLabel.Name = "palettesLabel";
             this.palettesLabel.Size = new System.Drawing.Size(45, 13);
             this.palettesLabel.TabIndex = 31;
@@ -114,17 +116,38 @@
             // 
             // palettesTextBox
             // 
-            this.palettesTextBox.Location = new System.Drawing.Point(12, 231);
+            this.palettesTextBox.Location = new System.Drawing.Point(12, 275);
             this.palettesTextBox.Name = "palettesTextBox";
             this.palettesTextBox.Size = new System.Drawing.Size(562, 20);
             this.palettesTextBox.TabIndex = 30;
-            this.palettesTextBox.Text = "C:\\Users\\tomas\\Documents\\NES\\GitHub\\Platformer\\PlatformerGraphics\\Palettes\\palettes.xml";
+            this.palettesTextBox.Text = "C:\\Users\\tomas\\Documents\\NES\\GitHub\\Platformer\\PlatformerGraphics\\Palettes\\palett" +
+    "es.xml";
+            // 
+            // constChrConfigLabel
+            // 
+            this.constChrConfigLabel.AutoSize = true;
+            this.constChrConfigLabel.Location = new System.Drawing.Point(12, 177);
+            this.constChrConfigLabel.Name = "constChrConfigLabel";
+            this.constChrConfigLabel.Size = new System.Drawing.Size(107, 13);
+            this.constChrConfigLabel.TabIndex = 33;
+            this.constChrConfigLabel.Text = "Constant CHR config";
+            // 
+            // constChrConfigTextBox
+            // 
+            this.constChrConfigTextBox.Location = new System.Drawing.Point(12, 193);
+            this.constChrConfigTextBox.Name = "constChrConfigTextBox";
+            this.constChrConfigTextBox.Size = new System.Drawing.Size(562, 20);
+            this.constChrConfigTextBox.TabIndex = 32;
+            this.constChrConfigTextBox.Text = "C:\\Users\\tomas\\Documents\\NES\\GitHub\\Platformer\\PlatformerGraphics\\Sprites\\constSp" +
+    "rites.xml";
             // 
             // ChrCombine
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(586, 318);
+            this.ClientSize = new System.Drawing.Size(586, 366);
+            this.Controls.Add(this.constChrConfigLabel);
+            this.Controls.Add(this.constChrConfigTextBox);
             this.Controls.Add(this.palettesLabel);
             this.Controls.Add(this.palettesTextBox);
             this.Controls.Add(this.constChrLabel);
@@ -152,5 +175,7 @@
         private System.Windows.Forms.TextBox constChrTextBox;
         private System.Windows.Forms.Label palettesLabel;
         private System.Windows.Forms.TextBox palettesTextBox;
+        private System.Windows.Forms.Label constChrConfigLabel;
+        private System.Windows.Forms.TextBox constChrConfigTextBox;
     }
 }

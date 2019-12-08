@@ -9,8 +9,8 @@
         public const int MaxBullets = 5 + 10;
 
         // Elevators, hardcoded in game code.
-        public const int ElevatorSprite = 249;
-        public const int ElevatorEndRSprite = 250;
+        public const string ElevatorSpriteName = "ELEVATOR_SPRITE";
+        public const string ElevatorEndRSpriteName = "ELEVATOR_END_SPRITE";
         public const int ElevatorPalette = 3;
         public const int ElevatorHeight = 6;
         public const int ElevatorWidthPerBlock = SpriteWidth;
@@ -19,9 +19,9 @@
         public const int MaxElevatorSize = 8;
 
         // Door and keycard, hardcoded in game code.
-        public const int KeycardSprite1 = 246;
-        public const int KeycardSprite2 = 247;
-        public const int DoorSprite = 248;
+        public const string KeycardSprite1Name = "KEYCARD_SPRITE_1";
+        public const string KeycardSprite2Name = "KEYCARD_SPRITE_2";
+        public const string DoorSpriteName = "DOOR_SPRITE";
         public const int DoorPalette = 3;
         public const int KeycardPalette = 3;
         public const int KeycardWidth = 2 * SpriteWidth;
@@ -30,8 +30,8 @@
         public const int DoorHeight = 6 * SpriteHeight;
 
         // Jetpack, hardcoded in game code.
-        public const int FlamesSprite = 242;
-        public const int JetpackSprite = 245;
+        public const string FlamesSpriteName = "FLAME_SPRITE_1";
+        public const string JetpackSpriteName = "JETPACK_SPRITE";
         public const int JetpackXOff = 3;
         public const int JetpackYOff = 1;
         public const int FlamesXOff = 2;

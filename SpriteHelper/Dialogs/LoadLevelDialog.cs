@@ -37,6 +37,8 @@ namespace SpriteHelper.Dialogs
             this.enSpecTextBox.Text = @"C:\Users\tomas\Documents\NES\GitHub\Platformer\PlatformerGraphics\Sprites\enemies.xml";
             this.playerTextBox.Text = Defaults.Instance.PlayerSpec;
             this.spriteChrTextBox.Text = @"C:\Users\tomas\Documents\NES\GitHub\Platformer\PlatformerGraphics\Chr\spr.chr";
+            this.constSpritesChrTextBox.Text = Defaults.Instance.ConstChrInput;
+            this.constSpritesConfTextBox.Text = Defaults.Instance.ConstSpritesConfig;
         }
 
         private void OkButtonClick(object sender, EventArgs e)
@@ -106,6 +108,22 @@ namespace SpriteHelper.Dialogs
             }
         }
 
+        public string ConstSpritesChr
+        {
+            get
+            {
+                return this.constSpritesChrTextBox.Text;
+            }
+        }
+
+        public string ConstSpritesConfig
+        {
+            get
+            {
+                return this.constSpritesConfTextBox.Text;
+            }
+        }
+
         private void BrowseLevelButtonClick(object sender, EventArgs e)
         {
             this.OpenFile(this.levelTextBox);
@@ -134,6 +152,16 @@ namespace SpriteHelper.Dialogs
         private void BrowseSpriteChrButtonClick(object sender, EventArgs e)
         {
             this.OpenFile(this.spriteChrTextBox);
+        }
+
+        private void BrowseConstSpritesButtonClick(object sender, EventArgs e)
+        {
+            this.OpenFile(this.constSpritesChrTextBox);
+        }
+
+        private void BrowseConstSpritesConfButtonClick(object sender, EventArgs e)
+        {
+            this.OpenFile(this.constSpritesConfTextBox);
         }
 
         private void OpenFile(TextBox target)

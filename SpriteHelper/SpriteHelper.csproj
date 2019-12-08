@@ -48,6 +48,7 @@
     <Reference Include="System.Xml.Serialization" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contract\ConstSprites.cs" />
     <Compile Include="Contract\Direction.cs" />
     <Compile Include="Contract\DoorAndKeycard.cs" />
     <Compile Include="Contract\Elevator.cs" />

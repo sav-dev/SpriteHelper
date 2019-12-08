@@ -77,6 +77,9 @@ namespace SpriteHelper.Files
         [DataMember]
         public string BackgroundPalette { get; set; }
 
+        [DataMember]
+        public string ConstSpritesConfig { get; set; }
+
         private static Defaults instance;
         public static Defaults Instance
         {

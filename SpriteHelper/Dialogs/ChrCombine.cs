@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 
 namespace SpriteHelper.Dialogs
@@ -73,8 +74,7 @@ namespace SpriteHelper.Dialogs
         {
             var inputs = new List<byte[][]>();
 
-            inputs.AddRange(this.specsTextBox.Lines.Select(s => SplitChr(GetSpritesFromSpec(s))));
-            inputs.Add(SplitChr(File.ReadAllBytes(this.constChrTextBox.Text)));
+            inputs.AddRange(this.specsTextBox.Lines.Select(s => SplitChr(GetSpritesFromSpec(s))));            
 
             var result = new byte[4096];
             var index = 0;
@@ -93,15 +93,65 @@ namespace SpriteHelper.Dialogs
                 }
                 else
                 {
-                    resultSprite = new byte[16];
+                    break; // last sprite processed
                 }
             
                 Array.Copy(resultSprite, 0, result, index * 16, 16);
                 index++;
             }
+
+            var consts = SplitChr(File.ReadAllBytes(this.constChrTextBox.Text)).ToArray();
+            var constsConfig = ConstSprites.Read(this.constChrConfigTextBox.Text);
+            var stringBuilder = new StringBuilder();
+
+            var constIndex = 0;
+            while (true)
+            {
+                var sprite = consts[constIndex];
+                if (sprite.All(b => b == 0))
+                {
+                    break; // last sprite processed
+                }
+
+                Array.Copy(sprite, 0, result, index * 16, 16);
+                stringBuilder.AppendLineFormat("{0} = ${1:X2}", constsConfig.Names[constIndex], index);
+                index++;
+                constIndex++;
+            }
+
+            if (constIndex != constsConfig.Names.Length)
+            {
+                throw new Exception("Some const sprites were not added!");
+            }
+
+            if (index >= 255)
+            {
+                throw new Exception("Too many sprites!");
+            }
+
+            var emptyArray = new byte[16];
+            while (index < 256)
+            {
+                Array.Copy(emptyArray, 0, result, index * 16, 16);
+                index++;
+            }
             
             File.WriteAllBytes(outputTextBox.Text, result);
+            ShowCode(stringBuilder.ToString());
         }     
+
+        private void ShowCode(string code)
+        {
+            var result =
+@";****************************************************************
+; Const sprites                                                 ;
+; Holds ids of const sprites (auto-generated)                   ;
+;****************************************************************
+
+" + code;
+            
+            new CodeWindow(result).ShowDialog();
+        }
 
         private byte[][] SplitChr(byte[] input)
         {
