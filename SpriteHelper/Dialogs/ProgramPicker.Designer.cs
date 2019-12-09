@@ -37,7 +37,7 @@
             this.chrButton = new System.Windows.Forms.Button();
             this.enemiesButton = new System.Windows.Forms.Button();
             this.explosionButton = new System.Windows.Forms.Button();
-            this.chrCompressButton = new System.Windows.Forms.Button();
+            this.chrProcessButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // playerButton
@@ -130,22 +130,22 @@
             this.explosionButton.UseVisualStyleBackColor = true;
             this.explosionButton.Click += new System.EventHandler(this.ExplosionButtonClick);
             // 
-            // chrCompressButton
+            // chrProcessButton
             // 
-            this.chrCompressButton.Location = new System.Drawing.Point(35, 136);
-            this.chrCompressButton.Name = "chrCompressButton";
-            this.chrCompressButton.Size = new System.Drawing.Size(172, 23);
-            this.chrCompressButton.TabIndex = 9;
-            this.chrCompressButton.Text = "CHR compress";
-            this.chrCompressButton.UseVisualStyleBackColor = true;
-            this.chrCompressButton.Click += new System.EventHandler(this.ChrCompressButtonClick);
+            this.chrProcessButton.Location = new System.Drawing.Point(35, 136);
+            this.chrProcessButton.Name = "chrProcessButton";
+            this.chrProcessButton.Size = new System.Drawing.Size(172, 23);
+            this.chrProcessButton.TabIndex = 9;
+            this.chrProcessButton.Text = "CHR process";
+            this.chrProcessButton.UseVisualStyleBackColor = true;
+            this.chrProcessButton.Click += new System.EventHandler(this.ChrProcessButtonClick);
             // 
             // ProgramPicker
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(244, 371);
-            this.Controls.Add(this.chrCompressButton);
+            this.Controls.Add(this.chrProcessButton);
             this.Controls.Add(this.explosionButton);
             this.Controls.Add(this.enemiesButton);
             this.Controls.Add(this.chrButton);
@@ -176,6 +176,6 @@
         private System.Windows.Forms.Button chrButton;
         private System.Windows.Forms.Button enemiesButton;
         private System.Windows.Forms.Button explosionButton;
-        private System.Windows.Forms.Button chrCompressButton;
+        private System.Windows.Forms.Button chrProcessButton;
     }
 }

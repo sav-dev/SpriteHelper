@@ -72,11 +72,11 @@
     <Compile Include="Dialogs\AddEditElevatorDialog.Designer.cs">
       <DependentUpon>AddEditElevatorDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\ChrCompress.cs">
+    <Compile Include="Dialogs\ChrProcess.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Dialogs\ChrCompress.Designer.cs">
-      <DependentUpon>ChrCompress.cs</DependentUpon>
+    <Compile Include="Dialogs\ChrProcess.Designer.cs">
+      <DependentUpon>ChrProcess.cs</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\EditDoorAndKeycardDialog.cs">
       <SubType>Form</SubType>
@@ -245,8 +245,8 @@
     <EmbeddedResource Include="Dialogs\BackgroundTilesetCreator.resx">
       <DependentUpon>BackgroundTilesetCreator.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\ChrCompress.resx">
-      <DependentUpon>ChrCompress.cs</DependentUpon>
+    <EmbeddedResource Include="Dialogs\ChrProcess.resx">
+      <DependentUpon>ChrProcess.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\EditDoorAndKeycardDialog.resx">
       <DependentUpon>EditDoorAndKeycardDialog.cs</DependentUpon>

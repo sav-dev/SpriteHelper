@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SpriteHelper.Utility;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -11,9 +12,9 @@ using System.Windows.Forms;
 
 namespace SpriteHelper.Dialogs
 {
-    public partial class ChrCompress : Form
+    public partial class ChrProcess : Form
     {
-        public ChrCompress()
+        public ChrProcess()
         {
             InitializeComponent();
         }
@@ -54,9 +55,9 @@ namespace SpriteHelper.Dialogs
                 }
             }
 
-            // todo game 0000 - for now do not compress, just remove empty tiles
+            // todo game 0000 - for now just remove empty tiles
             var fi = new FileInfo(path);
-            var targetFile = path.Substring(0, path.Length - fi.Extension.Length) + "Compressed" + fi.Extension;
+            var targetFile = path.Substring(0, path.Length - fi.Extension.Length) + "Processed" + fi.Extension;
             File.WriteAllBytes(targetFile, result.ToArray());
         }
     }

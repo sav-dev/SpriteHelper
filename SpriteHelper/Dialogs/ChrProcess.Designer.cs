@@ -1,6 +1,6 @@
 ﻿namespace SpriteHelper.Dialogs
 {
-    partial class ChrCompress
+    partial class ChrProcess
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChrCompress));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChrProcess));
             this.inputTextBox = new System.Windows.Forms.TextBox();
             this.processButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
@@ -52,7 +52,7 @@
             this.processButton.UseVisualStyleBackColor = true;
             this.processButton.Click += new System.EventHandler(this.ProcessButtonClick);
             // 
-            // ChrCompress
+            // ChrProcess
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -60,8 +60,8 @@
             this.Controls.Add(this.processButton);
             this.Controls.Add(this.inputTextBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Name = "ChrCompress";
-            this.Text = "ChrCompressor";
+            this.Name = "ChrProcess";
+            this.Text = "ChrProcessor";
             this.ResumeLayout(false);
             this.PerformLayout();
 
