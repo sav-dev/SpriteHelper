@@ -26,6 +26,9 @@ namespace SpriteHelper.Dialogs
                 case "Player":
                     new Player().ShowDialog();
                     break;
+                case "Enemies":
+                    new EnemiesWindow().ShowDialog();
+                    break;
                 case "Explosion":
                     new Explosion().ShowDialog();
                     break;

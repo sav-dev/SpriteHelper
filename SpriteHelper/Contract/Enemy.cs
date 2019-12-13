@@ -126,6 +126,18 @@ namespace SpriteHelper.Contract
                     case SpecialMovement.Sinus16:
                         return 64;
 
+                    case SpecialMovement.JumpBig:
+                        return 32;
+
+                    case SpecialMovement.JumpSmall:
+                        return 16;
+
+                    case SpecialMovement.JumpBigPause:
+                        return 64;
+
+                    case SpecialMovement.JumpSmallPause:
+                        return 32;
+
                     case SpecialMovement.Clockwise:
                     case SpecialMovement.CounterClockwise:
                         // hack - we need orientation to process these mov types, but we don't know it yet

@@ -83,7 +83,14 @@ namespace SpriteHelper.Contract
             {
                 foreach (var sprite in frame.Sprites)
                 {
-                    sprite.ActualSprite = config.Sprites.First(s => s.Id == sprite.Id);
+                    if (sprite.Id != -1)
+                    {
+                        sprite.ActualSprite = config.Sprites.First(s => s.Id == sprite.Id);
+                    }
+                    else
+                    {
+                        sprite.IsEmpty = true;
+                    }
                 }
             }
 

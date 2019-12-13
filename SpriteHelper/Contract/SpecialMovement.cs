@@ -13,6 +13,11 @@
         CounterClockwise = 6,
 
         Sinus8 = 10,
-        Sinus16 = 11
+        Sinus16 = 11,
+
+        JumpBig = 16,
+        JumpSmall = 17,
+        JumpBigPause = 18,
+        JumpSmallPause = 19,
     }
 }

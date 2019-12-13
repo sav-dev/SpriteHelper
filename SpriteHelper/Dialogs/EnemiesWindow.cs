@@ -459,7 +459,7 @@ EnemiesStart:
                     {
                         var sprite = firstFrame.Sprites[y * firstFrame.Width + x];
 
-                        var mapping = sprite.ActualSprite.Mapping;
+                        var mapping = sprite.Id == -1 ? 0 : sprite.ActualSprite.Mapping;
                         var atts = this.config.PaletteMappings[mapping].ToPalette;
 
                         if (sprite.HFlip)
@@ -492,11 +492,11 @@ EnemiesStart:
                         for (var y = 0; y < frame.Height; y++)
                         {
                             var sprite = frame.Sprites[y * frame.Width + x];
-                            tileList.Add(sprite.ActualSprite.Id);
+                            tileList.Add(sprite.Id == -1 ? -1 : sprite.ActualSprite.Id);
                         }
                     }
 
-                    builder.AppendLineFormat("  .byte {0}", string.Join(",", tileList.Select(t => "$" + t.ToString("X2"))));
+                    builder.AppendLineFormat("  .byte {0}", string.Join(",", tileList.Select(t => t == -1 ? "CLEAR_SPRITE" : "$" + t.ToString("X2"))));
                 }
 
                 builder.AppendLine();

@@ -1,6 +1,7 @@
 ﻿using SpriteHelper.NesGraphics;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Runtime.Serialization;
 
@@ -9,6 +10,8 @@ namespace SpriteHelper.Contract
     [DataContract]
     public class Sprite
     {
+        public bool IsEmpty { get; set; } = false;
+
         public Sprite ActualSprite;
 
         private Dictionary<ImageFlags, MyBitmap> sprites = new Dictionary<ImageFlags, MyBitmap>();
@@ -98,8 +101,13 @@ namespace SpriteHelper.Contract
             }
         }
 
-        public MyBitmap GetSprite(bool applyPalettes = false, bool vFlip = false, bool hFlip = false)
+        public MyBitmap GetSprite(bool applyPalettes = false, bool vFlip = false, bool hFlip = false, Color backColor = default(Color))
         {
+            if (this.IsEmpty)
+            {
+                return new MyBitmap(8, 8, backColor);
+            }
+
             if (this.ActualSprite != null)
             {
                 return this.ActualSprite.GetSprite(applyPalettes, vFlip, hFlip);

@@ -811,6 +811,19 @@ namespace SpriteHelper.Dialogs
                         minY,
                         maxY);
                 }
+                else if (specialMovement == SpecialMovement.JumpBig || specialMovement == SpecialMovement.JumpSmall ||
+                         specialMovement == SpecialMovement.JumpBigPause || specialMovement == SpecialMovement.JumpSmallPause)
+                {
+                    this.DrawJumpMovement(
+                        imageTransparent,
+                        pen,
+                        direction,
+                        specialMovement,
+                        x,
+                        y,
+                        minX,
+                        maxX);
+                }
                 else
                 {
                     this.DrawNormalMovement(
@@ -876,6 +889,56 @@ namespace SpriteHelper.Dialogs
             }
         }
 
+        private void DrawJumpMovement(
+            Image imageTransparent,
+            Pen pen,
+            Direction direction,
+            SpecialMovement specialMovement,
+            int x,
+            int y,
+            int minX,
+            int maxX)
+        {
+            var width = imageTransparent.Width;
+            var height = imageTransparent.Height;
+
+            var yScaled = y * Constants.LevelEditorZoom + height / 2;
+            var p1 = new Point(minX * Constants.LevelEditorZoom + width / 2, yScaled);
+            var p2 = new Point(maxX * Constants.LevelEditorZoom + width / 2, yScaled);
+            
+            var bigJump = specialMovement == SpecialMovement.JumpBig || specialMovement == SpecialMovement.JumpBigPause;
+            var jumpLength = bigJump ? 32 * Constants.LevelEditorZoom : 16 * Constants.LevelEditorZoom;
+            var jumpHeight = bigJump ? 16 * Constants.LevelEditorZoom : 8 * Constants.LevelEditorZoom;
+
+            var distance = Math.Abs(p2.X - p1.X);
+            var startPoint = new Point(p1.X, p1.Y);
+
+            for (var i = 0; i < distance / jumpLength; i++)
+            {
+                var segmentP1 = new Point(p1.X + i * jumpLength, yScaled);
+                var segmentP2 = new Point(p1.X + (int)((i + 0.5) * jumpLength), yScaled - jumpHeight);
+                var segmentP3 = new Point(p1.X + (i + 1) * jumpLength, yScaled);
+                this.graphics.DrawCurve(pen, new[] { segmentP1, segmentP2, segmentP3 });
+            }
+
+            // Draw arrow.
+            this.DrawArrow(
+              pen,
+              direction,
+              direction == Direction.Left ? p1 : p2);
+
+            if (minX != x)
+            {
+                // Draw min. transparent image.
+                this.graphics.DrawImage(imageTransparent, new Point(minX * Constants.LevelEditorZoom, y * Constants.LevelEditorZoom));
+            }
+
+            if (maxX != x)
+            {
+                // Draw max. transparent image.
+                this.graphics.DrawImage(imageTransparent, new Point(maxX * Constants.LevelEditorZoom, y * Constants.LevelEditorZoom));
+            }
+        }
 
         private void DrawSinusMovement(
             Image imageTransparent,
@@ -907,11 +970,11 @@ namespace SpriteHelper.Dialogs
                 {
                     var points = new Point[]
                     {
-                                startPoint,
-                                new Point(startPoint.X + radius, startPoint.Y + (direction == Direction.Left ? -radius : radius)),
-                                new Point(startPoint.X + radius * 2, startPoint.Y),
-                                new Point(startPoint.X + 3 * radius, startPoint.Y + (direction == Direction.Left ? radius : -radius)),
-                                new Point(startPoint.X + 4 * radius, startPoint.Y),
+                        startPoint,
+                        new Point(startPoint.X + radius, startPoint.Y + (direction == Direction.Left ? -radius : radius)),
+                        new Point(startPoint.X + radius * 2, startPoint.Y),
+                        new Point(startPoint.X + 3 * radius, startPoint.Y + (direction == Direction.Left ? radius : -radius)),
+                        new Point(startPoint.X + 4 * radius, startPoint.Y),
                     };
 
                     this.graphics.DrawCurve(pen, points);
@@ -927,11 +990,11 @@ namespace SpriteHelper.Dialogs
                 {
                     var points = new Point[]
                     {
-                                startPoint,
-                                new Point(startPoint.X + (direction == Direction.Up ? -radius : radius), startPoint.Y + radius),
-                                new Point(startPoint.X, startPoint.Y + radius * 2),
-                                new Point(startPoint.X + (direction == Direction.Up ? radius : -radius), startPoint.Y + radius * 3),
-                                new Point(startPoint.X, startPoint.Y + radius * 4),
+                        startPoint,
+                        new Point(startPoint.X + (direction == Direction.Up ? -radius : radius), startPoint.Y + radius),
+                        new Point(startPoint.X, startPoint.Y + radius * 2),
+                        new Point(startPoint.X + (direction == Direction.Up ? radius : -radius), startPoint.Y + radius * 3),
+                        new Point(startPoint.X, startPoint.Y + radius * 4),
                     };
 
                     this.graphics.DrawCurve(pen, points);
@@ -3637,7 +3700,12 @@ namespace SpriteHelper.Dialogs
             }
 
             if (enemy.SpecialMovement == SpecialMovement.Sinus8 ||
-                enemy.SpecialMovement == SpecialMovement.Sinus16)
+                enemy.SpecialMovement == SpecialMovement.Sinus16 ||
+                enemy.SpecialMovement == SpecialMovement.JumpBig ||
+                enemy.SpecialMovement == SpecialMovement.JumpSmall ||
+                enemy.SpecialMovement == SpecialMovement.JumpBigPause ||
+                enemy.SpecialMovement == SpecialMovement.JumpSmallPause
+                )
             {
                 int frames1, frames2;
 
@@ -3657,24 +3725,35 @@ namespace SpriteHelper.Dialogs
                     frames2 = (enemy.MaxPosition - enemyPosition) / enemy.Speed;
                 }
 
-                if (enemy.SpecialMovement == SpecialMovement.Sinus8 && frames1 % 32 != 0)
+                var dict = new Dictionary<SpecialMovement, int>
+                {
+                    { SpecialMovement.Sinus8, 32 },
+                    { SpecialMovement.Sinus16, 64 },
+                    { SpecialMovement.JumpBig, 32 },
+                    { SpecialMovement.JumpSmall, 16 },
+                    { SpecialMovement.JumpBigPause, 32 },
+                    { SpecialMovement.JumpSmallPause, 16 }
+                };
+
+                if (frames1 % dict[enemy.SpecialMovement] != 0)
                 {
                     return "Min. posisition is not reachable with given speed and special movement";
                 }
 
-                if (enemy.SpecialMovement == SpecialMovement.Sinus16 && frames1 % 64 != 0)
-                {
-                    return "Min. posisition is not reachable with given speed and special movement";
-                }
-
-                if (enemy.SpecialMovement == SpecialMovement.Sinus8 && frames2 % 32 != 0)
+                if (frames2 % dict[enemy.SpecialMovement] != 0)
                 {
                     return "Max. posisition is not reachable with given speed and special movement";
                 }
+            }
 
-                if (enemy.SpecialMovement == SpecialMovement.Sinus16 && frames2 % 64 != 0)
+            if (enemy.SpecialMovement == SpecialMovement.JumpBig ||
+                enemy.SpecialMovement == SpecialMovement.JumpSmall ||
+                enemy.SpecialMovement == SpecialMovement.JumpBigPause ||
+                enemy.SpecialMovement == SpecialMovement.JumpSmallPause)
+            {
+                if (enemy.MovementType != MovementType.Horizontal)
                 {
-                    return "Max. posisition is not reachable with given speed and special movement";
+                    return "Only horizontal movement allowed with jumps";
                 }
             }
 

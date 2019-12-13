@@ -244,7 +244,7 @@ namespace SpriteHelper.Contract
                     var shouldBeHFlip = sprite.HFlip ^ hFlip;
 
                     // Get the correct sprite image.
-                    var spriteImage = sprite.GetSprite(applyPalettes, shouldBeVFlip, shouldBeHFlip);
+                    var spriteImage = sprite.GetSprite(applyPalettes, shouldBeVFlip, shouldBeHFlip, backColor);
 
                     // Calculate sprite's position.
                     var x = spriteX * Constants.SpriteWidth;

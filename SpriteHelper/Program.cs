@@ -11,10 +11,24 @@ namespace SpriteHelper
         /// </summary>
         [STAThread]
         static void Main()
-        {
+        {           
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ProgramPicker());            
+
+            bool run = true;
+            while (run)
+            {
+                try
+                {
+                    Application.Run(new ProgramPicker());
+                    run = false;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    run = true;
+                }
+            }
         }
     }
 }
