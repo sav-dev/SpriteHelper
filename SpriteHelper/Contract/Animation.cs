@@ -26,6 +26,20 @@ namespace SpriteHelper.Contract
         [DataMember]
         public int MaxHealth { get; set; }
 
+        [DataMember]
+        public int CopyOf { get; set; }
+
+        [DataMember]
+        public int AttsUpdate { get; set; }
+
+        public void SetFrom(Animation other)
+        {
+            this.AnimationSpeed = other.AnimationSpeed;
+            this.Flip = other.Flip;
+            this.Offsets = other.Offsets;
+            this.MaxHealth = other.MaxHealth;
+        }
+
         // Same as ORIENTATION_* consts
         public Orientation Orientation => 
             this.Flip == Flip.None ? Orientation.None : (this.Flip == Flip.Horizontal ? Orientation.Horizontal : Orientation.Vertical);

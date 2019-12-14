@@ -1,5 +1,6 @@
 ﻿using SpriteHelper.NesGraphics;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -73,7 +74,7 @@ namespace SpriteHelper.Contract
                     }
                 }
 
-                // Prepare sprite with pallete applied and all reversse combinations.
+                // Prepare sprite with pallete applied and all reverse combinations.                
                 sprite.PreparePalettes(palettes, mapping);
                 sprite.PrepareReversed();
             }
@@ -97,6 +98,35 @@ namespace SpriteHelper.Contract
             // Prepare animations.
             foreach (var animation in config.Animations)
             {
+                // No copy of animation 0 possible since it defaults to 0
+                if (animation.CopyOf > 0)
+                {
+                    var copyFrom = config.Animations.First(a => a.Id == animation.CopyOf);
+                    
+                    //// Essentially what's happening here is we clone the animation, frames and sprites and change the palette
+
+                    // Copy everything except for Frames.
+                    animation.SetFrom(copyFrom);
+
+                    // Now we must copy Frames.
+                    var newFrames = new List<Frame>();
+                    foreach (var frame in copyFrom.Frames)
+                    {
+                        var frameClone = frame.Clone();
+                        foreach (var sprite in frameClone.Sprites)
+                        {
+                            var mapping = config.PaletteMappings.First(m => m.Id == sprite.ActualSprite.Mapping);
+                            sprite.ActualSprite.PreparePalettes(palettes, mapping, animation.AttsUpdate);
+                            sprite.ActualSprite.PrepareReversed();
+                        }
+
+                        newFrames.Add(frameClone);
+                    }
+
+                    animation.Frames = newFrames.ToArray();
+                    continue;
+                }
+
                 for (var i = 0; i < animation.Frames.Length; i++)
                 {
                     animation.Frames[i] = config.Frames.First(frame => frame.Id == animation.Frames[i].Id);

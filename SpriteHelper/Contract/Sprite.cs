@@ -12,7 +12,7 @@ namespace SpriteHelper.Contract
     {
         public bool IsEmpty { get; set; } = false;
 
-        public Sprite ActualSprite;
+        public Sprite ActualSprite { get; set; }
 
         private Dictionary<ImageFlags, MyBitmap> sprites = new Dictionary<ImageFlags, MyBitmap>();
 
@@ -37,6 +37,32 @@ namespace SpriteHelper.Contract
         [DataMember]
         public int Mapping { get; set; }
 
+        public Sprite Clone()
+        {
+            var result = new Sprite
+            {
+                Id = this.Id,
+                IsEmpty = this.IsEmpty,
+                X = this.X,
+                Y = this.Y,
+                GameSprite = this.GameSprite,
+                VFlip = this.VFlip,
+                HFlip = this.HFlip,
+                Mapping = this.Mapping,
+            };
+
+            if (this.ActualSprite != null)
+            {
+                result.ActualSprite = this.ActualSprite.Clone();
+            }
+            else
+            {
+                result.sprites.Add(ImageFlags.None, this.sprites[ImageFlags.None]);
+            }
+
+            return result;
+        }
+
         public void PrepareSprite(MyBitmap source)
         {
             if (this.ActualSprite != null)
@@ -48,11 +74,11 @@ namespace SpriteHelper.Contract
             sprites.Add(ImageFlags.None, sprite);
         }
 
-        public void PreparePalettes(Palettes palettes, PaletteMapping paletteMapping)
+        public void PreparePalettes(Palettes palettes, PaletteMapping paletteMapping, int attsUpdate = 0)
         {
             var sprite = this.sprites[ImageFlags.None];
             var spriteWithPalettesApplied = new MyBitmap(sprite.Width, sprite.Height);
-            var palette = palettes.SpritesPalette[paletteMapping.ToPalette];
+            var palette = palettes.SpritesPalette[paletteMapping.ToPalette + attsUpdate];
 
             for (var x = 0; x < sprite.Width; x++)
             {

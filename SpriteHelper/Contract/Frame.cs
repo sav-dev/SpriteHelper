@@ -36,6 +36,24 @@ namespace SpriteHelper.Contract
             }
         }
 
+        public Frame Clone()
+        {
+            var clone = new Frame
+            {
+                Name = this.Name,
+                Width = this.Width,
+                Height = this.Height,
+                Sprites = new Sprite[this.Sprites.Length],
+            };
+
+            for (var i = 0; i < this.Sprites.Length; i++)
+            {
+                clone.Sprites[i] = this.Sprites[i].Clone();
+            }
+
+            return clone;
+        }
+
         private ImageFlags GetFlags(
             bool applyPalettes,
             bool showBoxes,

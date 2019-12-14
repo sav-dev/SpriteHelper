@@ -460,7 +460,7 @@ EnemiesStart:
                         var sprite = firstFrame.Sprites[y * firstFrame.Width + x];
 
                         var mapping = sprite.Id == -1 ? 0 : sprite.ActualSprite.Mapping;
-                        var atts = this.config.PaletteMappings[mapping].ToPalette;
+                        var atts = this.config.PaletteMappings[mapping].ToPalette + animation.AttsUpdate; // handle clones
 
                         if (sprite.HFlip)
                         {
