@@ -33,7 +33,7 @@ namespace SpriteHelper.Contract
 
         // Speed
         [DataMember]
-        public int Speed { get; set; }
+        public double Speed { get; set; }
 
         // Should flip
         [DataMember]
