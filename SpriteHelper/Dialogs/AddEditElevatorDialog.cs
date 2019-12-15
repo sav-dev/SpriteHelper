@@ -95,9 +95,9 @@ namespace SpriteHelper.Dialogs
         public MovementType MovementType => this.movementPanel.MovementType ?? MovementType.None;
         public Direction Direction => this.movementPanel.Direction ?? Direction.None;
 
-        public bool TryGetSpeed(out int speed)
+        public double GetSpeed()
         {
-            return this.movementPanel.TryGetSpeed(out speed);
+            return this.movementPanel.GetSpeed();
         }
 
         public bool TryGetMin(out int min)
@@ -126,12 +126,12 @@ namespace SpriteHelper.Dialogs
             newElevator.Size = this.ElevatorSize;
             newElevator.MovementType = this.MovementType;
             newElevator.Direction = this.Direction;
+            newElevator.Speed = this.GetSpeed();
 
             // Get values that can fail.
-            int x, y, speed, min, max;
+            int x, y, min, max;
             if (!this.TryGetX(out x) ||
                 !this.TryGetY(out y) ||
-                !this.TryGetSpeed(out speed) ||
                 !this.TryGetMin(out min) ||
                 !this.TryGetMax(out max))
             {
@@ -141,7 +141,6 @@ namespace SpriteHelper.Dialogs
             // Set values that can fail.
             newElevator.X = x;
             newElevator.Y = y;
-            newElevator.Speed = speed;
             newElevator.MinPosition = min;
             newElevator.MaxPosition = max;
 

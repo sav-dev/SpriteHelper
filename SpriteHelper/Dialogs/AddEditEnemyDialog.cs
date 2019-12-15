@@ -113,9 +113,9 @@ namespace SpriteHelper.Dialogs
         public bool InitialFlip => this.flipPanel.InitialFlip;
         public bool ShouldFlip => this.flipPanel.ShouldFlip;
 
-        public bool TryGetSpeed(out int speed)
+        public double GetSpeed()
         {
-            return this.movementPanel.TryGetSpeed(out speed);
+            return this.movementPanel.GetSpeed();
         }
 
         public bool TryGetMin(out int min)
@@ -181,13 +181,13 @@ namespace SpriteHelper.Dialogs
             newEnemy.SpecialMovement = this.SpecialMovement;
             newEnemy.InitialFlip = this.InitialFlip;
             newEnemy.ShouldFlip = this.ShouldFlip;
+            newEnemy.Speed = this.GetSpeed();
 
             // Get values that can fail.
             BlinkingType blinkingType;
-            int x, y, speed, min, max, shootingFreq, shootingInitialFreq, blinkingFreq, blinkingInitialFreq;
+            int x, y, min, max, shootingFreq, shootingInitialFreq, blinkingFreq, blinkingInitialFreq;
             if (!this.TryGetX(out x) || 
                 !this.TryGetY(out y) || 
-                !this.TryGetSpeed(out speed) || 
                 !this.TryGetMin(out min) || 
                 !this.TryGetMax(out max) ||
                 !this.TryGetShootingFreq(out shootingFreq) ||
@@ -202,7 +202,6 @@ namespace SpriteHelper.Dialogs
             // Set values that can fail.
             newEnemy.X = x;
             newEnemy.Y = y;
-            newEnemy.Speed = speed;
             newEnemy.MinPosition = min;
             newEnemy.MaxPosition = max;
             newEnemy.ShootingFrequency = shootingFreq;

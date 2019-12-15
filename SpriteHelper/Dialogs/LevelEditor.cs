@@ -2628,7 +2628,18 @@ namespace SpriteHelper.Dialogs
                     result.Add((byte)(enemy.ShouldFlip ? 1 : 0));
 
                     // movement speed
-                    result.Add((byte)enemy.Speed);
+                    if (enemy.Speed == 0.25)
+                    {
+                        result.Add(254);
+                    }
+                    else if (enemy.Speed == 0.5)
+                    {
+                        result.Add(255);
+                    }
+                    else
+                    {
+                        result.Add((byte)enemy.Speed);
+                    }
 
                     // special movement type
                     result.Add((byte)enemy.SpecialMovement);
@@ -2770,7 +2781,18 @@ namespace SpriteHelper.Dialogs
                     result.Add((byte)screen);
 
                     // movement speed
-                    result.Add((byte)elevator.Speed);                    
+                    if (elevator.Speed == 0.25)
+                    {
+                        result.Add(254);
+                    }
+                    else if (elevator.Speed == 0.5)
+                    {
+                        result.Add(255);
+                    }
+                    else
+                    {
+                        result.Add((byte)elevator.Speed);
+                    }
 
                     // max movement distance
                     result.Add((byte)(elevator.MovementRange));
@@ -3456,12 +3478,6 @@ namespace SpriteHelper.Dialogs
                 return "Y is not a valid number";
             }
 
-            int speed;
-            if (!dialog.TryGetSpeed(out speed))
-            {
-                return "Speed is not a valid number";
-            }
-
             int min;
             if (!dialog.TryGetMin(out min))
             {
@@ -3686,8 +3702,13 @@ namespace SpriteHelper.Dialogs
                 return "Enemy must have some initial movement in the direction it's facing";
             }
 
-            if (enemy.Speed != 254 && enemy.Speed != 255) // special values for 1/4 and 1/2 - everything is reachable with those
+            if (enemy.Speed < 1 && enemy.Speed != 0.25 && enemy.Speed != 0.5)
             {
+                return "Invalid special speed";
+            }
+
+            if (enemy.Speed >= 1)
+            {                         
                 if ((enemyPosition - enemy.MinPosition) % enemy.Speed != 0)
                 {
                     return "Min. position is not reachable with given speed";
@@ -3709,22 +3730,9 @@ namespace SpriteHelper.Dialogs
             {
                 int frames1, frames2;
 
-                if (enemy.Speed == 255) // 1/2
-                {
-                    frames1 = (enemyPosition - enemy.MinPosition) * 2;
-                    frames2 = (enemy.MaxPosition - enemyPosition) * 2;
-                }
-                else if (enemy.Speed == 254) // 1/4
-                {
-                    frames1 = (enemyPosition - enemy.MinPosition) * 4;
-                    frames2 = (enemy.MaxPosition - enemyPosition) * 4;
-                }
-                else
-                {
-                    frames1 = (enemyPosition - enemy.MinPosition) / enemy.Speed;
-                    frames2 = (enemy.MaxPosition - enemyPosition) / enemy.Speed;
-                }
-
+                frames1 = (int)((enemyPosition - enemy.MinPosition) / enemy.Speed);
+                frames2 = (int)((enemy.MaxPosition - enemyPosition) / enemy.Speed);
+                
                 var dict = new Dictionary<SpecialMovement, int>
                 {
                     { SpecialMovement.Sinus8, 32 },
@@ -3870,12 +3878,6 @@ namespace SpriteHelper.Dialogs
             if (!dialog.TryGetY(out y))
             {
                 return "Y is not a valid number";
-            }
-
-            int speed;
-            if (!dialog.TryGetSpeed(out speed))
-            {
-                return "Speed is not a valid number";
             }
 
             int min;
@@ -4078,7 +4080,12 @@ namespace SpriteHelper.Dialogs
                 return "Elevator must have some initial movement in the direction it's facing";
             }
 
-            if (elevator.Speed != 254 && elevator.Speed != 255) // special values for 1/4 and 1/2 - everything is reachable with those
+            if (elevator.Speed < 1 && elevator.Speed != 0.25 && elevator.Speed != 0.5)
+            {
+                return "Invalid special speed";
+            }
+
+            if (elevator.Speed >= 1)
             {
                 if ((elevatorPosition - elevator.MinPosition) % elevator.Speed != 0)
                 {

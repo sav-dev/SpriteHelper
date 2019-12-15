@@ -10,8 +10,7 @@ namespace SpriteHelper.Controls
         public MovementPanel()
         {
             InitializeComponent();
-            this.toolTip.SetToolTip(this.movementSpeedLabel, "254 = 1/4, 255 = 1/2");
-
+            
             for (var i = 0; i < 255; i++)
             {
                 if (Enum.IsDefined(typeof(Contract.SpecialMovement), i))
@@ -83,9 +82,9 @@ namespace SpriteHelper.Controls
             }
         }
 
-        public bool TryGetSpeed(out int speed)
+        public double GetSpeed()
         {
-            return int.TryParse(this.speedTextBox.Text, out speed);
+            return double.Parse(this.speedComboBox.SelectedItem.ToString());
         }
 
         public bool TryGetMin(out int min)
@@ -98,9 +97,9 @@ namespace SpriteHelper.Controls
             return int.TryParse(this.maxTextBox.Text, out max);
         }
 
-        public void SetSpeed(int speed)
+        public void SetSpeed(double speed)
         {
-            this.speedTextBox.Text = speed.ToString();
+            this.speedComboBox.SelectedItem = speed.ToString();
         }
 
         public void SetMin(int min)
@@ -136,7 +135,7 @@ namespace SpriteHelper.Controls
         {
             var setToNone = this.MovementType == Contract.MovementType.None;
 
-            this.speedTextBox.Enabled = !setToNone;
+            this.speedComboBox.Enabled = !setToNone;
             this.minTilesTextBox.Enabled = !setToNone;
             this.minOffsetTextBox.Enabled = !setToNone;
             this.maxTilesTextBox.Enabled = !setToNone;

@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.propertiesLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.movementTypeLabel = new System.Windows.Forms.Label();
             this.xLabel = new System.Windows.Forms.Label();
@@ -43,14 +42,13 @@
             this.minTilesTextBox = new System.Windows.Forms.TextBox();
             this.yTilesLabel = new System.Windows.Forms.Label();
             this.maxTilesTextBox = new System.Windows.Forms.TextBox();
-            this.speedTextBox = new System.Windows.Forms.TextBox();
             this.movementComboBox = new System.Windows.Forms.ComboBox();
             this.movementSpeedLabel = new System.Windows.Forms.Label();
             this.directionLabel = new System.Windows.Forms.Label();
             this.directionComboBox = new System.Windows.Forms.ComboBox();
-            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.specialMovementLabel = new System.Windows.Forms.Label();
             this.specialMovementComboBox = new System.Windows.Forms.ComboBox();
+            this.speedComboBox = new System.Windows.Forms.ComboBox();
             this.propertiesLayoutPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -74,13 +72,13 @@
             this.propertiesLayoutPanel.Controls.Add(this.minTilesTextBox, 1, 2);
             this.propertiesLayoutPanel.Controls.Add(this.yTilesLabel, 2, 2);
             this.propertiesLayoutPanel.Controls.Add(this.maxTilesTextBox, 3, 2);
-            this.propertiesLayoutPanel.Controls.Add(this.speedTextBox, 3, 1);
             this.propertiesLayoutPanel.Controls.Add(this.movementComboBox, 1, 0);
             this.propertiesLayoutPanel.Controls.Add(this.movementSpeedLabel, 2, 1);
             this.propertiesLayoutPanel.Controls.Add(this.directionLabel, 0, 1);
             this.propertiesLayoutPanel.Controls.Add(this.directionComboBox, 1, 1);
             this.propertiesLayoutPanel.Controls.Add(this.specialMovementLabel, 2, 0);
             this.propertiesLayoutPanel.Controls.Add(this.specialMovementComboBox, 3, 0);
+            this.propertiesLayoutPanel.Controls.Add(this.speedComboBox, 3, 1);
             this.propertiesLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.propertiesLayoutPanel.Location = new System.Drawing.Point(0, 0);
             this.propertiesLayoutPanel.Name = "propertiesLayoutPanel";
@@ -224,15 +222,6 @@
             this.maxTilesTextBox.Text = "0";
             this.maxTilesTextBox.TextChanged += new System.EventHandler(this.InputTextChanged);
             // 
-            // speedTextBox
-            // 
-            this.speedTextBox.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.speedTextBox.Location = new System.Drawing.Point(363, 48);
-            this.speedTextBox.Name = "speedTextBox";
-            this.speedTextBox.Size = new System.Drawing.Size(100, 20);
-            this.speedTextBox.TabIndex = 19;
-            this.speedTextBox.Text = "0";
-            // 
             // movementComboBox
             // 
             this.movementComboBox.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -248,11 +237,11 @@
             // 
             this.movementSpeedLabel.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.movementSpeedLabel.AutoSize = true;
-            this.movementSpeedLabel.Location = new System.Drawing.Point(286, 52);
+            this.movementSpeedLabel.Location = new System.Drawing.Point(299, 52);
             this.movementSpeedLabel.Name = "movementSpeedLabel";
-            this.movementSpeedLabel.Size = new System.Drawing.Size(51, 13);
+            this.movementSpeedLabel.Size = new System.Drawing.Size(38, 13);
             this.movementSpeedLabel.TabIndex = 16;
-            this.movementSpeedLabel.Text = "Speed (*)";
+            this.movementSpeedLabel.Text = "Speed";
             // 
             // directionLabel
             // 
@@ -294,6 +283,24 @@
             this.specialMovementComboBox.Size = new System.Drawing.Size(121, 21);
             this.specialMovementComboBox.TabIndex = 24;
             // 
+            // speedComboBox
+            // 
+            this.speedComboBox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.speedComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.speedComboBox.FormattingEnabled = true;
+            this.speedComboBox.Items.AddRange(new object[] {
+            "0.25",
+            "0.5",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"});
+            this.speedComboBox.Location = new System.Drawing.Point(353, 48);
+            this.speedComboBox.Name = "speedComboBox";
+            this.speedComboBox.Size = new System.Drawing.Size(121, 21);
+            this.speedComboBox.TabIndex = 25;
+            // 
             // MovementPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -323,12 +330,11 @@
         private System.Windows.Forms.TextBox maxTextBox;
         private System.Windows.Forms.Label movementTypeLabel;
         private System.Windows.Forms.Label movementSpeedLabel;
-        private System.Windows.Forms.TextBox speedTextBox;
         private System.Windows.Forms.ComboBox movementComboBox;
-        private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.Label directionLabel;
         private System.Windows.Forms.ComboBox directionComboBox;
         private System.Windows.Forms.Label specialMovementLabel;
         private System.Windows.Forms.ComboBox specialMovementComboBox;
+        private System.Windows.Forms.ComboBox speedComboBox;
     }
 }
