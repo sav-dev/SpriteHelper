@@ -61,7 +61,6 @@ namespace SpriteHelper.Contract
                     case MovementType.Vertical:
                         return this.Direction == Direction.Up ? this.Y - this.MinPosition : this.MaxPosition - this.Y;
                     case MovementType.None:
-                    case MovementType.NoneAlwaysAnimate:
                     default:
                         return 0;
                 }
