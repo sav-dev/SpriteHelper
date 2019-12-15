@@ -289,6 +289,7 @@
             this.speedComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.speedComboBox.FormattingEnabled = true;
             this.speedComboBox.Items.AddRange(new object[] {
+            "0",
             "0.25",
             "0.5",
             "1",

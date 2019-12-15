@@ -8,6 +8,11 @@
         // Max number of bullets on screen.
         public const int MaxBullets = 5 + 10;
 
+        // Various constants, hardcoded in game code.
+        public const byte SpecialSpeedQuarter = 254;
+        public const byte SpecialSpeedHalf = 255;
+        public const byte SpecialSpeedAlwaysAnimate = 253;
+
         // Elevators, hardcoded in game code.
         public const string ElevatorSpriteName = "ELEVATOR_SPRITE";
         public const string ElevatorEndRSpriteName = "ELEVATOR_END_SPRITE";

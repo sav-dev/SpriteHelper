@@ -2630,11 +2630,15 @@ namespace SpriteHelper.Dialogs
                     // movement speed
                     if (enemy.Speed == 0.25)
                     {
-                        result.Add(254);
+                        result.Add(Constants.SpecialSpeedQuarter);
                     }
                     else if (enemy.Speed == 0.5)
                     {
-                        result.Add(255);
+                        result.Add(Constants.SpecialSpeedHalf);
+                    }
+                    else if (enemy.Speed == 0 && enemy.Animation.AlwaysAnimate)
+                    {
+                        result.Add(Constants.SpecialSpeedAlwaysAnimate);
                     }
                     else
                     {
