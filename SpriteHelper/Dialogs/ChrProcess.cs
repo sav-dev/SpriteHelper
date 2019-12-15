@@ -31,7 +31,8 @@ namespace SpriteHelper.Dialogs
         {
             var bytes = File.ReadAllBytes(path);
             var result = new List<byte>();
-            for (var i = 0; i < 4096; i += 16)
+            result.AddRange(Enumerable.Repeat<byte>(0, 16).ToList()); // 1st tile is always empty
+            for (var i = 16; i < 4096; i += 16)
             {
                 var isEmpty = true;
                 for (var j = 0; j < 16; j++)

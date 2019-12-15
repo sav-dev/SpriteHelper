@@ -14,21 +14,7 @@ namespace SpriteHelper
         {           
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
-            bool run = true;
-            while (run)
-            {
-                try
-                {
-                    Application.Run(new ProgramPicker());
-                    run = false;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                    run = true;
-                }
-            }
+            Application.Run(new ProgramPicker());
         }
     }
 }

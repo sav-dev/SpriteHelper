@@ -348,11 +348,11 @@ namespace SpriteHelper.Dialogs
                 throw new Exception("Empty tile not found for some reason");
             }
 
-            // Move empty tile to the end.
+            // Move empty tile to the beginning.
             var emptyTile = sprites[emptyTileIndex];
             sprites.RemoveAt(emptyTileIndex);
-            var newEmptyTileIndex = sprites.Count;
-            sprites.Add(emptyTile);
+            var newEmptyTileIndex = 0;
+            sprites.Insert(0, emptyTile);
 
             // Update the config.
             foreach (var tile in config.Tiles)
@@ -365,9 +365,9 @@ namespace SpriteHelper.Dialogs
                     {
                         newSprites[i] = newEmptyTileIndex;
                     }
-                    else if (newSprites[i] > emptyTileIndex)
+                    else if (newSprites[i] < emptyTileIndex)
                     {
-                        newSprites[i] = newSprites[i] - 1;
+                        newSprites[i] = newSprites[i] + 1;
                     }
                 }
 
