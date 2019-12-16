@@ -84,12 +84,6 @@ namespace SpriteHelper.Dialogs
 
         private void CodeButtonClick(object sender, EventArgs e)
         {
-            if (this.config.Animations.Length * Constants.EnemyDefinitionSize > 256)
-            {
-                MessageBox.Show("Too many enemies, udpate the consts pointer in enemy data to two bytes!");
-                return;
-            }
-
             var code = this.GetCode();
             new CodeWindow(code).ShowDialog();
         }
