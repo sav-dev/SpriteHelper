@@ -48,6 +48,7 @@
     <Reference Include="System.Xml.Serialization" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contract\Bullet.cs" />
     <Compile Include="Contract\ConstSprites.cs" />
     <Compile Include="Contract\Direction.cs" />
     <Compile Include="Contract\DoorAndKeycard.cs" />
@@ -71,6 +72,12 @@
     </Compile>
     <Compile Include="Dialogs\AddEditElevatorDialog.Designer.cs">
       <DependentUpon>AddEditElevatorDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\BulletsWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\BulletsWindow.Designer.cs">
+      <DependentUpon>BulletsWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\ChrProcess.cs">
       <SubType>Form</SubType>
@@ -244,6 +251,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\BackgroundTilesetCreator.resx">
       <DependentUpon>BackgroundTilesetCreator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\BulletsWindow.resx">
+      <DependentUpon>BulletsWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\ChrProcess.resx">
       <DependentUpon>ChrProcess.cs</DependentUpon>

@@ -23,6 +23,9 @@ namespace SpriteHelper.Contract
         [DataMember]
         public Animation[] Animations { get; set; }
 
+        [DataMember]
+        public Bullet[] Bullets { get; set; }
+
         public int MaxFrameWidth { get; set; }
         public int MaxFrameHeight { get; set; }
         public int MinXOffset { get; set; }
@@ -80,7 +83,7 @@ namespace SpriteHelper.Contract
             }
 
             // Prepare frames.
-            foreach (var frame in config.Frames)
+            foreach (var frame in config?.Frames ?? new Frame[0])
             {
                 foreach (var sprite in frame.Sprites)
                 {
@@ -96,7 +99,7 @@ namespace SpriteHelper.Contract
             }
 
             // Prepare animations.
-            foreach (var animation in config.Animations)
+            foreach (var animation in config.Animations ?? new Animation[0])
             {
                 // No copy of animation 0 possible since it defaults to 0
                 if (animation.CopyOf > 0)
@@ -131,6 +134,12 @@ namespace SpriteHelper.Contract
                 {
                     animation.Frames[i] = config.Frames.First(frame => frame.Id == animation.Frames[i].Id);
                 }
+            }
+
+            // Prepare bullets
+            foreach (var bullet in config?.Bullets ?? new Bullet[0])
+            {
+                bullet.Sprite = config.Sprites.First(s => s.Id == bullet.SpriteId);
             }
 
             return config;

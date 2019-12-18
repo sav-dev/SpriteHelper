@@ -95,6 +95,11 @@ namespace SpriteHelper.Dialogs
             new EnemiesWindow().ShowDialog();
         }
 
+        private void BulletsButtonClick(object sender, EventArgs e)
+        {
+            new BulletsWindow().ShowDialog();
+        }
+
         private void CloseButtonClick(object sender, EventArgs e)
         {
             this.Close();
