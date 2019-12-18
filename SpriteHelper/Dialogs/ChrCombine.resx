@@ -120,6 +120,7 @@
   <data name="specsTextBox.Text" xml:space="preserve">
     <value>C:\Users\tomas\Documents\NES\GitHub\Platformer\PlatformerGraphics\Sprites\player.xml
 C:\Users\tomas\Documents\NES\GitHub\Platformer\PlatformerGraphics\Sprites\explosion.xml
-C:\Users\tomas\Documents\NES\GitHub\Platformer\PlatformerGraphics\Sprites\enemies.xml</value>
+C:\Users\tomas\Documents\NES\GitHub\Platformer\PlatformerGraphics\Sprites\enemies.xml
+C:\Users\tomas\Documents\NES\GitHub\Platformer\PlatformerGraphics\Sprites\bullets.xml</value>
   </data>
 </root>

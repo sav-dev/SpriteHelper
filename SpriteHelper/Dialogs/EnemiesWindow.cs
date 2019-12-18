@@ -168,8 +168,7 @@ namespace SpriteHelper.Dialogs
 
         private string GetHeader()
         {
-            return @"
-EnemiesStart:
+            return @"EnemiesStart:
 
 ;****************************************************************
 ; Enemies                                                       ;
