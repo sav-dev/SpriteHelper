@@ -178,14 +178,14 @@ namespace SpriteHelper.Dialogs
         {
             return @";
 ;  constant properties for bullets
-;    sprite id          : 1 byte
-;    box width, height  : 2 bytes
-;    atts               : 1 byte
 ;    bullet dx, dy      : 2 bytes
 ;    box dx, dy         : 2 bytes
-;    atts flip          : 1 byte
+;    atts               : 1 byte
 ;    bullet dx, dy flip : 2 bytes
 ;    box dx, dy flip    : 2 bytes
+;    atts flip          : 1 byte
+;    sprite id          : 1 byte
+;    box width, height  : 2 bytes
 ;
 ;  ordered by bullet id
 ;
@@ -200,71 +200,49 @@ namespace SpriteHelper.Dialogs
             builder.AppendLine();
             builder.AppendLine("BulletConsts:");
 
-            foreach (var bullet in this.config.Bullets)
+            Func<Bullet, int> getAtts = b =>
             {
-                //// todo: don't export player bullet data? hardcode it instead? or export as consts?
-
-                builder.AppendLine();
-
-                // Name
-                builder.AppendLineFormat($"{bullet.Name.Replace(" ", "_")}:");
-
-                // Sprite
-                builder.AppendLine(".spriteId:");
-                builder.AppendLineFormat($"  .byte {ToHex(bullet.SpriteId)}");
-
-                // Box size
-                builder.AppendLine(".boxSize:");
-                builder.AppendLineFormat($"  .byte {ToHex(bullet.BoxWidth)}, {ToHex(bullet.BoxHeight)}");
-
-                // Atts
-                var paletteId = config.PaletteMappings.First(pm => pm.Id == bullet.Sprite.Mapping).ToPalette;
+                var paletteId = config.PaletteMappings.First(pm => pm.Id == b.Sprite.Mapping).ToPalette;
                 var atts = paletteId;
 
-                if (bullet.HFlip)
+                if (b.HFlip)
                 {
                     atts += 64;
                 }
 
-                if (bullet.VFlip)
+                if (b.VFlip)
                 {
                     atts += 128;
                 }
 
-                builder.AppendLine(".atts:");
-                builder.AppendLineFormat($"  .byte {ToHex(atts)}");
+                return atts;
+            };
 
-                // DX, DY
-                builder.AppendLine(".speed:");
-                builder.AppendLineFormat($"  .byte {ToHex(bullet.BulletDx)}, {ToHex(bullet.BulletDy)}");
-
-                // Box
-                builder.AppendLine(".boxOffset:");
-                builder.AppendLineFormat($"  .byte {ToHex(bullet.BoxDx)}, {ToHex(bullet.BoxDy)}");
-
-                // Atts flip
+            Func<Bullet, int> getAttsFlip = b =>
+            {
+                var paletteId = config.PaletteMappings.First(pm => pm.Id == b.Sprite.Mapping).ToPalette;
                 var attsFlip = paletteId;
 
-                if (bullet.Orientation == Contract.Orientation.Horizontal)
+                if (b.Orientation == Contract.Orientation.Horizontal)
                 {
-                    if (!bullet.HFlip)
+                    if (!b.HFlip)
                     {
                         attsFlip += 64;
                     }
 
-                    if (bullet.VFlip)
+                    if (b.VFlip)
                     {
                         attsFlip += 128;
                     }
                 }
-                else if (bullet.Orientation == Contract.Orientation.Vertical)
+                else if (b.Orientation == Contract.Orientation.Vertical)
                 {
-                    if (bullet.HFlip)
+                    if (b.HFlip)
                     {
                         attsFlip += 64;
                     }
 
-                    if (!bullet.VFlip)
+                    if (!b.VFlip)
                     {
                         attsFlip += 128;
                     }
@@ -274,8 +252,27 @@ namespace SpriteHelper.Dialogs
                     throw new Exception("Bullet can't have 'none' orientation.");
                 }
 
-                builder.AppendLine(".attsFlip:");
-                builder.AppendLineFormat($"  .byte {ToHex(attsFlip)}");
+                return attsFlip;
+            };
+
+            foreach (var bullet in this.config.Bullets.Where(b => b.Name != "Player"))
+            {
+                builder.AppendLine();
+
+                // Name
+                builder.AppendLineFormat($"{bullet.Name.Replace(" ", "_")}:");
+
+                // DX, DY
+                builder.AppendLine(".speed:");
+                builder.AppendLineFormat($"  .byte {ToHex(bullet.BulletDx)}, {ToHex(bullet.BulletDy)}");
+
+                // Box
+                builder.AppendLine(".boxOffset:");
+                builder.AppendLineFormat($"  .byte {ToHex(bullet.BoxDx)}, {ToHex(bullet.BoxDy)}");
+
+                // Atts
+                builder.AppendLine(".atts:");
+                builder.AppendLineFormat($"  .byte {ToHex(getAtts(bullet))}");
 
                 // DX, DY flip
                 builder.AppendLine(".speedFlip:");
@@ -283,7 +280,38 @@ namespace SpriteHelper.Dialogs
 
                 // Box flip
                 builder.AppendLine(".boxOffsetFlip:");
-                builder.AppendLineFormat($"  .byte {ToHex(bullet.BoxDxFlip)}, {ToHex(bullet.BoxDyFlip)}");                
+                builder.AppendLineFormat($"  .byte {ToHex(bullet.BoxDxFlip)}, {ToHex(bullet.BoxDyFlip)}");
+
+                // Atts flip
+                builder.AppendLine(".attsFlip:");
+                builder.AppendLineFormat($"  .byte {ToHex(getAttsFlip(bullet))}");
+
+                // Sprite
+                builder.AppendLine(".spriteId:");
+                builder.AppendLineFormat($"  .byte {ToHex(bullet.SpriteId)}");
+
+                // Box size
+                builder.AppendLine(".boxSize:");
+                builder.AppendLineFormat($"  .byte {ToHex(bullet.BoxWidth)}, {ToHex(bullet.BoxHeight)}");
+            }
+
+            var playerBullet = this.config.Bullets.First(b => b.Name == "Player");
+            var prefix = "PLAYER_BULLET_";
+            builder.AppendLine();
+            builder.AppendLine("; Player consts");
+            builder.AppendLine("; note: box DX/DY = 0 for both flip and non-flip");
+            builder.AppendLine(";       speed DY = 0 for both flip and non-flip");
+            builder.AppendLine($"{prefix}SPRITE = {ToHex(playerBullet.SpriteId)}");
+            builder.AppendLine($"{prefix}BOX_WIDTH = {ToHex(playerBullet.BoxWidth)}");
+            builder.AppendLine($"{prefix}BOX_HEIGHT = {ToHex(playerBullet.BoxHeight)}");
+            builder.AppendLine($"{prefix}SPEED_X = {ToHex(playerBullet.BulletDx)}");
+            builder.AppendLine($"{prefix}SPEED_X_FLIP = {ToHex(playerBullet.BulletDxFlip)}");
+            builder.AppendLine($"{prefix}ATTS = {ToHex(getAtts(playerBullet))}");
+            builder.AppendLine($"{prefix}ATTS_FLIP = {ToHex(getAttsFlip(playerBullet))}");
+
+            if (playerBullet.BoxDx != 0 || playerBullet.BoxDy != 0 || playerBullet.BoxDxFlip != 0 || playerBullet.BoxDyFlip != 0 || playerBullet.BulletDy != 0 || playerBullet.BulletDyFlip != 0)
+            {
+                throw new Exception("We expect player bullet box DX/DY to be 0!");
             }
 
             return builder.ToString();

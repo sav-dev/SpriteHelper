@@ -35,6 +35,9 @@ namespace SpriteHelper.Contract
         [DataMember]
         public bool AlwaysAnimate { get; set; }
 
+        [DataMember]
+        public int BulletId { get; set; }
+
         public void SetFrom(Animation other)
         {
             this.AnimationSpeed = other.AnimationSpeed;

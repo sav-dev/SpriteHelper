@@ -194,6 +194,7 @@ namespace SpriteHelper.Dialogs
 ;    hitbox y off    : 1 byte
 ;    hitbox height   : 1 byte (inclusive)
 ;    orientation     : 1 byte (see ORIENTATION_* consts)
+;    bullet id       : 1 byte
 ;    gun x off       : 1 byte (signed, 0 for non shooting)
 ;    gun y off       : 1 byte (signed, 0 for non shooting)
 ;    gun x off flip  : 1 byte (signed, 0 for non shooting)
@@ -202,6 +203,7 @@ namespace SpriteHelper.Dialogs
 ;    # of frames     : 1 bytes
 ;    rendering info  : 2 bytes
 ;    expl. offsets   : 2 bytes (x/y)
+;    expl. id        : 1 byte
 ;
 ;  ordered by animation id
 ;
@@ -264,7 +266,10 @@ namespace SpriteHelper.Dialogs
                 }
 
                 builder.AppendLine(".orientation:");
-                builder.AppendLineFormat("  .byte ${0:X2}", (int)animation.Orientation);
+                builder.AppendLineFormat("  .byte ${0:X2}", (byte)animation.Orientation);
+
+                builder.AppendLine(".bulletId:");
+                builder.AppendLineFormat("  .byte ${0:X2}", (byte)(animation.BulletId * Constants.BulletDefinitionSize));
 
                 builder.AppendLine(".gunInfo:");
                 builder.AppendLineFormat("  .byte {0}", string.Join(",", gun.Select(v => "$" + (v % 256).ToString("X2"))));
@@ -280,6 +285,10 @@ namespace SpriteHelper.Dialogs
 
                 builder.AppendLine(".explosionOffset:");
                 builder.AppendLineFormat("  .byte ${0:X2}, ${1:X2}", (widthInPixes / 2) - 8, (heightInPixels / 2) - 8);
+
+                builder.AppendLine(".explosionId:");
+                builder.AppendLineFormat("  .byte $00"); // todo 0004
+
                 builder.AppendLine();
             }
 
