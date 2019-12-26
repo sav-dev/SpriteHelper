@@ -1,5 +1,6 @@
 ﻿using SpriteHelper.Contract;
 using SpriteHelper.Files;
+using SpriteHelper.NesGraphics;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -12,6 +13,7 @@ namespace SpriteHelper.Dialogs
     public partial class EnemiesWindow : Form
     {
         private SpriteConfig config;
+        private SpriteConfig bulletConfig;
         private Palettes palettes;
 
         public EnemiesWindow()
@@ -36,6 +38,7 @@ namespace SpriteHelper.Dialogs
         {
             this.palettes = Palettes.Read(palettesTextBox.Text);
             this.config = SpriteConfig.Read(specTextBox.Text, this.palettes);
+            this.bulletConfig = SpriteConfig.Read(bulletsTextBox.Text, this.palettes);
 
             this.framesListBox.Items.Clear();
             this.enemiesListBox.Items.Clear();
@@ -113,17 +116,68 @@ namespace SpriteHelper.Dialogs
             this.pictureBox.BackColor = this.applyPaletteCheckbox.Checked ? this.palettes.SpritesPalette[0].ActualColors[0] : Color.Black;
 
             var animation = (Animation)this.enemiesListBox.SelectedItem;
-            var flip = this.flipCheckbox.Checked;            
+            var flip = this.flipCheckbox.Checked;
+            var zoom = (int)this.zoomPicker.Value;
 
-            this.pictureBox.Image = frame.GetGridBitmap(
+            var image = frame.GetGridBitmap(
                 this.pictureBox.BackColor,
                 this.applyPaletteCheckbox.Checked,
                 this.showBoxesCheckbox.Checked,
                 animation.Flip == Flip.Vertical && flip,
                 animation.Flip == Flip.Horizontal && flip,
-                (int)this.zoomPicker.Value,
+                zoom,
                 animation.Offsets);
-        }        
+
+            if (this.showBulletCheckBox.Checked)
+            {
+                image = DrawBullet(image, animation, flip, zoom);
+            }
+
+            this.pictureBox.Image = image;
+        }
+
+        private Bitmap DrawBullet(Bitmap image, Animation animation, bool flip, int zoom)
+        {
+            var width = image.Width;
+            var height = image.Height;
+
+            var xOff = Constants.SpriteWidth * zoom;
+            var yOff = Constants.SpriteHeight * zoom;
+
+            var newImage = new MyBitmap(width + xOff * 2, height + yOff * 2, this.pictureBox.BackColor);
+            
+            newImage.DrawImage(MyBitmap.FromBitmap(image), xOff, yOff);
+
+            if (animation.Offsets.GunXOff >= 0)
+            {
+                var bullet = this.bulletConfig.Bullets.First(b => b.BulletId == animation.BulletId);
+                var flipFlags = bullet.GetFlipFlags(flip);
+                var bulletBitmap = bullet.Sprite.GetSprite(
+                    this.applyPaletteCheckbox.Checked,
+                    flipFlags.HasFlag(ImageFlags.VFlip),
+                    flipFlags.HasFlag(ImageFlags.HFlip),
+                    this.pictureBox.BackColor).Clone();
+
+                var scaled = bulletBitmap.Scale(zoom);
+                if (flip)
+                {
+                    newImage.DrawImage(
+                        scaled, 
+                        xOff + animation.Offsets.GunXOffFlip * zoom, 
+                        yOff + animation.Offsets.GunYOffFlip * zoom);
+                }
+                else
+                {
+                    newImage.DrawImage(
+                        scaled, 
+                        xOff + animation.Offsets.GunXOff * zoom, 
+                        yOff + animation.Offsets.GunYOff * zoom);
+                }
+            }
+
+
+            return newImage.ToBitmap();
+        }
 
         private void Start()
         {
@@ -242,18 +296,18 @@ namespace SpriteHelper.Dialogs
                             gun = new[]
                                 {
                                     256 + animation.Offsets.GunXOff,
-                                    256 + animation.Offsets.GunYOff - Constants.BulletHOff,
-                                    256 + animation.Offsets.GunXOffFlip - Constants.SpriteWidth,
-                                    256 + animation.Offsets.GunYOffFlip - Constants.BulletHOff
+                                    256 + animation.Offsets.GunYOff,
+                                    256 + animation.Offsets.GunXOffFlip,
+                                    256 + animation.Offsets.GunYOffFlip
                                 };
                             break;
                         case Flip.Vertical:
                             gun = new[]
                                 {
-                                    256 + animation.Offsets.GunXOff - Constants.BulletVOff,
+                                    256 + animation.Offsets.GunXOff,
                                     256 + animation.Offsets.GunYOff,
-                                    256 + animation.Offsets.GunXOffFlip - Constants.BulletVOff,
-                                    256 + animation.Offsets.GunYOffFlip - Constants.SpriteHeight
+                                    256 + animation.Offsets.GunXOffFlip,
+                                    256 + animation.Offsets.GunYOffFlip
                                 };
                             break;
                         default:

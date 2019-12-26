@@ -285,12 +285,7 @@ namespace SpriteHelper.Contract
 
             if (showBoxes)
             {
-                image.DrawRectangle(MyBitmap.ThreatBoxColor, offsets.XOff, offsets.YOff, offsets.XOff + offsets.Width, offsets.YOff + offsets.Height);
-
-                if (offsets.GunXOff >= 0)
-                {
-                    image.SetPixel(MyBitmap.GunColor, isFlip ? offsets.GunXOffFlip : offsets.GunXOff, isFlip ? offsets.GunYOffFlip : offsets.GunYOff);
-                }
+                image.DrawRectangle(MyBitmap.ThreatBoxColor, offsets.XOff, offsets.YOff, offsets.XOff + offsets.Width, offsets.YOff + offsets.Height);                
             }
 
             // Scale image.

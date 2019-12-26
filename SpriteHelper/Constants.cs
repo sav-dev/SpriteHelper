@@ -60,10 +60,6 @@
         public const int PlayerThreatBoxWidth = 13;
         public const int PlayerSpeed = 2;
 
-        // Bullet constants.
-        public const int BulletHOff = 2;
-        public const int BulletVOff = 2;
-
         // Number of sprites for an explosion.
         public const int ExplosionSprites = 4;
         public const int ExplosionWidth = 2 * SpriteWidth;
