@@ -51,8 +51,8 @@
         public const int PlayerPlatformBoxWidth = 15;
         public const int PlayerGunOXffL = -3;
         public const int PlayerGunOXffR = 18;
-        public const int PlayerGunYOff = -20;
-        public const int PlayerGunYOffCrouch = -12;
+        public const int PlayerGunYOff = -21;
+        public const int PlayerGunYOffCrouch = -13;
         public const int PlayerThreatBoxXOff = 1;
         public const int PlayerThreatBoxYOff = -2;
         public const int PlayerThreatBoxHeight = -25;

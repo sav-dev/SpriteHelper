@@ -67,12 +67,14 @@ namespace SpriteHelper.Dialogs
                                 if (showBoxes)
                                 {
                                     if (flip)
-                                    {
-                                        bitmap.DrawRectangle(MyBitmap.ThreatBoxColor, bullet.BoxDxFlip, bullet.BoxDyFlip, bullet.BoxDxFlip + bullet.BoxWidth, bullet.BoxDyFlip + bullet.BoxHeight); 
+                                    {                                       
+                                        bitmap.DrawRectangle(MyBitmap.ThreatBoxColor, bullet.BoxDxFlip, bullet.BoxDyFlip, bullet.BoxDxFlip + bullet.BoxWidth, bullet.BoxDyFlip + bullet.BoxHeight);
+                                        bitmap.SetPixel(MyBitmap.GunColor, 7, 0);
                                     }
                                     else
                                     {
                                         bitmap.DrawRectangle(MyBitmap.ThreatBoxColor, bullet.BoxDx, bullet.BoxDy, bullet.BoxDx + bullet.BoxWidth, bullet.BoxDy + bullet.BoxHeight);
+                                        bitmap.SetPixel(MyBitmap.GunColor, 0, 0);
                                     }
                                 }
 
