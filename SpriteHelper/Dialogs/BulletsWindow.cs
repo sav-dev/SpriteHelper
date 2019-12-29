@@ -39,6 +39,30 @@ namespace SpriteHelper.Dialogs
             }
 
             this.bulletsListBox.SelectedIndex = 0;
+
+            ValidateBullets();
+        }
+
+        private void ValidateBullets()
+        {
+            foreach (var b in this.config.Bullets)
+            {
+                Func<int, int> getAbsoluteSpeed = value => value > 80 ? 256 - value : value;
+
+                var xSpeed = getAbsoluteSpeed(b.BulletDx);
+                var ySpeed = getAbsoluteSpeed(b.BulletDy);
+                if (xSpeed != 0 && ySpeed != 0 && xSpeed != ySpeed)
+                {
+                    throw new Exception($"{b.Name}: xSpeed != 0 && ySpeed != 0 && xSpeed != ySpeed");
+                }
+
+                var xSpeedFlip = getAbsoluteSpeed(b.BulletDxFlip);
+                var ySpeedFlip = getAbsoluteSpeed(b.BulletDyFlip);
+                if (xSpeedFlip != 0 && ySpeedFlip != 0 && xSpeedFlip != ySpeedFlip)
+                {
+                    throw new Exception($"{b.Name}: xSpeedFlip != 0 && ySpeedFlip != 0 && xSpeedFlip != ySpeedFlip");
+                }
+            }
         }
 
         private void CreateCachedBitmaps()

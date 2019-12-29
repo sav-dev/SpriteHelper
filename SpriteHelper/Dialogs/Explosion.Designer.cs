@@ -74,7 +74,7 @@
             this.specTextBox.Size = new System.Drawing.Size(401, 20);
             this.specTextBox.TabIndex = 3;
             this.specTextBox.Text = "C:\\Users\\tomas\\Documents\\NES\\GitHub\\Platformer\\PlatformerGraphics\\Sprites\\explosi" +
-    "on.xml";
+    "ons.xml";
             // 
             // specLabel
             // 
@@ -181,7 +181,8 @@
             this.palettesTextBox.Name = "palettesTextBox";
             this.palettesTextBox.Size = new System.Drawing.Size(401, 20);
             this.palettesTextBox.TabIndex = 14;
-            this.palettesTextBox.Text = "C:\\users\\tomas\\documents\\nes\\github\\platformer\\PlatformerGraphics\\palettes\\palettes.xml";
+            this.palettesTextBox.Text = "C:\\users\\tomas\\documents\\nes\\github\\platformer\\PlatformerGraphics\\palettes\\palett" +
+    "es.xml";
             // 
             // codeButton
             // 
