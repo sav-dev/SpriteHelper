@@ -341,7 +341,7 @@ namespace SpriteHelper.Dialogs
                 builder.AppendLineFormat("  .byte ${0:X2}, ${1:X2}", (widthInPixes / 2) - 8, (heightInPixels / 2) - 8);
 
                 builder.AppendLine(".explosionPointer:");
-                builder.AppendLineFormat("  .byte $00"); // todo 0004
+                builder.AppendLineFormat("  .byte ${0:X2}", animation.ExplosionId * Constants.ExplosionDefinitionSize);
 
                 builder.AppendLine();
             }

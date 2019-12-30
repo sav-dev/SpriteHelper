@@ -38,6 +38,9 @@ namespace SpriteHelper.Contract
         [DataMember]
         public int BulletId { get; set; }
 
+        [DataMember]
+        public int ExplosionId { get; set; }
+
         public void SetFrom(Animation other)
         {
             this.AnimationSpeed = other.AnimationSpeed;

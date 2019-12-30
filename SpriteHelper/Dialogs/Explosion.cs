@@ -215,7 +215,7 @@ namespace SpriteHelper.Dialogs
             builder.AppendLine();
             builder.AppendLine("Explosions:");
 
-            foreach (var animation in config.Animations)
+            foreach (var animation in config.Animations.OrderBy(e => e.Id))
             {
                 builder.AppendLineFormat($"{animation.Name}:");
                 builder.AppendLineFormat(".attributes:");
