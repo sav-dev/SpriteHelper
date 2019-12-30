@@ -255,9 +255,9 @@ namespace SpriteHelper.Dialogs
 ;    gun y off flip  : 1 byte (signed, 0 for non shooting)
 ;    animation speed : 1 byte (0 for non animated)
 ;    # of frames     : 1 bytes
-;    rendering info  : 2 bytes
-;    expl. offsets   : 2 bytes (x/y)
+;    rendering info  : 2 bytes (pointer)
 ;    expl. pointer   : 1 byte
+;    expl. offsets   : 2 bytes (x/y)
 ;
 ;  ordered by animation id
 ;
@@ -337,11 +337,11 @@ namespace SpriteHelper.Dialogs
                 builder.AppendLine(".renderingInfo:");
                 builder.AppendLineFormat("  .byte LOW({0}Render), HIGH({0}Render)", animation.Name.Replace(" ", ""));
 
-                builder.AppendLine(".explosionOffset:");
-                builder.AppendLineFormat("  .byte ${0:X2}, ${1:X2}", (widthInPixes / 2) - 8, (heightInPixels / 2) - 8);
-
                 builder.AppendLine(".explosionPointer:");
                 builder.AppendLineFormat("  .byte ${0:X2}", animation.ExplosionId * Constants.ExplosionDefinitionSize);
+
+                builder.AppendLine(".explosionOffset:");
+                builder.AppendLineFormat("  .byte ${0:X2}, ${1:X2}", (widthInPixes / 2) - 8, (heightInPixels / 2) - 8);
 
                 builder.AppendLine();
             }
