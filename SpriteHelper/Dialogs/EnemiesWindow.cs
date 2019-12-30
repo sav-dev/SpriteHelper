@@ -257,7 +257,7 @@ namespace SpriteHelper.Dialogs
 ;    # of frames     : 1 bytes
 ;    rendering info  : 2 bytes
 ;    expl. offsets   : 2 bytes (x/y)
-;    expl. id        : 1 byte
+;    expl. pointer   : 1 byte
 ;
 ;  ordered by animation id
 ;
@@ -340,7 +340,7 @@ namespace SpriteHelper.Dialogs
                 builder.AppendLine(".explosionOffset:");
                 builder.AppendLineFormat("  .byte ${0:X2}, ${1:X2}", (widthInPixes / 2) - 8, (heightInPixels / 2) - 8);
 
-                builder.AppendLine(".explosionId:");
+                builder.AppendLine(".explosionPointer:");
                 builder.AppendLineFormat("  .byte $00"); // todo 0004
 
                 builder.AppendLine();

@@ -34,6 +34,11 @@ namespace SpriteHelper.Dialogs
             this.LoadFiles();
         }
 
+        private void AnimationListBoxSelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.LoadAnimation();
+        }
+
         private void FramesListBoxSelectedIndexChanged(object sender, EventArgs e)
         {
             this.LoadFrame();
@@ -68,7 +73,15 @@ namespace SpriteHelper.Dialogs
         {
             this.palettes = Palettes.Read(palettesTextBox.Text);
             this.config = SpriteConfig.Read(specTextBox.Text, this.palettes);
-            this.LoadAnimation();
+
+            this.framesListBox.Items.Clear();
+            this.animationListBox.Items.Clear();
+            foreach (var animation in config.Animations)
+            {
+                this.animationListBox.Items.Add(animation);
+            }
+
+            this.animationListBox.SelectedIndex = 0;
         }
 
         private void LoadFrame()
@@ -86,7 +99,7 @@ namespace SpriteHelper.Dialogs
         {
             this.Stop();
 
-            var animation = this.config.Animations.First();
+            var animation = (Animation)this.animationListBox.SelectedItem;
             this.timer.Interval = animation.AnimationSpeed > 0 ? (1000 / (Constants.Framerate / animation.AnimationSpeed)) : int.MaxValue;
             
             this.framesListBox.Items.Clear();
@@ -198,31 +211,56 @@ namespace SpriteHelper.Dialogs
             // no need for this.
             // !!! one sprite can be saved for cost of additional processing if needed !!!
 
-            /////// TILES
+            // Explosions
+            builder.AppendLine();
+            builder.AppendLine("Explosions:");
 
-            // if there are 4 frames, they are executed in order: 4 -> 3 -> 2 -> 1
-            // so start with the last one etc.
-
-            builder.AppendLineFormat("explosionTiles:");
-            for (var i = this.config.Animations.First().Frames.Length - 1; i >= 0; i--)
+            foreach (var animation in config.Animations)
             {
-                var frame = this.config.Animations.First().Frames[i];
-                var sprites = new List<string>();
-                for (var j = 0; j < Constants.ExplosionSprites; j++)
+                builder.AppendLineFormat($"{animation.Name}:");
+                builder.AppendLineFormat(".attributes:");
+
+                var mappings = animation.Frames.SelectMany(f => f.Sprites).Select(s => s.ActualSprite.Mapping).Distinct().ToArray();
+                if (mappings.Length > 1)
                 {
-                    var sprite = frame.Sprites.Length > j ? frame.Sprites[j] : null;
-                    if (sprite == null)
-                    {
-                        sprites.Add("CLEAR_SPRITE");
-                    }
-                    else
-                    {
-                        var tileId = sprite.Id;
-                        sprites.Add("$" + tileId.ToString("X2"));
-                    }
+                    throw new Exception("All sprites must have the same atts");
                 }
 
-                builder.AppendLineFormat("  .byte {0}", string.Join(", ", sprites));
+                var atts = config.PaletteMappings.First(p => p.Id == mappings[0]).ToPalette + animation.AttsUpdate;
+                builder.AppendLineFormat($"  .byte ${atts:X2}");
+
+                builder.AppendLineFormat(".pointer:");
+                var name = animation.CopyOf == 0 ? animation.Name : config.Animations.First(a => a.Id == animation.CopyOf).Name;
+                builder.AppendLineFormat($"  .byte LOW({name}Tiles), HIGH({name}Tiles)");
+            }
+
+            builder.AppendLine();
+            builder.AppendLine("ExplosionTiles:");
+            foreach (var animation in config.Animations.Where(e => e.CopyOf == 0))
+            {
+                // if there are 4 frames, they are executed in order: 4 -> 3 -> 2 -> 1
+                // so start with the last one etc.            
+                builder.AppendLineFormat($"{animation.Name}Tiles:");
+                for (var i = animation.Frames.Length - 1; i >= 0; i--)
+                {
+                    var frame = animation.Frames[i];
+                    var sprites = new List<string>();
+                    for (var j = 0; j < Constants.ExplosionSprites; j++)
+                    {
+                        var sprite = frame.Sprites.Length > j ? frame.Sprites[j] : null;
+                        if (sprite == null)
+                        {
+                            sprites.Add("CLEAR_SPRITE");
+                        }
+                        else
+                        {
+                            var tileId = sprite.Id;
+                            sprites.Add("$" + tileId.ToString("X2"));
+                        }
+                    }
+
+                    builder.AppendLineFormat("  .byte {0}", string.Join(", ", sprites));
+                }
             }
 
             return builder.ToString();

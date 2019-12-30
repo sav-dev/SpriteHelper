@@ -43,6 +43,7 @@
             this.palettesLabel = new System.Windows.Forms.Label();
             this.palettesTextBox = new System.Windows.Forms.TextBox();
             this.codeButton = new System.Windows.Forms.Button();
+            this.animationListBox = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.zoomPicker)).BeginInit();
             this.SuspendLayout();
@@ -53,7 +54,7 @@
             this.pictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pictureBox.Location = new System.Drawing.Point(15, 127);
             this.pictureBox.Name = "pictureBox";
-            this.pictureBox.Size = new System.Drawing.Size(368, 303);
+            this.pictureBox.Size = new System.Drawing.Size(270, 303);
             this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.pictureBox.TabIndex = 0;
             this.pictureBox.TabStop = false;
@@ -61,7 +62,7 @@
             // framesListBox
             // 
             this.framesListBox.FormattingEnabled = true;
-            this.framesListBox.Location = new System.Drawing.Point(389, 127);
+            this.framesListBox.Location = new System.Drawing.Point(291, 126);
             this.framesListBox.Name = "framesListBox";
             this.framesListBox.Size = new System.Drawing.Size(92, 303);
             this.framesListBox.TabIndex = 1;
@@ -194,11 +195,21 @@
             this.codeButton.UseVisualStyleBackColor = true;
             this.codeButton.Click += new System.EventHandler(this.CodeButtonClick);
             // 
+            // animationListBox
+            // 
+            this.animationListBox.FormattingEnabled = true;
+            this.animationListBox.Location = new System.Drawing.Point(389, 127);
+            this.animationListBox.Name = "animationListBox";
+            this.animationListBox.Size = new System.Drawing.Size(92, 303);
+            this.animationListBox.TabIndex = 24;
+            this.animationListBox.SelectedIndexChanged += new System.EventHandler(this.AnimationListBoxSelectedIndexChanged);
+            // 
             // Explosion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(489, 441);
+            this.Controls.Add(this.animationListBox);
             this.Controls.Add(this.codeButton);
             this.Controls.Add(this.palettesLabel);
             this.Controls.Add(this.palettesTextBox);
@@ -240,6 +251,7 @@
         private System.Windows.Forms.Label palettesLabel;
         private System.Windows.Forms.TextBox palettesTextBox;
         private System.Windows.Forms.Button codeButton;
+        private System.Windows.Forms.ListBox animationListBox;
     }
 }
 
