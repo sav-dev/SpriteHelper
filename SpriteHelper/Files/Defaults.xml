@@ -36,15 +36,11 @@
   </ThreatBackgrounds>
   <BgDefaultLevels>
     <string>C:\Users\tomas\Documents\NES\GitHub\Platformer\data\levels\00.xml</string>
-    <string>C:\Users\tomas\Documents\NES\GitHub\Platformer\data\levels\boss.xml</string>
-    <string>C:\Users\tomas\Documents\NES\GitHub\Platformer\data\levels\elevator_checks.xml</string>
-    <string>C:\Users\tomas\Documents\NES\GitHub\Platformer\data\levels\jetpack.xml</string>
-    <string>C:\Users\tomas\Documents\NES\GitHub\Platformer\data\levels\vertical_checks.xml</string>    
   </BgDefaultLevels>
-  <BackgroundImage>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\_chr.png</BackgroundImage>
-  <BackgroundSpec>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\_back.xml</BackgroundSpec>
-  <BackgroundChr>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\chr\bg.chr</BackgroundChr>
-  <GraphicsDefaultDir>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\</GraphicsDefaultDir> 
+  <BackgroundImage>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\00\_chr.png</BackgroundImage>
+  <BackgroundSpec>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\00\_back.xml</BackgroundSpec>
+  <BackgroundChr>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\chr\bg_0.chr</BackgroundChr>
+  <GraphicsDefaultDir>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\00\</GraphicsDefaultDir> 
   <DefaultLevel>C:\users\tomas\documents\nes\github\platformer\data\levels\00.xml</DefaultLevel>  
   <LevelsDefaultDir>C:\users\tomas\documents\nes\github\platformer\data\levels\</LevelsDefaultDir>
   <SpritesPalette>C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\palettes\spr.bin</SpritesPalette>
