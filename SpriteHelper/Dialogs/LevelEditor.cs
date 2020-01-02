@@ -2133,7 +2133,7 @@ namespace SpriteHelper.Dialogs
             logger.WriteLineIfNotNull();
 
             // Bg Palette.
-            result.AddRange(GetBgPalette(logger));
+            result.AddRange(GetBgPaletteAndTileset(logger));
             logger.WriteLineIfNotNull();
 
             // Starting position
@@ -2836,8 +2836,10 @@ namespace SpriteHelper.Dialogs
             return result.ToArray();
         }
 
-        private byte[] GetBgPalette(TextWriter logger = null)
+        private byte[] GetBgPaletteAndTileset(TextWriter logger = null)
         {
+            // todo 0008 export the tileset id
+
             // Bg palette offset, 1 byte.
             var paletteOffset = this.bgPalette * Constants.PaletteSize;
             var result = new byte[] { (byte)paletteOffset };
