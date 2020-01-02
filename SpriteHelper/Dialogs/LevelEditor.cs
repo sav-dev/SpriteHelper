@@ -173,6 +173,7 @@ namespace SpriteHelper.Dialogs
         //// Level loading & saving
         ////
 
+        //// todo 0008 - change the signature of this - we need to know the id of the selected tileset
         private void LoadLevel(string level, string bgSpec, string enSpec, string palettes, string player, string spriteChr, string constChr, string constConfig)
         {
             this.palettes = Palettes.Read(palettes);

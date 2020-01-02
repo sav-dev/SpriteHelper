@@ -14,9 +14,6 @@ namespace SpriteHelper
         public const string SprChr = ChrDirectory + "spr.chr";
         public const string BgChr = ChrDirectory + "bg_{0}.chr";
 
-        // todo 0008: update this
-        public const string BgChrTmp = ChrDirectory + "bg_0.chr";
-        
         public const string ConstChrConfig = @"C:\Users\tomas\Documents\NES\GitHub\Platformer\PlatformerGraphics\Sprites\constSprites.xml";
 
         public const string PalettesSpec = @"C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\palettes\palettes.xml";
