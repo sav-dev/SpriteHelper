@@ -15,6 +15,9 @@ namespace SpriteHelper.Contract
         public int BgPalette { get; set; }
 
         [DataMember]
+        public int TilesetId { get; set; }
+
+        [DataMember]
         public string[][] Tiles { get; set; }
 
         [DataMember]
