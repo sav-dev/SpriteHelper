@@ -18,27 +18,6 @@ namespace SpriteHelper.Dialogs
             InitializeComponent();
         }
 
-        private void MainFormLoad(object sender, EventArgs e)
-        {
-            if (Defaults.Instance.ApplyDefaults)
-            {
-                this.PreLoad();
-            }
-        }
-
-        private void PreLoad()
-        {
-            this.nonBlockingTextBox.Lines = Defaults.Instance.NonBlockingBackgrounds;
-            this.blockingTextBox.Lines = Defaults.Instance.BlockingBackgrounds;
-            this.threatTextBox.Lines = Defaults.Instance.ThreatBackgrounds;
-            this.bgColorComboBox.SelectedIndex = Defaults.Instance.BgColor;
-            this.outputImageTextBox.Text = Defaults.Instance.BackgroundImage;
-            this.outputSpecTextBox.Text = Defaults.Instance.BackgroundSpec;
-            this.outputChrTextBox.Text = Defaults.Instance.BackgroundChr;
-            this.lvlFilesTextBox.Lines = Defaults.Instance.BgDefaultLevels;
-            //this.Process();
-        }
-
         private void ProcessButtonClick(object sender, EventArgs e)
         {
             this.Process();
@@ -228,7 +207,7 @@ namespace SpriteHelper.Dialogs
                     for (var y = 0; y < bitmap.Height; y += Constants.BackgroundTileHeight)
                     {
                         var newTile = bitmap.GetPart(x, y, Constants.BackgroundTileWidth, Constants.BackgroundTileHeight);
-                        var isEmptyTile = newTile.IsNesColor(this.bgColorComboBox.SelectedIndex);
+                        var isEmptyTile = newTile.IsNesColor(0);
                         if (allTiles.Any(tile => tile.Equals(newTile)))
                         {
                             if (!isEmptyTile)
@@ -337,7 +316,7 @@ namespace SpriteHelper.Dialogs
             int emptyTileIndex = -1;
             for (var i = 0; i < sprites.Count; i++)
             {
-                if (sprites[i].IsNesColor(this.bgColorComboBox.SelectedIndex))
+                if (sprites[i].IsNesColor(0))
                 {
                     emptyTileIndex = i;
                 }
@@ -458,7 +437,7 @@ namespace SpriteHelper.Dialogs
         {
             var positions = Packer.Pack(bitmaps.Select(b => b.Size), Constants.PickerWidth);
             var bitmapsCopy = bitmaps.ToList();
-            var backColor = MyBitmap.NesGreyscale[bgColorComboBox.SelectedIndex];
+            var backColor = MyBitmap.NesGreyscale[0];
             var resultBitmap = new MyBitmap(1, 1, backColor);
 
             foreach (var tuple in positions)
@@ -523,6 +502,18 @@ To fix it:
   1) Make a copy of all updated files
   2) Revert all graphics updates
   3) Revert all level updates");
+        }
+
+        private void LoadButtonClick(object sender, EventArgs e)
+        {
+            var spec = TilesetSpec.Read(this.inputSpecTextbox.Text);
+            this.nonBlockingTextBox.Lines = spec.NonBlocking.Select(l => spec.Directory + "\\" + l).OrderBy(l => l).ToArray();
+            this.blockingTextBox.Lines = spec.Blocking.Select(l => spec.Directory + "\\" + l).OrderBy(l => l).ToArray();
+            this.threatTextBox.Lines = spec.Threats.Select(l => spec.Directory + "\\" + l).OrderBy(l => l).ToArray();
+
+            this.outputChrTextBox.Text = Constants.ChrDirectory + "\\bg_" + spec.Id + ".chr";
+            this.outputImageTextBox.Text = spec.Directory + "\\back.bmp";
+            this.outputSpecTextBox.Text = spec.Directory + "\\spec.xml";
         }
     }
 }

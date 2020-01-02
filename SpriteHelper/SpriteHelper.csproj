@@ -55,6 +55,7 @@
     <Compile Include="Contract\Elevator.cs" />
     <Compile Include="Contract\Orientation.cs" />
     <Compile Include="Contract\SpecialMovement.cs" />
+    <Compile Include="Contract\TilesetSpec.cs" />
     <Compile Include="Controls\BlinkingPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
