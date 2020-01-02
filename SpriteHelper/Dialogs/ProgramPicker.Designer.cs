@@ -39,6 +39,7 @@
             this.explosionButton = new System.Windows.Forms.Button();
             this.chrProcessButton = new System.Windows.Forms.Button();
             this.bulletsButton = new System.Windows.Forms.Button();
+            this.tilesetViewerButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // playerButton
@@ -83,7 +84,7 @@
             // 
             // closeButton
             // 
-            this.closeButton.Location = new System.Drawing.Point(35, 336);
+            this.closeButton.Location = new System.Drawing.Point(35, 394);
             this.closeButton.Name = "closeButton";
             this.closeButton.Size = new System.Drawing.Size(172, 23);
             this.closeButton.TabIndex = 4;
@@ -151,11 +152,22 @@
             this.bulletsButton.UseVisualStyleBackColor = true;
             this.bulletsButton.Click += new System.EventHandler(this.BulletsButtonClick);
             // 
+            // tilesetViewerButton
+            // 
+            this.tilesetViewerButton.Location = new System.Drawing.Point(35, 302);
+            this.tilesetViewerButton.Name = "tilesetViewerButton";
+            this.tilesetViewerButton.Size = new System.Drawing.Size(172, 23);
+            this.tilesetViewerButton.TabIndex = 11;
+            this.tilesetViewerButton.Text = "Tileset Viewer";
+            this.tilesetViewerButton.UseVisualStyleBackColor = true;
+            this.tilesetViewerButton.Click += new System.EventHandler(this.TilesetViewerButtonClick);
+            // 
             // ProgramPicker
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(244, 371);
+            this.ClientSize = new System.Drawing.Size(244, 429);
+            this.Controls.Add(this.tilesetViewerButton);
             this.Controls.Add(this.bulletsButton);
             this.Controls.Add(this.chrProcessButton);
             this.Controls.Add(this.explosionButton);
@@ -189,5 +201,6 @@
         private System.Windows.Forms.Button explosionButton;
         private System.Windows.Forms.Button chrProcessButton;
         private System.Windows.Forms.Button bulletsButton;
+        private System.Windows.Forms.Button tilesetViewerButton;
     }
 }

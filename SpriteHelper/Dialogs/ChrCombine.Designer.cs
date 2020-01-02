@@ -46,6 +46,7 @@
             this.specsTextBox.Location = new System.Drawing.Point(12, 31);
             this.specsTextBox.Multiline = true;
             this.specsTextBox.Name = "specsTextBox";
+            this.specsTextBox.ReadOnly = true;
             this.specsTextBox.Size = new System.Drawing.Size(562, 102);
             this.specsTextBox.TabIndex = 24;
             this.specsTextBox.WordWrap = false;

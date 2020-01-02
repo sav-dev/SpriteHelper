@@ -44,14 +44,16 @@
             this.lvlFilesTextBox = new System.Windows.Forms.TextBox();
             this.lvlFilesLabel = new System.Windows.Forms.Label();
             this.helpButton = new System.Windows.Forms.Button();
-            this.inputSpecTextbox = new System.Windows.Forms.TextBox();
-            this.inputSpecLabel = new System.Windows.Forms.Label();
+            this.inputsTextbox = new System.Windows.Forms.TextBox();
+            this.inputsSpecLabel = new System.Windows.Forms.Label();
             this.loadButton = new System.Windows.Forms.Button();
+            this.tilesetLabel = new System.Windows.Forms.Label();
+            this.tilesetComboBox = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // outputImageTextBox
             // 
-            this.outputImageTextBox.Location = new System.Drawing.Point(86, 273);
+            this.outputImageTextBox.Location = new System.Drawing.Point(86, 297);
             this.outputImageTextBox.Name = "outputImageTextBox";
             this.outputImageTextBox.Size = new System.Drawing.Size(607, 20);
             this.outputImageTextBox.TabIndex = 3;
@@ -59,7 +61,7 @@
             // blockingLabel
             // 
             this.blockingLabel.AutoSize = true;
-            this.blockingLabel.Location = new System.Drawing.Point(13, 109);
+            this.blockingLabel.Location = new System.Drawing.Point(13, 133);
             this.blockingLabel.Name = "blockingLabel";
             this.blockingLabel.Size = new System.Drawing.Size(48, 13);
             this.blockingLabel.TabIndex = 4;
@@ -68,7 +70,7 @@
             // outputImageLabel
             // 
             this.outputImageLabel.AutoSize = true;
-            this.outputImageLabel.Location = new System.Drawing.Point(12, 276);
+            this.outputImageLabel.Location = new System.Drawing.Point(12, 300);
             this.outputImageLabel.Name = "outputImageLabel";
             this.outputImageLabel.Size = new System.Drawing.Size(70, 13);
             this.outputImageLabel.TabIndex = 5;
@@ -77,7 +79,7 @@
             // outputSpecLabel
             // 
             this.outputSpecLabel.AutoSize = true;
-            this.outputSpecLabel.Location = new System.Drawing.Point(12, 302);
+            this.outputSpecLabel.Location = new System.Drawing.Point(12, 326);
             this.outputSpecLabel.Name = "outputSpecLabel";
             this.outputSpecLabel.Size = new System.Drawing.Size(65, 13);
             this.outputSpecLabel.TabIndex = 15;
@@ -85,14 +87,14 @@
             // 
             // outputSpecTextBox
             // 
-            this.outputSpecTextBox.Location = new System.Drawing.Point(86, 299);
+            this.outputSpecTextBox.Location = new System.Drawing.Point(86, 323);
             this.outputSpecTextBox.Name = "outputSpecTextBox";
             this.outputSpecTextBox.Size = new System.Drawing.Size(607, 20);
             this.outputSpecTextBox.TabIndex = 14;
             // 
             // blockingTextBox
             // 
-            this.blockingTextBox.Location = new System.Drawing.Point(86, 106);
+            this.blockingTextBox.Location = new System.Drawing.Point(86, 130);
             this.blockingTextBox.Multiline = true;
             this.blockingTextBox.Name = "blockingTextBox";
             this.blockingTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -102,7 +104,7 @@
             // 
             // processButton
             // 
-            this.processButton.Location = new System.Drawing.Point(618, 351);
+            this.processButton.Location = new System.Drawing.Point(618, 375);
             this.processButton.Name = "processButton";
             this.processButton.Size = new System.Drawing.Size(75, 23);
             this.processButton.TabIndex = 17;
@@ -112,7 +114,7 @@
             // 
             // nonBlockingTextBox
             // 
-            this.nonBlockingTextBox.Location = new System.Drawing.Point(86, 52);
+            this.nonBlockingTextBox.Location = new System.Drawing.Point(86, 76);
             this.nonBlockingTextBox.Multiline = true;
             this.nonBlockingTextBox.Name = "nonBlockingTextBox";
             this.nonBlockingTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -123,7 +125,7 @@
             // nonBlockingLabel
             // 
             this.nonBlockingLabel.AutoSize = true;
-            this.nonBlockingLabel.Location = new System.Drawing.Point(13, 55);
+            this.nonBlockingLabel.Location = new System.Drawing.Point(13, 79);
             this.nonBlockingLabel.Name = "nonBlockingLabel";
             this.nonBlockingLabel.Size = new System.Drawing.Size(70, 13);
             this.nonBlockingLabel.TabIndex = 21;
@@ -131,7 +133,7 @@
             // 
             // threatTextBox
             // 
-            this.threatTextBox.Location = new System.Drawing.Point(86, 160);
+            this.threatTextBox.Location = new System.Drawing.Point(86, 184);
             this.threatTextBox.Multiline = true;
             this.threatTextBox.Name = "threatTextBox";
             this.threatTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -142,7 +144,7 @@
             // threatsLabel
             // 
             this.threatsLabel.AutoSize = true;
-            this.threatsLabel.Location = new System.Drawing.Point(12, 163);
+            this.threatsLabel.Location = new System.Drawing.Point(12, 187);
             this.threatsLabel.Name = "threatsLabel";
             this.threatsLabel.Size = new System.Drawing.Size(43, 13);
             this.threatsLabel.TabIndex = 23;
@@ -151,7 +153,7 @@
             // outputChrLabel
             // 
             this.outputChrLabel.AutoSize = true;
-            this.outputChrLabel.Location = new System.Drawing.Point(12, 328);
+            this.outputChrLabel.Location = new System.Drawing.Point(12, 352);
             this.outputChrLabel.Name = "outputChrLabel";
             this.outputChrLabel.Size = new System.Drawing.Size(57, 13);
             this.outputChrLabel.TabIndex = 27;
@@ -159,14 +161,14 @@
             // 
             // outputChrTextBox
             // 
-            this.outputChrTextBox.Location = new System.Drawing.Point(86, 325);
+            this.outputChrTextBox.Location = new System.Drawing.Point(86, 349);
             this.outputChrTextBox.Name = "outputChrTextBox";
             this.outputChrTextBox.Size = new System.Drawing.Size(607, 20);
             this.outputChrTextBox.TabIndex = 26;
             // 
             // lvlFilesTextBox
             // 
-            this.lvlFilesTextBox.Location = new System.Drawing.Point(86, 214);
+            this.lvlFilesTextBox.Location = new System.Drawing.Point(86, 238);
             this.lvlFilesTextBox.Multiline = true;
             this.lvlFilesTextBox.Name = "lvlFilesTextBox";
             this.lvlFilesTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -177,7 +179,7 @@
             // lvlFilesLabel
             // 
             this.lvlFilesLabel.AutoSize = true;
-            this.lvlFilesLabel.Location = new System.Drawing.Point(12, 217);
+            this.lvlFilesLabel.Location = new System.Drawing.Point(12, 241);
             this.lvlFilesLabel.Name = "lvlFilesLabel";
             this.lvlFilesLabel.Size = new System.Drawing.Size(61, 26);
             this.lvlFilesLabel.TabIndex = 28;
@@ -185,7 +187,7 @@
             // 
             // helpButton
             // 
-            this.helpButton.Location = new System.Drawing.Point(537, 351);
+            this.helpButton.Location = new System.Drawing.Point(537, 375);
             this.helpButton.Name = "helpButton";
             this.helpButton.Size = new System.Drawing.Size(75, 23);
             this.helpButton.TabIndex = 30;
@@ -193,23 +195,24 @@
             this.helpButton.UseVisualStyleBackColor = true;
             this.helpButton.Click += new System.EventHandler(this.HelpButtonClick);
             // 
-            // inputSpecTextbox
+            // inputsTextbox
             // 
-            this.inputSpecTextbox.Location = new System.Drawing.Point(86, 14);
-            this.inputSpecTextbox.Name = "inputSpecTextbox";
-            this.inputSpecTextbox.Size = new System.Drawing.Size(526, 20);
-            this.inputSpecTextbox.TabIndex = 31;
-            this.inputSpecTextbox.Text = "C:\\Users\\tomas\\Documents\\NES\\GitHub\\Platformer\\PlatformerGraphics\\Backgrounds\\00\\" +
-    "_spec.xml";
+            this.inputsTextbox.Location = new System.Drawing.Point(86, 14);
+            this.inputsTextbox.Name = "inputsTextbox";
+            this.inputsTextbox.ReadOnly = true;
+            this.inputsTextbox.Size = new System.Drawing.Size(526, 20);
+            this.inputsTextbox.TabIndex = 31;
+            this.inputsTextbox.TextChanged += new System.EventHandler(this.inputsTextbox_TextChanged);
             // 
-            // inputSpecLabel
+            // inputsSpecLabel
             // 
-            this.inputSpecLabel.AutoSize = true;
-            this.inputSpecLabel.Location = new System.Drawing.Point(13, 17);
-            this.inputSpecLabel.Name = "inputSpecLabel";
-            this.inputSpecLabel.Size = new System.Drawing.Size(57, 13);
-            this.inputSpecLabel.TabIndex = 32;
-            this.inputSpecLabel.Text = "Input spec";
+            this.inputsSpecLabel.AutoSize = true;
+            this.inputsSpecLabel.Location = new System.Drawing.Point(13, 17);
+            this.inputsSpecLabel.Name = "inputsSpecLabel";
+            this.inputsSpecLabel.Size = new System.Drawing.Size(62, 13);
+            this.inputsSpecLabel.TabIndex = 32;
+            this.inputsSpecLabel.Text = "Inputs spec";
+            this.inputsSpecLabel.Click += new System.EventHandler(this.inputsSpecLabel_Click);
             // 
             // loadButton
             // 
@@ -221,14 +224,36 @@
             this.loadButton.UseVisualStyleBackColor = true;
             this.loadButton.Click += new System.EventHandler(this.LoadButtonClick);
             // 
+            // tilesetLabel
+            // 
+            this.tilesetLabel.AutoSize = true;
+            this.tilesetLabel.Location = new System.Drawing.Point(12, 40);
+            this.tilesetLabel.Name = "tilesetLabel";
+            this.tilesetLabel.Size = new System.Drawing.Size(38, 13);
+            this.tilesetLabel.TabIndex = 34;
+            this.tilesetLabel.Text = "Tileset";
+            this.tilesetLabel.Click += new System.EventHandler(this.tilesetLabel_Click);
+            // 
+            // tilesetComboBox
+            // 
+            this.tilesetComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.tilesetComboBox.FormattingEnabled = true;
+            this.tilesetComboBox.Location = new System.Drawing.Point(86, 37);
+            this.tilesetComboBox.Name = "tilesetComboBox";
+            this.tilesetComboBox.Size = new System.Drawing.Size(121, 21);
+            this.tilesetComboBox.TabIndex = 35;
+            this.tilesetComboBox.SelectedIndexChanged += new System.EventHandler(this.TilesetComboBoxSelectedIndexChanged);
+            // 
             // BackgroundTilesetCreator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(705, 383);
+            this.ClientSize = new System.Drawing.Size(705, 406);
+            this.Controls.Add(this.tilesetComboBox);
+            this.Controls.Add(this.tilesetLabel);
             this.Controls.Add(this.loadButton);
-            this.Controls.Add(this.inputSpecLabel);
-            this.Controls.Add(this.inputSpecTextbox);
+            this.Controls.Add(this.inputsSpecLabel);
+            this.Controls.Add(this.inputsTextbox);
             this.Controls.Add(this.helpButton);
             this.Controls.Add(this.lvlFilesTextBox);
             this.Controls.Add(this.lvlFilesLabel);
@@ -249,6 +274,7 @@
             this.MaximizeBox = false;
             this.Name = "BackgroundTilesetCreator";
             this.Text = "Background tileset creator";
+            this.Load += new System.EventHandler(this.BackgroundTilesetCreatorLoad);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -271,9 +297,11 @@
         private System.Windows.Forms.TextBox lvlFilesTextBox;
         private System.Windows.Forms.Label lvlFilesLabel;
         private System.Windows.Forms.Button helpButton;
-        private System.Windows.Forms.TextBox inputSpecTextbox;
-        private System.Windows.Forms.Label inputSpecLabel;
+        private System.Windows.Forms.TextBox inputsTextbox;
+        private System.Windows.Forms.Label inputsSpecLabel;
         private System.Windows.Forms.Button loadButton;
+        private System.Windows.Forms.Label tilesetLabel;
+        private System.Windows.Forms.ComboBox tilesetComboBox;
     }
 }
 

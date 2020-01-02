@@ -12,9 +12,10 @@ namespace SpriteHelper
 
         public const string ConstChr = ChrDirectory + "const.chr";
         public const string SprChr = ChrDirectory + "spr.chr";
-        
+        public const string BgChr = ChrDirectory + "bg_{0}.chr";
+
         // todo 0008: update this
-        public const string BgChr = ChrDirectory + "bg_0.chr";
+        public const string BgChrTmp = ChrDirectory + "bg_0.chr";
         
         public const string ConstChrConfig = @"C:\Users\tomas\Documents\NES\GitHub\Platformer\PlatformerGraphics\Sprites\constSprites.xml";
 
@@ -31,5 +32,7 @@ namespace SpriteHelper
         public const string LevelsDir = @"C:\Users\tomas\Documents\NES\GitHub\Platformer\data\levels";
 
         public const string Desktop = @"C:\users\tomas\desktop";
+
+        public const string Tilesets = @"C:\Users\tomas\Documents\NES\GitHub\Platformer\PlatformerGraphics\Backgrounds\list.xml";
     }
 }

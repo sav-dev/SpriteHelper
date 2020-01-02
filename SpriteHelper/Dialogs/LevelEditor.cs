@@ -134,7 +134,7 @@ namespace SpriteHelper.Dialogs
         {
             this.LoadLevel(
                 @"C:\users\tomas\documents\nes\github\platformer\data\levels\00.xml", // todo 0008 remove this
-                @"C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\00\_back.xml", // todo 0008 remove this
+                @"C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\0\_back.xml", // todo 0008 remove this
                 FileConstants.EnemiesSpec,
                 FileConstants.PalettesSpec,
                 FileConstants.PlayerSpec,

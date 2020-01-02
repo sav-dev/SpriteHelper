@@ -92,6 +92,12 @@
     <Compile Include="Dialogs\EditDoorAndKeycardDialog.Designer.cs">
       <DependentUpon>EditDoorAndKeycardDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\TilesetViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\TilesetViewer.Designer.cs">
+      <DependentUpon>TilesetViewer.cs</DependentUpon>
+    </Compile>
     <Compile Include="NesGraphics\ChrLoader.cs" />
     <Compile Include="Contract\Enemy.cs" />
     <Compile Include="Contract\MovementType.cs" />
@@ -295,6 +301,9 @@
     <EmbeddedResource Include="Dialogs\ProgramPicker.resx">
       <DependentUpon>ProgramPicker.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\TilesetViewer.resx">
+      <DependentUpon>TilesetViewer.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -319,12 +328,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Files\Defaults.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
-    </Content>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

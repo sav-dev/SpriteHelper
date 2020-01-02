@@ -1,4 +1,5 @@
-﻿using SpriteHelper.Utility;
+﻿using SpriteHelper.Contract;
+using SpriteHelper.Utility;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,7 +19,8 @@ namespace SpriteHelper.Dialogs
         {
             InitializeComponent();
 
-            this.inputTextBox.Lines = new[] { FileConstants.SprChr, FileConstants.BgChr };
+            var tilesets = Tilesets.Read(FileConstants.Tilesets);
+            this.inputTextBox.Lines = (new[] { FileConstants.SprChr }).Union(tilesets.LoadedSets.Select(ts => ts.ChrPath())).ToArray();
         }
 
         private void ProcessButtonClick(object sender, EventArgs e)

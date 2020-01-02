@@ -12,9 +12,12 @@ namespace SpriteHelper.Dialogs
 {
     public partial class BackgroundTilesetCreator : Form
     {
+        private Tilesets config;
+
         public BackgroundTilesetCreator()
         {
             InitializeComponent();
+            this.inputsTextbox.Text = FileConstants.Tilesets;
         }
 
         private void ProcessButtonClick(object sender, EventArgs e)
@@ -505,14 +508,48 @@ To fix it:
 
         private void LoadButtonClick(object sender, EventArgs e)
         {
-            ////var spec = TilesetSpec.Read(this.inputSpecTextbox.Text);
-            ////this.nonBlockingTextBox.Lines = spec.NonBlocking.Select(l => spec.Directory + "\\" + l).OrderBy(l => l).ToArray();
-            ////this.blockingTextBox.Lines = spec.Blocking.Select(l => spec.Directory + "\\" + l).OrderBy(l => l).ToArray();
-            ////this.threatTextBox.Lines = spec.Threats.Select(l => spec.Directory + "\\" + l).OrderBy(l => l).ToArray();
-            ////
-            ////this.outputChrTextBox.Text = Constants.ChrDirectory + "\\bg_" + spec.Id + ".chr";
-            ////this.outputImageTextBox.Text = spec.Directory + "\\back.bmp";
-            ////this.outputSpecTextBox.Text = spec.Directory + "\\spec.xml";
+            this.LoadTilesetList();
+        }
+
+        private void BackgroundTilesetCreatorLoad(object sender, EventArgs e)
+        {
+            this.LoadTilesetList();
+        }
+
+        private void LoadTilesetList()
+        {
+            this.config = Tilesets.Read(this.inputsTextbox.Text);
+            this.tilesetComboBox.Items.Clear();
+            foreach (var id in this.config.LoadedSets.Select(ls => ls.Id).ToArray()) this.tilesetComboBox.Items.Add(id);
+            this.tilesetComboBox.SelectedIndex = 0;
+        }
+
+        private TilesetSpec SelectedSpec => this.config.GetSpecById((int)this.tilesetComboBox.SelectedItem);
+
+        private void TilesetComboBoxSelectedIndexChanged(object sender, EventArgs e)
+        {
+            var tileset = this.SelectedSpec;
+            this.nonBlockingTextBox.Lines = tileset.NonBlocking.Select(i => tileset.Directory + i).OrderBy(i => i).ToArray();
+            this.blockingTextBox.Lines = tileset.Blocking.Select(i => tileset.Directory + i).OrderBy(i => i).ToArray();
+            this.threatTextBox.Lines = tileset.Threats.Select(i => tileset.Directory + i).OrderBy(i => i).ToArray();
+            this.outputChrTextBox.Text = tileset.ChrPath();
+            this.outputImageTextBox.Text = tileset.ChrImagePath();
+            this.outputSpecTextBox.Text = tileset.SpecPath();
+        }
+
+        private void tilesetLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void inputsSpecLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void inputsTextbox_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

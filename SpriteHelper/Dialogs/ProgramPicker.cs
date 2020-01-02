@@ -60,9 +60,14 @@ namespace SpriteHelper.Dialogs
             new BulletsWindow().ShowDialog();
         }
 
+        private void TilesetViewerButtonClick(object sender, EventArgs e)
+        {
+            new TilesetViewer().ShowDialog();
+        }
+
         private void CloseButtonClick(object sender, EventArgs e)
         {
             this.Close();
-        }
+        }        
     }
 }
