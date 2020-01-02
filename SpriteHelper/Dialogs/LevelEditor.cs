@@ -117,30 +117,9 @@ namespace SpriteHelper.Dialogs
 
         }
 
-        private void LevelEditorLoad(object sender, EventArgs e)
-        {
-            // todo 0008: do something else here
-            this.PreLoad();
-
-            this.splitContainerVertical.Panel2.Focus();
-        }
-
         private void LevelEditorResize(object sender, EventArgs e)
         {
             this.UpdateDrawPanel();
-        }
-
-        private void PreLoad()
-        {
-            this.LoadLevel(
-                @"C:\users\tomas\documents\nes\github\platformer\data\levels\00.xml", // todo 0008 remove this
-                @"C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\0\_back.xml", // todo 0008 remove this
-                FileConstants.EnemiesSpec,
-                FileConstants.PalettesSpec,
-                FileConstants.PlayerSpec,
-                FileConstants.SprChr,
-                FileConstants.ConstChr,
-                FileConstants.ConstChrConfig);
         }
 
         private void ClearStatus()
@@ -174,16 +153,16 @@ namespace SpriteHelper.Dialogs
         ////
 
         //// todo 0008 - change the signature of this - we need to know the id of the selected tileset
-        private void LoadLevel(string level, string bgSpec, string enSpec, string palettes, string player, string spriteChr, string constChr, string constConfig)
+        private void LoadLevel(string level, string bgSpec)
         {
-            this.palettes = Palettes.Read(palettes);
+            this.palettes = Palettes.Read(FileConstants.PalettesSpec);
             this.bgConfig = BackgroundConfig.Read(bgSpec);
 
             string[][] newLevel;
             Enemy[] enemies;
             Elevator[] elevators;
 
-            if (File.Exists(level))
+            if (!string.IsNullOrEmpty(level) && File.Exists(level))
             {
                 var readLevel = Level.Read(level);
                 newLevel = readLevel.Tiles;
@@ -222,7 +201,7 @@ namespace SpriteHelper.Dialogs
             this.CreateTileDictionaries();
 
             // Load enemies config
-            this.enConfig = SpriteConfig.Read(enSpec, this.palettes);
+            this.enConfig = SpriteConfig.Read(FileConstants.EnemiesSpec, this.palettes);
             this.enBitmaps = new Dictionary<string, Dictionary<bool, Bitmap>>();
             this.enBitmapsTransparent = new Dictionary<string, Dictionary<bool, Bitmap>>();
 
@@ -306,13 +285,13 @@ namespace SpriteHelper.Dialogs
             this.enShooting = this.enConfig.Animations.ToDictionary(a => a.Name, a => a.Offsets.GunXOff >= 0);
 
             // Sprites.
-            var sprites = new ChrLoader(spriteChr, this.palettes.SpritesPalette);
-            var constSprites = new ChrLoader(constChr, this.palettes.SpritesPalette);
-            var constSpritesConfig = ConstSprites.Read(constConfig);
+            var sprites = new ChrLoader(FileConstants.SprChr, this.palettes.SpritesPalette);
+            var constSprites = new ChrLoader(FileConstants.ConstChr, this.palettes.SpritesPalette);
+            var constSpritesConfig = ConstSprites.Read(FileConstants.ConstChrConfig);
             Func<string, int> getIndexForName = name => Array.FindIndex<string>(constSpritesConfig.Names, i => i == name);
 
             // Player config.
-            var playerConfig = SpriteConfig.Read(player, this.palettes);
+            var playerConfig = SpriteConfig.Read(FileConstants.PlayerSpec, this.palettes);
             this.playerBitmap = playerConfig.Frames.First().GetPlayerBitmap(playerConfig, this.transparentColor, true, false, false, Constants.LevelEditorZoom, true);
             var playerBitmapJump = playerConfig.Frames.First(f => f.Name == "Jump").GetPlayerBitmap(playerConfig, this.transparentColor, true, false, false, 1, true);
             var playerMyBitmapJump = MyBitmap.FromBitmap(playerBitmapJump);
@@ -373,6 +352,7 @@ namespace SpriteHelper.Dialogs
 
             this.SetLevel(newLevel);
             this.ClearHistory();
+            this.splitContainerVertical.Panel2.Focus();
         }
 
         private void CreateTileDictionaries()
@@ -1258,46 +1238,20 @@ namespace SpriteHelper.Dialogs
 
         private void OpenToolStripMenuItemClick(object sender, EventArgs e)
         {
-            var loadLevelDialog = new LoadLevelDialog(true);
-            loadLevelDialog.FormClosed += (notUsed1, notUsed2) =>
-            {
-                if (loadLevelDialog.ClickedOk)
-                {
-                    this.LoadLevel(
-                        loadLevelDialog.Level, 
-                        loadLevelDialog.BgSpec, 
-                        loadLevelDialog.EnSpec, 
-                        loadLevelDialog.Palettes, 
-                        loadLevelDialog.Player, 
-                        loadLevelDialog.SpriteChr, 
-                        loadLevelDialog.ConstSpritesChr, 
-                        loadLevelDialog.ConstSpritesConfig);
-                }
-            };
-
-            loadLevelDialog.ShowDialog();
+            // todo 0008 tweak this
+            this.LoadLevel(
+                @"C:\users\tomas\documents\nes\github\platformer\data\levels\00.xml", // todo 0008 remove this
+                @"C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\0\_back.xml" // todo 0008 remove this
+                );
         }
 
         private void NewToolStripMenuItemClick(object sender, EventArgs e)
         {
-            var loadLevelDialog = new LoadLevelDialog(false);
-            loadLevelDialog.FormClosed += (notUsed1, notUsed2) =>
-            {
-                if (loadLevelDialog.ClickedOk)
-                {
-                    this.LoadLevel(
-                        null, 
-                        loadLevelDialog.BgSpec, 
-                        loadLevelDialog.EnSpec, 
-                        loadLevelDialog.Palettes, 
-                        loadLevelDialog.Player,
-                        loadLevelDialog.SpriteChr,
-                        loadLevelDialog.ConstSpritesChr,
-                        loadLevelDialog.ConstSpritesConfig);
-                }
-            };
-
-            loadLevelDialog.ShowDialog();
+            // todo 0008 tweak this
+            this.LoadLevel(
+                null, // todo 0008 remove this
+                @"C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\0\_back.xml" // todo 0008 remove this
+                );
         }
 
         private void SaveToolStripMenuItemClick(object sender, EventArgs e)

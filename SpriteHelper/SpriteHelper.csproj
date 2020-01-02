@@ -168,12 +168,6 @@
     <Compile Include="Dialogs\LevelSplitView.Designer.cs">
       <DependentUpon>LevelSplitView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\LoadLevelDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Dialogs\LoadLevelDialog.Designer.cs">
-      <DependentUpon>LoadLevelDialog.cs</DependentUpon>
-    </Compile>
     <Compile Include="Dialogs\EditLevelDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -285,9 +279,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\LevelSplitView.resx">
       <DependentUpon>LevelSplitView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\LoadLevelDialog.resx">
-      <DependentUpon>LoadLevelDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\EditLevelDialog.resx">
       <DependentUpon>EditLevelDialog.cs</DependentUpon>

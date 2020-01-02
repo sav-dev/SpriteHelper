@@ -821,7 +821,6 @@
             this.Name = "LevelEditor";
             this.Text = "Level editor";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            this.Load += new System.EventHandler(this.LevelEditorLoad);
             this.Resize += new System.EventHandler(this.LevelEditorResize);
             this.splitContainerVertical.Panel1.ResumeLayout(false);
             this.splitContainerVertical.Panel2.ResumeLayout(false);
