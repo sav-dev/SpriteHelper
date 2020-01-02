@@ -1,5 +1,4 @@
-﻿using SpriteHelper.Files;
-using SpriteHelper.NesGraphics;
+﻿using SpriteHelper.NesGraphics;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -18,16 +17,6 @@ namespace SpriteHelper.Dialogs
         public AnimationsDialog()
         {
             InitializeComponent();
-            if (Defaults.Instance.ApplyDefaults)
-            {
-                this.PreLoad();
-            }
-        }
-
-        private void PreLoad()
-        {
-            this.directoryTextBox.Text = Defaults.Instance.AnimationDirectory;
-            this.LoadDirectory();
         }
 
         private void LoadButtonClick(object sender, EventArgs e)

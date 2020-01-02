@@ -1,5 +1,4 @@
 ﻿using SpriteHelper.Contract;
-using SpriteHelper.Files;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -19,14 +18,13 @@ namespace SpriteHelper.Dialogs
         {
             InitializeComponent();
             this.zoomPicker.Maximum = Constants.MaxZoom;
+            this.specTextBox.Text = FileConstants.PlayerSpec;
+            this.palettesTextBox.Text = FileConstants.PalettesSpec;
         }
 
         private void MainFormLoad(object sender, EventArgs e)
         {
-            if (Defaults.Instance.ApplyDefaults)
-            {
-                this.PreLoad();
-            }
+            this.LoadFiles();
         }
 
         private void LoadButtonClick(object sender, EventArgs e)
@@ -78,14 +76,7 @@ namespace SpriteHelper.Dialogs
         {
             this.LoadFrame();
         }
-
-        private void PreLoad()
-        {
-            this.specTextBox.Text = Defaults.Instance.PlayerSpec;
-            this.palettesTextBox.Text = Defaults.Instance.PalettesSpec;
-            this.LoadFiles();
-        }
-
+        
         private void LoadFiles()
         {
             this.palettes = Palettes.Read(palettesTextBox.Text);

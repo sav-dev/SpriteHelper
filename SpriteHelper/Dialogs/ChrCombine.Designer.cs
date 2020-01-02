@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChrCombine));
             this.specsTextBox = new System.Windows.Forms.TextBox();
             this.specsLabel = new System.Windows.Forms.Label();
             this.outputLabel = new System.Windows.Forms.Label();
@@ -49,7 +48,6 @@
             this.specsTextBox.Name = "specsTextBox";
             this.specsTextBox.Size = new System.Drawing.Size(562, 102);
             this.specsTextBox.TabIndex = 24;
-            this.specsTextBox.Text = resources.GetString("specsTextBox.Text");
             this.specsTextBox.WordWrap = false;
             // 
             // specsLabel
@@ -74,9 +72,9 @@
             // 
             this.outputTextBox.Location = new System.Drawing.Point(12, 234);
             this.outputTextBox.Name = "outputTextBox";
+            this.outputTextBox.ReadOnly = true;
             this.outputTextBox.Size = new System.Drawing.Size(562, 20);
             this.outputTextBox.TabIndex = 25;
-            this.outputTextBox.Text = "C:\\Users\\tomas\\Documents\\NES\\GitHub\\Platformer\\PlatformerGraphics\\Chr\\spr.chr";
             // 
             // processButton
             // 
@@ -101,9 +99,9 @@
             // 
             this.constChrTextBox.Location = new System.Drawing.Point(12, 152);
             this.constChrTextBox.Name = "constChrTextBox";
+            this.constChrTextBox.ReadOnly = true;
             this.constChrTextBox.Size = new System.Drawing.Size(562, 20);
             this.constChrTextBox.TabIndex = 28;
-            this.constChrTextBox.Text = "C:\\Users\\tomas\\Documents\\NES\\GitHub\\Platformer\\PlatformerGraphics\\Chr\\const.chr";
             // 
             // palettesLabel
             // 
@@ -118,10 +116,9 @@
             // 
             this.palettesTextBox.Location = new System.Drawing.Point(12, 275);
             this.palettesTextBox.Name = "palettesTextBox";
+            this.palettesTextBox.ReadOnly = true;
             this.palettesTextBox.Size = new System.Drawing.Size(562, 20);
             this.palettesTextBox.TabIndex = 30;
-            this.palettesTextBox.Text = "C:\\Users\\tomas\\Documents\\NES\\GitHub\\Platformer\\PlatformerGraphics\\Palettes\\palett" +
-    "es.xml";
             // 
             // constChrConfigLabel
             // 
@@ -136,10 +133,9 @@
             // 
             this.constChrConfigTextBox.Location = new System.Drawing.Point(12, 193);
             this.constChrConfigTextBox.Name = "constChrConfigTextBox";
+            this.constChrConfigTextBox.ReadOnly = true;
             this.constChrConfigTextBox.Size = new System.Drawing.Size(562, 20);
             this.constChrConfigTextBox.TabIndex = 32;
-            this.constChrConfigTextBox.Text = "C:\\Users\\tomas\\Documents\\NES\\GitHub\\Platformer\\PlatformerGraphics\\Sprites\\constSp" +
-    "rites.xml";
             // 
             // ChrCombine
             // 

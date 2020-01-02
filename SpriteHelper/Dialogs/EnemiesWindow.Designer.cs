@@ -34,6 +34,8 @@
             this.specLabel = new System.Windows.Forms.Label();
             this.specTextBox = new System.Windows.Forms.TextBox();
             this.topPanel = new System.Windows.Forms.Panel();
+            this.bulletsTextBox = new System.Windows.Forms.TextBox();
+            this.bulletsLabel = new System.Windows.Forms.Label();
             this.showBulletCheckBox = new System.Windows.Forms.CheckBox();
             this.codeButton = new System.Windows.Forms.Button();
             this.startButton = new System.Windows.Forms.Button();
@@ -54,8 +56,6 @@
             this.centerPanel = new System.Windows.Forms.Panel();
             this.timer = new System.Windows.Forms.Timer(this.components);
             this.pictureBoxPanel = new System.Windows.Forms.Panel();
-            this.bulletsLabel = new System.Windows.Forms.Label();
-            this.bulletsTextBox = new System.Windows.Forms.TextBox();
             this.topPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.zoomPicker)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
@@ -75,10 +75,9 @@
             // 
             this.palettesTextBox.Location = new System.Drawing.Point(75, 59);
             this.palettesTextBox.Name = "palettesTextBox";
+            this.palettesTextBox.ReadOnly = true;
             this.palettesTextBox.Size = new System.Drawing.Size(478, 20);
             this.palettesTextBox.TabIndex = 28;
-            this.palettesTextBox.Text = "C:\\users\\tomas\\documents\\nes\\github\\platformer\\PlatformerGraphics\\palettes\\palett" +
-    "es.xml";
             // 
             // specLabel
             // 
@@ -93,10 +92,9 @@
             // 
             this.specTextBox.Location = new System.Drawing.Point(75, 11);
             this.specTextBox.Name = "specTextBox";
+            this.specTextBox.ReadOnly = true;
             this.specTextBox.Size = new System.Drawing.Size(478, 20);
             this.specTextBox.TabIndex = 26;
-            this.specTextBox.Text = "C:\\Users\\tomas\\Documents\\NES\\GitHub\\Platformer\\PlatformerGraphics\\Sprites\\enemies" +
-    ".xml";
             // 
             // topPanel
             // 
@@ -121,6 +119,23 @@
             this.topPanel.Name = "topPanel";
             this.topPanel.Size = new System.Drawing.Size(562, 164);
             this.topPanel.TabIndex = 34;
+            // 
+            // bulletsTextBox
+            // 
+            this.bulletsTextBox.Location = new System.Drawing.Point(75, 35);
+            this.bulletsTextBox.Name = "bulletsTextBox";
+            this.bulletsTextBox.ReadOnly = true;
+            this.bulletsTextBox.Size = new System.Drawing.Size(478, 20);
+            this.bulletsTextBox.TabIndex = 48;
+            // 
+            // bulletsLabel
+            // 
+            this.bulletsLabel.AutoSize = true;
+            this.bulletsLabel.Location = new System.Drawing.Point(7, 38);
+            this.bulletsLabel.Name = "bulletsLabel";
+            this.bulletsLabel.Size = new System.Drawing.Size(38, 13);
+            this.bulletsLabel.TabIndex = 47;
+            this.bulletsLabel.Text = "Bullets";
             // 
             // showBulletCheckBox
             // 
@@ -326,24 +341,6 @@
             this.pictureBoxPanel.Name = "pictureBoxPanel";
             this.pictureBoxPanel.Size = new System.Drawing.Size(298, 290);
             this.pictureBoxPanel.TabIndex = 43;
-            // 
-            // bulletsLabel
-            // 
-            this.bulletsLabel.AutoSize = true;
-            this.bulletsLabel.Location = new System.Drawing.Point(7, 38);
-            this.bulletsLabel.Name = "bulletsLabel";
-            this.bulletsLabel.Size = new System.Drawing.Size(38, 13);
-            this.bulletsLabel.TabIndex = 47;
-            this.bulletsLabel.Text = "Bullets";
-            // 
-            // bulletsTextBox
-            // 
-            this.bulletsTextBox.Location = new System.Drawing.Point(75, 35);
-            this.bulletsTextBox.Name = "bulletsTextBox";
-            this.bulletsTextBox.Size = new System.Drawing.Size(478, 20);
-            this.bulletsTextBox.TabIndex = 48;
-            this.bulletsTextBox.Text = "C:\\Users\\tomas\\Documents\\NES\\GitHub\\Platformer\\PlatformerGraphics\\Sprites\\bullets" +
-    ".xml";
             // 
             // EnemiesWindow
             // 

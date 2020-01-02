@@ -1,5 +1,4 @@
-﻿using SpriteHelper.Files;
-using System;
+﻿using System;
 using System.Windows.Forms;
 
 namespace SpriteHelper.Dialogs
@@ -9,45 +8,6 @@ namespace SpriteHelper.Dialogs
         public ProgramPicker()
         {
             InitializeComponent();
-        }
-
-        private void ProgramPickerLoad(object sender, EventArgs e)
-        {
-            if (Defaults.Instance.ApplyDefaults)
-            {
-                this.PreLoad();
-            }
-        }
-
-        private void PreLoad()
-        {
-            switch (Defaults.Instance.DefaultApp)
-            {
-                case "Player":
-                    new Player().ShowDialog();
-                    break;
-                case "Enemies":
-                    new EnemiesWindow().ShowDialog();
-                    break;
-                case "Explosion":
-                    new Explosion().ShowDialog();
-                    break;
-                case "Palettes":
-                    new PaletteProcessor().ShowDialog();
-                    break;
-                case "Background":
-                    new BackgroundTilesetCreator().ShowDialog();
-                    break;
-                case "Level":
-                    new LevelEditor().ShowDialog();
-                    break;
-                case "Animations":
-                    new AnimationsDialog().ShowDialog();
-                    break;
-                case "CHR Combine":
-                    new ChrCombine().ShowDialog();
-                    break;
-            }
         }
 
         private void PlayerButtonClick(object sender, EventArgs e)

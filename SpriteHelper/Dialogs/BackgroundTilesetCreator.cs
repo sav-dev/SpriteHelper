@@ -1,5 +1,4 @@
 ﻿using SpriteHelper.Contract;
-using SpriteHelper.Files;
 using SpriteHelper.NesGraphics;
 using SpriteHelper.Utility;
 using System;
@@ -506,14 +505,14 @@ To fix it:
 
         private void LoadButtonClick(object sender, EventArgs e)
         {
-            var spec = TilesetSpec.Read(this.inputSpecTextbox.Text);
-            this.nonBlockingTextBox.Lines = spec.NonBlocking.Select(l => spec.Directory + "\\" + l).OrderBy(l => l).ToArray();
-            this.blockingTextBox.Lines = spec.Blocking.Select(l => spec.Directory + "\\" + l).OrderBy(l => l).ToArray();
-            this.threatTextBox.Lines = spec.Threats.Select(l => spec.Directory + "\\" + l).OrderBy(l => l).ToArray();
-
-            this.outputChrTextBox.Text = Constants.ChrDirectory + "\\bg_" + spec.Id + ".chr";
-            this.outputImageTextBox.Text = spec.Directory + "\\back.bmp";
-            this.outputSpecTextBox.Text = spec.Directory + "\\spec.xml";
+            ////var spec = TilesetSpec.Read(this.inputSpecTextbox.Text);
+            ////this.nonBlockingTextBox.Lines = spec.NonBlocking.Select(l => spec.Directory + "\\" + l).OrderBy(l => l).ToArray();
+            ////this.blockingTextBox.Lines = spec.Blocking.Select(l => spec.Directory + "\\" + l).OrderBy(l => l).ToArray();
+            ////this.threatTextBox.Lines = spec.Threats.Select(l => spec.Directory + "\\" + l).OrderBy(l => l).ToArray();
+            ////
+            ////this.outputChrTextBox.Text = Constants.ChrDirectory + "\\bg_" + spec.Id + ".chr";
+            ////this.outputImageTextBox.Text = spec.Directory + "\\back.bmp";
+            ////this.outputSpecTextBox.Text = spec.Directory + "\\spec.xml";
         }
     }
 }

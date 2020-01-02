@@ -1,5 +1,4 @@
-﻿using SpriteHelper.Files;
-using System;
+﻿using System;
 using System.Drawing;
 
 namespace SpriteHelper.NesGraphics
@@ -16,7 +15,7 @@ namespace SpriteHelper.NesGraphics
         {
             Colors = new Color[PaletteColors];
 
-            var image = new Bitmap(Defaults.Instance.Palette);
+            var image = new Bitmap(FileConstants.PalettePicture);
             var rows = (int)Math.Ceiling((double)(PaletteColors / PaletteSquaresPerRow));
             for (var row = 0; row < rows; row++)
             {

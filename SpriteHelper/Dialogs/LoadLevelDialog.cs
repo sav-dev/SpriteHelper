@@ -1,5 +1,4 @@
-﻿using SpriteHelper.Files;
-using System;
+﻿using System;
 using System.Windows.Forms;
 
 namespace SpriteHelper.Dialogs
@@ -19,27 +18,9 @@ namespace SpriteHelper.Dialogs
             {
                 this.Text = "New level";
             }
-        }
 
-        private void LoadLevelDialogLoad(object sender, EventArgs e)
-        {
-            if (Defaults.Instance.ApplyDefaults)
-            {
-                this.PreLoad();
-            }
-        }
-
-        private void PreLoad()
-        {
-            this.bgSpecTextBox.Text = Defaults.Instance.BackgroundSpec;
-            this.palettesTextBox.Text = Defaults.Instance.PalettesSpec;
-            this.levelTextBox.Text = Defaults.Instance.DefaultLevel;
-            this.enSpecTextBox.Text = @"C:\Users\tomas\Documents\NES\GitHub\Platformer\PlatformerGraphics\Sprites\enemies.xml";
-            this.playerTextBox.Text = Defaults.Instance.PlayerSpec;
-            this.spriteChrTextBox.Text = @"C:\Users\tomas\Documents\NES\GitHub\Platformer\PlatformerGraphics\Chr\spr.chr";
-            this.constSpritesChrTextBox.Text = Defaults.Instance.ConstChrInput;
-            this.constSpritesConfTextBox.Text = Defaults.Instance.ConstSpritesConfig;
-        }
+            // todo 0008 completely redo this
+        }        
 
         private void OkButtonClick(object sender, EventArgs e)
         {
@@ -166,7 +147,7 @@ namespace SpriteHelper.Dialogs
 
         private void OpenFile(TextBox target)
         {
-            var openFileDialog = new OpenFileDialog { InitialDirectory = Defaults.Instance.GraphicsDefaultDir };
+            var openFileDialog = new OpenFileDialog(); // todo 0008 if we keep this add variable default dir
             openFileDialog.ShowDialog();
             if (!string.IsNullOrEmpty(openFileDialog.FileName))
             {

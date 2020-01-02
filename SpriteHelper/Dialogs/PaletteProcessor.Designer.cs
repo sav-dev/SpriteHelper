@@ -36,6 +36,7 @@
             this.spritesTextBox = new System.Windows.Forms.TextBox();
             this.backgroundLabel = new System.Windows.Forms.Label();
             this.backgroundTextBox = new System.Windows.Forms.TextBox();
+            this.loadButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.palettesPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -52,6 +53,7 @@
             // 
             this.palettesTextBox.Location = new System.Drawing.Point(80, 12);
             this.palettesTextBox.Name = "palettesTextBox";
+            this.palettesTextBox.ReadOnly = true;
             this.palettesTextBox.Size = new System.Drawing.Size(522, 20);
             this.palettesTextBox.TabIndex = 16;
             // 
@@ -90,6 +92,7 @@
             // 
             this.spritesTextBox.Location = new System.Drawing.Point(81, 38);
             this.spritesTextBox.Name = "spritesTextBox";
+            this.spritesTextBox.ReadOnly = true;
             this.spritesTextBox.Size = new System.Drawing.Size(522, 20);
             this.spritesTextBox.TabIndex = 20;
             // 
@@ -106,14 +109,26 @@
             // 
             this.backgroundTextBox.Location = new System.Drawing.Point(81, 64);
             this.backgroundTextBox.Name = "backgroundTextBox";
+            this.backgroundTextBox.ReadOnly = true;
             this.backgroundTextBox.Size = new System.Drawing.Size(522, 20);
             this.backgroundTextBox.TabIndex = 22;
+            // 
+            // loadButton
+            // 
+            this.loadButton.Location = new System.Drawing.Point(447, 90);
+            this.loadButton.Name = "loadButton";
+            this.loadButton.Size = new System.Drawing.Size(75, 23);
+            this.loadButton.TabIndex = 24;
+            this.loadButton.Text = "Load";
+            this.loadButton.UseVisualStyleBackColor = true;
+            this.loadButton.Click += new System.EventHandler(this.LoadButtonClick);
             // 
             // PaletteProcessor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(615, 264);
+            this.Controls.Add(this.loadButton);
             this.Controls.Add(this.backgroundLabel);
             this.Controls.Add(this.backgroundTextBox);
             this.Controls.Add(this.spritesLabel);
@@ -143,5 +158,6 @@
         private System.Windows.Forms.TextBox spritesTextBox;
         private System.Windows.Forms.Label backgroundLabel;
         private System.Windows.Forms.TextBox backgroundTextBox;
+        private System.Windows.Forms.Button loadButton;
     }
 }

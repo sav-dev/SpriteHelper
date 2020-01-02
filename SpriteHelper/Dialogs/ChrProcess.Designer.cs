@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChrProcess));
             this.inputTextBox = new System.Windows.Forms.TextBox();
             this.processButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
@@ -38,9 +37,9 @@
             this.inputTextBox.Location = new System.Drawing.Point(12, 12);
             this.inputTextBox.Multiline = true;
             this.inputTextBox.Name = "inputTextBox";
+            this.inputTextBox.ReadOnly = true;
             this.inputTextBox.Size = new System.Drawing.Size(534, 142);
             this.inputTextBox.TabIndex = 0;
-            this.inputTextBox.Text = resources.GetString("inputTextBox.Text");
             // 
             // processButton
             // 

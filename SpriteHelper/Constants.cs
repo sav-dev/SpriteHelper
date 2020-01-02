@@ -2,9 +2,6 @@
 {
     public class Constants
     {
-        // Directories.
-        public const string ChrDirectory = @"C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\chr";
-
         // Number of sprites for the player.
         public const int PlayerSprites = 9;
 

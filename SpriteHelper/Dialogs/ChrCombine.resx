@@ -117,10 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="specsTextBox.Text" xml:space="preserve">
-    <value>C:\Users\tomas\Documents\NES\GitHub\Platformer\PlatformerGraphics\Sprites\player.xml
-C:\Users\tomas\Documents\NES\GitHub\Platformer\PlatformerGraphics\Sprites\explosions.xml
-C:\Users\tomas\Documents\NES\GitHub\Platformer\PlatformerGraphics\Sprites\enemies.xml
-C:\Users\tomas\Documents\NES\GitHub\Platformer\PlatformerGraphics\Sprites\bullets.xml</value>
-  </data>
 </root>

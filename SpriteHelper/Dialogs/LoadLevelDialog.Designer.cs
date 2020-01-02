@@ -318,7 +318,6 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "LoadLevelDialog";
             this.Text = "Open Level";
-            this.Load += new System.EventHandler(this.LoadLevelDialogLoad);
             this.ResumeLayout(false);
             this.PerformLayout();
 

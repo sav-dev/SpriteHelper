@@ -14,6 +14,16 @@ namespace SpriteHelper.Dialogs
         public ChrCombine()
         {
             InitializeComponent();
+
+            this.specsTextBox.Lines = new[]
+            {
+                FileConstants.PlayerSpec, FileConstants.ExplosionsSpec, FileConstants.EnemiesSpec, FileConstants.BulletSpec
+            };
+
+            this.constChrTextBox.Text = FileConstants.ConstChr;
+            this.constChrConfigTextBox.Text = FileConstants.ConstChrConfig;
+            this.outputTextBox.Text = FileConstants.SprChr;
+            this.palettesTextBox.Text = FileConstants.PalettesSpec;
         }
 
         private byte[] GetSpritesFromSpec(string spec)

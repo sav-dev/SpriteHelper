@@ -19,6 +19,8 @@ namespace SpriteHelper.Dialogs
         public BulletsWindow()
         {
             InitializeComponent();
+            this.specTextBox.Text = FileConstants.BulletSpec;
+            this.palettesTextBox.Text = FileConstants.PalettesSpec;
         }
 
         private void LoadButtonClick(object sender, EventArgs e)
@@ -342,5 +344,10 @@ namespace SpriteHelper.Dialogs
         }
 
         private string ToHex(int n) => $"${n:X2}";
+
+        private void BulletsWindowLoad(object sender, EventArgs e)
+        {
+            this.LoadFiles();
+        }
     }
 }

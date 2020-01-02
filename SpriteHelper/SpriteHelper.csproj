@@ -145,7 +145,6 @@
       <DependentUpon>CodeWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Contract\Flip.cs" />
-    <Compile Include="Files\Defaults.cs" />
     <Compile Include="Controls\DoubleBufferedPanel.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -181,6 +180,7 @@
     <Compile Include="Dialogs\LevelEditor.Designer.cs">
       <DependentUpon>LevelEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Utility\FileConstants.cs" />
     <Compile Include="Utility\Packer.cs" />
     <Compile Include="Dialogs\PaletteProcessor.cs">
       <SubType>Form</SubType>

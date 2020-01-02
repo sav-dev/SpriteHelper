@@ -17,6 +17,8 @@ namespace SpriteHelper.Dialogs
         public ChrProcess()
         {
             InitializeComponent();
+
+            this.inputTextBox.Lines = new[] { FileConstants.SprChr, FileConstants.BgChr };
         }
 
         private void ProcessButtonClick(object sender, EventArgs e)

@@ -1,5 +1,4 @@
 ﻿using SpriteHelper.Contract;
-using SpriteHelper.Files;
 using SpriteHelper.NesGraphics;
 using System;
 using System.Collections.Generic;
@@ -20,30 +19,28 @@ namespace SpriteHelper.Dialogs
             InitializeComponent();
             this.WindowDefaultHeight = this.Height;
             this.PictureBoxDefaultHeight = this.palettesPictureBox.Height;
+            this.palettesTextBox.Text = FileConstants.PalettesSpec;
+            this.spritesTextBox.Text = FileConstants.SprPalette;
+            this.backgroundTextBox.Text = FileConstants.BgPalettes;
         }
 
         private void PaletteProcessorLoad(object sender, EventArgs e)
         {
-            if (Defaults.Instance.ApplyDefaults)
-            {
-                this.PreLoad();
-            }
+            this.Process(false);
         }
 
-        private void PreLoad()
+        private void LoadButtonClick(object sender, EventArgs e)
         {
-            this.palettesTextBox.Text = Defaults.Instance.PalettesSpec;
-            this.spritesTextBox.Text = Defaults.Instance.SpritesPalette;
-            this.backgroundTextBox.Text = Defaults.Instance.BackgroundPalette;
-            this.Process();
+            this.Process(false);
+            
         }
 
         private void ProcessButtonClick(object sender, System.EventArgs e)
         {
-            this.Process();
+            this.Process(true);
         }
 
-        private void Process()
+        private void Process(bool writeFiles)
         {
             var palettesConfig = Palettes.Read(this.palettesTextBox.Text);
             var spritesPalette = new List<byte>();
@@ -55,19 +52,22 @@ namespace SpriteHelper.Dialogs
                 backgroundPalettes.AddRange(bgPalette.Palettes.SelectMany(p => p.Colors).Select(c => (byte)c));
             }
 
-            if (File.Exists(spritesTextBox.Text))
+            if (writeFiles)
             {
-                File.Delete(spritesTextBox.Text);
+                if (File.Exists(spritesTextBox.Text))
+                {
+                    File.Delete(spritesTextBox.Text);
+                }
+
+                File.WriteAllBytes(spritesTextBox.Text, spritesPalette.ToArray());
+
+                if (File.Exists(backgroundTextBox.Text))
+                {
+                    File.Delete(backgroundTextBox.Text);
+                }
+
+                File.WriteAllBytes(backgroundTextBox.Text, backgroundPalettes.ToArray());
             }
-
-            File.WriteAllBytes(spritesTextBox.Text, spritesPalette.ToArray());
-
-            if (File.Exists(backgroundTextBox.Text))
-            {
-                File.Delete(backgroundTextBox.Text);
-            }
-
-            File.WriteAllBytes(backgroundTextBox.Text, backgroundPalettes.ToArray());
 
             const int HorizontalPadding = 6;
             const int VerticalPadding = 12;
@@ -132,6 +132,6 @@ namespace SpriteHelper.Dialogs
             }
 
             this.palettesPictureBox.Image = resultBitmap;
-        }       
+        }
     }
 }

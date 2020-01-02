@@ -168,19 +168,17 @@
             // 
             this.specTextBox.Location = new System.Drawing.Point(75, 11);
             this.specTextBox.Name = "specTextBox";
+            this.specTextBox.ReadOnly = true;
             this.specTextBox.Size = new System.Drawing.Size(478, 20);
             this.specTextBox.TabIndex = 26;
-            this.specTextBox.Text = "C:\\Users\\tomas\\Documents\\NES\\GitHub\\Platformer\\PlatformerGraphics\\Sprites\\bullets" +
-    ".xml";
             // 
             // palettesTextBox
             // 
             this.palettesTextBox.Location = new System.Drawing.Point(75, 37);
             this.palettesTextBox.Name = "palettesTextBox";
+            this.palettesTextBox.ReadOnly = true;
             this.palettesTextBox.Size = new System.Drawing.Size(478, 20);
             this.palettesTextBox.TabIndex = 28;
-            this.palettesTextBox.Text = "C:\\users\\tomas\\documents\\nes\\github\\platformer\\PlatformerGraphics\\palettes\\palett" +
-    "es.xml";
             // 
             // palettesLabel
             // 
@@ -242,6 +240,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Name = "BulletsWindow";
             this.Text = "BulletsWindow";
+            this.Load += new System.EventHandler(this.BulletsWindowLoad);
             this.topPanel.ResumeLayout(false);
             this.topPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.zoomPicker)).EndInit();

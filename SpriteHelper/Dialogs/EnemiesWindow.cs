@@ -1,5 +1,4 @@
 ﻿using SpriteHelper.Contract;
-using SpriteHelper.Files;
 using SpriteHelper.NesGraphics;
 using System;
 using System.Collections.Generic;
@@ -19,14 +18,14 @@ namespace SpriteHelper.Dialogs
         public EnemiesWindow()
         {
             InitializeComponent();
+            this.specTextBox.Text = FileConstants.EnemiesSpec;
+            this.palettesTextBox.Text = FileConstants.PalettesSpec;
+            this.bulletsTextBox.Text = FileConstants.BulletSpec;
         }
 
         private void EnemiesWindowLoad(object sender, System.EventArgs e)
         {
-            if (Defaults.Instance.ApplyDefaults)
-            {
-                this.LoadFiles();
-            }
+            this.LoadFiles();
         }
 
         private void LoadButtonClick(object sender, System.EventArgs e)

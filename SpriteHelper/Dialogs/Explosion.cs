@@ -1,5 +1,4 @@
 ﻿using SpriteHelper.Contract;
-using SpriteHelper.Files;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -19,14 +18,13 @@ namespace SpriteHelper.Dialogs
         {
             InitializeComponent();
             this.zoomPicker.Maximum = Constants.MaxZoom;
+            this.specTextBox.Text = FileConstants.ExplosionsSpec;
+            this.palettesTextBox.Text = FileConstants.PalettesSpec;
         }
 
         private void ExplosionLoad(object sender, EventArgs e)
         {
-            if (Defaults.Instance.ApplyDefaults)
-            {
-                this.LoadFiles();
-            }
+            this.LoadFiles();
         }
 
         private void LoadButtonClick(object sender, EventArgs e)

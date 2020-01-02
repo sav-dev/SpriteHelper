@@ -1,6 +1,5 @@
 ﻿using SpriteHelper.Contract;
 using SpriteHelper.Controls;
-using SpriteHelper.Files;
 using SpriteHelper.NesGraphics;
 using System;
 using System.Collections.Generic;
@@ -120,10 +119,8 @@ namespace SpriteHelper.Dialogs
 
         private void LevelEditorLoad(object sender, EventArgs e)
         {
-            if (Defaults.Instance.ApplyDefaults)
-            {
-                this.PreLoad();
-            }
+            // todo 0008: do something else here
+            this.PreLoad();
 
             this.splitContainerVertical.Panel2.Focus();
         }
@@ -136,14 +133,14 @@ namespace SpriteHelper.Dialogs
         private void PreLoad()
         {
             this.LoadLevel(
-                Defaults.Instance.DefaultLevel,
-                Defaults.Instance.BackgroundSpec,
-                @"C:\Users\tomas\Documents\NES\GitHub\Platformer\PlatformerGraphics\Sprites\enemies.xml",
-                Defaults.Instance.PalettesSpec,
-                Defaults.Instance.PlayerSpec,
-                @"C:\Users\tomas\Documents\NES\GitHub\Platformer\PlatformerGraphics\Chr\spr.chr",
-                Defaults.Instance.ConstChrInput,
-                Defaults.Instance.ConstSpritesConfig);
+                @"C:\users\tomas\documents\nes\github\platformer\data\levels\00.xml", // todo 0008 remove this
+                @"C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\00\_back.xml", // todo 0008 remove this
+                FileConstants.EnemiesSpec,
+                FileConstants.PalettesSpec,
+                FileConstants.PlayerSpec,
+                FileConstants.SprChr,
+                FileConstants.ConstChr,
+                FileConstants.ConstChrConfig);
         }
 
         private void ClearStatus()
@@ -1165,7 +1162,7 @@ namespace SpriteHelper.Dialogs
 
         private void ExportImageToolStripMenuItemClick(object sender, EventArgs e)
         {
-            var saveFileDialog = new SaveFileDialog { InitialDirectory = Defaults.Instance.GraphicsDefaultDir, Filter = "png files (*.png)|*.png" };
+            var saveFileDialog = new SaveFileDialog { InitialDirectory = FileConstants.Desktop, Filter = "png files (*.png)|*.png" };
             saveFileDialog.ShowDialog();
             if (!string.IsNullOrEmpty(saveFileDialog.FileName))
             {
@@ -1314,7 +1311,7 @@ namespace SpriteHelper.Dialogs
                 return;
             }
 
-            var saveFileDialog = new SaveFileDialog { InitialDirectory = Defaults.Instance.LevelsDefaultDir, Filter = "xml files (*.xml)|*.xml" };
+            var saveFileDialog = new SaveFileDialog { InitialDirectory = FileConstants.LevelsDir, Filter = "xml files (*.xml)|*.xml" };
             saveFileDialog.ShowDialog();
             if (!string.IsNullOrEmpty(saveFileDialog.FileName))
             {
@@ -1347,7 +1344,7 @@ namespace SpriteHelper.Dialogs
                 return;
             }
 
-            var saveFileDialog = new SaveFileDialog { InitialDirectory = Defaults.Instance.LevelsDefaultDir, Filter = "binary files (*.bin)|*.bin" };
+            var saveFileDialog = new SaveFileDialog { InitialDirectory = FileConstants.LevelsDir, Filter = "binary files (*.bin)|*.bin" };
             saveFileDialog.ShowDialog();
             if (!string.IsNullOrEmpty(saveFileDialog.FileName))
             {
