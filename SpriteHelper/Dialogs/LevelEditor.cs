@@ -83,7 +83,8 @@ namespace SpriteHelper.Dialogs
         private Pen EnemyMovementPen = new Pen(Color.DarkOrange, 3);
         private Pen ElevatorMovementPen = new Pen(Color.Crimson, 3);
 
-        // Palette related.
+        // Tileset related.
+        private int tilesetId;
         private int bgPalette;
 
         #region FormRelated
@@ -152,12 +153,10 @@ namespace SpriteHelper.Dialogs
         //// Level loading & saving
         ////
 
-        //// todo 0008 - change the signature of this - we need to know the id of the selected tileset
-        private void LoadLevel(string level, string bgSpec)
+        private void LoadLevel(string level, int tileset = 0, int palette = 0)
         {
             this.palettes = Palettes.Read(FileConstants.PalettesSpec);
-            this.bgConfig = BackgroundConfig.Read(bgSpec);
-
+            
             string[][] newLevel;
             Enemy[] enemies;
             Elevator[] elevators;
@@ -173,10 +172,32 @@ namespace SpriteHelper.Dialogs
                 this.exitPosition = readLevel.ExitPosition;
                 this.scrollSpeed = readLevel.ScrollSpeed;
                 this.bgPalette = readLevel.BgPalette;
+                this.tilesetId = readLevel.TilesetId;
                 this.doorAndKeycard = readLevel.DoorAndKeycard;
             }
             else
             {
+                newLevel = null;
+                enemies = new Enemy[0];
+                elevators = new Elevator[0];
+                this.playerStartingPosition = default(Point);
+                this.exitPosition = default(Point);
+                this.bgPalette = tileset;
+                this.tilesetId = palette;
+                this.levelType = LevelType.Normal;
+                this.scrollSpeed = 1;
+                this.doorAndKeycard = null;
+            }
+
+            var tilesets = Tilesets.Read(FileConstants.Tilesets);
+            var set = tilesets.GetSpecById(this.tilesetId);
+            this.bgConfig = set.GetBgSpec();
+
+            this.CreateTileDictionaries();
+
+            if (newLevel == null)
+            {
+                // This is a new level case but we have to wait until here to create it
                 var widthInTiles = DefaultWidthInTiles;
                 newLevel = new string[widthInTiles][];
                 for (var i = 0; i < widthInTiles; i++)
@@ -187,18 +208,7 @@ namespace SpriteHelper.Dialogs
                         newLevel[i][j] = this.emptyTile;
                     }
                 }
-
-                enemies = new Enemy[0];
-                elevators = new Elevator[0];
-                this.playerStartingPosition = default(Point);
-                this.exitPosition = default(Point);
-                this.bgPalette = 0;
-                this.levelType = LevelType.Normal;
-                this.scrollSpeed = 1;
-                this.doorAndKeycard = null;
             }
-
-            this.CreateTileDictionaries();
 
             // Load enemies config
             this.enConfig = SpriteConfig.Read(FileConstants.EnemiesSpec, this.palettes);
@@ -1238,20 +1248,26 @@ namespace SpriteHelper.Dialogs
 
         private void OpenToolStripMenuItemClick(object sender, EventArgs e)
         {
-            // todo 0008 tweak this
-            this.LoadLevel(
-                @"C:\users\tomas\documents\nes\github\platformer\data\levels\00.xml", // todo 0008 remove this
-                @"C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\0\_back.xml" // todo 0008 remove this
-                );
+            var openFileDialog = new OpenFileDialog { InitialDirectory = FileConstants.LevelsDir, Filter = "(*.xml)|*.xml" };
+            openFileDialog.ShowDialog();
+            if (string.IsNullOrEmpty(openFileDialog.FileName))
+            {
+                return;
+            }
+            
+            this.LoadLevel(openFileDialog.FileName);
         }
 
         private void NewToolStripMenuItemClick(object sender, EventArgs e)
         {
-            // todo 0008 tweak this
-            this.LoadLevel(
-                null, // todo 0008 remove this
-                @"C:\users\tomas\documents\nes\github\platformer\PlatformerGraphics\backgrounds\0\_back.xml" // todo 0008 remove this
-                );
+            var dialog = new TilesetViewer(this.tilesetId, this.bgPalette, true, true);
+            dialog.ShowDialog();
+            if (!dialog.Succeeded)
+            {
+                return;
+            }
+
+            this.LoadLevel(null, dialog.SelectedTileset, dialog.SelectedPalette);
         }
 
         private void SaveToolStripMenuItemClick(object sender, EventArgs e)
@@ -1391,9 +1407,26 @@ namespace SpriteHelper.Dialogs
             }
         }
 
+        private void PaletteMenuItemClick(object sender, EventArgs e)
+        {
+            var dialog = new TilesetViewer(this.tilesetId, this.bgPalette, false, true);
+            dialog.ShowDialog();
+            if (!dialog.Succeeded)
+            {
+                return;
+            }
+
+            if (dialog.SelectedPalette != this.bgPalette)
+            {
+                this.bgPalette = dialog.SelectedPalette;
+                this.CreateTileDictionaries();
+                this.UpdateBitmap();
+            }
+        }
+
         private void PropertiesToolStripMenuItemClick(object sender, EventArgs e)
         {
-            Func<EditLevelDialog, Tuple<int, int, LevelType, Point, Point, double>> getResultFunc =
+            Func<EditLevelDialog, Tuple<int, LevelType, Point, Point, double>> getResultFunc =
                 dialog =>
                 {
                     int levelWidth;
@@ -1494,13 +1527,11 @@ namespace SpriteHelper.Dialogs
                     var levelType = dialog.LevelType;
                     var scrollSpeed = dialog.ScrollSpeed;
 
-                    return Tuple.Create(levelWidth, dialog.BgPalette, levelType, playerStartingPosition, exitPosition, scrollSpeed);
+                    return Tuple.Create(levelWidth, levelType, playerStartingPosition, exitPosition, scrollSpeed);
                 };
 
             var editLevelDialog = new EditLevelDialog(
                 this.level.Length,
-                this.palettes.BackgroundPalettes.Length,
-                this.bgPalette,
                 this.playerStartingPosition,
                 this.levelType,
                 this.exitPosition,
@@ -1519,41 +1550,33 @@ namespace SpriteHelper.Dialogs
             var widthChanged = false;
             widthChanged = this.ChangeWidth(result.Item1);
 
-            var paletteChanged = false;
-            if (this.bgPalette != result.Item2)
-            {
-                paletteChanged = true;
-                this.bgPalette = result.Item2;
-                this.CreateTileDictionaries();
-            }
-
             var levelTypeChanged = false;
-            if (this.levelType != result.Item3)
+            if (this.levelType != result.Item2)
             {
-                this.levelType = result.Item3;
+                this.levelType = result.Item2;
                 levelTypeChanged = true;
             }
 
             var playerStartingPositionChanged = false;
-            if (this.playerStartingPosition != result.Item4)
+            if (this.playerStartingPosition != result.Item3)
             {
-                this.playerStartingPosition = result.Item4;
+                this.playerStartingPosition = result.Item3;
                 playerStartingPositionChanged = true;
             }
 
             var exitPositionChanged = false;
-            if (this.exitPosition != result.Item5)
+            if (this.exitPosition != result.Item4)
             {
-                this.exitPosition = result.Item5;
+                this.exitPosition = result.Item4;
                 exitPositionChanged = true;
             }
 
-            this.scrollSpeed = result.Item6; // doesn't affect rendering
+            this.scrollSpeed = result.Item5; // doesn't affect rendering
 
             // Only update bitmap if 
             //  1) something affecting rednering has changed, and 
             //  2) width hasn't changed - ChangeWidth updates the bitmap if that's the case
-            if (!widthChanged && (paletteChanged || playerStartingPositionChanged || levelTypeChanged || exitPositionChanged))
+            if (!widthChanged && (playerStartingPositionChanged || levelTypeChanged || exitPositionChanged))
             {
                 this.UpdateBitmap();
             }

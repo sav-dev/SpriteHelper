@@ -97,6 +97,7 @@
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.exportCheckToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.diagnosticsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.paletteMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerVertical)).BeginInit();
             this.splitContainerVertical.Panel1.SuspendLayout();
             this.splitContainerVertical.Panel2.SuspendLayout();
@@ -514,6 +515,7 @@
             // editToolStripMenuItem
             // 
             this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.paletteMenuItem1,
             this.propertiesToolStripMenuItem,
             this.toolStripSeparator1,
             this.transformToolStripMenuItem,
@@ -531,7 +533,7 @@
             this.propertiesToolStripMenuItem.Name = "propertiesToolStripMenuItem";
             this.propertiesToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
             this.propertiesToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
-            this.propertiesToolStripMenuItem.Text = "&Properties";
+            this.propertiesToolStripMenuItem.Text = "Prop&erties";
             this.propertiesToolStripMenuItem.Click += new System.EventHandler(this.PropertiesToolStripMenuItemClick);
             // 
             // toolStripSeparator1
@@ -544,7 +546,7 @@
             this.transformToolStripMenuItem.Name = "transformToolStripMenuItem";
             this.transformToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
             this.transformToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
-            this.transformToolStripMenuItem.Text = "Transform";
+            this.transformToolStripMenuItem.Text = "&Transform";
             this.transformToolStripMenuItem.Click += new System.EventHandler(this.TransformToolStripMenuItemClick);
             // 
             // toolStripSeparator4
@@ -808,6 +810,14 @@
             this.diagnosticsToolStripMenuItem.Text = "&Diagnostics";
             this.diagnosticsToolStripMenuItem.Click += new System.EventHandler(this.DiagnosticsToolStripMenuItemClick);
             // 
+            // paletteMenuItem1
+            // 
+            this.paletteMenuItem1.Name = "paletteMenuItem1";
+            this.paletteMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
+            this.paletteMenuItem1.Size = new System.Drawing.Size(231, 22);
+            this.paletteMenuItem1.Text = "&Palette";
+            this.paletteMenuItem1.Click += new System.EventHandler(this.PaletteMenuItemClick);
+            // 
             // LevelEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -916,5 +926,6 @@
         private System.Windows.Forms.Button addElevatorButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
         private System.Windows.Forms.ToolStripMenuItem editDoorAndKeycardToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem paletteMenuItem1;
     }
 }

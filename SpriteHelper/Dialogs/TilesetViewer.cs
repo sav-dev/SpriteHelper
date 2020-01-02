@@ -22,7 +22,7 @@ namespace SpriteHelper.Dialogs
         private int? selectTileset;
         private int? selectPalette;
 
-        public TilesetViewer(int? selectTileset = null, int? selectPalette = null, bool showOkCancelButtons = false)
+        public TilesetViewer(int? selectTileset = null, int? selectPalette = null, bool allowTilesetChange = true, bool showOkCancelButtons = false)
         {
             InitializeComponent();
             this.okButton.Visible = showOkCancelButtons;
@@ -30,6 +30,8 @@ namespace SpriteHelper.Dialogs
             this.reloadButton.Visible = !showOkCancelButtons;
             this.selectTileset = selectTileset;
             this.selectPalette = selectPalette;
+            this.tilesetComboBox.Enabled = allowTilesetChange;
+            if (!allowTilesetChange && !selectTileset.HasValue) throw new Exception("Tileset must be give");
         }
 
         private void TilesetViewerLoad(object sender, EventArgs e)

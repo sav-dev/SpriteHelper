@@ -40,8 +40,6 @@
             this.exitYTextBox = new System.Windows.Forms.TextBox();
             this.exitXLabel = new System.Windows.Forms.Label();
             this.exitXTextBox = new System.Windows.Forms.TextBox();
-            this.bgPaletteLabel = new System.Windows.Forms.Label();
-            this.bgPaletteComboBox = new System.Windows.Forms.ComboBox();
             this.commonGroupBox = new System.Windows.Forms.GroupBox();
             this.levelTypeComboBox = new System.Windows.Forms.ComboBox();
             this.lvlTypeLabel = new System.Windows.Forms.Label();
@@ -154,31 +152,11 @@
             this.exitXTextBox.Size = new System.Drawing.Size(48, 20);
             this.exitXTextBox.TabIndex = 46;
             // 
-            // bgPaletteLabel
-            // 
-            this.bgPaletteLabel.AutoSize = true;
-            this.bgPaletteLabel.Location = new System.Drawing.Point(146, 22);
-            this.bgPaletteLabel.Name = "bgPaletteLabel";
-            this.bgPaletteLabel.Size = new System.Drawing.Size(57, 13);
-            this.bgPaletteLabel.TabIndex = 50;
-            this.bgPaletteLabel.Text = "BG palette";
-            // 
-            // bgPaletteComboBox
-            // 
-            this.bgPaletteComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.bgPaletteComboBox.FormattingEnabled = true;
-            this.bgPaletteComboBox.Location = new System.Drawing.Point(222, 19);
-            this.bgPaletteComboBox.Name = "bgPaletteComboBox";
-            this.bgPaletteComboBox.Size = new System.Drawing.Size(48, 21);
-            this.bgPaletteComboBox.TabIndex = 51;
-            // 
             // commonGroupBox
             // 
             this.commonGroupBox.Controls.Add(this.levelTypeComboBox);
             this.commonGroupBox.Controls.Add(this.lvlTypeLabel);
-            this.commonGroupBox.Controls.Add(this.bgPaletteComboBox);
             this.commonGroupBox.Controls.Add(this.widthTextBox);
-            this.commonGroupBox.Controls.Add(this.bgPaletteLabel);
             this.commonGroupBox.Controls.Add(this.widthLabel);
             this.commonGroupBox.Controls.Add(this.playerXTextBox);
             this.commonGroupBox.Controls.Add(this.playerXLabel);
@@ -296,8 +274,6 @@
         private System.Windows.Forms.TextBox exitYTextBox;
         private System.Windows.Forms.Label exitXLabel;
         private System.Windows.Forms.TextBox exitXTextBox;
-        private System.Windows.Forms.Label bgPaletteLabel;
-        private System.Windows.Forms.ComboBox bgPaletteComboBox;
         private System.Windows.Forms.GroupBox commonGroupBox;
         private System.Windows.Forms.ComboBox levelTypeComboBox;
         private System.Windows.Forms.Label lvlTypeLabel;

@@ -11,8 +11,6 @@ namespace SpriteHelper.Dialogs
 
         public EditLevelDialog(
             int width,
-            int bgPaletteCount,
-            int selectedBgPalette,
             Point playerStartingPosition,
             LevelType levelType,
             Point exitPosition,
@@ -23,14 +21,6 @@ namespace SpriteHelper.Dialogs
 
             // Width
             this.widthTextBox.Text = width.ToString();
-
-            // Palettes
-            for (var i = 0; i < bgPaletteCount; i++)
-            {
-                this.bgPaletteComboBox.Items.Add(i);
-            }
-
-            this.bgPaletteComboBox.SelectedItem = selectedBgPalette;
 
             // Starting position
             this.playerXTextBox.Text = playerStartingPosition.X.ToString();
@@ -108,8 +98,6 @@ namespace SpriteHelper.Dialogs
                 return false;
             }
         }
-
-        public int BgPalette => (int)this.bgPaletteComboBox.SelectedItem;
 
         public LevelType LevelType => (LevelType)Enum.Parse(typeof(LevelType), this.levelTypeComboBox.SelectedItem.ToString());
 
