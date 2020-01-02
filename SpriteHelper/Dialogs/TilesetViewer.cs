@@ -5,6 +5,7 @@ using System;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 
 namespace SpriteHelper.Dialogs
@@ -21,17 +22,18 @@ namespace SpriteHelper.Dialogs
         private bool disableRedrawing;
         private int? selectTileset;
         private int? selectPalette;
+        private bool isLevelEditor;
 
-        public TilesetViewer(int? selectTileset = null, int? selectPalette = null, bool allowTilesetChange = true, bool showOkCancelButtons = false)
+        public TilesetViewer(int? selectTileset = null, int? selectPalette = null, bool allowTilesetChange = true, bool isLevelEditor = false)
         {
             InitializeComponent();
-            this.okButton.Visible = showOkCancelButtons;
-            this.cancelButton.Visible = showOkCancelButtons;
-            this.reloadButton.Visible = !showOkCancelButtons;
             this.selectTileset = selectTileset;
             this.selectPalette = selectPalette;
             this.tilesetComboBox.Enabled = allowTilesetChange;
             if (!allowTilesetChange && !selectTileset.HasValue) throw new Exception("Tileset must be give");
+            this.button1.Text = isLevelEditor ? "OK" : "Reload";
+            this.button2.Text = isLevelEditor ? "Cancel" : "Code";
+            this.isLevelEditor = isLevelEditor;
         }
 
         private void TilesetViewerLoad(object sender, EventArgs e)
@@ -117,15 +119,57 @@ namespace SpriteHelper.Dialogs
             this.Height = newHeight + heightOffset;
         }
 
-        private void OkButtonClick(object sender, EventArgs e)
+        private void Button1Click(object sender, EventArgs e)
         {
-            this.Succeeded = true;
-            this.Close();
+            if (this.isLevelEditor)
+            {
+                this.Succeeded = true;
+                this.Close();
+            }
+            else
+            {
+                this.Redraw();
+            }
         }
 
-        private void CancelButtonClick(object sender, EventArgs e)
+        private void Button2Click(object sender, EventArgs e)
         {
-            this.Close();
+            if (this.isLevelEditor)
+            {
+                this.Close();
+            }
+            else
+            {
+                var code = this.GetCode();
+                new CodeWindow(code).ShowDialog();
+
+                // todo 0008: also lay out the chrs in the 1st bank and export that here
+            }
+        }
+
+        private string GetCode()
+        {
+            var builder = new StringBuilder();
+
+            builder.AppendLine(
+@"TilesetsStart:
+
+;****************************************************************
+; Tilesets                                                      ;
+; Holds tileset pointers (auto-generated)                       ;
+;****************************************************************
+
+Tilesets:");
+
+            foreach (var item in this.config.LoadedSets)
+            {
+                builder.AppendLine($"Tileset{item.Id}:");
+                builder.AppendLine($"  .byte LOW(bg{item.Id}chr), HIGH(bg{item.Id}chr)");
+            }
+
+            builder.AppendLine();
+            builder.AppendLine("TilesetsEnd:");
+            return builder.ToString();
         }
 
         private void ReloadButtonClick(object sender, EventArgs e)

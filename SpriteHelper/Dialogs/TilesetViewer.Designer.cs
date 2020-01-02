@@ -31,12 +31,11 @@
             this.tilesetComboBox = new System.Windows.Forms.ComboBox();
             this.tilesetLabel = new System.Windows.Forms.Label();
             this.topPanel = new System.Windows.Forms.Panel();
-            this.cancelButton = new System.Windows.Forms.Button();
-            this.okButton = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.paletteComboBox = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.paletteLabel = new System.Windows.Forms.Panel();
-            this.reloadButton = new System.Windows.Forms.Button();
             this.topPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -61,9 +60,8 @@
             // 
             // topPanel
             // 
-            this.topPanel.Controls.Add(this.reloadButton);
-            this.topPanel.Controls.Add(this.cancelButton);
-            this.topPanel.Controls.Add(this.okButton);
+            this.topPanel.Controls.Add(this.button2);
+            this.topPanel.Controls.Add(this.button1);
             this.topPanel.Controls.Add(this.paletteComboBox);
             this.topPanel.Controls.Add(this.label1);
             this.topPanel.Controls.Add(this.tilesetComboBox);
@@ -74,25 +72,25 @@
             this.topPanel.Size = new System.Drawing.Size(524, 42);
             this.topPanel.TabIndex = 41;
             // 
-            // cancelButton
+            // button2
             // 
-            this.cancelButton.Location = new System.Drawing.Point(440, 7);
-            this.cancelButton.Name = "cancelButton";
-            this.cancelButton.Size = new System.Drawing.Size(75, 23);
-            this.cancelButton.TabIndex = 44;
-            this.cancelButton.Text = "Cancel";
-            this.cancelButton.UseVisualStyleBackColor = true;
-            this.cancelButton.Click += new System.EventHandler(this.CancelButtonClick);
+            this.button2.Location = new System.Drawing.Point(440, 7);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 44;
+            this.button2.Text = "button2";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.Button2Click);
             // 
-            // okButton
+            // button1
             // 
-            this.okButton.Location = new System.Drawing.Point(359, 7);
-            this.okButton.Name = "okButton";
-            this.okButton.Size = new System.Drawing.Size(75, 23);
-            this.okButton.TabIndex = 43;
-            this.okButton.Text = "OK";
-            this.okButton.UseVisualStyleBackColor = true;
-            this.okButton.Click += new System.EventHandler(this.OkButtonClick);
+            this.button1.Location = new System.Drawing.Point(359, 7);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 43;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.Button1Click);
             // 
             // paletteComboBox
             // 
@@ -122,16 +120,6 @@
             this.paletteLabel.Size = new System.Drawing.Size(524, 561);
             this.paletteLabel.TabIndex = 42;
             // 
-            // reloadButton
-            // 
-            this.reloadButton.Location = new System.Drawing.Point(359, 7);
-            this.reloadButton.Name = "reloadButton";
-            this.reloadButton.Size = new System.Drawing.Size(63, 23);
-            this.reloadButton.TabIndex = 45;
-            this.reloadButton.Text = "Reload";
-            this.reloadButton.UseVisualStyleBackColor = true;
-            this.reloadButton.Click += new System.EventHandler(this.ReloadButtonClick);
-            // 
             // TilesetViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -156,8 +144,7 @@
         private System.Windows.Forms.Panel paletteLabel;
         private System.Windows.Forms.ComboBox paletteComboBox;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button cancelButton;
-        private System.Windows.Forms.Button okButton;
-        private System.Windows.Forms.Button reloadButton;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button1;
     }
 }

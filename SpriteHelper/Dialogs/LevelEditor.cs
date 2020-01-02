@@ -2838,12 +2838,14 @@ namespace SpriteHelper.Dialogs
 
         private byte[] GetBgPaletteAndTileset(TextWriter logger = null)
         {
-            // todo 0008 export the tileset id
+            // Tileset pointer offset, 1 byte
+            var tilesetOffset = this.tilesetId * 2; // x2 since it's a pointer
 
             // Bg palette offset, 1 byte.
             var paletteOffset = this.bgPalette * Constants.PaletteSize;
-            var result = new byte[] { (byte)paletteOffset };
-            logger.WriteLineIfNotNull("Total bytes for Bg Palette: {0}", result.Length);
+
+            var result = new byte[] { (byte)tilesetOffset, (byte)paletteOffset };
+            logger.WriteLineIfNotNull("Total bytes for Tileset and Palette: {0}", result.Length);
             return result;
 
         }
