@@ -91,7 +91,6 @@ namespace SpriteHelper.Dialogs
 
             var width = packed.Max(tpl => tpl.Item1.X + tpl.Item2.Width);
             var height = packed.Max(tpl => tpl.Item1.Y + tpl.Item2.Height);
-            var bitmap = new MyBitmap(width, height, Color.FromArgb(0, 0, 0));
 
             var blockingPosition = packed.First(tpl => tpl.Item2 == blocking.Size);
             packed.Remove(blockingPosition);
@@ -99,16 +98,27 @@ namespace SpriteHelper.Dialogs
             packed.Remove(nonBlockingPosition);
             var threatsPosition = packed.First(); // only one left
 
-            bitmap.DrawImage(blocking, blockingPosition.Item1.X, blockingPosition.Item1.Y);
-            bitmap.DrawImage(nonBlocking, nonBlockingPosition.Item1.X, nonBlockingPosition.Item1.Y);
-            bitmap.DrawImage(threats, threatsPosition.Item1.X, threatsPosition.Item1.Y);
+            var palette = this.palettes.BackgroundPalettes[this.SelectedPalette];
+            var bgColor = palette.Palettes.First().ActualColors.First();
 
-            var bigBitmap = new MyBitmap(2 * bitmap.Width + 30, 2 * bitmap.Height + 30, Color.FromArgb(0, 0, 0));
+            var bigBitmap = new MyBitmap(2 * width + 30, 2 * height + 30, bgColor);
+
             for (var i = 0; i <= 3; i++)
             {
-                var clone = bitmap.Clone();
-                clone.UpdateColors(clone.UniqueColors(), this.palettes.BackgroundPalettes[this.SelectedPalette].Palettes[i].ActualColors);
-                bigBitmap.DrawImage(clone, 10 + (i % 2) * (bitmap.Width + 10), 10 + (i / 2) * (bitmap.Height + 10));
+                var bitmap = new MyBitmap(width, height, bgColor);
+
+                var blockingClone = blocking.Clone();
+                blockingClone.UpdateColors(blockingClone.UniqueColors(), palette.Palettes[i].ActualColors);
+                var nonBlockingClone = nonBlocking.Clone();
+                nonBlockingClone.UpdateColors(nonBlockingClone.UniqueColors(), palette.Palettes[i].ActualColors);
+                var threatsClone = threats.Clone();
+                threatsClone.UpdateColors(threatsClone.UniqueColors(), palette.Palettes[i].ActualColors);
+
+                bitmap.DrawImage(blockingClone, blockingPosition.Item1.X, blockingPosition.Item1.Y);
+                bitmap.DrawImage(nonBlockingClone, nonBlockingPosition.Item1.X, nonBlockingPosition.Item1.Y);
+                bitmap.DrawImage(threatsClone, threatsPosition.Item1.X, threatsPosition.Item1.Y);
+
+                bigBitmap.DrawImage(bitmap, 10 + (i % 2) * (bitmap.Width + 10), 10 + (i / 2) * (bitmap.Height + 10));
             }
 
             this.paletteLabel.BackgroundImage = bigBitmap.ToBitmap();
