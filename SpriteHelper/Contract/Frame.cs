@@ -283,7 +283,7 @@ namespace SpriteHelper.Contract
                 }
             }
 
-            if (showBoxes)
+            if (showBoxes && offsets.XOff != 255)
             {
                 image.DrawRectangle(MyBitmap.ThreatBoxColor, offsets.XOff, offsets.YOff, offsets.XOff + offsets.Width, offsets.YOff + offsets.Height);                
             }
