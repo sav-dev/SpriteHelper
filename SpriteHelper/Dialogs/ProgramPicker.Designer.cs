@@ -40,6 +40,7 @@
             this.chrProcessButton = new System.Windows.Forms.Button();
             this.bulletsButton = new System.Windows.Forms.Button();
             this.tilesetViewerButton = new System.Windows.Forms.Button();
+            this.logoButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // playerButton
@@ -162,11 +163,22 @@
             this.tilesetViewerButton.UseVisualStyleBackColor = true;
             this.tilesetViewerButton.Click += new System.EventHandler(this.TilesetViewerButtonClick);
             // 
+            // logoButton
+            // 
+            this.logoButton.Location = new System.Drawing.Point(35, 331);
+            this.logoButton.Name = "logoButton";
+            this.logoButton.Size = new System.Drawing.Size(172, 23);
+            this.logoButton.TabIndex = 12;
+            this.logoButton.Text = "Logo";
+            this.logoButton.UseVisualStyleBackColor = true;
+            this.logoButton.Click += new System.EventHandler(this.LogoButtonClick);
+            // 
             // ProgramPicker
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(244, 429);
+            this.Controls.Add(this.logoButton);
             this.Controls.Add(this.tilesetViewerButton);
             this.Controls.Add(this.bulletsButton);
             this.Controls.Add(this.chrProcessButton);
@@ -202,5 +214,6 @@
         private System.Windows.Forms.Button chrProcessButton;
         private System.Windows.Forms.Button bulletsButton;
         private System.Windows.Forms.Button tilesetViewerButton;
+        private System.Windows.Forms.Button logoButton;
     }
 }

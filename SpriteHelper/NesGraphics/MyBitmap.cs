@@ -22,10 +22,11 @@ namespace SpriteHelper.NesGraphics
         private int height;
         private Color[][] pixels;
 
-        private int? colorSkip;
+        private int[] colorSkips;
 
         public int Width { get { return this.width; } }
         public int Height { get { return this.height; } }
+       
         public Size Size { get { return new Size(this.width, this.height); } }
         public string FileName { get { return this.fileName; } }
 
@@ -35,8 +36,13 @@ namespace SpriteHelper.NesGraphics
             var bitmap = FromFile(split[0]);
             if (split.Length > 1)
             {
-                var colorSkip = int.Parse(split[1]);
-                bitmap.colorSkip = colorSkip;
+                var colorSkips = new List<int>();
+                for (var i = 1; i < split.Length; i++)
+                {
+                    colorSkips.Add(int.Parse(split[i]));
+                }
+
+                bitmap.colorSkips = colorSkips.ToArray();
             }
 
             return bitmap;
@@ -349,7 +355,7 @@ namespace SpriteHelper.NesGraphics
 
         public void MakeNesGreyscale()
         {
-            this.UpdateColors(this.UniqueColors(), NesGreyscale);
+             this.UpdateColors(this.UniqueColors(), NesGreyscale);
         }
 
         public void UpdateColors(Color[] sourceColors, Color[] targetColors)
@@ -359,9 +365,18 @@ namespace SpriteHelper.NesGraphics
 
         public void UpdateColors(List<Color> sourceColors, List<Color> targetColors)
         {
-            if (this.colorSkip.HasValue)
+            if (this.colorSkips != null)
             {
-                targetColors.RemoveAt(this.colorSkip.Value);
+                var colorsToRemove = new List<Color>();
+                foreach (var skip in colorSkips)
+                {
+                    colorsToRemove.Add(targetColors[skip]);
+                }
+
+                foreach (var color in colorsToRemove)
+                {
+                    targetColors.Remove(color);
+                }
             }
 
             if (sourceColors.Count != targetColors.Count)

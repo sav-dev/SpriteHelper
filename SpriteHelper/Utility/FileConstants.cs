@@ -31,5 +31,7 @@ namespace SpriteHelper
         public const string Desktop = @"C:\users\tomas\desktop";
 
         public const string Tilesets = @"C:\Users\tomas\Documents\NES\GitHub\Platformer\PlatformerGraphics\Backgrounds\list.xml";
+
+        public const string Logo = @"C:\Users\tomas\Documents\NES\GitHub\Platformer\PlatformerGraphics\Logo\logo.png";
     }
 }

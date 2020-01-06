@@ -68,6 +68,11 @@ namespace SpriteHelper.Dialogs
         private void CloseButtonClick(object sender, EventArgs e)
         {
             this.Close();
-        }        
+        }
+
+        private void LogoButtonClick(object sender, EventArgs e)
+        {
+            new LogoDialog().ShowDialog();
+        }
     }
 }
