@@ -4107,6 +4107,8 @@ namespace SpriteHelper.Dialogs
             private Action<string> onClick;
             private TileType tileType;
             private int palette;
+            private bool drawSelector;
+            private int scroll; // number of tiles scrolled
 
             public TileSelector(MyBitmap image, TileType tileType, int palette, Action<string> onClick)
             {
@@ -4118,37 +4120,92 @@ namespace SpriteHelper.Dialogs
                 this.onClick = onClick;
                 this.tileType = tileType;
                 this.palette = palette;
+                this.drawSelector = false;
+                this.scroll = 0;
 
                 this.MouseMove += TileSelectorMouseMove;
                 this.MouseLeave += TileSelectorMouseLeave;
                 this.MouseDown += TileSelectorMouseDown;
+                this.MouseWheel += TileSelectorMouseWheel;
             }
 
             private void TileSelectorMouseDown(object sender, MouseEventArgs e)
             {
                 var x = e.X / TileWidth;
-                var y = e.Y / TileHeight;
+                var y = e.Y / TileHeight + scroll;
                 onClick(TileIds.PaletteTileId(this.palette, this.tileType, x, y));            
             }
 
             private void TileSelectorMouseLeave(object sender, EventArgs e)
             {
-                this.Image = this.bitmap;
-                this.Refresh();
+                this.drawSelector = false;
+                this.UpdateBitmap();                
             }
 
             private void TileSelectorMouseMove(object sender, MouseEventArgs e)
             {
-                var x = e.X / TileWidth;
-                var y = e.Y / TileHeight;
-                var bitmapClone = new Bitmap(this.bitmap);
-                using (var graphics = Graphics.FromImage(bitmapClone))
+                this.drawSelector = true;
+                this.UpdateBitmap(e.X, e.Y);
+            }
+
+            private Bitmap GetBitmap(int eX = 0, int eY = 0)
+            {
+                Bitmap image;
+                if (this.drawSelector)
                 {
-                    graphics.DrawRectangle(new Pen(MyBitmap.GridColor, 2), x * TileWidth + 1, y * TileHeight + 1, TileWidth - 2, TileHeight - 2);
+                    var x = eX / TileWidth;
+                    var y = eY / TileHeight + scroll;
+                    var bitmapClone = new Bitmap(this.bitmap);
+                    using (var graphics = Graphics.FromImage(bitmapClone))
+                    {
+                        graphics.DrawRectangle(new Pen(MyBitmap.GridColor, 2), x * TileWidth + 1, y * TileHeight + 1, TileWidth - 2, TileHeight - 2);
+                    }
+
+                    image = bitmapClone;
+                }
+                else
+                {
+                    image = this.bitmap;
                 }
 
-                this.Image = bitmapClone;
+                return image;
+            }
+
+            private void UpdateBitmap(int eX = 0, int eY = 0)
+            {
+                var image = GetBitmap(eX, eY);
+                if (scroll > 0)
+                {
+                    var croppedImage = new Bitmap(image.Width, image.Height - scroll * (Constants.BackgroundTileHeight * Constants.LevelEditorZoom));
+                    using (var g = Graphics.FromImage(croppedImage))
+                    {
+                        g.DrawImage(
+                            image,
+                            new Rectangle(0, 0, croppedImage.Width, croppedImage.Height),
+                            new Rectangle(0, scroll * (Constants.BackgroundTileHeight * Constants.LevelEditorZoom), croppedImage.Width, croppedImage.Height),
+                            GraphicsUnit.Pixel);
+                    }
+
+                    image = croppedImage;
+                }
+                                
+                this.Image = image;
                 this.Refresh();
+            }
+
+            private void TileSelectorMouseWheel(object sender, MouseEventArgs e)
+            {
+                this.drawSelector = false; 
+                if (e.Delta > 0 && scroll > 0)
+                {
+                    scroll--;
+                }
+                else if (e.Delta < 0 && scroll < this.bitmap.Height / (Constants.BackgroundTileHeight * Constants.LevelEditorZoom) - 1)
+                {
+                    scroll++;
+                }
+
+                this.UpdateBitmap();
             }
         }
 
