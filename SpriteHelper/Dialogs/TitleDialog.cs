@@ -20,29 +20,28 @@ namespace SpriteHelper.Dialogs
 
         private void ProcessButtonClick(object sender, EventArgs e)
         {
-            var bytes = new List<byte>();
             var tiles = new List<MyBitmap>();
             var bgColor = Color.Black;
 
-            // 1st empty sprite
-            bytes.AddRange(Enumerable.Repeat((byte)0, 16));
-
             // Font
             var fontBitmap = MyBitmap.FromFile(fontTextBox.Text);
-            for (var x = 0; x < fontBitmap.Width; x += Constants.SpriteWidth)
+            for (var y = 0; y < fontBitmap.Height; y += Constants.SpriteHeight)                
             {
-                for (var y = 0; y < fontBitmap.Height; y += Constants.SpriteHeight)
+                for (var x = 0; x < fontBitmap.Width; x += Constants.SpriteWidth)
                 {
                     var part = fontBitmap.GetPart(x, y, Constants.SpriteWidth, Constants.SpriteHeight);
-                    tiles.Add(part);
+                    if (!part.IsSolidColor(part.GetPixel(0, 0)))
+                    {
+                        tiles.Add(part);
+                    }
                 }
             }
         
             // Logo
-            var logo = MyBitmap.FromFile(FileConstants.Logo);            
-            for (var x = 0; x < logo.Width; x += Constants.SpriteWidth)
+            var logo = MyBitmap.FromFile(FileConstants.Logo);
+            for (var y = 0; y < logo.Height; y += Constants.SpriteHeight)
             {
-                for (var y = 0; y < logo.Height; y += Constants.SpriteHeight)
+                for (var x = 0; x < logo.Width; x += Constants.SpriteWidth)                    
                 {
                     var tile = logo.GetPart(x, y, Constants.SpriteWidth, Constants.SpriteHeight);
                     if (!tiles.Any(t => t.Equals(tile)))
@@ -53,6 +52,9 @@ namespace SpriteHelper.Dialogs
             }
 
             // Create CHR.
+            // 1st empty sprite
+            var bytes = new List<byte>();
+            bytes.AddRange(Enumerable.Repeat((byte)0, 16));
             foreach (var tile in tiles)
             {
                 var lowBits = new List<byte>();
@@ -67,7 +69,8 @@ namespace SpriteHelper.Dialogs
                         lowBit = (byte)(lowBit << 1);
                         highBit = (byte)(highBit << 1);
 
-                        if (tile.GetPixel(x, y) != bgColor)
+                        var pixel = tile.GetPixel(x, y).ToArgb();
+                        if (pixel != bgColor.ToArgb())
                         {
                             lowBit |= 1;
                         }
