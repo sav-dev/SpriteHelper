@@ -135,7 +135,7 @@ namespace SpriteHelper.Dialogs
                 throw new Exception("Some const sprites were not added!");
             }
 
-            if (index >= 255)
+            if (index - 1 > 256)
             {
                 throw new Exception("Too many sprites!");
             }
