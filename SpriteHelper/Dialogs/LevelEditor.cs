@@ -182,8 +182,8 @@ namespace SpriteHelper.Dialogs
                 elevators = new Elevator[0];
                 this.playerStartingPosition = default(Point);
                 this.exitPosition = default(Point);
-                this.bgPalette = tileset;
-                this.tilesetId = palette;
+                this.bgPalette = palette;
+                this.tilesetId = tileset;
                 this.levelType = LevelType.Normal;
                 this.scrollSpeed = 1;
                 this.doorAndKeycard = null;
