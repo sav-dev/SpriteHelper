@@ -92,11 +92,11 @@
     <Compile Include="Dialogs\EditDoorAndKeycardDialog.Designer.cs">
       <DependentUpon>EditDoorAndKeycardDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\LogoDialog.cs">
+    <Compile Include="Dialogs\TitleDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Dialogs\LogoDialog.Designer.cs">
-      <DependentUpon>LogoDialog.cs</DependentUpon>
+    <Compile Include="Dialogs\TitleDialog.Designer.cs">
+      <DependentUpon>TitleDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\TilesetViewer.cs">
       <SubType>Form</SubType>
@@ -274,8 +274,8 @@
     <EmbeddedResource Include="Dialogs\Explosion.resx">
       <DependentUpon>Explosion.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\LogoDialog.resx">
-      <DependentUpon>LogoDialog.cs</DependentUpon>
+    <EmbeddedResource Include="Dialogs\TitleDialog.resx">
+      <DependentUpon>TitleDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\Player.resx">
       <DependentUpon>Player.cs</DependentUpon>

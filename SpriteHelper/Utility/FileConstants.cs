@@ -13,6 +13,7 @@ namespace SpriteHelper
         public const string ConstChr = ChrDirectory + "const.chr";
         public const string SprChr = ChrDirectory + "spr.chr";
         public const string BgChr = ChrDirectory + "bg_{0}.chr";
+        public const string TitleChr = ChrDirectory + "title.chr";
 
         public const string ConstChrConfig = @"C:\Users\tomas\Documents\NES\GitHub\Platformer\PlatformerGraphics\Sprites\constSprites.xml";
 
@@ -33,5 +34,6 @@ namespace SpriteHelper
         public const string Tilesets = @"C:\Users\tomas\Documents\NES\GitHub\Platformer\PlatformerGraphics\Backgrounds\list.xml";
 
         public const string Logo = @"C:\Users\tomas\Documents\NES\GitHub\Platformer\PlatformerGraphics\Logo\logo.png";
+        public const string Font = @"C:\Users\tomas\Documents\NES\GitHub\Platformer\PlatformerGraphics\Font\font.png";
     }
 }

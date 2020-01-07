@@ -20,7 +20,7 @@ namespace SpriteHelper.Dialogs
             InitializeComponent();
 
             var tilesets = Tilesets.Read(FileConstants.Tilesets);
-            this.inputTextBox.Lines = (new[] { FileConstants.SprChr }).Union(tilesets.LoadedSets.Select(ts => ts.ChrPath())).ToArray();
+            this.inputTextBox.Lines = (new[] { FileConstants.SprChr, FileConstants.TitleChr }).Union(tilesets.LoadedSets.Select(ts => ts.ChrPath())).ToArray();
         }
 
         private void ProcessButtonClick(object sender, EventArgs e)

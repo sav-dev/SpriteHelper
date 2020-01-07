@@ -70,9 +70,9 @@ namespace SpriteHelper.Dialogs
             this.Close();
         }
 
-        private void LogoButtonClick(object sender, EventArgs e)
+        private void TitleButtonClick(object sender, EventArgs e)
         {
-            new LogoDialog().ShowDialog();
+            new TitleDialog().ShowDialog();
         }
     }
 }
