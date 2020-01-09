@@ -34,9 +34,12 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.paletteComboBox = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.paletteLabel = new System.Windows.Forms.Panel();
+            this.paletteLabel = new System.Windows.Forms.Label();
+            this.picturePanel = new System.Windows.Forms.Panel();
+            this.pictureBox = new System.Windows.Forms.PictureBox();
             this.topPanel.SuspendLayout();
+            this.picturePanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // tilesetComboBox
@@ -63,7 +66,7 @@
             this.topPanel.Controls.Add(this.button2);
             this.topPanel.Controls.Add(this.button1);
             this.topPanel.Controls.Add(this.paletteComboBox);
-            this.topPanel.Controls.Add(this.label1);
+            this.topPanel.Controls.Add(this.paletteLabel);
             this.topPanel.Controls.Add(this.tilesetComboBox);
             this.topPanel.Controls.Add(this.tilesetLabel);
             this.topPanel.Dock = System.Windows.Forms.DockStyle.Top;
@@ -102,36 +105,51 @@
             this.paletteComboBox.TabIndex = 42;
             this.paletteComboBox.SelectedIndexChanged += new System.EventHandler(this.PaletteComboBoxSelectedIndexChanged);
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(188, 12);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(40, 13);
-            this.label1.TabIndex = 41;
-            this.label1.Text = "Palette";
-            // 
             // paletteLabel
             // 
-            this.paletteLabel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.paletteLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.paletteLabel.Location = new System.Drawing.Point(0, 42);
+            this.paletteLabel.AutoSize = true;
+            this.paletteLabel.Location = new System.Drawing.Point(188, 12);
             this.paletteLabel.Name = "paletteLabel";
-            this.paletteLabel.Size = new System.Drawing.Size(524, 561);
-            this.paletteLabel.TabIndex = 42;
+            this.paletteLabel.Size = new System.Drawing.Size(40, 13);
+            this.paletteLabel.TabIndex = 41;
+            this.paletteLabel.Text = "Palette";
+            // 
+            // picturePanel
+            // 
+            this.picturePanel.AutoScroll = true;
+            this.picturePanel.BackColor = System.Drawing.Color.Black;
+            this.picturePanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.picturePanel.Controls.Add(this.pictureBox);
+            this.picturePanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.picturePanel.Location = new System.Drawing.Point(0, 42);
+            this.picturePanel.Name = "picturePanel";
+            this.picturePanel.Size = new System.Drawing.Size(524, 519);
+            this.picturePanel.TabIndex = 42;
+            // 
+            // pictureBox
+            // 
+            this.pictureBox.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox.Name = "pictureBox";
+            this.pictureBox.Size = new System.Drawing.Size(100, 100);
+            this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox.TabIndex = 0;
+            this.pictureBox.TabStop = false;
             // 
             // TilesetViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(524, 603);
-            this.Controls.Add(this.paletteLabel);
+            this.ClientSize = new System.Drawing.Size(524, 561);
+            this.Controls.Add(this.picturePanel);
             this.Controls.Add(this.topPanel);
             this.Name = "TilesetViewer";
             this.Text = "TilesetViewer";
             this.Load += new System.EventHandler(this.TilesetViewerLoad);
             this.topPanel.ResumeLayout(false);
             this.topPanel.PerformLayout();
+            this.picturePanel.ResumeLayout(false);
+            this.picturePanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -141,10 +159,11 @@
         private System.Windows.Forms.ComboBox tilesetComboBox;
         private System.Windows.Forms.Label tilesetLabel;
         private System.Windows.Forms.Panel topPanel;
-        private System.Windows.Forms.Panel paletteLabel;
+        private System.Windows.Forms.Panel picturePanel;
         private System.Windows.Forms.ComboBox paletteComboBox;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label paletteLabel;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.PictureBox pictureBox;
     }
 }

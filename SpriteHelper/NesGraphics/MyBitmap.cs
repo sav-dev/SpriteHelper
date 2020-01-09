@@ -381,7 +381,7 @@ namespace SpriteHelper.NesGraphics
 
             if (sourceColors.Count != targetColors.Count)
             {
-                throw new Exception("Invalid number of colors provided");
+                 throw new Exception("Invalid number of colors provided");
             }
 
             if (this.UniqueColors().Any(c => !sourceColors.Contains(c)))

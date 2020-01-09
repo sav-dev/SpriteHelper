@@ -14,7 +14,9 @@ namespace SpriteHelper.Dialogs
     {
         private const int minWidth = 525;
         private const int maxWidth = 1250;
+        private const int maxHeight = 600;
         private const int heightOffset = 83;
+        private const int widthOffset = 50;
 
         private Tilesets config;
         private Palettes palettes;
@@ -121,12 +123,13 @@ namespace SpriteHelper.Dialogs
                 bigBitmap.DrawImage(bitmap, 10 + (i % 2) * (bitmap.Width + 10), 10 + (i / 2) * (bitmap.Height + 10));
             }
 
-            this.paletteLabel.BackgroundImage = bigBitmap.ToBitmap();
+            this.pictureBox.Image = bigBitmap.ToBitmap();
 
             var newWidth = Math.Max(bigBitmap.Width, minWidth);
-            var newHeight = bigBitmap.Height;
-            this.Width = newWidth;
-            this.Height = newHeight + heightOffset;
+            var newHeight = bigBitmap.Height + heightOffset;
+            this.Width = newWidth + widthOffset;
+            this.Height = Math.Min(newHeight, maxHeight);
+            this.Refresh();
         }
 
         private void Button1Click(object sender, EventArgs e)

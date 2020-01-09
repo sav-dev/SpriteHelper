@@ -1290,6 +1290,7 @@ namespace SpriteHelper.Dialogs
                 {
                     Tiles = this.level,
                     BgPalette = this.bgPalette,
+                    TilesetId = this.tilesetId,
                     Enemies = this.Enemies,
                     Elevators = this.Elevators,
                     PlayerStartingPosition = this.playerStartingPosition,
