@@ -22,7 +22,14 @@ namespace SpriteHelper.Dialogs
 
         private void ProcessButtonClick(object sender, EventArgs e)
         {
-            this.Process();
+            try
+            {
+                this.Process();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
 
         private void Process()

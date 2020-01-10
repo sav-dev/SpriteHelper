@@ -516,7 +516,17 @@ namespace SpriteHelper.Dialogs
                     {
                         var sprite = firstFrame.Sprites[y * firstFrame.Width + x];
 
-                        var mapping = sprite.Id == -1 ? 0 : sprite.ActualSprite.Mapping;
+                        long mapping;
+                        if (sprite.Id == -1)
+                        {
+                            mapping = animation.Frames.Select(f => f.Sprites[y * firstFrame.Width + x]).Where(s => s.Id != -1).FirstOrDefault()?.ActualSprite?.Mapping ?? 0;
+                        }
+                        else
+                        {
+                            mapping = sprite.ActualSprite.Mapping;
+
+                        }
+
                         var atts = this.config.PaletteMappings[mapping].ToPalette + animation.AttsUpdate; // handle clones
 
                         if (sprite.HFlip)

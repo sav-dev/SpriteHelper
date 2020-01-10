@@ -141,7 +141,7 @@ namespace SpriteHelper.Dialogs
             }
             else
             {
-                this.Redraw();
+                this.Reload();
             }
         }
 
@@ -185,7 +185,7 @@ Tilesets:");
             return builder.ToString();
         }
 
-        private void ReloadButtonClick(object sender, EventArgs e)
+        private void Reload()
         {
             var previousTileset = SelectedTileset;
             var previousPalette = SelectedPalette;
