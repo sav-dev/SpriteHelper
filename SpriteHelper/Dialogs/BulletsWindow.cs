@@ -340,6 +340,17 @@ namespace SpriteHelper.Dialogs
                 throw new Exception("We expect player bullet box DX/DY to be 0!");
             }
 
+
+            var bossRightHandBullet = this.config.Bullets.First(b => b.Name == "Boss Right Hand").BulletId * Constants.BulletDefinitionSize;
+            var bossLeftHandBullet = this.config.Bullets.First(b => b.Name == "Boss Left Hand").BulletId * Constants.BulletDefinitionSize;
+            if (bossRightHandBullet >= bossLeftHandBullet)
+            {
+                throw new Exception("bossRightHandBullet >= bossLeftHandBullet");
+            }
+            builder.AppendLine();
+            builder.AppendLine($"BOSS_RIGHT_HAND_BULLET = {ToHex(bossRightHandBullet)}");
+            builder.AppendLine($"BOSS_LEFT_HAND_BULLET = {ToHex(bossLeftHandBullet)}");
+
             return builder.ToString();
         }
 

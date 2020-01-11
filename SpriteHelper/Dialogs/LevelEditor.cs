@@ -2910,8 +2910,8 @@ namespace SpriteHelper.Dialogs
             {
                 result.Add(0);
 
-                // todo game 0001 - for now assume all enemies must be destroyed. Later add some tagging for bosses.
-                // This logic is the same as enemies export.
+                // All destroyable enemies must be destroyed.
+                // This logic is the same as enemies export to ensure the ids match.
                 var resultVar = 0;
                 var enemyId = 0;
                 var width = this.level.Length;
