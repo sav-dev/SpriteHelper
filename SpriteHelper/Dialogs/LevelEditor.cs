@@ -2106,7 +2106,55 @@ namespace SpriteHelper.Dialogs
             }
 
             File.WriteAllBytes(fileName, bytes);
+
+            if (this.levelType == LevelType.Boss)
+            {
+                new CodeWindow(GetBossData()).ShowDialog();
+            }
         }
+
+        private string GetBossData()
+        {
+            var h = this.Enemies.First(e => e.Animation.Name == "Boss head");
+            var rh = this.Enemies.First(e => e.Animation.Name == "Boss right hand");
+            var lh = this.Enemies.First(e => e.Animation.Name == "Boss left hand");
+
+            var rhSlot = 0;
+            for (var i = 0; i < this.Enemies.Length; i++)
+            {
+                if (this.Enemies[i].Animation.Name == "Boss right hand")
+                {
+                    rhSlot = i;
+                }
+            }
+
+            var rhInMemory = rhSlot * Constants.EnemyInMemorySize;
+            var rhAnimationFrame = rhInMemory + Constants.EnemyInMemorySize - 1; // animation frame is last
+
+            var hSlot = 0;
+            for (var i = 0; i < this.Enemies.Length; i++)
+            {
+                if (this.Enemies[i].Animation.Name == "Boss head")
+                {
+                    hSlot = i;
+                }
+            }
+
+            var hInMemory = hSlot * Constants.EnemyInMemorySize;
+            var hY = hInMemory + 15; // 15 = position of enemy y in memory
+
+            var builder = new StringBuilder();
+            builder.AppendLine($"BOSS_HEAD_X = {ToHex(h.X - h.Screen * Constants.ScreenWidth)}");
+            builder.AppendLine($"BOSS_HEAD_Y = {ToHex(hY)}");
+            builder.AppendLine($"BOSS_RH_X = {ToHex(rh.X - h.Screen * Constants.ScreenWidth)}");
+            builder.AppendLine($"BOSS_RH_Y = {ToHex(rh.Y)}");
+            builder.AppendLine($"BOSS_LH_X = {ToHex(lh.X - h.Screen * Constants.ScreenWidth)}");
+            builder.AppendLine($"BOSS_LH_Y = {ToHex(lh.Y)}");
+            builder.AppendLine($"BOSS_H_FRAME = {ToHex(rhAnimationFrame)}");
+            return builder.ToString();
+        }
+
+        private string ToHex(int n) => $"${n:X2}";
 
         private byte[] GetExportPayload(TextWriter logger = null)
         {
