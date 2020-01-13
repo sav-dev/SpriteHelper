@@ -2875,7 +2875,7 @@ namespace SpriteHelper.Dialogs
             //   - next 3 bytes: depends on level type:
             //     - normal: exit position (screen/x/y)
             //     - jetpack: scroll speed (1 byte, 2 bytes are not important)
-            //     - boss: 1st byte must be 0, 2nd byte is victory condition, 3rd byte is not important
+            //     - boss: 1st byte must be 0, 2nd byte is victory condition, 3rd byte must be 0
 
             var result = new List<byte>();
             result.Add((byte)this.levelType);
