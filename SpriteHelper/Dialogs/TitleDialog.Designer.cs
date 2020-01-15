@@ -35,6 +35,8 @@
             this.chrOutputTextBox = new System.Windows.Forms.TextBox();
             this.chrOutputLabel = new System.Windows.Forms.Label();
             this.processButton = new System.Windows.Forms.Button();
+            this.stringsTextBox = new System.Windows.Forms.TextBox();
+            this.stringsLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // fontTextBox
@@ -90,19 +92,38 @@
             // 
             // processButton
             // 
-            this.processButton.Location = new System.Drawing.Point(478, 79);
+            this.processButton.Location = new System.Drawing.Point(431, 103);
             this.processButton.Name = "processButton";
-            this.processButton.Size = new System.Drawing.Size(75, 23);
+            this.processButton.Size = new System.Drawing.Size(122, 23);
             this.processButton.TabIndex = 55;
-            this.processButton.Text = "Process";
+            this.processButton.Text = "Process and get code";
             this.processButton.UseVisualStyleBackColor = true;
             this.processButton.Click += new System.EventHandler(this.ProcessButtonClick);
+            // 
+            // stringsTextBox
+            // 
+            this.stringsTextBox.Location = new System.Drawing.Point(75, 77);
+            this.stringsTextBox.Name = "stringsTextBox";
+            this.stringsTextBox.ReadOnly = true;
+            this.stringsTextBox.Size = new System.Drawing.Size(478, 20);
+            this.stringsTextBox.TabIndex = 56;
+            // 
+            // stringsLabel
+            // 
+            this.stringsLabel.AutoSize = true;
+            this.stringsLabel.Location = new System.Drawing.Point(7, 80);
+            this.stringsLabel.Name = "stringsLabel";
+            this.stringsLabel.Size = new System.Drawing.Size(39, 13);
+            this.stringsLabel.TabIndex = 57;
+            this.stringsLabel.Text = "Strings";
             // 
             // TitleDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(560, 111);
+            this.ClientSize = new System.Drawing.Size(560, 139);
+            this.Controls.Add(this.stringsTextBox);
+            this.Controls.Add(this.stringsLabel);
             this.Controls.Add(this.processButton);
             this.Controls.Add(this.fontTextBox);
             this.Controls.Add(this.fontLabel);
@@ -126,5 +147,7 @@
         private System.Windows.Forms.TextBox chrOutputTextBox;
         private System.Windows.Forms.Label chrOutputLabel;
         private System.Windows.Forms.Button processButton;
+        private System.Windows.Forms.TextBox stringsTextBox;
+        private System.Windows.Forms.Label stringsLabel;
     }
 }

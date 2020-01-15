@@ -34,6 +34,7 @@ namespace SpriteHelper
         public const string Tilesets = @"C:\Users\tomas\Documents\NES\GitHub\Platformer\PlatformerGraphics\Backgrounds\list.xml";
 
         public const string Logo = @"C:\Users\tomas\Documents\NES\GitHub\Platformer\PlatformerGraphics\Logo\logo.png";
-        public const string Font = @"C:\Users\tomas\Documents\NES\GitHub\Platformer\PlatformerGraphics\Font\font.png";
+        public const string Font = @"C:\Users\tomas\Documents\NES\GitHub\Platformer\PlatformerGraphics\Strings\font.png";
+        public const string Strings = @"C:\Users\tomas\Documents\NES\GitHub\Platformer\PlatformerGraphics\Strings\strings.xml";
     }
 }
