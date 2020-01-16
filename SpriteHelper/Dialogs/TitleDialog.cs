@@ -26,11 +26,13 @@ namespace SpriteHelper.Dialogs
             this.fontTextBox.Text = FileConstants.Font;
             this.chrOutputTextBox.Text = FileConstants.TitleChr;
             this.stringsTextBox.Text = FileConstants.Strings;
+            this.cursorTextBox.Text = FileConstants.Cursor;
         }
 
         private void ProcessButtonClick(object sender, EventArgs e)
         {
             var tiles = new List<MyBitmap>();
+            var atts = new List<int>();
             var bgColor = Color.Black;
 
             // Font
@@ -48,6 +50,7 @@ namespace SpriteHelper.Dialogs
                         {
                             emptyFound = true;
                             tiles.Add(part);
+                            atts.Add(1);
                         }
                         else
                         {
@@ -62,6 +65,7 @@ namespace SpriteHelper.Dialogs
                         }
 
                         tiles.Add(part);
+                        atts.Add(1);
                     }
                 }
             }
@@ -72,7 +76,7 @@ namespace SpriteHelper.Dialogs
             }
         
             // Logo
-            var logo = MyBitmap.FromFile(FileConstants.Logo);
+            var logo = MyBitmap.FromFile(this.logoTextBox.Text);
             var ids = new int[logo.Width / Constants.SpriteWidth, logo.Height / Constants.SpriteHeight];
             for (var y = 0; y < logo.Height; y += Constants.SpriteHeight)
             {
@@ -82,19 +86,30 @@ namespace SpriteHelper.Dialogs
                     if (!tiles.Any(t => t.Equals(tile)))
                     {
                         tiles.Add(tile);
+                        atts.Add(3);
                     }
 
                     ids[x / Constants.SpriteWidth, y / Constants.SpriteHeight] = tiles.IndexOf(tile);
                 }
             }
 
+            // Cursor.
+            var cursor = MyBitmap.FromFile(this.cursorTextBox.Text);
+            var cursorId = tiles.Count;
+            tiles.Add(cursor);
+            atts.Add(2);
+
             // Create CHR.
             // 1st empty sprite
             var bytes = new List<byte>();
-            foreach (var tile in tiles)
+            for (var i = 0; i < tiles.Count; i++)
             {
+                var tile = tiles[i];
+                var attsForTile = atts[i];
+
                 var lowBits = new List<byte>();
                 var highBits = new List<byte>();
+
                 for (var y = 0; y < Constants.SpriteHeight; y++)
                 {
                     byte lowBit = 0;
@@ -108,22 +123,16 @@ namespace SpriteHelper.Dialogs
                         var pixel = tile.GetPixel(x, y).ToArgb();
                         if (pixel != bgColor.ToArgb())
                         {
-                            lowBit |= 1;
-                        }
+                            if (attsForTile == 1 || attsForTile == 3)
+                            {
+                                lowBit |= 1;
+                            }
 
-                        ////var pixel = 0 .. 3
-                        ////
-                        ////if (pixel == 1 || pixel == 3)
-                        ////{
-                        ////    // low bit set
-                        ////    lowBit |= 1;
-                        ////}
-                        ////
-                        ////if (pixel == 2 || pixel == 3)
-                        ////{
-                        ////    // high bit set
-                        ////    highBit |= 1;
-                        ////}
+                            if (attsForTile == 2 || attsForTile == 3)
+                            {
+                                highBit |= 1;
+                            }
+                        }                        
                     }
 
                     lowBits.Add(lowBit);
@@ -138,11 +147,11 @@ namespace SpriteHelper.Dialogs
             File.WriteAllBytes(chrOutputTextBox.Text, bytes.ToArray());
 
             // Get code.
-            var code = this.GetCode(logo, ids);
+            var code = this.GetCode(logo, ids, cursorId);
             new CodeWindow(code).ShowDialog();
         }
 
-        private string GetCode(MyBitmap logo, int[,] logoIds)
+        private string GetCode(MyBitmap logo, int[,] logoIds, int cursorId)
         {
             var builder = new StringBuilder();
             builder.AppendLine(
@@ -154,7 +163,11 @@ namespace SpriteHelper.Dialogs
 ;****************************************************************
 ");
             GetLogoData(builder, logo, logoIds);
-            GetStringsData(builder); 
+            GetStringsData(builder);
+
+            builder.AppendLine();
+            builder.AppendLine($"CURSOR_TILE = {ToHex(cursorId)}");
+            builder.AppendLine();
 
             builder.AppendLine(@"
 LogoAndTextDataEnd:");

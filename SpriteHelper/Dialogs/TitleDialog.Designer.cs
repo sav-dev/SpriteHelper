@@ -37,6 +37,8 @@
             this.processButton = new System.Windows.Forms.Button();
             this.stringsTextBox = new System.Windows.Forms.TextBox();
             this.stringsLabel = new System.Windows.Forms.Label();
+            this.cursorTextBox = new System.Windows.Forms.TextBox();
+            this.cursorLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // fontTextBox
@@ -92,7 +94,7 @@
             // 
             // processButton
             // 
-            this.processButton.Location = new System.Drawing.Point(431, 103);
+            this.processButton.Location = new System.Drawing.Point(431, 127);
             this.processButton.Name = "processButton";
             this.processButton.Size = new System.Drawing.Size(122, 23);
             this.processButton.TabIndex = 55;
@@ -117,11 +119,30 @@
             this.stringsLabel.TabIndex = 57;
             this.stringsLabel.Text = "Strings";
             // 
+            // cursorTextBox
+            // 
+            this.cursorTextBox.Location = new System.Drawing.Point(75, 101);
+            this.cursorTextBox.Name = "cursorTextBox";
+            this.cursorTextBox.ReadOnly = true;
+            this.cursorTextBox.Size = new System.Drawing.Size(478, 20);
+            this.cursorTextBox.TabIndex = 58;
+            // 
+            // cursorLabel
+            // 
+            this.cursorLabel.AutoSize = true;
+            this.cursorLabel.Location = new System.Drawing.Point(7, 104);
+            this.cursorLabel.Name = "cursorLabel";
+            this.cursorLabel.Size = new System.Drawing.Size(37, 13);
+            this.cursorLabel.TabIndex = 59;
+            this.cursorLabel.Text = "Cursor";
+            // 
             // TitleDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(560, 139);
+            this.ClientSize = new System.Drawing.Size(560, 163);
+            this.Controls.Add(this.cursorTextBox);
+            this.Controls.Add(this.cursorLabel);
             this.Controls.Add(this.stringsTextBox);
             this.Controls.Add(this.stringsLabel);
             this.Controls.Add(this.processButton);
@@ -149,5 +170,7 @@
         private System.Windows.Forms.Button processButton;
         private System.Windows.Forms.TextBox stringsTextBox;
         private System.Windows.Forms.Label stringsLabel;
+        private System.Windows.Forms.TextBox cursorTextBox;
+        private System.Windows.Forms.Label cursorLabel;
     }
 }
