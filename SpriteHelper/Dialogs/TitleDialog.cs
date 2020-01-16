@@ -170,8 +170,14 @@ LogoAndTextDataEnd:");
 ;****************************************************************
 ");
 
-            builder.AppendLine($"LOGO_X = {ToHex(((256 - logo.Width) / 2) / Constants.SpriteHeight)}");
-            builder.AppendLine($"LOGO_Y = {ToHex(5)}"); // todo 0010 tweak this?
+            var logoX = ((256 - logo.Width) / 2) / Constants.SpriteHeight;
+            var logoY = 5; // todo 0010 tweak this?
+            var initLogoAddrs = 8192 + logoX + logoY * 32;
+
+            builder.AppendLine($"LOGO_X = {ToHex(logoX)}");
+            builder.AppendLine($"LOGO_Y = {ToHex(logoY)}");
+            builder.AppendLine($"INITIAL_LOGO_ADDR_L = {ToHex(initLogoAddrs % 256)}");
+            builder.AppendLine($"INITIAL_LOGO_ADDR_H = {ToHex(initLogoAddrs / 256)}");
             builder.AppendLine($"LOGO_ROW_LENGTH = {ToHex(logoIds.GetLength(0))}");
             builder.AppendLine($"LOGO_ROWS = {ToHex(logoIds.GetLength(1))}");
             builder.AppendLine("Logo:");
