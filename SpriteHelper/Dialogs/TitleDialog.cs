@@ -171,7 +171,7 @@ LogoAndTextDataEnd:");
 ");
 
             var logoX = ((256 - logo.Width) / 2) / Constants.SpriteHeight;
-            var logoY = 5; // todo 0010 tweak this?
+            var logoY = 5;
             var initLogoAddrs = 8192 + logoX + logoY * 32;
 
             builder.AppendLine($"LOGO_X = {ToHex(logoX)}");
