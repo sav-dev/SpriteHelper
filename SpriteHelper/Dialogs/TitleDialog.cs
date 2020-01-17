@@ -235,13 +235,24 @@ LogoAndTextDataEnd:");
 
             builder.AppendLine("StringPointers:");
 
-            for (var i = 0; i < stringConfig.Strings.Length; i++)
+            var maxId = stringConfig.Strings.Max(s => s.Id);           
+            for (var i = 0; i < maxId; i++)
             {
-                var str = stringConfig.Strings[i];
-                builder.AppendLine($"; {str.Id}");
-                builder.AppendLine($"; \"{str.Value}\"");
-                builder.AppendLine($"STR_{str.Id} = {i * 2}"); // x2 because it's a pointer
-                builder.AppendLine($"  .byte LOW(string{str.Id}), HIGH(string{str.Id})");
+                builder.AppendLine($"; {i}");
+
+                var str = stringConfig.Strings.FirstOrDefault(s => s.Id == i);
+                if (str != null)
+                {
+                    builder.AppendLine($"; \"{str.Value}\"");
+                    builder.AppendLine($"STR_{i} = {i * 2}"); // x2 because it's a pointer
+                    builder.AppendLine($"  .byte LOW(string{i}), HIGH(string{i})");
+                }
+                else
+                {
+                    builder.AppendLine($"; placeholder");
+                    builder.AppendLine($"  .byte $00, $00");
+                }
+
                 builder.AppendLine();
             }
 

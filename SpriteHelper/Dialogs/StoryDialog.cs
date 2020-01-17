@@ -104,22 +104,7 @@ namespace SpriteHelper.Dialogs
             {
                 payload.Add((byte)str.X);
                 payload.Add((byte)str.Y);
-
-                var found = false;
-                for (var i = 0; i < this.stringsConfig.Strings.Length; i++)
-                {
-                    if (this.stringsConfig.Strings[i].Id == str.StringId)
-                    {
-                        payload.Add((byte)(i * 2));  // x2 because it's a pointer
-                        found = true;
-                        break;
-                    }
-                }
-
-                if (!found)
-                {
-                    throw new System.Exception("String id not found");
-                }
+                payload.Add((byte)(str.StringId * 2)); // x2 because it's a pointer
             }
 
             File.WriteAllBytes(fileName, payload.ToArray());
