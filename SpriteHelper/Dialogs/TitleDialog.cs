@@ -236,7 +236,7 @@ LogoAndTextDataEnd:");
             builder.AppendLine("StringPointers:");
 
             var maxId = stringConfig.Strings.Max(s => s.Id);           
-            for (var i = 0; i < maxId; i++)
+            for (var i = 0; i <= maxId; i++)
             {
                 builder.AppendLine($"; {i}");
 
