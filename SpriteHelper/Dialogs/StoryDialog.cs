@@ -10,6 +10,7 @@ namespace SpriteHelper.Dialogs
     public partial class StoryDialog : Form
     {
         private Story story;
+        private StringsConfig stringsConfig;
 
         private const int PressStartX = 10;
         private const int PressStartY = 24;
@@ -39,7 +40,7 @@ namespace SpriteHelper.Dialogs
         private void LoadButtonClick(object sender, System.EventArgs e)
         {
             this.story = Story.Read(this.storyTextBox.Text);
-            var stringsConfig = StringsConfig.Read(this.stringsTextBox.Text);
+            this.stringsConfig = StringsConfig.Read(this.stringsTextBox.Text);
             var tiles = new List<MyBitmap>();
             TitleDialog.ProcessFont(this.fontTextBox.Text, tiles);
 
@@ -52,25 +53,25 @@ namespace SpriteHelper.Dialogs
                     throw new System.Exception("Invalid string position");
                 }
 
-                var str = stringsConfig.Strings.First(s => s.Id == strData.StringId).Value;
+                var str = this.stringsConfig.Strings.First(s => s.Id == strData.StringId).Value;
                 if (str.Length > 30)
                 {
                     throw new System.Exception("Invalid string length");
                 }
 
-                strings.Add(new StringToRedner(strData.X, strData.Y, str));
+                strings.Add(new StringToRedner(strData.X, strData.Y, str.ToLower()));
             }
 
             strings.Add(new StringToRedner(PressStartX, PressStartY, PressStart));
 
-            var bmp = new MyBitmap(512, 448, System.Drawing.Color.Black);
+            var bmp = new MyBitmap(512, 448, System.Drawing.Color.Black); // 448 means NTSC
             foreach (var str in strings)
             {
                 var x = str.X;
                 foreach (var chr in str.Str.ToCharArray())
                 {
                     var tile = tiles[TitleDialog.Chars.IndexOf(chr)].Scale(BitmapZoom);
-                    bmp.DrawImage(tile, x * Constants.SpriteWidth * BitmapZoom, str.Y * Constants.SpriteHeight * BitmapZoom);
+                    bmp.DrawImage(tile, x * Constants.SpriteWidth * BitmapZoom, (str.Y - 1) * Constants.SpriteHeight * BitmapZoom); // - 1 because of NTSC
                     x++;
                 }
             }
@@ -103,7 +104,22 @@ namespace SpriteHelper.Dialogs
             {
                 payload.Add((byte)str.X);
                 payload.Add((byte)str.Y);
-                payload.Add((byte)str.StringId);
+
+                var found = false;
+                for (var i = 0; i < this.stringsConfig.Strings.Length; i++)
+                {
+                    if (this.stringsConfig.Strings[i].Id == str.StringId)
+                    {
+                        payload.Add((byte)(i * 2));  // x2 because it's a pointer
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (!found)
+                {
+                    throw new System.Exception("String id not found");
+                }
             }
 
             File.WriteAllBytes(fileName, payload.ToArray());
