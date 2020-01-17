@@ -13,7 +13,7 @@ namespace SpriteHelper.Dialogs
     public partial class TitleDialog : Form
     {
         // these must be in these order in the fonts file
-        private readonly List<char> chars = new List<char> {
+        public static readonly List<char> Chars = new List<char> {
             ' ', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
             'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k',
             'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
@@ -36,41 +36,8 @@ namespace SpriteHelper.Dialogs
             var bgColor = Color.Black;
 
             // Font
-            var emptyFound = false;
-            var secondEmptyFound = false;
-            var fontBitmap = MyBitmap.FromFile(fontTextBox.Text);
-            for (var y = 0; y < fontBitmap.Height; y += Constants.SpriteHeight)                
-            {
-                for (var x = 0; x < fontBitmap.Width; x += Constants.SpriteWidth)
-                {
-                    var part = fontBitmap.GetPart(x, y, Constants.SpriteWidth, Constants.SpriteHeight);
-                    if (part.IsSolidColor(part.GetPixel(0, 0)))
-                    {
-                        if (!emptyFound)
-                        {
-                            emptyFound = true;
-                            tiles.Add(part);
-                            atts.Add(1);
-                        }
-                        else
-                        {
-                            secondEmptyFound = true;
-                        }
-                    }
-                    else
-                    {
-                        if (secondEmptyFound)
-                        {
-                            throw new Exception("Empty font tile in the middle of other tiles");
-                        }
-
-                        tiles.Add(part);
-                        atts.Add(1);
-                    }
-                }
-            }
-
-            if (tiles.Count != this.chars.Count)
+            ProcessFont(this.fontTextBox.Text, tiles, atts);
+            if (tiles.Count != Chars.Count)
             {
                 throw new Exception("Invalid number of tiles in the font bmp");
             }
@@ -151,6 +118,49 @@ namespace SpriteHelper.Dialogs
             new CodeWindow(code).ShowDialog();
         }
 
+        public static void ProcessFont(string fontBmp, IList<MyBitmap> tiles, IList<int> atts = null)
+        {
+            var emptyFound = false;
+            var secondEmptyFound = false;
+            var fontBitmap = MyBitmap.FromFile(fontBmp);
+            for (var y = 0; y < fontBitmap.Height; y += Constants.SpriteHeight)
+            {
+                for (var x = 0; x < fontBitmap.Width; x += Constants.SpriteWidth)
+                {
+                    var part = fontBitmap.GetPart(x, y, Constants.SpriteWidth, Constants.SpriteHeight);
+                    if (part.IsSolidColor(part.GetPixel(0, 0)))
+                    {
+                        if (!emptyFound)
+                        {
+                            emptyFound = true;
+                            tiles.Add(part);
+                            if (atts != null)
+                            {
+                                atts.Add(1);
+                            }                            
+                        }
+                        else
+                        {
+                            secondEmptyFound = true;
+                        }
+                    }
+                    else
+                    {
+                        if (secondEmptyFound)
+                        {
+                            throw new Exception("Empty font tile in the middle of other tiles");
+                        }
+
+                        tiles.Add(part);
+                        if (atts != null)
+                        {
+                            atts.Add(1);
+                        }
+                    }
+                }
+            }
+        }
+
         private string GetCode(MyBitmap logo, int[,] logoIds, int cursorId)
         {
             var builder = new StringBuilder();
@@ -223,18 +233,16 @@ LogoAndTextDataEnd:");
 ;****************************************************************
 ");
 
-            foreach (var str in stringConfig.Strings)
+            builder.AppendLine("StringPointers:");
+
+            for (var i = 0; i < stringConfig.Strings.Length; i++)
             {
+                var str = stringConfig.Strings[i];
                 builder.AppendLine($"; {str.Id}");
                 builder.AppendLine($"; \"{str.Value}\"");
-                builder.AppendLine($"STR_{str.Id} = {str.Id * 2}"); // x2 because it's a pointer
-                builder.AppendLine();
-            }
-
-            builder.AppendLine("StringPointers:");
-            foreach (var str in stringConfig.Strings)
-            {
+                builder.AppendLine($"STR_{str.Id} = {i * 2}"); // x2 because it's a pointer
                 builder.AppendLine($"  .byte LOW(string{str.Id}), HIGH(string{str.Id})");
+                builder.AppendLine();
             }
 
             builder.AppendLine();
@@ -260,12 +268,12 @@ LogoAndTextDataEnd:");
 
             foreach (var chr in str.ToLower().ToCharArray())
             {
-                if (!this.chars.Contains(chr))
+                if (!Chars.Contains(chr))
                 {
                     throw new Exception($"Invalid character: {chr}");
                 }
 
-                bytes.Add((byte)this.chars.IndexOf(chr));
+                bytes.Add((byte)Chars.IndexOf(chr));
             }
 
             return bytes.ToArray();

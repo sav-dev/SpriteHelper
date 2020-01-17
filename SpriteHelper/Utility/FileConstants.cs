@@ -28,6 +28,7 @@ namespace SpriteHelper
         public const string EnemiesSpec = @"C:\Users\tomas\Documents\NES\GitHub\Platformer\PlatformerGraphics\Sprites\enemies.xml";
 
         public const string LevelsDir = @"C:\Users\tomas\Documents\NES\GitHub\Platformer\data\levels";
+        public const string StoriesDir = @"C:\Users\tomas\Documents\NES\GitHub\Platformer\data\stories";
 
         public const string Desktop = @"C:\users\tomas\desktop";
 

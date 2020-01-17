@@ -74,5 +74,10 @@ namespace SpriteHelper.Dialogs
         {
             new TitleDialog().ShowDialog();
         }
+
+        private void StoryButtonClick(object sender, EventArgs e)
+        {
+            new StoryDialog().ShowDialog();
+        }
     }
 }

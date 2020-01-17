@@ -41,6 +41,7 @@
             this.bulletsButton = new System.Windows.Forms.Button();
             this.tilesetViewerButton = new System.Windows.Forms.Button();
             this.titleButton = new System.Windows.Forms.Button();
+            this.storyButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // playerButton
@@ -85,7 +86,7 @@
             // 
             // closeButton
             // 
-            this.closeButton.Location = new System.Drawing.Point(35, 394);
+            this.closeButton.Location = new System.Drawing.Point(35, 425);
             this.closeButton.Name = "closeButton";
             this.closeButton.Size = new System.Drawing.Size(172, 23);
             this.closeButton.TabIndex = 4;
@@ -173,11 +174,22 @@
             this.titleButton.UseVisualStyleBackColor = true;
             this.titleButton.Click += new System.EventHandler(this.TitleButtonClick);
             // 
+            // storyButton
+            // 
+            this.storyButton.Location = new System.Drawing.Point(35, 360);
+            this.storyButton.Name = "storyButton";
+            this.storyButton.Size = new System.Drawing.Size(172, 23);
+            this.storyButton.TabIndex = 13;
+            this.storyButton.Text = "Story";
+            this.storyButton.UseVisualStyleBackColor = true;
+            this.storyButton.Click += new System.EventHandler(this.StoryButtonClick);
+            // 
             // ProgramPicker
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(244, 429);
+            this.ClientSize = new System.Drawing.Size(244, 460);
+            this.Controls.Add(this.storyButton);
             this.Controls.Add(this.titleButton);
             this.Controls.Add(this.tilesetViewerButton);
             this.Controls.Add(this.bulletsButton);
@@ -215,5 +227,6 @@
         private System.Windows.Forms.Button bulletsButton;
         private System.Windows.Forms.Button tilesetViewerButton;
         private System.Windows.Forms.Button titleButton;
+        private System.Windows.Forms.Button storyButton;
     }
 }
