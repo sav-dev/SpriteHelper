@@ -235,7 +235,12 @@ LogoAndTextDataEnd:");
 
             builder.AppendLine("StringPointers:");
 
-            var maxId = stringConfig.Strings.Max(s => s.Id);           
+            var maxId = stringConfig.Strings.Max(s => s.Id);
+            if (maxId > 127)
+            {
+                throw new Exception("Too many strings");
+            }
+                       
             for (var i = 0; i <= maxId; i++)
             {
                 builder.AppendLine($"; {i}");
