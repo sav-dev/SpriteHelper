@@ -41,12 +41,16 @@ namespace SpriteHelper.Contract
         [DataMember]
         public int ExplosionId { get; set; }
 
+        [DataMember]
+        public string Sound { get; set; }
+
         public void SetFrom(Animation other)
         {
             this.AnimationSpeed = other.AnimationSpeed;
             this.Flip = other.Flip;
             this.Offsets = other.Offsets;
             this.MaxHealth = other.MaxHealth;
+            this.Sound = other.Sound;
         }
 
         // Same as ORIENTATION_* consts

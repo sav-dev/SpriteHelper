@@ -230,6 +230,9 @@ namespace SpriteHelper.Dialogs
                 builder.AppendLineFormat(".pointer:");
                 var name = animation.CopyOf == 0 ? animation.Name : config.Animations.First(a => a.Id == animation.CopyOf).Name;
                 builder.AppendLineFormat($"  .byte LOW({name}Tiles), HIGH({name}Tiles)");
+
+                builder.AppendLineFormat(".sound:");
+                builder.AppendLineFormat($"  .byte {animation.Sound}");
             }
 
             builder.AppendLine();
