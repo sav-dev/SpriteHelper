@@ -1,5 +1,6 @@
 ﻿using SpriteHelper.Contract;
 using SpriteHelper.NesGraphics;
+using SpriteHelper.NesSound;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -92,13 +93,17 @@ namespace SpriteHelper.Dialogs
         private void Export(string fileName)
         {
             // Export format:
+            // 1 byte: song to play
+            // 1 byte: progress type story            
             // 1 byte: number of strings
             // then for each string:
             //   1 byte: x
             //   1 byte: y
-            //   1 byte: stirng id
+            //   1 byte: string id            
 
-            var payload = new List<byte>();
+            var payload = new List<byte>();            
+            payload.Add(SoundDataReader.GetSongs()[this.story.Song]);
+            payload.Add(Constants.ProgressStory);
             payload.Add((byte)this.story.Strings.Length);
             foreach (var str in this.story.Strings)
             {

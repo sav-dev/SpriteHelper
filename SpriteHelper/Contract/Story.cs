@@ -10,6 +10,9 @@ namespace SpriteHelper.Contract
         [DataMember]
         public StoryString[] Strings { get; set; }
 
+        [DataMember]
+        public string Song { get; set; }
+
         public static Story Read(string file)
         {
             var xml = File.ReadAllText(file);

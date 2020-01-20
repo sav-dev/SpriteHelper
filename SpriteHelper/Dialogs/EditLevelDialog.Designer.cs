@@ -47,9 +47,13 @@
             this.jetpackGroupBox = new System.Windows.Forms.GroupBox();
             this.scrollSpeedComboBox = new System.Windows.Forms.ComboBox();
             this.scrollSpeedLabel = new System.Windows.Forms.Label();
+            this.soundGroupBox = new System.Windows.Forms.GroupBox();
+            this.songComboBox = new System.Windows.Forms.ComboBox();
+            this.songLabel = new System.Windows.Forms.Label();
             this.commonGroupBox.SuspendLayout();
             this.exitGroupBox.SuspendLayout();
             this.jetpackGroupBox.SuspendLayout();
+            this.soundGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // widthLabel
@@ -70,7 +74,7 @@
             // 
             // okButton
             // 
-            this.okButton.Location = new System.Drawing.Point(157, 220);
+            this.okButton.Location = new System.Drawing.Point(157, 289);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(55, 23);
             this.okButton.TabIndex = 40;
@@ -80,7 +84,7 @@
             // 
             // cancelButton
             // 
-            this.cancelButton.Location = new System.Drawing.Point(223, 220);
+            this.cancelButton.Location = new System.Drawing.Point(223, 289);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(55, 23);
             this.cancelButton.TabIndex = 41;
@@ -237,11 +241,48 @@
             this.scrollSpeedLabel.TabIndex = 47;
             this.scrollSpeedLabel.Text = "Scroll Speed";
             // 
+            // soundGroupBox
+            // 
+            this.soundGroupBox.Controls.Add(this.songComboBox);
+            this.soundGroupBox.Controls.Add(this.songLabel);
+            this.soundGroupBox.Location = new System.Drawing.Point(8, 220);
+            this.soundGroupBox.Name = "soundGroupBox";
+            this.soundGroupBox.Size = new System.Drawing.Size(281, 45);
+            this.soundGroupBox.TabIndex = 55;
+            this.soundGroupBox.TabStop = false;
+            this.soundGroupBox.Text = "Sound";
+            // 
+            // songComboBox
+            // 
+            this.songComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.songComboBox.FormattingEnabled = true;
+            this.songComboBox.Items.AddRange(new object[] {
+            "0.25",
+            "0.5",
+            "1",
+            "2",
+            "3",
+            "4"});
+            this.songComboBox.Location = new System.Drawing.Point(84, 13);
+            this.songComboBox.Name = "songComboBox";
+            this.songComboBox.Size = new System.Drawing.Size(186, 21);
+            this.songComboBox.TabIndex = 54;
+            // 
+            // songLabel
+            // 
+            this.songLabel.AutoSize = true;
+            this.songLabel.Location = new System.Drawing.Point(8, 16);
+            this.songLabel.Name = "songLabel";
+            this.songLabel.Size = new System.Drawing.Size(32, 13);
+            this.songLabel.TabIndex = 47;
+            this.songLabel.Text = "Song";
+            // 
             // EditLevelDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(301, 257);
+            this.ClientSize = new System.Drawing.Size(301, 341);
+            this.Controls.Add(this.soundGroupBox);
             this.Controls.Add(this.jetpackGroupBox);
             this.Controls.Add(this.exitGroupBox);
             this.Controls.Add(this.commonGroupBox);
@@ -256,6 +297,8 @@
             this.exitGroupBox.PerformLayout();
             this.jetpackGroupBox.ResumeLayout(false);
             this.jetpackGroupBox.PerformLayout();
+            this.soundGroupBox.ResumeLayout(false);
+            this.soundGroupBox.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -281,5 +324,8 @@
         private System.Windows.Forms.GroupBox jetpackGroupBox;
         private System.Windows.Forms.ComboBox scrollSpeedComboBox;
         private System.Windows.Forms.Label scrollSpeedLabel;
+        private System.Windows.Forms.GroupBox soundGroupBox;
+        private System.Windows.Forms.ComboBox songComboBox;
+        private System.Windows.Forms.Label songLabel;
     }
 }

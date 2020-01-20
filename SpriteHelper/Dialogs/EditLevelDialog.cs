@@ -1,4 +1,5 @@
 ﻿using SpriteHelper.Contract;
+using SpriteHelper.NesSound;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -15,6 +16,7 @@ namespace SpriteHelper.Dialogs
             LevelType levelType,
             Point exitPosition,
             double scrollSpeed,
+            string song,
             Func<EditLevelDialog, bool> validationFunc)
         {
             InitializeComponent();
@@ -40,6 +42,15 @@ namespace SpriteHelper.Dialogs
 
             // Scroll speed
             this.scrollSpeedComboBox.SelectedItem = scrollSpeed.ToString();
+
+            // Song
+            this.songComboBox.Items.Clear();
+            foreach (var item in SoundDataReader.GetSongs().Keys)
+            {
+                this.songComboBox.Items.Add(item);
+            }
+
+            this.songComboBox.SelectedItem = song;
 
             // Store the validation function
             this.validationFunc = validationFunc;
@@ -102,6 +113,8 @@ namespace SpriteHelper.Dialogs
         public LevelType LevelType => (LevelType)Enum.Parse(typeof(LevelType), this.levelTypeComboBox.SelectedItem.ToString());
 
         public double ScrollSpeed => double.Parse(this.scrollSpeedComboBox.SelectedItem.ToString());
+
+        public string Song => this.songComboBox.SelectedItem as string;
 
         private void LevelTypeComboBoxSelectedIndexChanged(object sender, EventArgs e)
         {

@@ -53,6 +53,9 @@ namespace SpriteHelper.Contract
         [DataMember]
         public int BoxDyFlip { get; set; }
 
+        [DataMember]
+        public string Sfx { get; set; }
+
         public Sprite Sprite { get; set; }
 
         public ImageFlags GetFlipFlags(bool flip)

@@ -38,6 +38,9 @@ namespace SpriteHelper.Contract
         [DataMember]
         public Point ExitPosition { get; set; }
 
+        [DataMember]
+        public string Song { get; set; }
+
         public void Write(string file)
         {
             if (File.Exists(file))

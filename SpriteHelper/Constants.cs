@@ -124,5 +124,9 @@
         public const int ExitYOff = 13;
         public const int ExitWidth = 24;
         public const int ExitHeight = 35;
+
+        // Progress (same as consts)
+        public const byte ProgressGame = 0;
+        public const byte ProgressStory = 1;
     }
 }

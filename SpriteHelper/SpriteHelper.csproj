@@ -194,6 +194,7 @@
     <Compile Include="Dialogs\LevelEditor.Designer.cs">
       <DependentUpon>LevelEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="NesSound\SoundDataReader.cs" />
     <Compile Include="Utility\FileConstants.cs" />
     <Compile Include="Utility\Packer.cs" />
     <Compile Include="Dialogs\PaletteProcessor.cs">
