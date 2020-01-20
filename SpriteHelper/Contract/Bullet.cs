@@ -54,7 +54,7 @@ namespace SpriteHelper.Contract
         public int BoxDyFlip { get; set; }
 
         [DataMember]
-        public string Sfx { get; set; }
+        public string Sound { get; set; }
 
         public Sprite Sprite { get; set; }
 

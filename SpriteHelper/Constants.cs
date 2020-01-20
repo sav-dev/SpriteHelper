@@ -113,7 +113,7 @@
         public const int EnemyInLevelDataSize = 22;
         public const int ElevatorInMemorySize = 8;
         public const int ElevatorInLevelDataSize = 9;
-        public const int BulletDefinitionSize = 13;
+        public const int BulletDefinitionSize = 14;
         public const int ExplosionDefinitionSize = 4;
 
         // Transparency.

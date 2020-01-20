@@ -319,6 +319,10 @@ namespace SpriteHelper.Dialogs
                 // Box size
                 builder.AppendLine(".boxSize:");
                 builder.AppendLineFormat($"  .byte {ToHex(bullet.BoxWidth)}, {ToHex(bullet.BoxHeight)}");
+
+                // Sound
+                builder.AppendLine(".sound:");
+                builder.AppendLineFormat($"  .byte {bullet.Sound}");
             }
 
             var playerBullet = this.config.Bullets.First(b => b.Name == "Player");
@@ -334,6 +338,9 @@ namespace SpriteHelper.Dialogs
             builder.AppendLine($"{prefix}SPEED_X_FLIP = {ToHex(playerBullet.BulletDxFlip)}");
             builder.AppendLine($"{prefix}ATTS = {ToHex(getAtts(playerBullet))}");
             builder.AppendLine($"{prefix}ATTS_FLIP = {ToHex(getAttsFlip(playerBullet))}");
+
+            builder.AppendLine("; For some reason this is causing issues, ref the sound directly");
+            builder.AppendLine($";{prefix}SOUND = {playerBullet.Sound}");
 
             if (playerBullet.BoxDx != 0 || playerBullet.BoxDy != 0 || playerBullet.BoxDxFlip != 0 || playerBullet.BoxDyFlip != 0 || playerBullet.BulletDy != 0 || playerBullet.BulletDyFlip != 0)
             {
