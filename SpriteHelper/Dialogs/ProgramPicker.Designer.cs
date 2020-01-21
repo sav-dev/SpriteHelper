@@ -42,6 +42,7 @@
             this.tilesetViewerButton = new System.Windows.Forms.Button();
             this.titleButton = new System.Windows.Forms.Button();
             this.storyButton = new System.Windows.Forms.Button();
+            this.stageSelectButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // playerButton
@@ -86,7 +87,7 @@
             // 
             // closeButton
             // 
-            this.closeButton.Location = new System.Drawing.Point(35, 425);
+            this.closeButton.Location = new System.Drawing.Point(35, 447);
             this.closeButton.Name = "closeButton";
             this.closeButton.Size = new System.Drawing.Size(172, 23);
             this.closeButton.TabIndex = 4;
@@ -184,11 +185,22 @@
             this.storyButton.UseVisualStyleBackColor = true;
             this.storyButton.Click += new System.EventHandler(this.StoryButtonClick);
             // 
+            // stageSelectButton
+            // 
+            this.stageSelectButton.Location = new System.Drawing.Point(35, 389);
+            this.stageSelectButton.Name = "stageSelectButton";
+            this.stageSelectButton.Size = new System.Drawing.Size(172, 23);
+            this.stageSelectButton.TabIndex = 14;
+            this.stageSelectButton.Text = "Stage Select";
+            this.stageSelectButton.UseVisualStyleBackColor = true;
+            this.stageSelectButton.Click += new System.EventHandler(this.StageSelectButtonClick);
+            // 
             // ProgramPicker
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(244, 460);
+            this.ClientSize = new System.Drawing.Size(244, 491);
+            this.Controls.Add(this.stageSelectButton);
             this.Controls.Add(this.storyButton);
             this.Controls.Add(this.titleButton);
             this.Controls.Add(this.tilesetViewerButton);
@@ -228,5 +240,6 @@
         private System.Windows.Forms.Button tilesetViewerButton;
         private System.Windows.Forms.Button titleButton;
         private System.Windows.Forms.Button storyButton;
+        private System.Windows.Forms.Button stageSelectButton;
     }
 }

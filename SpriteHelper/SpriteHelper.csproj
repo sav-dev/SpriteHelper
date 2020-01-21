@@ -55,6 +55,7 @@
     <Compile Include="Contract\Elevator.cs" />
     <Compile Include="Contract\Orientation.cs" />
     <Compile Include="Contract\SpecialMovement.cs" />
+    <Compile Include="Contract\Stages.cs" />
     <Compile Include="Contract\Story.cs" />
     <Compile Include="Contract\StringsConfig.cs" />
     <Compile Include="Contract\TilesetSpec.cs" />
@@ -93,6 +94,12 @@
     </Compile>
     <Compile Include="Dialogs\EditDoorAndKeycardDialog.Designer.cs">
       <DependentUpon>EditDoorAndKeycardDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\StageSelectDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\StageSelectDialog.Designer.cs">
+      <DependentUpon>StageSelectDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\StoryDialog.cs">
       <SubType>Form</SubType>
@@ -282,6 +289,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\Explosion.resx">
       <DependentUpon>Explosion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\StageSelectDialog.resx">
+      <DependentUpon>StageSelectDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\StoryDialog.resx">
       <DependentUpon>StoryDialog.cs</DependentUpon>

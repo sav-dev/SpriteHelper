@@ -36,8 +36,9 @@ namespace SpriteHelper
 
         public const string Logo = @"C:\Users\tomas\Documents\NES\GitHub\Platformer\PlatformerGraphics\Logo\logo.png";
         public const string Font = @"C:\Users\tomas\Documents\NES\GitHub\Platformer\PlatformerGraphics\Strings\font.png";
-        public const string Strings = @"C:\Users\tomas\Documents\NES\GitHub\Platformer\PlatformerGraphics\Strings\strings.xml";
+        public const string Strings = @"C:\Users\tomas\Documents\NES\GitHub\Platformer\data\strings\strings.xml";
         public const string Cursor = @"C:\Users\tomas\Documents\NES\GitHub\Platformer\PlatformerGraphics\Strings\cursor.png";
+        public const string Stages = @"C:\Users\tomas\Documents\NES\GitHub\Platformer\data\stages\stages.xml";
 
         public const string Sound = @"C:\Users\tomas\Documents\NES\GitHub\Platformer\ggsound\sound.asm";
     }

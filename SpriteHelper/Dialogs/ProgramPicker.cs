@@ -79,5 +79,10 @@ namespace SpriteHelper.Dialogs
         {
             new StoryDialog().ShowDialog();
         }
+
+        private void StageSelectButtonClick(object sender, EventArgs e)
+        {
+            new StageSelectDialog().ShowDialog();
+        }
     }
 }
