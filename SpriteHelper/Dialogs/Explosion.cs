@@ -144,6 +144,14 @@ namespace SpriteHelper.Dialogs
         {
             var builder = new StringBuilder();
 
+            builder.AppendLine(@"ExplosionsStart:
+
+;****************************************************************
+; Explosions                                                    ;
+; Holds information about explosions (auto-generated)           ;
+;****************************************************************
+");
+
             var firstFrame = this.config.Frames.First();
             var firstFrameSprites = firstFrame.Sprites;
             var otherFrame = this.config.Frames.Last();
@@ -263,6 +271,9 @@ namespace SpriteHelper.Dialogs
                     builder.AppendLineFormat("  .byte {0}", string.Join(", ", sprites));
                 }
             }
+
+            builder.AppendLine();
+            builder.AppendLine("ExplosionsEnd:");
 
             return builder.ToString();
         }
