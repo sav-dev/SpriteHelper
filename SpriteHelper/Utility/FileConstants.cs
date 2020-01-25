@@ -40,6 +40,6 @@ namespace SpriteHelper
         public const string Cursor = @"C:\Users\tomas\Documents\NES\GitHub\Platformer\PlatformerGraphics\Strings\cursor.png";
         public const string Stages = @"C:\Users\tomas\Documents\NES\GitHub\Platformer\data\stages\stages.xml";
 
-        public const string Sound = @"C:\Users\tomas\Documents\NES\GitHub\Platformer\ggsound\sound.asm";
+        public const string Sound = @"C:\Users\tomas\Documents\NES\GitHub\Platformer\sound\sound.asm";
     }
 }
