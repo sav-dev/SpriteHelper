@@ -84,5 +84,10 @@ namespace SpriteHelper.Dialogs
         {
             new StageSelectDialog().ShowDialog();
         }
+
+        private void StringConfigGenButtonClick(object sender, EventArgs e)
+        {
+            new startingIdLabel().ShowDialog();
+        }
     }
 }

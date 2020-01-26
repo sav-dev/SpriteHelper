@@ -43,6 +43,7 @@
             this.titleButton = new System.Windows.Forms.Button();
             this.storyButton = new System.Windows.Forms.Button();
             this.stageSelectButton = new System.Windows.Forms.Button();
+            this.stringConfigGenButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // playerButton
@@ -87,7 +88,7 @@
             // 
             // closeButton
             // 
-            this.closeButton.Location = new System.Drawing.Point(35, 447);
+            this.closeButton.Location = new System.Drawing.Point(35, 456);
             this.closeButton.Name = "closeButton";
             this.closeButton.Size = new System.Drawing.Size(172, 23);
             this.closeButton.TabIndex = 4;
@@ -195,11 +196,22 @@
             this.stageSelectButton.UseVisualStyleBackColor = true;
             this.stageSelectButton.Click += new System.EventHandler(this.StageSelectButtonClick);
             // 
+            // stringConfigGenButton
+            // 
+            this.stringConfigGenButton.Location = new System.Drawing.Point(35, 418);
+            this.stringConfigGenButton.Name = "stringConfigGenButton";
+            this.stringConfigGenButton.Size = new System.Drawing.Size(172, 23);
+            this.stringConfigGenButton.TabIndex = 15;
+            this.stringConfigGenButton.Text = "String Config Gen.";
+            this.stringConfigGenButton.UseVisualStyleBackColor = true;
+            this.stringConfigGenButton.Click += new System.EventHandler(this.StringConfigGenButtonClick);
+            // 
             // ProgramPicker
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(244, 491);
+            this.Controls.Add(this.stringConfigGenButton);
             this.Controls.Add(this.stageSelectButton);
             this.Controls.Add(this.storyButton);
             this.Controls.Add(this.titleButton);
@@ -241,5 +253,6 @@
         private System.Windows.Forms.Button titleButton;
         private System.Windows.Forms.Button storyButton;
         private System.Windows.Forms.Button stageSelectButton;
+        private System.Windows.Forms.Button stringConfigGenButton;
     }
 }

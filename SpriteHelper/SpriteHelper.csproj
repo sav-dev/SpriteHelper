@@ -107,6 +107,12 @@
     <Compile Include="Dialogs\StoryDialog.Designer.cs">
       <DependentUpon>StoryDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\StringConfigGenerator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\StringConfigGenerator.Designer.cs">
+      <DependentUpon>StringConfigGenerator.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\TitleDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -295,6 +301,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\StoryDialog.resx">
       <DependentUpon>StoryDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\StringConfigGenerator.resx">
+      <DependentUpon>StringConfigGenerator.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\TitleDialog.resx">
       <DependentUpon>TitleDialog.cs</DependentUpon>
