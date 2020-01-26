@@ -5,9 +5,20 @@ namespace SpriteHelper.Dialogs
 {
     public partial class ProgramPicker : Form
     {
-        public ProgramPicker()
+        bool startLevelEditor = false;
+
+        public ProgramPicker(string[] args)
         {
+            startLevelEditor = (args != null && args.Length > 0 && args[0] == "LevelEditor");
             InitializeComponent();
+        }
+
+        private void ProgramPickerLoad(object sender, EventArgs e)
+        {
+            if (startLevelEditor)
+            {
+                this.LevelEditorButtonClick(null, null);
+            }
         }
 
         private void PlayerButtonClick(object sender, EventArgs e)

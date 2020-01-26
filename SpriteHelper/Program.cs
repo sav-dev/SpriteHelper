@@ -10,11 +10,11 @@ namespace SpriteHelper
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        static void Main(params string[] args)
         {           
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ProgramPicker());
+            Application.Run(new ProgramPicker(args));
         }
     }
 }
