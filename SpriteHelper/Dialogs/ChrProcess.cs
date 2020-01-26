@@ -61,14 +61,12 @@ namespace SpriteHelper.Dialogs
             }
 
             // Pad to 256
-            // todo game 0000 - is this the way to go
             var targetSize = ((result.Count + 255) / 256) * 256;
             while (result.Count < targetSize)
             {
                 result.Add(0);
             }
 
-            // todo game 0000 - for now just remove empty tiles
             var fi = new FileInfo(path);
             var targetFile = path.Substring(0, path.Length - fi.Extension.Length) + "Processed" + fi.Extension;
             File.WriteAllBytes(targetFile, result.ToArray());
