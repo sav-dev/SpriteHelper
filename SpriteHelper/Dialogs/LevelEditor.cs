@@ -1176,10 +1176,32 @@ namespace SpriteHelper.Dialogs
                 File.Delete(target);
             }
 
-            File.Copy(FileConstants.Rom, target);
-
             // todo: injest the level into the target
+            var bytes = File.ReadAllBytes(FileConstants.Rom);
 
+            // level destination = 16 bytes header + 6 whole banks + first half of the bank
+            const int levelDestination = 16 + 6 * (8192 * 2) + 8192;
+
+            // expected size = 16 bytes header + 8 whole banks 
+            const int expectedSize = 16 + 8 * (8192 * 2);
+
+            // flag destination = expected size - 6 bytes for vectors - 1 byte
+            const int flagDestination = expectedSize - 6 - 1;
+
+            // get export payload
+            var exportPayload = GetExportPayload();
+
+            // set the lvl
+            for (var i = 0; i < exportPayload.Length; i++)
+            {
+                bytes[i + levelDestination] = exportPayload[i];
+            }
+
+            // set the flag
+            bytes[flagDestination] = 1;
+
+            // write the lvl and run the emulator
+            File.WriteAllBytes(target, bytes);
             Process.Start(FileConstants.Emulator, target);
         }
 
