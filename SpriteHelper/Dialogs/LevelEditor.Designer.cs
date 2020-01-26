@@ -66,6 +66,7 @@
             this.exportLevelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.paletteMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.propertiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.transformToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -97,7 +98,7 @@
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.exportCheckToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.diagnosticsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.paletteMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.runToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerVertical)).BeginInit();
             this.splitContainerVertical.Panel1.SuspendLayout();
             this.splitContainerVertical.Panel2.SuspendLayout();
@@ -453,7 +454,8 @@
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.editToolStripMenuItem,
-            this.viewToolStripMenuItem});
+            this.viewToolStripMenuItem,
+            this.runToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Size = new System.Drawing.Size(943, 24);
@@ -527,6 +529,14 @@
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
             this.editToolStripMenuItem.Text = "&Edit";
+            // 
+            // paletteMenuItem1
+            // 
+            this.paletteMenuItem1.Name = "paletteMenuItem1";
+            this.paletteMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
+            this.paletteMenuItem1.Size = new System.Drawing.Size(231, 22);
+            this.paletteMenuItem1.Text = "&Palette";
+            this.paletteMenuItem1.Click += new System.EventHandler(this.PaletteMenuItemClick);
             // 
             // propertiesToolStripMenuItem
             // 
@@ -810,13 +820,13 @@
             this.diagnosticsToolStripMenuItem.Text = "&Diagnostics";
             this.diagnosticsToolStripMenuItem.Click += new System.EventHandler(this.DiagnosticsToolStripMenuItemClick);
             // 
-            // paletteMenuItem1
+            // runToolStripMenuItem
             // 
-            this.paletteMenuItem1.Name = "paletteMenuItem1";
-            this.paletteMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
-            this.paletteMenuItem1.Size = new System.Drawing.Size(231, 22);
-            this.paletteMenuItem1.Text = "&Palette";
-            this.paletteMenuItem1.Click += new System.EventHandler(this.PaletteMenuItemClick);
+            this.runToolStripMenuItem.Name = "runToolStripMenuItem";
+            this.runToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
+            this.runToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
+            this.runToolStripMenuItem.Text = "&Run";
+            this.runToolStripMenuItem.Click += new System.EventHandler(this.RunToolStripMenuItemClick);
             // 
             // LevelEditor
             // 
@@ -927,5 +937,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
         private System.Windows.Forms.ToolStripMenuItem editDoorAndKeycardToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem paletteMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem runToolStripMenuItem;
     }
 }

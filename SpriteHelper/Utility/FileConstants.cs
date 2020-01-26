@@ -41,5 +41,8 @@ namespace SpriteHelper
         public const string Stages = @"C:\Users\tomas\Documents\NES\GitHub\Platformer\data\stages\stages.xml";
 
         public const string Sound = @"C:\Users\tomas\Documents\NES\GitHub\Platformer\sound\sound.asm";
+
+        public const string Rom = @"C:\Users\tomas\Documents\NES\GitHub\Platformer\platform.nes";
+        public const string Emulator = @"C:\Users\tomas\Documents\NES\Tools\FCEUXDSP\fceuxdsp.exe";
     }
 }

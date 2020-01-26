@@ -4,6 +4,7 @@ using SpriteHelper.NesGraphics;
 using SpriteHelper.NesSound;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -1156,6 +1157,31 @@ namespace SpriteHelper.Dialogs
         ////
         //// Menu Items
         ////
+
+        private void RunToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            if (!File.Exists(FileConstants.Rom))
+            {
+                MessageBox.Show($"ROM not found at {FileConstants.Rom}");
+            }
+
+            if (!File.Exists(FileConstants.Emulator))
+            {
+                MessageBox.Show($"Emulator not found at {FileConstants.Emulator}");
+            }
+
+            const string target = @".\romToRun.nes";
+            if (File.Exists(target))
+            {
+                File.Delete(target);
+            }
+
+            File.Copy(FileConstants.Rom, target);
+
+            // todo: injest the level into the target
+
+            Process.Start(FileConstants.Emulator, target);
+        }
 
         private void ExportImageToolStripMenuItemClick(object sender, EventArgs e)
         {
@@ -4283,6 +4309,6 @@ namespace SpriteHelper.Dialogs
             }
         }
 
-        #endregion
+        #endregion        
     }
 }
