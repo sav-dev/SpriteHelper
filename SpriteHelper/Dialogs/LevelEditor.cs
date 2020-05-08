@@ -2264,7 +2264,7 @@ namespace SpriteHelper.Dialogs
             // 2nd byte = progress type game
 
             var result = new byte[] { SoundDataReader.GetSongs()[this.levelSong], Constants.ProgressGame };
-            logger.WriteLineIfNotNull("Total bytes for progress ytpe and song: {0}", result.Length);
+            logger.WriteLineIfNotNull("Total bytes for progress type and song: {0}", result.Length);
             return result;
 
         }
