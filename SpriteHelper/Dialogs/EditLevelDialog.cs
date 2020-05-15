@@ -17,6 +17,7 @@ namespace SpriteHelper.Dialogs
             Point exitPosition,
             double scrollSpeed,
             string song,
+            bool stopSong,
             Func<EditLevelDialog, bool> validationFunc)
         {
             InitializeComponent();
@@ -51,6 +52,7 @@ namespace SpriteHelper.Dialogs
             }
 
             this.songComboBox.SelectedItem = song;
+            this.stopSongCheckBox.Checked = stopSong;
 
             // Store the validation function
             this.validationFunc = validationFunc;
@@ -115,6 +117,8 @@ namespace SpriteHelper.Dialogs
         public double ScrollSpeed => double.Parse(this.scrollSpeedComboBox.SelectedItem.ToString());
 
         public string Song => this.songComboBox.SelectedItem as string;
+
+        public bool StopSong => this.stopSongCheckBox.Checked;
 
         private void LevelTypeComboBoxSelectedIndexChanged(object sender, EventArgs e)
         {

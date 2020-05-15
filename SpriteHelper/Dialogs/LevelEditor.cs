@@ -91,6 +91,7 @@ namespace SpriteHelper.Dialogs
 
         // Sound.
         private string levelSong;
+        private bool stopSong;
 
         #region FormRelated
 
@@ -180,6 +181,7 @@ namespace SpriteHelper.Dialogs
                 this.tilesetId = readLevel.TilesetId;
                 this.doorAndKeycard = readLevel.DoorAndKeycard;
                 this.levelSong = readLevel.Song;
+                this.stopSong = readLevel.StopSong;
             }
             else
             {
@@ -194,6 +196,7 @@ namespace SpriteHelper.Dialogs
                 this.scrollSpeed = 1;
                 this.doorAndKeycard = null;
                 this.levelSong = SoundDataReader.GetSongs().First().Key;
+                this.stopSong = false;
             }
 
             var tilesets = Tilesets.Read(FileConstants.Tilesets);
@@ -1353,6 +1356,7 @@ namespace SpriteHelper.Dialogs
                     LevelType = this.levelType,
                     ScrollSpeed = this.scrollSpeed,
                     Song = this.levelSong,
+                    StopSong = this.stopSong,
                 };
 
                 level.Write(saveFileDialog.FileName);
@@ -1482,7 +1486,7 @@ namespace SpriteHelper.Dialogs
 
         private void PropertiesToolStripMenuItemClick(object sender, EventArgs e)
         {
-            Func<EditLevelDialog, Tuple<int, LevelType, Point, Point, double, string>> getResultFunc =
+            Func<EditLevelDialog, Tuple<int, LevelType, Point, Point, double, string, bool>> getResultFunc =
                 dialog =>
                 {
                     int levelWidth;
@@ -1583,8 +1587,9 @@ namespace SpriteHelper.Dialogs
                     var levelType = dialog.LevelType;
                     var scrollSpeed = dialog.ScrollSpeed;
                     var song = dialog.Song;
+                    var stopSong = dialog.StopSong;
 
-                    return Tuple.Create(levelWidth, levelType, playerStartingPosition, exitPosition, scrollSpeed, song);
+                    return Tuple.Create(levelWidth, levelType, playerStartingPosition, exitPosition, scrollSpeed, song, stopSong);
                 };
 
             var editLevelDialog = new EditLevelDialog(
@@ -1594,6 +1599,7 @@ namespace SpriteHelper.Dialogs
                 this.exitPosition,
                 this.scrollSpeed,
                 this.levelSong,
+                this.stopSong,
                 dialog => getResultFunc(dialog) != null);
 
             editLevelDialog.ShowDialog();
@@ -1603,8 +1609,7 @@ namespace SpriteHelper.Dialogs
             }
 
             var result = getResultFunc(editLevelDialog);
-
-
+            
             var widthChanged = false;
             widthChanged = this.ChangeWidth(result.Item1);
 
@@ -1631,6 +1636,7 @@ namespace SpriteHelper.Dialogs
 
             this.scrollSpeed = result.Item5; // doesn't affect rendering
             this.levelSong = result.Item6; // doesn't affect rendering
+            this.stopSong = result.Item7; // doesn't affect rendering
 
             // Only update bitmap if 
             //  1) something affecting rednering has changed, and 
@@ -2260,10 +2266,16 @@ namespace SpriteHelper.Dialogs
 
         private byte[] GetProgressTypeAndSong(TextWriter logger = null)
         {
-            // 1st byte = song to play
+            // 1st byte = song to play, highest byte: stop song
             // 2nd byte = progress type game
 
-            var result = new byte[] { SoundDataReader.GetSongs()[this.levelSong], Constants.ProgressGame };
+            var song = (byte)SoundDataReader.GetSongs()[this.levelSong];
+            if (this.stopSong)
+            {
+                song = song |= 128;
+            }
+
+            var result = new byte[] { song, Constants.ProgressGame };
             logger.WriteLineIfNotNull("Total bytes for progress type and song: {0}", result.Length);
             return result;
 

@@ -41,6 +41,9 @@ namespace SpriteHelper.Contract
         [DataMember]
         public string Song { get; set; }
 
+        [DataMember]
+        public bool StopSong { get; set; }
+
         public void Write(string file)
         {
             if (File.Exists(file))

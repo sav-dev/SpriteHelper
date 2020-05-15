@@ -50,6 +50,7 @@
             this.soundGroupBox = new System.Windows.Forms.GroupBox();
             this.songComboBox = new System.Windows.Forms.ComboBox();
             this.songLabel = new System.Windows.Forms.Label();
+            this.stopSongCheckBox = new System.Windows.Forms.CheckBox();
             this.commonGroupBox.SuspendLayout();
             this.exitGroupBox.SuspendLayout();
             this.jetpackGroupBox.SuspendLayout();
@@ -243,11 +244,12 @@
             // 
             // soundGroupBox
             // 
+            this.soundGroupBox.Controls.Add(this.stopSongCheckBox);
             this.soundGroupBox.Controls.Add(this.songComboBox);
             this.soundGroupBox.Controls.Add(this.songLabel);
             this.soundGroupBox.Location = new System.Drawing.Point(8, 220);
             this.soundGroupBox.Name = "soundGroupBox";
-            this.soundGroupBox.Size = new System.Drawing.Size(281, 45);
+            this.soundGroupBox.Size = new System.Drawing.Size(281, 63);
             this.soundGroupBox.TabIndex = 55;
             this.soundGroupBox.TabStop = false;
             this.soundGroupBox.Text = "Sound";
@@ -277,11 +279,21 @@
             this.songLabel.TabIndex = 47;
             this.songLabel.Text = "Song";
             // 
+            // stopSongCheckBox
+            // 
+            this.stopSongCheckBox.AutoSize = true;
+            this.stopSongCheckBox.Location = new System.Drawing.Point(11, 40);
+            this.stopSongCheckBox.Name = "stopSongCheckBox";
+            this.stopSongCheckBox.Size = new System.Drawing.Size(74, 17);
+            this.stopSongCheckBox.TabIndex = 56;
+            this.stopSongCheckBox.Text = "Stop song";
+            this.stopSongCheckBox.UseVisualStyleBackColor = true;
+            // 
             // EditLevelDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(301, 341);
+            this.ClientSize = new System.Drawing.Size(301, 366);
             this.Controls.Add(this.soundGroupBox);
             this.Controls.Add(this.jetpackGroupBox);
             this.Controls.Add(this.exitGroupBox);
@@ -327,5 +339,6 @@
         private System.Windows.Forms.GroupBox soundGroupBox;
         private System.Windows.Forms.ComboBox songComboBox;
         private System.Windows.Forms.Label songLabel;
+        private System.Windows.Forms.CheckBox stopSongCheckBox;
     }
 }
