@@ -182,6 +182,7 @@ namespace SpriteHelper.Dialogs
                 this.doorAndKeycard = readLevel.DoorAndKeycard;
                 this.levelSong = readLevel.Song;
                 this.stopSong = readLevel.StopSong;
+                this.SetTitle(new FileInfo(level).Name);
             }
             else
             {
@@ -197,6 +198,7 @@ namespace SpriteHelper.Dialogs
                 this.doorAndKeycard = null;
                 this.levelSong = SoundDataReader.GetSongs().First().Key;
                 this.stopSong = false;
+                this.SetTitle(null);
             }
 
             var tilesets = Tilesets.Read(FileConstants.Tilesets);
@@ -457,6 +459,11 @@ namespace SpriteHelper.Dialogs
             }
 
             this.PopulateTiles();
+        }
+
+        public void SetTitle(string fileName)
+        {
+            this.Text = "Level editor" + (string.IsNullOrEmpty(fileName) ? string.Empty : " - " + fileName);
         }
 
         #endregion
@@ -1360,6 +1367,7 @@ namespace SpriteHelper.Dialogs
                 };
 
                 level.Write(saveFileDialog.FileName);
+                this.SetTitle(new FileInfo(saveFileDialog.FileName).Name);
             }
         }
 
