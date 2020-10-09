@@ -1438,33 +1438,78 @@ namespace SpriteHelper.Dialogs
         {
             var changed = false;
             var newLevel = this.CloneLevel();
+            
+            // todo: Y cloning is probably wrong
 
-            var dx = 0;
-            for (var x = result.X; x < (this.level.Length) && x < result.X + result.Width; x++, dx++)
+            if (result.NewX < result.X)
             {
-                var newX = result.NewX + dx;
-                if (newX >= this.level.Length)
+                var dx = 0;
+                for (var x = result.X; x < (this.level.Length) && x < result.X + result.Width; x++, dx++)
                 {
-                    break;
-                }
-
-                var dy = 0;
-                for (var y = result.Y; y < (this.level[0].Length) && y < result.Y + result.Height; y++, dy++)
-                {
-                    var newY = result.NewY + dy;
-                    if (newY >= this.level[0].Length)
+                    var newX = result.NewX + dx;
+                    if (newX >= this.level.Length)
                     {
                         break;
                     }
 
-                    var newTile = newLevel[x][y];
-
-                    if (!changed && newLevel[newX][newY] != newTile)
+                    var dy = 0;
+                    for (var y = result.Y; y < (this.level[0].Length) && y < result.Y + result.Height; y++, dy++)
                     {
-                        changed = true;
-                    }
+                        var newY = result.NewY + dy;
+                        if (newY >= this.level[0].Length)
+                        {
+                            break;
+                        }
 
-                    newLevel[newX][newY] = newTile;
+                        var newTile = newLevel[x][y];
+
+                        if (!changed && newLevel[newX][newY] != newTile)
+                        {
+                            changed = true;
+                        }
+
+                        newLevel[newX][newY] = newTile;
+                    }
+                }
+            }
+            else
+            {
+                // todo: this may not be correct
+
+                int startX, dx;
+                if (result.X + result.Width - 1 > this.level.Length)
+                {
+                    startX = this.level.Length;
+                    dx = result.Width - ((result.X + result.Width - 1) - this.level.Length);
+                }
+                else
+                {
+                    startX = result.X + result.Width - 1;
+                    dx = result.Width - 1;
+                }
+
+                for (var x = startX; x >= result.X; x--, dx--)
+                {
+                    var newX = result.NewX + dx;
+                    
+                    var dy = 0;
+                    for (var y = result.Y; y < (this.level[0].Length) && y < result.Y + result.Height; y++, dy++)
+                    {
+                        var newY = result.NewY + dy;
+                        if (newY >= this.level[0].Length)
+                        {
+                            break;
+                        }
+
+                        var newTile = newLevel[x][y];
+
+                        if (!changed && newLevel[newX][newY] != newTile)
+                        {
+                            changed = true;
+                        }
+
+                        newLevel[newX][newY] = newTile;
+                    }
                 }
             }
 
