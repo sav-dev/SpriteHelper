@@ -1452,34 +1452,63 @@ namespace SpriteHelper.Dialogs
                         break;
                     }
 
-                    var dy = 0;
-                    for (var y = result.Y; y < (this.level[0].Length) && y < result.Y + result.Height; y++, dy++)
+                    if (result.NewY < result.Y)
                     {
-                        var newY = result.NewY + dy;
-                        if (newY >= this.level[0].Length)
+                        var dy = 0;
+                        for (var y = result.Y; y < (this.level[0].Length) && y < result.Y + result.Height; y++, dy++)
                         {
-                            break;
+                            var newY = result.NewY + dy;
+                            if (newY >= this.level[0].Length)
+                            {
+                                break;
+                            }
+
+                            var newTile = newLevel[x][y];
+
+                            if (!changed && newLevel[newX][newY] != newTile)
+                            {
+                                changed = true;
+                            }
+
+                            newLevel[newX][newY] = newTile;
+
+                        }
+                    }
+                    else
+                    {
+                        int startY, dy;
+                        if (result.Y + result.Height - 1 > Constants.ScreenHeightInTiles)
+                        {
+                            startY = Constants.ScreenHeightInTiles;
+                            dy = result.Height - ((result.Y + result.Height - 1) - Constants.ScreenHeightInTiles);
+                        }
+                        else
+                        {
+                            startY = result.Y + result.Height - 1;
+                            dy = result.Height - 1;
                         }
 
-                        var newTile = newLevel[x][y];
-
-                        if (!changed && newLevel[newX][newY] != newTile)
+                        for (var y = startY; y >= result.Y; y--, dy--)
                         {
-                            changed = true;
-                        }
+                            var newY = result.NewY + dy;
+                            var newTile = newLevel[x][y];
 
-                        newLevel[newX][newY] = newTile;
+                            if (!changed && newLevel[newX][newY] != newTile)
+                            {
+                                changed = true;
+                            }
+
+                            newLevel[newX][newY] = newTile;
+                        }
                     }
                 }
             }
             else
             {
-                // todo: this may not be correct
-
                 int startX, dx;
                 if (result.X + result.Width - 1 > this.level.Length)
                 {
-                    startX = this.level.Length;
+                    startX = this.level.Length - 1;
                     dx = result.Width - ((result.X + result.Width - 1) - this.level.Length);
                 }
                 else
@@ -1491,24 +1520,54 @@ namespace SpriteHelper.Dialogs
                 for (var x = startX; x >= result.X; x--, dx--)
                 {
                     var newX = result.NewX + dx;
-                    
-                    var dy = 0;
-                    for (var y = result.Y; y < (this.level[0].Length) && y < result.Y + result.Height; y++, dy++)
+
+                    if (result.NewY < result.Y)
                     {
-                        var newY = result.NewY + dy;
-                        if (newY >= this.level[0].Length)
+                        var dy = 0;
+                        for (var y = result.Y; y < (this.level[0].Length) && y < result.Y + result.Height; y++, dy++)
                         {
-                            break;
+                            var newY = result.NewY + dy;
+                            if (newY >= this.level[0].Length)
+                            {
+                                break;
+                            }
+
+                            var newTile = newLevel[x][y];
+
+                            if (!changed && newLevel[newX][newY] != newTile)
+                            {
+                                changed = true;
+                            }
+
+                            newLevel[newX][newY] = newTile;
+                        }
+                    }
+                    else
+                    {
+                        int startY, dy;
+                        if (result.Y + result.Height - 1 > Constants.ScreenHeightInTiles)
+                        {
+                            startY = Constants.ScreenHeightInTiles;
+                            dy = result.Height - ((result.Y + result.Height - 1) - Constants.ScreenHeightInTiles);
+                        }
+                        else
+                        {
+                            startY = result.Y + result.Height - 1;
+                            dy = result.Height - 1;
                         }
 
-                        var newTile = newLevel[x][y];
-
-                        if (!changed && newLevel[newX][newY] != newTile)
+                        for (var y = startY; y >= result.Y; y--, dy--)
                         {
-                            changed = true;
-                        }
+                            var newY = result.NewY + dy;
+                            var newTile = newLevel[x][y];
 
-                        newLevel[newX][newY] = newTile;
+                            if (!changed && newLevel[newX][newY] != newTile)
+                            {
+                                changed = true;
+                            }
+
+                            newLevel[newX][newY] = newTile;
+                        }
                     }
                 }
             }
