@@ -35,11 +35,21 @@ namespace SpriteHelper.Dialogs
             switch (this.Operation)
             {
                 case TransformDialogResult.Fill:
-                    this.fillPanel.Enabled = true;
+                    this.fillPanel.Enabled = true;                    
+                    this.clonePanel.Enabled = false;
+                    this.moveItemsPanel.Enabled = false;
                     break;
 
                 case TransformDialogResult.Clone:
+                    this.fillPanel.Enabled = false;                    
                     this.clonePanel.Enabled = true;
+                    this.moveItemsPanel.Enabled = false;
+                    break;
+
+                case TransformDialogResult.MoveItems:
+                    this.fillPanel.Enabled = false;                    
+                    this.clonePanel.Enabled = false;
+                    this.moveItemsPanel.Enabled = true;
                     break;
             }
         }
@@ -56,6 +66,11 @@ namespace SpriteHelper.Dialogs
                 if (this.cloneRadioButton.Checked)
                 {
                     return TransformDialogResult.Clone;
+                }
+
+                if (this.moveItemsRadioButton.Checked)
+                {
+                    return TransformDialogResult.MoveItems;
                 }
 
                 return TransformDialogResult.None;
@@ -111,11 +126,23 @@ namespace SpriteHelper.Dialogs
             }
         }
 
+        public class MoveItemsOperation : TransformOperation
+        {
+            public int DX { get; private set; }
+
+            public MoveItemsOperation(int dx)
+            {
+                this.DX = dx;
+                this.Operation = TransformDialogResult.MoveItems;
+            }
+        }
+
         public enum TransformDialogResult
         {
             None,
             Fill,
             Clone,
+            MoveItems,
         }
 
         private void OkButtonClick(object sender, EventArgs e)
@@ -140,6 +167,12 @@ namespace SpriteHelper.Dialogs
                         var newX = int.Parse(this.cloneNewXTextbox.Text);
                         var newY = int.Parse(this.cloneNewYTextbox.Text);
                         this.result = new CloneOperation(x, y, x2 - x + 1, y2 - y + 1, newX, newY);
+                        break;
+                    }
+                case TransformDialogResult.MoveItems:
+                    {
+                        var dx = int.Parse(this.dxTextbox.Text);
+                        this.result = new MoveItemsOperation(dx);
                         break;
                     }
             }

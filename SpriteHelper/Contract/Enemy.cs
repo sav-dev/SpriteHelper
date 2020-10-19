@@ -1,6 +1,8 @@
 ﻿using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.Xml.Serialization;
 
 namespace SpriteHelper.Contract
 {
@@ -70,6 +72,20 @@ namespace SpriteHelper.Contract
         // Blinking frequency initial.
         [DataMember]
         public int BlinkingInitialFrequency { get; set; }
+
+        public Enemy Clone(Animation[] animations)
+        {
+            var xmlSerializer = new XmlSerializer(typeof(Enemy));
+            using (var memoryStream = new MemoryStream())
+            {
+                xmlSerializer.Serialize(memoryStream, this);
+                memoryStream.Flush();
+                memoryStream.Position = 0;
+                var cloned = (Enemy)xmlSerializer.Deserialize(memoryStream);
+                cloned.Initialize(animations.First(a => a.Name == cloned.Name));
+                return cloned;
+            }
+        }
 
         // Screen the enemy is on.
         public int Screen => this.X / (Constants.ScreenWidthInTiles * Constants.BackgroundTileWidth);

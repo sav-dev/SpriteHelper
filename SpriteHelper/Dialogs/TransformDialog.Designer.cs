@@ -56,9 +56,14 @@
             this.cloneYTextbox = new System.Windows.Forms.TextBox();
             this.cloneXLabel = new System.Windows.Forms.Label();
             this.cloneXTextbox = new System.Windows.Forms.TextBox();
+            this.moveItemsPanel = new System.Windows.Forms.Panel();
+            this.dxLabel = new System.Windows.Forms.Label();
+            this.dxTextbox = new System.Windows.Forms.TextBox();
+            this.moveItemsRadioButton = new System.Windows.Forms.RadioButton();
             this.fillPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.selectedTilePictureBox)).BeginInit();
             this.clonePanel.SuspendLayout();
+            this.moveItemsPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // fillXLabel
@@ -179,7 +184,7 @@
             // 
             // cancelButton
             // 
-            this.cancelButton.Location = new System.Drawing.Point(138, 341);
+            this.cancelButton.Location = new System.Drawing.Point(138, 441);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(55, 23);
             this.cancelButton.TabIndex = 5;
@@ -189,7 +194,7 @@
             // 
             // okButton
             // 
-            this.okButton.Location = new System.Drawing.Point(72, 341);
+            this.okButton.Location = new System.Drawing.Point(72, 441);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(55, 23);
             this.okButton.TabIndex = 4;
@@ -332,11 +337,50 @@
             this.cloneXTextbox.TabIndex = 0;
             this.cloneXTextbox.Text = "0";
             // 
+            // moveItemsPanel
+            // 
+            this.moveItemsPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.moveItemsPanel.Controls.Add(this.dxLabel);
+            this.moveItemsPanel.Controls.Add(this.dxTextbox);
+            this.moveItemsPanel.Location = new System.Drawing.Point(15, 361);
+            this.moveItemsPanel.Name = "moveItemsPanel";
+            this.moveItemsPanel.Size = new System.Drawing.Size(230, 58);
+            this.moveItemsPanel.TabIndex = 7;
+            // 
+            // dxLabel
+            // 
+            this.dxLabel.AutoSize = true;
+            this.dxLabel.Location = new System.Drawing.Point(17, 18);
+            this.dxLabel.Name = "dxLabel";
+            this.dxLabel.Size = new System.Drawing.Size(20, 13);
+            this.dxLabel.TabIndex = 39;
+            this.dxLabel.Text = "dX";
+            // 
+            // dxTextbox
+            // 
+            this.dxTextbox.Location = new System.Drawing.Point(60, 15);
+            this.dxTextbox.Name = "dxTextbox";
+            this.dxTextbox.Size = new System.Drawing.Size(48, 20);
+            this.dxTextbox.TabIndex = 0;
+            this.dxTextbox.Text = "0";
+            // 
+            // moveItemsRadioButton
+            // 
+            this.moveItemsRadioButton.AutoSize = true;
+            this.moveItemsRadioButton.Location = new System.Drawing.Point(15, 338);
+            this.moveItemsRadioButton.Name = "moveItemsRadioButton";
+            this.moveItemsRadioButton.Size = new System.Drawing.Size(79, 17);
+            this.moveItemsRadioButton.TabIndex = 6;
+            this.moveItemsRadioButton.Text = "Move items";
+            this.moveItemsRadioButton.UseVisualStyleBackColor = true;
+            // 
             // TransformDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(262, 375);
+            this.ClientSize = new System.Drawing.Size(262, 482);
+            this.Controls.Add(this.moveItemsPanel);
+            this.Controls.Add(this.moveItemsRadioButton);
             this.Controls.Add(this.clonePanel);
             this.Controls.Add(this.fillRadioButton);
             this.Controls.Add(this.fillPanel);
@@ -351,6 +395,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.selectedTilePictureBox)).EndInit();
             this.clonePanel.ResumeLayout(false);
             this.clonePanel.PerformLayout();
+            this.moveItemsPanel.ResumeLayout(false);
+            this.moveItemsPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -386,5 +432,9 @@
         private System.Windows.Forms.Label cloneXLabel;
         private System.Windows.Forms.TextBox cloneXTextbox;
         private System.Windows.Forms.TextBox cloneNewXTextbox;
+        private System.Windows.Forms.Panel moveItemsPanel;
+        private System.Windows.Forms.Label dxLabel;
+        private System.Windows.Forms.TextBox dxTextbox;
+        private System.Windows.Forms.RadioButton moveItemsRadioButton;
     }
 }

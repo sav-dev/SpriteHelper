@@ -1404,10 +1404,74 @@ namespace SpriteHelper.Dialogs
                     case TransformDialog.TransformDialogResult.Clone:
                         this.Clone((TransformDialog.CloneOperation)transformDialog.Result);
                         break;
+                    case TransformDialog.TransformDialogResult.MoveItems:
+                        this.MoveItems(((TransformDialog.MoveItemsOperation)transformDialog.Result).DX);
+                        break;
                 }
             };
 
             transformDialog.ShowDialog();
+        }
+
+        private void MoveItems(int dx)
+        {
+            var dxPixels = dx * Constants.BackgroundTileWidth;
+            var newEnemies = new List<Enemy>();
+            foreach (var enemy in this.Enemies)
+            {
+                var clone = enemy.Clone(this.enConfig.Animations);
+                clone.X += dxPixels;
+                if (clone.MovementType == MovementType.Horizontal)
+                {
+                    clone.MinPosition += dxPixels;
+                    clone.MaxPosition += dxPixels;
+                }
+
+                var result = ValidateEnemy(clone, enemy);
+                if (result != null)
+                {
+                    MessageBox.Show($"{clone}: {result}");
+                    return;
+                }
+
+                newEnemies.Add(clone);
+            }
+
+            var newElevators = new List<Elevator>();
+            foreach (var elevator in this.Elevators)
+            {
+                var clone = elevator.Clone();
+                clone.X += dxPixels;
+                if (clone.MovementType == MovementType.Horizontal)
+                {
+                    clone.MinPosition += dxPixels;
+                    clone.MaxPosition += dxPixels;
+                }
+
+                var result = ValidateElevator(clone, elevator);
+                if (result != null)
+                {
+                    MessageBox.Show($"{clone}: {result}");
+                    return;
+                }
+
+                newElevators.Add(clone);
+            }
+
+            this.enemiesListBox.Items.Clear();
+            this.elevatorsListBox.Items.Clear();
+
+            foreach (var newEnemy in newEnemies)
+            {
+                this.enemiesListBox.Items.Add(newEnemy);
+            }
+
+            foreach (var newElevator in newElevators)
+            {
+                this.elevatorsListBox.Items.Add(newElevator);
+            }
+
+            this.UpdateBitmap();
         }
 
         private void Fill(TransformDialog.FillOperation result)

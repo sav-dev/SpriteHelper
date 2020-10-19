@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
 using System.Runtime.Serialization;
+using System.Xml.Serialization;
 
 namespace SpriteHelper.Contract
 {
@@ -48,6 +50,19 @@ namespace SpriteHelper.Contract
         // Width and height.
         public int Width => this.Size * Constants.SpriteWidth;
         public int Height => Constants.ElevatorHeight;
+
+        public Elevator Clone()
+        {
+            var xmlSerializer = new XmlSerializer(typeof(Elevator));
+            using (var memoryStream = new MemoryStream())
+            {
+                xmlSerializer.Serialize(memoryStream, this);
+                memoryStream.Flush();
+                memoryStream.Position = 0;
+                var cloned = (Elevator)xmlSerializer.Deserialize(memoryStream);
+                return cloned;
+            }
+        }
 
         // Initial movement distance left.
         public int InitialDistanceLeft
