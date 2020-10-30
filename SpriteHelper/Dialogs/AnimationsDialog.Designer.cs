@@ -34,7 +34,6 @@
             this.speedPicker = new System.Windows.Forms.NumericUpDown();
             this.speedLabel = new System.Windows.Forms.Label();
             this.loadButton = new System.Windows.Forms.Button();
-            this.pictureBox = new System.Windows.Forms.PictureBox();
             this.framesListBox = new System.Windows.Forms.ListBox();
             this.startButton = new System.Windows.Forms.Button();
             this.stopButton = new System.Windows.Forms.Button();
@@ -47,8 +46,8 @@
             this.directionComboBox = new System.Windows.Forms.ComboBox();
             this.moveLabel = new System.Windows.Forms.Label();
             this.bgLabel = new System.Windows.Forms.Label();
+            this.picturePanel = new SpriteHelper.Controls.DoubleBufferedPanel();
             ((System.ComponentModel.ISupportInitialize)(this.speedPicker)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.zoomPicker)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.movSpeedPicker)).BeginInit();
             this.SuspendLayout();
@@ -105,17 +104,6 @@
             this.loadButton.Text = "Load";
             this.loadButton.UseVisualStyleBackColor = true;
             this.loadButton.Click += new System.EventHandler(this.LoadButtonClick);
-            // 
-            // pictureBox
-            // 
-            this.pictureBox.BackColor = System.Drawing.Color.Black;
-            this.pictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox.Location = new System.Drawing.Point(12, 96);
-            this.pictureBox.Name = "pictureBox";
-            this.pictureBox.Size = new System.Drawing.Size(497, 394);
-            this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pictureBox.TabIndex = 13;
-            this.pictureBox.TabStop = false;
             // 
             // framesListBox
             // 
@@ -259,11 +247,19 @@
             this.bgLabel.TabIndex = 24;
             this.bgLabel.Text = "BG";
             // 
+            // picturePanel
+            // 
+            this.picturePanel.Location = new System.Drawing.Point(17, 96);
+            this.picturePanel.Name = "picturePanel";
+            this.picturePanel.Size = new System.Drawing.Size(492, 394);
+            this.picturePanel.TabIndex = 25;
+            // 
             // AnimationsDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(602, 502);
+            this.Controls.Add(this.picturePanel);
             this.Controls.Add(this.bgLabel);
             this.Controls.Add(this.moveLabel);
             this.Controls.Add(this.directionComboBox);
@@ -275,7 +271,6 @@
             this.Controls.Add(this.startButton);
             this.Controls.Add(this.stopButton);
             this.Controls.Add(this.framesListBox);
-            this.Controls.Add(this.pictureBox);
             this.Controls.Add(this.speedPicker);
             this.Controls.Add(this.speedLabel);
             this.Controls.Add(this.loadButton);
@@ -285,7 +280,6 @@
             this.Name = "AnimationsDialog";
             this.Text = "AnimationsDialog";
             ((System.ComponentModel.ISupportInitialize)(this.speedPicker)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.zoomPicker)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.movSpeedPicker)).EndInit();
             this.ResumeLayout(false);
@@ -300,7 +294,6 @@
         private System.Windows.Forms.NumericUpDown speedPicker;
         private System.Windows.Forms.Label speedLabel;
         private System.Windows.Forms.Button loadButton;
-        private System.Windows.Forms.PictureBox pictureBox;
         private System.Windows.Forms.ListBox framesListBox;
         private System.Windows.Forms.Button startButton;
         private System.Windows.Forms.Button stopButton;
@@ -313,5 +306,6 @@
         private System.Windows.Forms.ComboBox directionComboBox;
         private System.Windows.Forms.Label moveLabel;
         private System.Windows.Forms.Label bgLabel;
+        private Controls.DoubleBufferedPanel picturePanel;
     }
 }

@@ -11,7 +11,7 @@ namespace SpriteHelper.Dialogs
 {
     public partial class AnimationsDialog : Form
     {
-        private Dictionary<string, Dictionary<int, MyBitmap>> images;
+        private Dictionary<string, Bitmap> images;
         private Point position;
         private bool loaded;
         private string direction;
@@ -32,7 +32,7 @@ namespace SpriteHelper.Dialogs
 
         private void LoadDirectory()
         {
-            this.images = new Dictionary<string, Dictionary<int, MyBitmap>>();
+            this.images = new Dictionary<string, Bitmap>();
             var directory = new DirectoryInfo(this.directoryTextBox.Text);
 
             int? width = null;
@@ -46,7 +46,6 @@ namespace SpriteHelper.Dialogs
                     continue;
                 }
 
-                this.images.Add(file.Name, new Dictionary<int, MyBitmap>());
                 var image = MyBitmap.FromFile(file.FullName);
 
                 if (width == null)
@@ -67,10 +66,7 @@ namespace SpriteHelper.Dialogs
                     throw new Exception("Invalid height " + file.Name);
                 }
 
-                for (var zoom = 1; zoom <= 10; zoom++)
-                {
-                    this.images[file.Name].Add(zoom, image.Scale(zoom));
-                }
+                this.images.Add(file.Name, image.Scale((int)this.zoomPicker.Value).ToBitmap());
             }
 
             this.framesListBox.Items.Clear();
@@ -94,28 +90,18 @@ namespace SpriteHelper.Dialogs
 
         private void UpdateImage()
         {
-            var image = this.GetImage(); 
+            var image = this.GetImage();
 
-            if (this.direction != "None")
+            using (var g = this.picturePanel.CreateGraphics())
             {
-                var bitmap = new MyBitmap(this.pictureBox.Width, this.pictureBox.Height, GetBgColor());
-                bitmap.DrawImage(image, position.X, position.Y);
-                this.pictureBox.Image = bitmap.ToBitmap();
-            }            
-            else
-            {
-                this.pictureBox.Image = image.ToBitmap();
+                g.Clear(this.GetBgColor());
+                g.DrawImage(image, this.position);
             }
         }
 
-        private MyBitmap GetImage()
+        private Bitmap GetImage()
         {
-            return this.images[this.framesListBox.SelectedItem.ToString()][(int)this.zoomPicker.Value];
-        }
-
-        private bool GoingLeft()
-        {
-            return false;
+            return this.images[this.framesListBox.SelectedItem.ToString()];
         }
 
         private void FramesListBoxSelectedIndexChanged(object sender, EventArgs e)
@@ -125,7 +111,7 @@ namespace SpriteHelper.Dialogs
 
         private void ZoomPickerValueChanged(object sender, EventArgs e)
         {
-            this.StartAnimation();
+            this.LoadDirectory();
         }
 
         private void SpeedPickerValueChanged(object sender, EventArgs e)
@@ -143,8 +129,14 @@ namespace SpriteHelper.Dialogs
             this.timer.Interval = (int)((1.0 / 60.0) * (int)this.speedPicker.Value * 1000);
         }
 
+        private DateTime previousDt = DateTime.Now;
+
         private void TimerTick(object sender, EventArgs e)
         {
+            var now = DateTime.Now;
+            Console.WriteLine((now - previousDt).TotalMilliseconds);
+            previousDt = now;
+
             var previousIndex = this.framesListBox.SelectedIndex;
             this.framesListBox.SelectedIndex = (this.framesListBox.SelectedIndex + 1) % this.framesListBox.Items.Count;
             var newIndex = this.framesListBox.SelectedIndex;
@@ -156,8 +148,8 @@ namespace SpriteHelper.Dialogs
             }
 
             var speed = (int)this.movSpeedPicker.Value * (int)this.zoomPicker.Value;
-            var pictureBoxWidth = this.pictureBox.Width;
-            var pictureBoxHeight = this.pictureBox.Height;
+            var pictureBoxWidth = this.picturePanel.Width;
+            var pictureBoxHeight = this.picturePanel.Height;
             var image = this.GetImage();
             var imageWidth = image.Width;
             var imageHeight = image.Height;
@@ -194,6 +186,8 @@ namespace SpriteHelper.Dialogs
                     this.position.Y = 0;
                 }
             }
+
+            this.UpdateImage();
         }
 
         private void StopAnimation()
@@ -201,6 +195,13 @@ namespace SpriteHelper.Dialogs
             this.timer.Stop();
             this.startButton.Enabled = true;
             this.stopButton.Enabled = false;
+            var pictureBoxWidth = this.picturePanel.Width;
+            var pictureBoxHeight = this.picturePanel.Height;
+            var image = this.GetImage();
+            var imageWidth = image.Width;
+            var imageHeight = image.Height;
+            this.position = new Point((pictureBoxWidth - imageWidth) / 2, (pictureBoxHeight - imageHeight) / 2);
+            this.UpdateImage();
         }
 
         private void StartAnimation()
@@ -208,13 +209,17 @@ namespace SpriteHelper.Dialogs
             this.framesListBox.SelectedIndex = 0;
             this.UpdateTimer();
 
-            var pictureBoxWidth = this.pictureBox.Width;
-            var pictureBoxHeight = this.pictureBox.Height;
+            var pictureBoxWidth = this.picturePanel.Width;
+            var pictureBoxHeight = this.picturePanel.Height;
             var image = this.GetImage();
             var imageWidth = image.Width;
             var imageHeight = image.Height;
 
-            if (this.direction == "Left")
+            if (this.direction == "None")
+            {
+                this.position = new Point((pictureBoxWidth - imageWidth) / 2, (pictureBoxHeight - imageHeight) / 2);
+            }
+            else if (this.direction == "Left")
             {
                 this.position = new Point(pictureBoxWidth - imageWidth, (pictureBoxHeight - imageHeight) / 2);
             }
@@ -238,7 +243,7 @@ namespace SpriteHelper.Dialogs
 
         private void BgComboBoxSelectedIndexChanged(object sender, EventArgs e)
         {
-            this.pictureBox.BackColor = GetBgColor();            
+            this.picturePanel.BackColor = GetBgColor();            
         }
 
         private Color GetBgColor()
