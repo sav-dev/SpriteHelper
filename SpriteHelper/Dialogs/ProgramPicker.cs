@@ -5,7 +5,7 @@ namespace SpriteHelper.Dialogs
 {
     public partial class ProgramPicker : Form
     {
-        Action<object, object> singleProgram = null;
+        Action<object, EventArgs> singleProgram;
 
         bool startLevelEditor = false;
 

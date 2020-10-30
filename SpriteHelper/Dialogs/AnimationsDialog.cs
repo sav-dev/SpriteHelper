@@ -273,5 +273,12 @@ namespace SpriteHelper.Dialogs
                 this.StartAnimation();
             }
         }
+
+        private void BrowseButtonClick(object sender, EventArgs e)
+        {
+            var picker = new FolderBrowserDialog();
+            picker.ShowDialog();
+            this.directoryTextBox.Text = picker.SelectedPath;
+        }
     }
 }

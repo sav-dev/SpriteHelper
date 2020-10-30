@@ -47,6 +47,7 @@
             this.moveLabel = new System.Windows.Forms.Label();
             this.bgLabel = new System.Windows.Forms.Label();
             this.picturePanel = new SpriteHelper.Controls.DoubleBufferedPanel();
+            this.browseButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.speedPicker)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.zoomPicker)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.movSpeedPicker)).BeginInit();
@@ -65,7 +66,7 @@
             // 
             this.directoryTextBox.Location = new System.Drawing.Point(61, 6);
             this.directoryTextBox.Name = "directoryTextBox";
-            this.directoryTextBox.Size = new System.Drawing.Size(529, 20);
+            this.directoryTextBox.Size = new System.Drawing.Size(443, 20);
             this.directoryTextBox.TabIndex = 5;
             // 
             // speedPicker
@@ -254,11 +255,22 @@
             this.picturePanel.Size = new System.Drawing.Size(492, 394);
             this.picturePanel.TabIndex = 25;
             // 
+            // browseButton
+            // 
+            this.browseButton.Location = new System.Drawing.Point(510, 4);
+            this.browseButton.Name = "browseButton";
+            this.browseButton.Size = new System.Drawing.Size(75, 23);
+            this.browseButton.TabIndex = 26;
+            this.browseButton.Text = "Browse";
+            this.browseButton.UseVisualStyleBackColor = true;
+            this.browseButton.Click += new System.EventHandler(this.BrowseButtonClick);
+            // 
             // AnimationsDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(602, 502);
+            this.Controls.Add(this.browseButton);
             this.Controls.Add(this.picturePanel);
             this.Controls.Add(this.bgLabel);
             this.Controls.Add(this.moveLabel);
@@ -307,5 +319,6 @@
         private System.Windows.Forms.Label moveLabel;
         private System.Windows.Forms.Label bgLabel;
         private Controls.DoubleBufferedPanel picturePanel;
+        private System.Windows.Forms.Button browseButton;
     }
 }
