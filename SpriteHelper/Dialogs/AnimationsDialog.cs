@@ -15,6 +15,7 @@ namespace SpriteHelper.Dialogs
         private Point position;
         private bool loaded;
         private string direction;
+        private Color bgColor;
 
         public AnimationsDialog()
         {
@@ -92,11 +93,14 @@ namespace SpriteHelper.Dialogs
         {
             var image = this.GetImage();
 
-            using (var g = this.picturePanel.CreateGraphics())
+            var bitmap = new Bitmap(this.picturePanel.Width, this.picturePanel.Height);
+            using (var g = Graphics.FromImage(bitmap))
             {
-                g.Clear(this.GetBgColor());
+                g.Clear(this.bgColor);
                 g.DrawImage(image, this.position);
             }
+
+            this.picturePanel.BackgroundImage = bitmap;
         }
 
         private Bitmap GetImage()
@@ -243,7 +247,7 @@ namespace SpriteHelper.Dialogs
 
         private void BgComboBoxSelectedIndexChanged(object sender, EventArgs e)
         {
-            this.picturePanel.BackColor = GetBgColor();            
+            this.bgColor = GetBgColor();
         }
 
         private Color GetBgColor()
