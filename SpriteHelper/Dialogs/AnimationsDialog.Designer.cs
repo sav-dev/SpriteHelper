@@ -43,8 +43,10 @@
             this.timer = new System.Windows.Forms.Timer(this.components);
             this.movSpeedPicker = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
-            this.directionCheckBox = new System.Windows.Forms.CheckBox();
-            this.moveCheckBox = new System.Windows.Forms.CheckBox();
+            this.bgComboBox = new System.Windows.Forms.ComboBox();
+            this.directionComboBox = new System.Windows.Forms.ComboBox();
+            this.moveLabel = new System.Windows.Forms.Label();
+            this.bgLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.speedPicker)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.zoomPicker)).BeginInit();
@@ -62,14 +64,14 @@
             // 
             // directoryTextBox
             // 
-            this.directoryTextBox.Location = new System.Drawing.Point(101, 6);
+            this.directoryTextBox.Location = new System.Drawing.Point(61, 6);
             this.directoryTextBox.Name = "directoryTextBox";
-            this.directoryTextBox.Size = new System.Drawing.Size(381, 20);
+            this.directoryTextBox.Size = new System.Drawing.Size(529, 20);
             this.directoryTextBox.TabIndex = 5;
             // 
             // speedPicker
             // 
-            this.speedPicker.Location = new System.Drawing.Point(344, 72);
+            this.speedPicker.Location = new System.Drawing.Point(447, 70);
             this.speedPicker.Minimum = new decimal(new int[] {
             1,
             0,
@@ -88,7 +90,7 @@
             // speedLabel
             // 
             this.speedLabel.AutoSize = true;
-            this.speedLabel.Location = new System.Drawing.Point(273, 74);
+            this.speedLabel.Location = new System.Drawing.Point(376, 72);
             this.speedLabel.Name = "speedLabel";
             this.speedLabel.Size = new System.Drawing.Size(65, 13);
             this.speedLabel.TabIndex = 11;
@@ -96,7 +98,7 @@
             // 
             // loadButton
             // 
-            this.loadButton.Location = new System.Drawing.Point(245, 35);
+            this.loadButton.Location = new System.Drawing.Point(348, 32);
             this.loadButton.Name = "loadButton";
             this.loadButton.Size = new System.Drawing.Size(75, 23);
             this.loadButton.TabIndex = 10;
@@ -108,9 +110,9 @@
             // 
             this.pictureBox.BackColor = System.Drawing.Color.Black;
             this.pictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox.Location = new System.Drawing.Point(9, 101);
+            this.pictureBox.Location = new System.Drawing.Point(12, 96);
             this.pictureBox.Name = "pictureBox";
-            this.pictureBox.Size = new System.Drawing.Size(392, 251);
+            this.pictureBox.Size = new System.Drawing.Size(497, 394);
             this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.pictureBox.TabIndex = 13;
             this.pictureBox.TabStop = false;
@@ -118,15 +120,15 @@
             // framesListBox
             // 
             this.framesListBox.FormattingEnabled = true;
-            this.framesListBox.Location = new System.Drawing.Point(407, 101);
+            this.framesListBox.Location = new System.Drawing.Point(515, 96);
             this.framesListBox.Name = "framesListBox";
-            this.framesListBox.Size = new System.Drawing.Size(75, 251);
+            this.framesListBox.Size = new System.Drawing.Size(75, 394);
             this.framesListBox.TabIndex = 14;
             this.framesListBox.SelectedIndexChanged += new System.EventHandler(this.FramesListBoxSelectedIndexChanged);
             // 
             // startButton
             // 
-            this.startButton.Location = new System.Drawing.Point(326, 35);
+            this.startButton.Location = new System.Drawing.Point(429, 32);
             this.startButton.Name = "startButton";
             this.startButton.Size = new System.Drawing.Size(75, 23);
             this.startButton.TabIndex = 16;
@@ -137,7 +139,7 @@
             // stopButton
             // 
             this.stopButton.Enabled = false;
-            this.stopButton.Location = new System.Drawing.Point(407, 35);
+            this.stopButton.Location = new System.Drawing.Point(510, 32);
             this.stopButton.Name = "stopButton";
             this.stopButton.Size = new System.Drawing.Size(75, 23);
             this.stopButton.TabIndex = 15;
@@ -147,7 +149,7 @@
             // 
             // zoomPicker
             // 
-            this.zoomPicker.Location = new System.Drawing.Point(436, 72);
+            this.zoomPicker.Location = new System.Drawing.Point(539, 70);
             this.zoomPicker.Maximum = new decimal(new int[] {
             10,
             0,
@@ -162,7 +164,7 @@
             this.zoomPicker.Size = new System.Drawing.Size(46, 20);
             this.zoomPicker.TabIndex = 18;
             this.zoomPicker.Value = new decimal(new int[] {
-            5,
+            1,
             0,
             0,
             0});
@@ -171,7 +173,7 @@
             // zoomLabel
             // 
             this.zoomLabel.AutoSize = true;
-            this.zoomLabel.Location = new System.Drawing.Point(396, 74);
+            this.zoomLabel.Location = new System.Drawing.Point(499, 72);
             this.zoomLabel.Name = "zoomLabel";
             this.zoomLabel.Size = new System.Drawing.Size(34, 13);
             this.zoomLabel.TabIndex = 17;
@@ -183,7 +185,7 @@
             // 
             // movSpeedPicker
             // 
-            this.movSpeedPicker.Location = new System.Drawing.Point(221, 72);
+            this.movSpeedPicker.Location = new System.Drawing.Point(324, 70);
             this.movSpeedPicker.Minimum = new decimal(new int[] {
             1,
             0,
@@ -202,41 +204,70 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(150, 74);
+            this.label1.Location = new System.Drawing.Point(255, 72);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(63, 13);
             this.label1.TabIndex = 19;
             this.label1.Text = "Mov. speed";
             // 
-            // directionCheckBox
+            // bgComboBox
             // 
-            this.directionCheckBox.AutoSize = true;
-            this.directionCheckBox.Location = new System.Drawing.Point(68, 73);
-            this.directionCheckBox.Name = "directionCheckBox";
-            this.directionCheckBox.Size = new System.Drawing.Size(75, 17);
-            this.directionCheckBox.TabIndex = 21;
-            this.directionCheckBox.Text = "Going Left";
-            this.directionCheckBox.UseVisualStyleBackColor = true;
-            this.directionCheckBox.CheckedChanged += new System.EventHandler(this.DirectionCheckBoxCheckedChanged);
+            this.bgComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.bgComboBox.FormattingEnabled = true;
+            this.bgComboBox.Items.AddRange(new object[] {
+            "Black",
+            "White"});
+            this.bgComboBox.Location = new System.Drawing.Point(46, 69);
+            this.bgComboBox.Name = "bgComboBox";
+            this.bgComboBox.Size = new System.Drawing.Size(83, 21);
+            this.bgComboBox.TabIndex = 21;
+            this.bgComboBox.SelectedIndexChanged += new System.EventHandler(this.BgComboBoxSelectedIndexChanged);
             // 
-            // moveCheckBox
+            // directionComboBox
             // 
-            this.moveCheckBox.AutoSize = true;
-            this.moveCheckBox.Location = new System.Drawing.Point(9, 73);
-            this.moveCheckBox.Name = "moveCheckBox";
-            this.moveCheckBox.Size = new System.Drawing.Size(53, 17);
-            this.moveCheckBox.TabIndex = 22;
-            this.moveCheckBox.Text = "Move";
-            this.moveCheckBox.UseVisualStyleBackColor = true;
-            this.moveCheckBox.CheckedChanged += new System.EventHandler(this.MoveCheckBoxCheckedChanged);
+            this.directionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.directionComboBox.FormattingEnabled = true;
+            this.directionComboBox.Items.AddRange(new object[] {
+            "None",
+            "Up",
+            "Down",
+            "Left",
+            "Right"});
+            this.directionComboBox.Location = new System.Drawing.Point(175, 69);
+            this.directionComboBox.Name = "directionComboBox";
+            this.directionComboBox.Size = new System.Drawing.Size(74, 21);
+            this.directionComboBox.TabIndex = 22;
+            this.directionComboBox.SelectedIndexChanged += new System.EventHandler(this.DirectionComboBoxSelectedIndexChanged);
+            // 
+            // moveLabel
+            // 
+            this.moveLabel.AutoSize = true;
+            this.moveLabel.Location = new System.Drawing.Point(135, 72);
+            this.moveLabel.Name = "moveLabel";
+            this.moveLabel.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.moveLabel.Size = new System.Drawing.Size(34, 13);
+            this.moveLabel.TabIndex = 23;
+            this.moveLabel.Text = "Move";
+            // 
+            // bgLabel
+            // 
+            this.bgLabel.AutoSize = true;
+            this.bgLabel.Location = new System.Drawing.Point(18, 72);
+            this.bgLabel.Name = "bgLabel";
+            this.bgLabel.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.bgLabel.Size = new System.Drawing.Size(22, 13);
+            this.bgLabel.TabIndex = 24;
+            this.bgLabel.Text = "BG";
             // 
             // AnimationsDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(495, 368);
-            this.Controls.Add(this.moveCheckBox);
-            this.Controls.Add(this.directionCheckBox);
+            this.ClientSize = new System.Drawing.Size(602, 502);
+            this.Controls.Add(this.bgLabel);
+            this.Controls.Add(this.moveLabel);
+            this.Controls.Add(this.directionComboBox);
+            this.Controls.Add(this.bgComboBox);
             this.Controls.Add(this.movSpeedPicker);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.zoomPicker);
@@ -278,7 +309,9 @@
         private System.Windows.Forms.Timer timer;
         private System.Windows.Forms.NumericUpDown movSpeedPicker;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.CheckBox directionCheckBox;
-        private System.Windows.Forms.CheckBox moveCheckBox;
+        private System.Windows.Forms.ComboBox bgComboBox;
+        private System.Windows.Forms.ComboBox directionComboBox;
+        private System.Windows.Forms.Label moveLabel;
+        private System.Windows.Forms.Label bgLabel;
     }
 }

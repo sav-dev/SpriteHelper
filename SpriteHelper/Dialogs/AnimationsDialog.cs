@@ -12,11 +12,17 @@ namespace SpriteHelper.Dialogs
     public partial class AnimationsDialog : Form
     {
         private Dictionary<string, Dictionary<int, MyBitmap>> images;
-        private int position = 0;
+        private Point position;
+        private bool loaded;
+        private string direction;
 
         public AnimationsDialog()
         {
+            this.loaded = false;
             InitializeComponent();
+            this.bgComboBox.SelectedIndex = 0;
+            this.directionComboBox.SelectedIndex = 0;
+            this.loaded = true;
         }
 
         private void LoadButtonClick(object sender, EventArgs e)
@@ -72,6 +78,8 @@ namespace SpriteHelper.Dialogs
             {
                 this.framesListBox.Items.Add(item);
             }
+
+            this.StartAnimation();
         }
 
         private void StopButtonClick(object sender, EventArgs e)
@@ -88,10 +96,10 @@ namespace SpriteHelper.Dialogs
         {
             var image = this.GetImage(); 
 
-            if (this.moveCheckBox.Checked)
+            if (this.direction != "None")
             {
-                var bitmap = new MyBitmap(this.pictureBox.Width, image.Height, Color.Black);
-                bitmap.DrawImage(image, position, 0);
+                var bitmap = new MyBitmap(this.pictureBox.Width, this.pictureBox.Height, GetBgColor());
+                bitmap.DrawImage(image, position.X, position.Y);
                 this.pictureBox.Image = bitmap.ToBitmap();
             }            
             else
@@ -107,7 +115,7 @@ namespace SpriteHelper.Dialogs
 
         private bool GoingLeft()
         {
-            return this.directionCheckBox.Checked;
+            return false;
         }
 
         private void FramesListBoxSelectedIndexChanged(object sender, EventArgs e)
@@ -126,16 +134,6 @@ namespace SpriteHelper.Dialogs
         }
 
         private void MovSpeedPickerValueChanged(object sender, EventArgs e)
-        {
-            this.StartAnimation();
-        }
-
-        private void DirectionCheckBoxCheckedChanged(object sender, EventArgs e)
-        {
-            this.StartAnimation();
-        }
-
-        private void MoveCheckBoxCheckedChanged(object sender, EventArgs e)
         {
             this.StartAnimation();
         }
@@ -159,22 +157,41 @@ namespace SpriteHelper.Dialogs
 
             var speed = (int)this.movSpeedPicker.Value * (int)this.zoomPicker.Value;
             var pictureBoxWidth = this.pictureBox.Width;
-            var imageWidth = this.GetImage().Width;
+            var pictureBoxHeight = this.pictureBox.Height;
+            var image = this.GetImage();
+            var imageWidth = image.Width;
+            var imageHeight = image.Height;
 
-            if (this.GoingLeft())
+            if (this.direction == "Left")
             {
-                this.position -= speed;
-                if (this.position < 0)
+                this.position.X -= speed;
+                if (this.position.X < 0)
                 {
-                    this.position = pictureBoxWidth - imageWidth;
+                    this.position.X = pictureBoxWidth - imageWidth;
                 }
             }
-            else
+            else if (this.direction == "Right")
             {
-                this.position += speed;
-                if (this.position + imageWidth > pictureBoxWidth)
+                this.position.X += speed;
+                if (this.position.X + imageWidth > pictureBoxWidth)
                 {
-                    this.position = 0;
+                    this.position.X = 0;
+                }
+            }
+            else if (this.direction == "Up")
+            {
+                this.position.Y -= speed;
+                if (this.position.Y < 0)
+                {
+                    this.position.Y = pictureBoxHeight - imageHeight;
+                }
+            }
+            else if (this.direction == "Down")
+            {
+                this.position.Y += speed;
+                if (this.position.Y + imageHeight > pictureBoxHeight)
+                {
+                    this.position.Y = 0;
                 }
             }
         }
@@ -191,20 +208,61 @@ namespace SpriteHelper.Dialogs
             this.framesListBox.SelectedIndex = 0;
             this.UpdateTimer();
 
-            if (this.GoingLeft())
+            var pictureBoxWidth = this.pictureBox.Width;
+            var pictureBoxHeight = this.pictureBox.Height;
+            var image = this.GetImage();
+            var imageWidth = image.Width;
+            var imageHeight = image.Height;
+
+            if (this.direction == "Left")
             {
-                var pictureBoxWidth = this.pictureBox.Width;
-                var imageWidth = this.GetImage().Width;
-                this.position = pictureBoxWidth - imageWidth;
+                this.position = new Point(pictureBoxWidth - imageWidth, (pictureBoxHeight - imageHeight) / 2);
             }
-            else
+            else if (this.direction == "Right")
             {
-                this.position = 0;
+                this.position = new Point(0, (pictureBoxHeight - imageHeight) / 2);
+            }
+            else if (this.direction == "Up")
+            {
+                this.position = new Point((pictureBoxWidth - imageWidth) / 2, pictureBoxHeight - imageHeight);
+            }
+            else if (this.direction == "Down")
+            {
+                this.position = new Point((pictureBoxWidth - imageWidth) / 2, 0);
             }
 
             this.timer.Start();
             this.startButton.Enabled = false;
             this.stopButton.Enabled = true;
+        }
+
+        private void BgComboBoxSelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.pictureBox.BackColor = GetBgColor();            
+        }
+
+        private Color GetBgColor()
+        {
+            if ((string)this.bgComboBox.SelectedItem == "White")
+            {
+                return Color.White;
+            }
+
+            if ((string)this.bgComboBox.SelectedItem == "Black")
+            {
+                return Color.Black;
+            }
+
+            return Color.Black;
+        }
+
+        private void DirectionComboBoxSelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.direction = (string)this.directionComboBox.SelectedItem;
+            if (this.loaded)
+            {
+                this.StartAnimation();
+            }
         }
     }
 }
